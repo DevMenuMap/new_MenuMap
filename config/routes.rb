@@ -4,8 +4,10 @@ Rails.application.routes.draw do
 
 	get "about"		=> "home#about"
 	get "manual"	=> "home#manual"
-	get "qna"			=> "home#qna"
+	get "qna"			=> "notice#index"
 	get "search"	=> "home#search"
+
+	resources :notices, except: [:index, :show]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
