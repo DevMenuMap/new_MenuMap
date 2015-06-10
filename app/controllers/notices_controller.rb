@@ -9,9 +9,9 @@ class NoticesController < ApplicationController
 	end
 
 	def create
-		new_notice = Notice.new(notice_params)
-		if new_notice.save
-			flash[:alert] = "success new notice"
+		@notice = Notice.new(notice_params)
+		if @notice.save
+			flash[:alert] = "succeed new notice"
 			redirect_to qna_url
 		else
 			flash[:alert] = "fail new notice"
@@ -20,9 +20,18 @@ class NoticesController < ApplicationController
 	end
 
 	def edit
+		@notice = Notice.find(params[:id])
 	end
 
 	def update
+		@notice = Notice.find(params[:id])
+		if @notice.update_attributes(notice_params) 
+			flash[:alert] = "succeed edit notice"
+			redirect_to qna_url
+		else
+			flash[:alert] = "fail edit notice"
+			redirect_to qna_url
+		end
 	end
 
 	def destroy
