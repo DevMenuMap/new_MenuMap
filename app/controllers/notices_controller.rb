@@ -35,6 +35,9 @@ class NoticesController < ApplicationController
 	end
 
 	def destroy
+		@notice = Notice.find(params[:id]).destroy
+		flash[:alert] = "succeed destroy notice"
+		redirect_to qna_url
 	end
 
 	private

@@ -1,6 +1,6 @@
 <tr>
-	<td><%= notice.question %></td>
-	<td><%= notice.answer %></td>
+	<td id="notice_question_<%= notice.id %>"><%= notice.question %></td>
+	<td id="notice_answer_<%= notice.id %>"><%= notice.answer.html_safe %></td>
 	<td><%= link_to "edit", edit_notice_path(notice) %></td>
 	<td><%= link_to "delete", notice_path(notice), method: :delete, confirm: "really??" %></td>
 </tr>
