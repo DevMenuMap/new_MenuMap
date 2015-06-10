@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 	
+  get 'questions/index'
+
+  get 'questions/new'
+
+  get 'questions/edit'
+
+  get 'questions/show'
+
 	root "home#brandpage"
 
 	get "about"		=> "home#about"
