@@ -1,2 +1,13 @@
 <h1>Questions#index</h1>
-<p>Find me in app/views/questions/index.html.erb</p>
+
+<table>
+	<tr>
+		<th>user_id</th>
+		<th>email</th>
+		<th>contents</th>
+		<th></th>
+	</tr>
+
+	<!-- Each questions in questions/_question.html.erb -->
+	<%= render @questions %>
+</table>

@@ -1,13 +1,5 @@
 Rails.application.routes.draw do
 	
-  get 'questions/index'
-
-  get 'questions/new'
-
-  get 'questions/edit'
-
-  get 'questions/show'
-
 	root "home#brandpage"
 
 	get "about"		=> "home#about"
@@ -16,6 +8,7 @@ Rails.application.routes.draw do
 	get "search"	=> "home#search"
 
 	resources :notices, except: [:index, :show]
+	resources :questions
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
