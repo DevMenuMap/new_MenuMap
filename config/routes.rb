@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
 	get "about"		=> "home#about"
 	get "manual"	=> "home#manual"
-	get "qna"			=> "notice#index"
+	get "qna"			=> "notices#index"
 	get "search"	=> "home#search"
 
 	resources :notices, except: [:index, :show]
