@@ -1,3 +1,5 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+jQuery ->
+	$("#new_question :submit").click ->
+		if !$("#new_question #question_contents").val()
+			alert("경고: contents should not be blank!")
+			false
