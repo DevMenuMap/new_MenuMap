@@ -8,7 +8,7 @@
 				options_for_select(@categories.map{ |c| [c.name, c.name] }, nil), 
 																					{ id: "category_select" } %>
 	<%= select_tag :category, 
-				options_for_select(@subcategories.map{ |c| [c.name, c.name] }, nil),
+				options_for_select(@subcategories.map{ |s| [s.name, s.name] }, nil),
 																					{ id: "subcategory_select" } %>
 
 	<%= submit_tag "gogogo", name: nil %>

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 	get "manual"	=> "home#manual"
 	get "qna"			=> "notices#index"
 	get "search"	=> "home#search"
+	get "home/update_sub_categories"
 
 	resources :notices, except: [:index, :show]
 	resources :questions, except: [:new]

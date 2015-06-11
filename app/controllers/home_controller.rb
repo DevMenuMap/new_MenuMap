@@ -16,4 +16,12 @@ class HomeController < ApplicationController
 		@categories = Category.all
 		@subcategories = Subcategory.all
 	end
+
+	def update_sub_categories
+		@subcategories = Category.find_by(name: params[:category])
+														 .subcategories
+		respond_to do |format|
+			format.js
+		end
+	end
 end
