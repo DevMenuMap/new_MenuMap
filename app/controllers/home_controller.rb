@@ -13,5 +13,7 @@ class HomeController < ApplicationController
 	end
 
 	def search
+		@categories = Category.all
+		@subcategories = Subcategory.all
 	end
 end

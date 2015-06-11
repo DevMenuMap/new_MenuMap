@@ -1,1 +1,15 @@
 <h1>Search page</h1>
+
+<%= form_tag search_path, method: :get, name: nil do %>
+	<%= label_tag :category, "category" %>
+
+	<!-- options_for_select(options[text, value], selected) -->
+	<%= select_tag nil, 
+				options_for_select(@categories.map{ |c| [c.name, c.name] }, nil), 
+																					{ id: "category_select" } %>
+	<%= select_tag :category, 
+				options_for_select(@subcategories.map{ |c| [c.name, c.name] }, nil),
+																					{ id: "subcategory_select" } %>
+
+	<%= submit_tag "gogogo", name: nil %>
+<% end %>
