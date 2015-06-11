@@ -2,6 +2,7 @@ class NoticesController < ApplicationController
 
   def index
 		@notices = Notice.all
+		@question = Question.new
   end
 
 	def new

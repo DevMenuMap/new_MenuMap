@@ -11,3 +11,8 @@
 	<!-- Each notices in notices/_notice.html.erb -->
 	<%= render @notices %>
 </table>
+
+<!-- Show modal for questions#new on click -->
+<%= link_to "new question", "#new_question" %>
+
+<%= render "questions/new" %>
