@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 	get "search"	=> "home#search"
 
 	resources :notices, except: [:index, :show]
-	resources :questions
+	resources :questions, except: [:new]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
