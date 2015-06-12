@@ -11,5 +11,5 @@
 				options_for_select(@subcategories.map{ |s| [s.name, s.name] }, nil),
 																					{ id: "subcategory_select" } %>
 
-	<%= submit_tag "gogogo", name: nil %>
+	<%= submit_tag "gogogo", name: nil, onclick: "_gaq.push(['_trackEvent', 'test1', 'clicked'])" %>
 <% end %>
