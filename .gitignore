@@ -11,3 +11,9 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore environment variables.
+/config/app_environment_variables.rb
+
+# Ignore precompiled assets.
+/public/assets
