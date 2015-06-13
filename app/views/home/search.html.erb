@@ -1,6 +1,11 @@
 <h1>Search page</h1>
 
 <%= form_tag search_path, method: :get, name: nil do %>
+	<%= label_tag :address, "set addr" %>
+	<!-- autocomplete_field_tag(name, value, source, options = {}) -->
+	<%= autocomplete_field_tag :address, "", addrcomplete_path, { id_element: "#jeongbinelement", placeholder: "gogogoplaceholder"} %>
+	<!-- text_field_tag :address -->
+
 	<%= label_tag :category, "category" %>
 
 	<!-- options_for_select(options[text, value], selected) -->
@@ -13,3 +18,10 @@
 
 	<%= submit_tag "gogogo", name: nil %>
 <% end %>
+
+<script>
+$('#address').bind('railsAutocomplete.select', function(event, data){
+  /* Do something here */
+  /* alert(data.item.id); */
+});
+</script>
