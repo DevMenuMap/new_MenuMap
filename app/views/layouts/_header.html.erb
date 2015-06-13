@@ -13,4 +13,16 @@
 	<li>
 		<%= link_to "search page" , search_path %>
 	</li>
+	<% if !current_user %>
+		<li>
+			<%= link_to "signup page" , new_user_registration_path %>
+		</li>
+		<li>
+			<%= link_to "signin page" , new_user_session_path %>
+		</li>
+	<% else %>
+		<li>
+			<%= link_to "signout page" , destroy_user_session_path, method: :delete %>
+		</li>
+	<% end %>
 </ul>
