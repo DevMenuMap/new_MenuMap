@@ -5,8 +5,12 @@ Rails.application.routes.draw do
 	get "about"		=> "home#about"
 	get "manual"	=> "home#manual"
 	get "qna"			=> "notices#index"
+
 	get "search"	=> "home#search"
+	# cascading select box
 	get "home/update_sub_categories"
+	# autocomplete for address text_field
+	get "home/autocomplete_addrcomplete_name", as: "addrcomplete"
 
 	resources :notices, except: [:index, :show]
 	resources :questions, except: [:new]
