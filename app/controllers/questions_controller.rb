@@ -1,4 +1,7 @@
 class QuestionsController < ApplicationController
+	
+	# Filters
+	before_action :correct_user?, only: [:create]
 
   def index
 		@questions = Question.all
@@ -43,5 +46,13 @@ class QuestionsController < ApplicationController
 	private
 		def question_params
 			params.require(:question).permit(:user_id, :email, :contents)
+		end
+
+		# Check if the user_id input value is equal to current user's id.
+		def correct_user?
+			if current_user != User.find(params[:question][:user_id])
+				flash[:alert] = "not correct user"
+				redirect_to :back
+			end
 		end
 end
