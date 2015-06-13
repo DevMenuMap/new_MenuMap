@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 	resources :notices, except: [:index, :show]
 	resources :questions, except: [:new]
 
+	# User & Admin with devise gem.
+  devise_for :users
+
   # Example resource route with options:
   #   resources :products do
   #     member do
