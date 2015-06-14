@@ -1,8 +1,4 @@
 class HomeController < ApplicationController
-	# Autocomplete address name in search page
-	# full option makes any substirngs(not only starting strings) captured
-	# autocomplete :addrcomplete, :name, full: true
-	
 	def brandpage
 	end
 
