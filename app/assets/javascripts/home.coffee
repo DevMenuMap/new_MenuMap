@@ -1,7 +1,7 @@
 jQuery ->
 	$("#category_select").change ->
 		$.ajax 
-			url: "home/update_sub_categories"
+			url: "/home/update_sub_categories"
 			datatype: "script"
 			data:
 				category: $("#category_select").val()

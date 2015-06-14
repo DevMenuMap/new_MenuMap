@@ -6,5 +6,14 @@ class RestRegistersController < ApplicationController
   end
 
   def new
+		@rest_register = RestRegister.new
+		@categories = Category.all
+		@subcategories = Subcategory.all
   end
+
+	def create
+	end
+
+	def destroy
+	end
 end
