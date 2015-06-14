@@ -48,9 +48,10 @@ class QuestionsController < ApplicationController
 			params.require(:question).permit(:user_id, :email, :contents)
 		end
 
-		# Check if the user_id input value is equal to current user's id.
+		# Check if the user_id input value is equal to current user's id
+		# only when there is a current_user.
 		def correct_user?
-			if current_user != User.find(params[:question][:user_id])
+			if current_user && current_user != User.find(params[:question][:user_id])
 				flash[:alert] = "not correct user"
 				redirect_to :back
 			end
