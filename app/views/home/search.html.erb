@@ -3,8 +3,8 @@
 <%= form_tag search_path, method: :get, name: nil do %>
 	<%= label_tag :address, "set addr" %>
 	<!-- autocomplete_field_tag(name, value, source, options = {}) -->
-	<%= autocomplete_field_tag :address, "", addrcomplete_path, { id_element: "#jeongbinelement", placeholder: "gogogoplaceholder"} %>
-	<!-- text_field_tag :address -->
+	<!-- autocomplete_field_tag :address, "", addrcomplete_path, { id_element: "#jeongbinelement", placeholder: "gogogoplaceholder"} -->
+	<%= text_field_tag :address %>
 
 	<%= label_tag :category, "category" %>
 
@@ -20,8 +20,29 @@
 <% end %>
 
 <script>
-$('#address').bind('railsAutocomplete.select', function(event, data){
+/*$('#address').bind('railsAutocomplete.select', function(event, data){*/
   /* Do something here */
   /* alert(data.item.id); */
+/*});*/
+
+$(function() {
+	$("#address").autocomplete({
+			source: "/home/addrcomplete",
+			minLength: 0,
+			/* autoFocus: false */
+			focus:  function(event, ui){
+								$("#address").val(ui.item.name);
+								return false;
+							},
+			select: function(event, ui){
+								$("#address").val(ui.item.name);
+								return false;
+							}
+		})
+		.data("uiAutocomplete")._renderItem = function(ul, item){
+			return $("<li></li>").data("item.autocomplete", item)
+													 .append("<a>" + item.name + "</a>")
+													 .appendTo(ul);
+		};
 });
 </script>

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 	# cascading select box
 	get "home/update_sub_categories"
 	# autocomplete for address text_field
-	get "home/autocomplete_addrcomplete_name", as: "addrcomplete"
+	get "home/addrcomplete"
 
 	resources :notices, except: [:index, :show]
 	resources :questions, except: [:new]
