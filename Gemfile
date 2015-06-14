@@ -12,8 +12,6 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Use jquery-ui
-gem 'jquery-ui-rails'
 
 # Prevent jquery from not working with page:load.
 gem 'jquery-turbolinks'

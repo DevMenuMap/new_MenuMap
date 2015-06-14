@@ -1,5 +1,7 @@
 /*
- *= jquery-ui/autocomplete
+ *= require jquery-ui.structure
+ *= require jquery-ui.theme
+ *= require jquery-ui
  *= require_tree .
  *= require_self
  */
