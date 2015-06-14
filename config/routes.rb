@@ -12,8 +12,9 @@ Rails.application.routes.draw do
 	# autocomplete for address text_field
 	get "home/addrcomplete"
 
-	resources :notices, except: [:index, :show]
-	resources :questions, except: [:new]
+	resources :notices, 			 except: [:index, :show]
+	resources :questions, 		 except: [:new]
+	resources :rest_registers, except: [:edit, :update]
 
 	# User & Admin with devise gem.
   devise_for :users, controllers: {
