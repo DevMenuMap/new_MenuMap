@@ -16,9 +16,15 @@ class HomeController < ApplicationController
 		@subcategories = Subcategory.all
 	end
 
-	def update_sub_categories
-		@subcategories = Category.find_by(name: params[:category])
-														 .subcategories
+	def update_subcategories
+		# Check if parameter value is numeric or string(only at home#search)
+		if params[:category].to_i == 0 
+			@subcategories = Category.find_by(name: params[:category])
+															 .subcategories
+		else
+			@subcategories = Category.find(params[:category]).subcategories
+		end
+
 		respond_to do |format|
 			format.js
 		end

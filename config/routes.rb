@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
 	get "search"	=> "home#search"
 	# cascading select box
-	get "home/update_sub_categories"
+	get "home/update_subcategories"
 	# autocomplete for address text_field
 	get "home/addrcomplete"
 
