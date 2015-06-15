@@ -13,6 +13,9 @@
 	<li>
 		<%= link_to "search page" , search_path %>
 	</li>
+	<li>
+		<%= link_to "restaurant register" , new_rest_register_path %>
+	</li>
 	<% if !current_user %>
 		<li>
 			<%= link_to "signup page" , new_user_registration_path %>

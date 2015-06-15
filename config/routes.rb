@@ -8,12 +8,13 @@ Rails.application.routes.draw do
 
 	get "search"	=> "home#search"
 	# cascading select box
-	get "home/update_sub_categories"
+	get "home/update_subcategories"
 	# autocomplete for address text_field
 	get "home/addrcomplete"
 
-	resources :notices, except: [:index, :show]
-	resources :questions, except: [:new]
+	resources :notices, 			 except: [:index, :show]
+	resources :questions, 		 except: [:new]
+	resources :rest_registers, except: [:edit, :update]
 
 	# User & Admin with devise gem.
   devise_for :users, controllers: {

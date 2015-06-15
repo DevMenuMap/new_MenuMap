@@ -1,0 +1,21 @@
+<h1>RestRegisters#index</h1>
+
+<table>
+	<tr>
+		<% RestRegister.column_names.each do |column| %>
+			<th><%= column %></th>
+		<% end %>
+		<th></th>
+		<th></th>
+	</tr>
+
+	<% @rest_registers.each do |register| %>
+		<tr>
+			<% register.attributes.each_value do |value| %>
+				<td><%= value %></td>
+			<% end %>
+			<td><%= link_to "show", rest_register_path(register) %></td>
+			<td><%= link_to "destroy", rest_register_path(register), method: :delete %></td>
+		</tr>
+	<% end %>
+</table>
