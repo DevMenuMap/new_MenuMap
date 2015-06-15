@@ -4,8 +4,8 @@ class CreateRestRegisters < ActiveRecord::Migration
       t.references :user, index: true, foreign_key: true
       t.string :email
       t.string :name
-      t.string :cat
-      t.string :subcat
+      t.references :category, index: true, foreign_key: true
+      t.references :subcategory, index: true, foreign_key: true
       t.string :addr
       t.string :phnum
       t.boolean :delivery

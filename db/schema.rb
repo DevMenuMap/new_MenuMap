@@ -55,20 +55,22 @@ ActiveRecord::Schema.define(version: 20150614131755) do
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
 
   create_table "rest_registers", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "email",      limit: 255
-    t.string   "name",       limit: 255
-    t.string   "cat",        limit: 255
-    t.string   "subcat",     limit: 255
-    t.string   "addr",       limit: 255
-    t.string   "phnum",      limit: 255
-    t.boolean  "delivery",   limit: 1
-    t.string   "open_at",    limit: 255
-    t.text     "etc",        limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "user_id",        limit: 4
+    t.string   "email",          limit: 255
+    t.string   "name",           limit: 255
+    t.integer  "category_id",    limit: 4
+    t.integer  "subcategory_id", limit: 4
+    t.string   "addr",           limit: 255
+    t.string   "phnum",          limit: 255
+    t.boolean  "delivery",       limit: 1
+    t.string   "open_at",        limit: 255
+    t.text     "etc",            limit: 65535
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
+  add_index "rest_registers", ["category_id"], name: "index_rest_registers_on_category_id", using: :btree
+  add_index "rest_registers", ["subcategory_id"], name: "index_rest_registers_on_subcategory_id", using: :btree
   add_index "rest_registers", ["user_id"], name: "index_rest_registers_on_user_id", using: :btree
 
   create_table "subcategories", force: :cascade do |t|
@@ -97,5 +99,7 @@ ActiveRecord::Schema.define(version: 20150614131755) do
 
   add_foreign_key "category_relationships", "categories"
   add_foreign_key "category_relationships", "subcategories"
+  add_foreign_key "rest_registers", "categories"
+  add_foreign_key "rest_registers", "subcategories"
   add_foreign_key "rest_registers", "users"
 end

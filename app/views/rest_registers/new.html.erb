@@ -14,10 +14,10 @@
 	<%= f.text_field :name %>
 
 	<!-- options_for_select(options[text, value], selected) -->
-	<%= f.select :cat, 
+	<%= f.select :category_id, 
 				options_for_select(@categories.map{ |c| [c.name, c.name] }, nil), 
 																			{}, { id: "category_select" } %>
-	<%= f.select :subcat, 
+	<%= f.select :subcategory_id, 
 				options_for_select(@subcategories.map{ |s| [s.name, s.name] }, nil),
 																			{}, { id: "subcategory_select" } %>
 

@@ -2,8 +2,10 @@ class RestRegister < ActiveRecord::Base
 	# validations
 	validates :name, presence: true
 	validates :addr, presence: true
-	validates :cat,  presence: true
-	validates :subcat, presence: true
+	validates :category_id,  presence: true
+	validates :subcategory_id, presence: true
 
-  belongs_to :user_id
+  belongs_to :user
+  belongs_to :category
+  belongs_to :subcategory
 end
