@@ -1,3 +1,11 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+jQuery ->
+	$("#new_rest_register :submit").click ->
+		mustFill = [] 
+		mustFill.push("name") if !$("#rest_register_name").val()
+		# User should select subcategory(not "전체")
+		mustFill.push("category")	if $("#subcategory_select").val() == "1"
+		mustFill.push("addr") if !$("#rest_register_addr").val()
+		if mustFill
+			mustFill = mustFill.join(", ").concat(" should be submitted")
+			alert(mustFill)
+			false
