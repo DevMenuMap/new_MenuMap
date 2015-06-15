@@ -1,9 +1,7 @@
+<%= f.label :email, "email" %>
 <% if current_user %>
-	<%= f.hidden_field :user_id, value: current_user.id %>
-	<%= f.label :email, "email" %>
 	<%= f.text_field :email, value: current_user.email, readonly: true %>
 <% else %>
-	<%= f.label :email, "email" %>
 	<%= f.text_field :email %>
 <% end %>
 

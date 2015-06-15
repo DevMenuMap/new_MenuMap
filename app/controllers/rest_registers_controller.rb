@@ -15,6 +15,7 @@ class RestRegistersController < ApplicationController
 
 	def create
 		@rest_register = RestRegister.new(register_params)	
+		@rest_register.user_id = current_user.id if current_user
 		if @rest_register.save
 			flash[:alert] = "succeed in rest_registers#create"
 			redirect_to rest_registers_path
@@ -32,7 +33,7 @@ class RestRegistersController < ApplicationController
 
 	private
 		def register_params
-			params.require(:rest_register).permit(:user_id, :email, :name,
+			params.require(:rest_register).permit(:email, :name,
 																						:category_id, :subcategory_id,
 																						:addr, :phnum, :delivery,
 																						:open_at, :etc)

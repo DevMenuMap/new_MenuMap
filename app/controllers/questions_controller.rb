@@ -1,14 +1,11 @@
 class QuestionsController < ApplicationController
-	
-	# Filters
-	before_action :correct_user?, only: [:create]
-
   def index
 		@questions = Question.all
   end
 
 	def create
 		@question = Question.new(question_params)
+		@question.user_id = current_user.id if current_user
 		if @question.save
 			flash[:alert] = "succeed question#create"
 			redirect_to questions_url
@@ -45,15 +42,6 @@ class QuestionsController < ApplicationController
 
 	private
 		def question_params
-			params.require(:question).permit(:user_id, :email, :contents)
-		end
-
-		# Check if the user_id input value is equal to current user's id
-		# only when there is a current_user.
-		def correct_user?
-			if current_user && current_user != User.find(params[:question][:user_id])
-				flash[:alert] = "not correct user"
-				redirect_to :back
-			end
+			params.require(:question).permit(:email, :contents)
 		end
 end
