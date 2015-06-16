@@ -1,6 +1,6 @@
 <h1>RestRegisters#new</h1>
 
-<%= form_for @rest_register do |f| %>
+<%= form_for @rest_register, html: { multipart: true } do |f| %>
 	<%= f.label :email, "email" %>
 	<% if current_user %>
 		<%= f.text_field :email, value: current_user.email, readonly: true %>
@@ -11,6 +11,7 @@
 	<%= f.label :name, "restaurant's name" %>
 	<%= f.text_field :name %>
 
+	<%= f.label :category_id, "category" %>
 	<%= render "shared/category_select", f: f %>
 
 	<%= f.label :addr, "address" %>
@@ -21,9 +22,12 @@
 	<%= f.check_box :delivery, { class: "gogo_delivery" } %>
 	<%= f.label :open_at, "open timing" %>
 	<%= f.text_field :open_at %>
-	
 	<%= f.label :etc, "etc" %>
 	<%= f.text_area :etc, class: "gogogo", cols: 30, rows: 10 %>
+
+	<!-- Limit the filetype to choose on user's device -->
+	<%= f.label :img, "image" %>
+	<%= f.file_field :img, accept: "image/jpeg, image/png, image/gif" %>
 
 	<%= f.submit "go submit" %>
 <% end %>

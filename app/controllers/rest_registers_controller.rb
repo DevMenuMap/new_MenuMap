@@ -36,6 +36,6 @@ class RestRegistersController < ApplicationController
 			params.require(:rest_register).permit(:email, :name,
 																						:category_id, :subcategory_id,
 																						:addr, :phnum, :delivery,
-																						:open_at, :etc)
+																						:open_at, :etc, :img)
 		end
 end
