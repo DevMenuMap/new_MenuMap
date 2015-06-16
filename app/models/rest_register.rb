@@ -14,8 +14,10 @@ class RestRegister < ActiveRecord::Base
 	# Attach image on RestRegister
 	has_attached_file :img, 
 										:styles => { :medium => "300x300>" },
-										:url 	=> "/:class/:attachment/:id/:style/:basename.:extension",
-										:path => ":rails_root/public/:class/:attachment/:id/:style/:basename.:extension"
+										# Default image for rest_register
+										:default_url => "download.jpg",
+										:url 	=> "/assets/:class/:attachment/:id_partition/:style/:basename.:extension",
+										:path => ":rails_root/app/assets/images/:class/:attachment/:id_partition/:style/:basename.:extension"
 	
 	# Validation check for images
 	validates_attachment	:img, 

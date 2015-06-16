@@ -17,3 +17,9 @@ jQuery ->
 		if fileType && $.inArray(fileType, ["jpg", "jpeg", "png", "gif"]) == -1
 			alert("wrong filetype")
 			false
+
+	# Check if image file's size is over 15 megabytes
+	$("#rest_register_img").bind "change", (event) ->
+		fileSize = this.files[0].size/1024/1024
+		if fileSize > 15
+			alert("so big image")
