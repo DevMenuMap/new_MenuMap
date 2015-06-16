@@ -24,8 +24,10 @@
 	<%= f.text_field :open_at %>
 	<%= f.label :etc, "etc" %>
 	<%= f.text_area :etc, class: "gogogo", cols: 30, rows: 10 %>
+
+	<!-- Limit the filetype to choose on user's device -->
 	<%= f.label :img, "image" %>
-	<%= f.file_field :img %>
+	<%= f.file_field :img, accept: "image/jpeg, image/png, image/gif" %>
 
 	<%= f.submit "go submit" %>
 <% end %>

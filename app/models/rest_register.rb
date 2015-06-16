@@ -2,7 +2,7 @@ class RestRegister < ActiveRecord::Base
 	# validations
 	validates :name, presence: true
 	validates :addr, presence: true
-	validates :category_id,  presence: true
+	validates :category_id,  	 presence: true
 	validates :subcategory_id, presence: true
 
 	# Associations
@@ -10,11 +10,15 @@ class RestRegister < ActiveRecord::Base
   belongs_to :category
   belongs_to :subcategory
 
-	# Image	
+	### Image	
+	# Attach image on RestRegister
 	has_attached_file :img, 
-										:styles => { :medium => "300x300>", :thumb => "100x100>" },
+										:styles => { :medium => "300x300>" },
 										:url 	=> "/:class/:attachment/:id/:style/:basename.:extension",
 										:path => ":rails_root/public/:class/:attachment/:id/:style/:basename.:extension"
-	validates_attachment_content_type :img, 
-																		:content_type => /\Aimage\/.*\Z/
+	
+	# Validation check for images
+	validates_attachment	:img, 
+												:content_type => { content_type: /\Aimage\/.*\Z/ },
+												:size					=> { in: 0..15.megabyte }
 end
