@@ -5,7 +5,7 @@ jQuery ->
 		# User should select subcategory(not "전체")
 		mustFill.push("category")	if $("#subcategory_select").val() == "1"
 		mustFill.push("addr") if !$("#rest_register_addr").val()
-		if mustFill
+		if mustFill.length != 0
 			mustFill = mustFill.join(", ").concat(" should be submitted")
 			alert(mustFill)
 			false
