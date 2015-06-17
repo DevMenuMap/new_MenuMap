@@ -79,4 +79,17 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+	# Let paperclip to know where the utilities from ImageMagick are located
+	Paperclip.options[:command_path] = "/usr/bin/"
+
+	# Configure paperclip for AWS S3
+	config.paperclip_defaults = {
+		storage: :s3,
+		s3_credentials: {
+			:bucket 					 => ENV['S3_BUCKET'],
+			:access_key_id		 => ENV['S3_ACCESS_KEY'],
+			:secret_access_key => ENV['S3_SECRET_KEY']
+		}
+	}
 end
