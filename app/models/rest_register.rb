@@ -24,8 +24,4 @@ class RestRegister < ActiveRecord::Base
 	validates_attachment	:img, 
 												:content_type => { content_type: /\Aimage\/.*\Z/ },
 												:size					=> { in: 0..15.megabyte }
-
-	def subcategory
-		Subcategory.find(self.subcategory_id).name
-	end
 end
