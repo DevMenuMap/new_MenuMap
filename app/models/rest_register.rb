@@ -1,4 +1,7 @@
 class RestRegister < ActiveRecord::Base
+	# extensions
+	extend S3Helper
+
 	# validations
 	validates :name, presence: true
 	validates :addr, presence: true
@@ -10,14 +13,12 @@ class RestRegister < ActiveRecord::Base
   belongs_to :category
   belongs_to :subcategory
 
-	### Image	
+	### Images
 	# Attach image on RestRegister
 	has_attached_file :img, 
-										:styles => { :medium => "300x300>" },
 										# Default image for rest_register
-										:default_url => "download.jpg",
-										:url 	=> "/assets/:class/:attachment/:id_partition/:style/:basename.:extension",
-										:path => ":rails_root/app/assets/images/:class/:attachment/:id_partition/:style/:basename.:extension"
+										:default_url => s3_image_url("rest_register_default.jpg"),
+										:styles 		 => { :medium => "300x300>" }
 	
 	# Validation check for images
 	validates_attachment	:img, 
