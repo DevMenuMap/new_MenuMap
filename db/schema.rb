@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150616025856) do
+ActiveRecord::Schema.define(version: 20150617091152) do
 
   create_table "addrcompletes", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -77,6 +77,23 @@ ActiveRecord::Schema.define(version: 20150616025856) do
   add_index "rest_registers", ["subcategory_id"], name: "index_rest_registers_on_subcategory_id", using: :btree
   add_index "rest_registers", ["user_id"], name: "index_rest_registers_on_user_id", using: :btree
 
+  create_table "restaurants", force: :cascade do |t|
+    t.string   "name",           limit: 255
+    t.integer  "category_id",    limit: 4
+    t.integer  "subcategory_id", limit: 4
+    t.string   "addr",           limit: 255
+    t.string   "phnum",          limit: 255
+    t.boolean  "delivery",       limit: 1,   default: false
+    t.integer  "menu_on",        limit: 4,   default: 0
+    t.string   "open_at",        limit: 255
+    t.boolean  "active",         limit: 1,   default: true
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "restaurants", ["category_id"], name: "index_restaurants_on_category_id", using: :btree
+  add_index "restaurants", ["subcategory_id"], name: "index_restaurants_on_subcategory_id", using: :btree
+
   create_table "subcategories", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -106,4 +123,6 @@ ActiveRecord::Schema.define(version: 20150616025856) do
   add_foreign_key "rest_registers", "categories"
   add_foreign_key "rest_registers", "subcategories"
   add_foreign_key "rest_registers", "users"
+  add_foreign_key "restaurants", "categories"
+  add_foreign_key "restaurants", "subcategories"
 end

@@ -26,6 +26,9 @@ Rails.application.routes.draw do
 		# omniauth_callbacks: "users/omniauth_callbacks"
 	}
 
+	# Restaurant and related controllers
+	resources :restaurants
+
   # Example resource route with options:
   #   resources :products do
   #     member do
