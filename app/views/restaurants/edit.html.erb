@@ -4,3 +4,6 @@
 	<%= render "field", f: f %>
 	<%= f.submit "go submit" %>
 <% end %>
+
+<!-- Original category and subcategory -->
+<%= @restaurant.category.name %> | <%= @restaurant.subcategory.name %>
