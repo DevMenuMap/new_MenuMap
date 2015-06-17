@@ -11,4 +11,5 @@ class Restaurant < ActiveRecord::Base
 	# Associations
   belongs_to :category
   belongs_to :subcategory
+	has_one 	 :rest_info
 end
