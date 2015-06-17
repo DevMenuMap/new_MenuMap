@@ -1,0 +1,6 @@
+<h1>Restaurants#new</h1>
+
+<%= form_for @restaurant, html: { multipart: true } do |f| %>
+	<%= render "field", f: f %>
+	<%= f.submit "go submit" %>
+<% end %>
