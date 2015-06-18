@@ -9,6 +9,7 @@ class RestaurantsController < ApplicationController
   def show
 		@restaurant = Restaurant.find(params[:id])
 		@rest_info = RestInfo.unscoped.find(params[:id])  
+		@rest_err = RestErr.new
   end
 
   def new
@@ -49,6 +50,7 @@ class RestaurantsController < ApplicationController
 
 	def destroy
 		Restaurant.find(params[:id]).update(active: false)
+		# inactivate belongings
 		redirect_to restaurants_url
 	end
 

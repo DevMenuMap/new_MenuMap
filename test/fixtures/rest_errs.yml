@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  restaurant_id: 
+  presence_err: false
+  menu_err: false
+  phnum_err: false
+  category_err: false
+  etc: MyText
+  active: false
+
+two:
+  restaurant_id: 
+  presence_err: false
+  menu_err: false
+  phnum_err: false
+  category_err: false
+  etc: MyText
+  active: false
