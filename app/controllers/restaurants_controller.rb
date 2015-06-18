@@ -50,6 +50,7 @@ class RestaurantsController < ApplicationController
 
 	def destroy
 		Restaurant.find(params[:id]).update(active: false)
+		# inactivate belongings
 		redirect_to restaurants_url
 	end
 
