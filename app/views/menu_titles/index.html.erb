@@ -1,0 +1,21 @@
+<h1>MenuTitles#index</h1>
+
+<table>
+	<tr>
+		<% MenuTitle.column_names.each do |column| %>
+			<th><%= column %></th>
+		<% end %>
+		<th></th>
+		<th></th>
+	</tr>
+
+	<% @menu_titles.each do |title| %>
+		<tr>
+			<% title.attributes.each_value do |value| %>
+				<td><%= value %></td>
+			<% end %>
+			<td><%= link_to "edit", edit_menu_title_path(title) %></td>
+			<td><%= link_to "destroy", menu_title_path(title), method: :delete %></td>
+		</tr>
+	<% end %>
+</table>

@@ -8,8 +8,14 @@ class RestaurantsController < ApplicationController
 
   def show
 		@restaurant = Restaurant.find(params[:id])
+		# change to this after creating all RestInfo
+		# @rest_info = RestInfo.find(params[:id])  
 		@rest_info = RestInfo.unscoped.find(params[:id])  
+		@menu_titles = @restaurant.menu_titles
+
+		# partial forms
 		@rest_err = RestErr.new
+		@menu_title = MenuTitle.new
   end
 
   def new

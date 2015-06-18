@@ -5,12 +5,9 @@ Rails.application.routes.draw do
 	get "about"		=> "home#about"
 	get "manual"	=> "home#manual"
 	get "qna"			=> "notices#index"
-
 	get "search"	=> "home#search"
-	# cascading select box
-	get "home/update_subcategories"
-	# autocomplete for address text_field
-	get "home/addrcomplete"
+	get "home/update_subcategories"		# cascading select box 
+	get "home/addrcomplete"						# autocomplete for address text_field
 
 	resources :notices, 			 except: [:index, :show]
 	resources :questions, 		 except: [:new]
@@ -18,22 +15,26 @@ Rails.application.routes.draw do
 
 	# User & Admin with devise gem.
   devise_for :users, controllers: {
-		# confirmations: "users/confirmations",
 		passwords: "users/passwords",
 		registrations: "users/registrations",
-		sessions: "users/sessions",
+		sessions: "users/sessions"
+		# confirmations: "users/confirmations",
 		# unlocks: "users/unlocks",
 		# omniauth_callbacks: "users/omniauth_callbacks"
 	}
 
 	# Restaurant and related controllers
 	resources :restaurants, shallow: true do 
-		resources :rest_infos,	 except: [:index]
+		resources :rest_infos,	 except: [:index, :show]
 		resources :rest_errs, 	 except: [:index, :new]
+		resources :menu_titles,  except: [:index, :new, :show]
 	end
 
-	# rest_errs#index without assciations to restaurants
+	# rest_errs#index without associations to restaurants
 	get "rest_errs" => "rest_errs#index", as: "rest_errs"
+
+	# menu_titles#index without associations to restaurants
+	get "menu_titles" => "menu_titles#index", as: "menu_titles"
 
   # Example resource route with options:
   #   resources :products do
