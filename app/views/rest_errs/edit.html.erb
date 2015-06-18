@@ -1,0 +1,10 @@
+<h1>RestErrs#edit</h1>
+
+<%= form_for @rest_err do |f| %>
+	<%= render "field", f: f %>
+
+	<%= f.label :active %>
+	<%= f.check_box :active %>
+
+	<%= f.submit "gogo rest_errs#update" %>
+<% end %>

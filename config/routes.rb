@@ -27,9 +27,13 @@ Rails.application.routes.draw do
 	}
 
 	# Restaurant and related controllers
-	resources :restaurants do 
-		resources :rest_infos,	 except: [:index],	shallow: true
+	resources :restaurants, shallow: true do 
+		resources :rest_infos,	 except: [:index]
+		resources :rest_errs, 	 except: [:index, :new]
 	end
+
+	# rest_errs#index without assciations to restaurants
+	get "rest_errs" => "rest_errs#index", as: "rest_errs"
 
   # Example resource route with options:
   #   resources :products do
@@ -41,12 +45,6 @@ Rails.application.routes.draw do
   #     collection do
   #       get 'sold'
   #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
   #   end
 
   # Example resource route with more complex sub-resources:
