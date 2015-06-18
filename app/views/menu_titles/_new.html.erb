@@ -1,0 +1,10 @@
+<h1>MenuTitles#new</h1>
+
+<!-- Should be called by Ajax like menu_titles#edit -->
+<%= form_for [@restaurant, @menu_title] do |f| %>
+	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+
+	<!-- Specify field because of controller subordination -->
+	<%= render "menu_titles/field", f: f %>
+	<%= f.submit "update menu_title" %>
+<% end %>

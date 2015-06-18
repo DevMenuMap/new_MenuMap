@@ -1,2 +1,7 @@
 <h1>MenuTitles#edit</h1>
-<p>Find me in app/views/menu_titles/edit.html.erb</p>
+
+<!-- change edit page to be loaded by Ajax call -->
+<%= form_for @menu_title do |f| %>
+	<%= render "field", f: f %>
+	<%= f.submit "update menu_title" %>
+<% end %>
