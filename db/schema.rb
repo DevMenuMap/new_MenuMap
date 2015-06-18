@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618003916) do
+ActiveRecord::Schema.define(version: 20150618035122) do
 
   create_table "addrcompletes", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -36,6 +36,17 @@ ActiveRecord::Schema.define(version: 20150618003916) do
 
   add_index "category_relationships", ["category_id"], name: "index_category_relationships_on_category_id", using: :btree
   add_index "category_relationships", ["subcategory_id"], name: "index_category_relationships_on_subcategory_id", using: :btree
+
+  create_table "menu_titles", force: :cascade do |t|
+    t.integer  "restaurant_id", limit: 4
+    t.string   "title_name",    limit: 255
+    t.string   "title_info",    limit: 255
+    t.boolean  "active",        limit: 1,   default: true
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "menu_titles", ["restaurant_id"], name: "index_menu_titles_on_restaurant_id", using: :btree
 
   create_table "notices", force: :cascade do |t|
     t.string   "question",   limit: 255
@@ -148,6 +159,7 @@ ActiveRecord::Schema.define(version: 20150618003916) do
 
   add_foreign_key "category_relationships", "categories"
   add_foreign_key "category_relationships", "subcategories"
+  add_foreign_key "menu_titles", "restaurants"
   add_foreign_key "rest_errs", "restaurants"
   add_foreign_key "rest_errs", "users"
   add_foreign_key "rest_infos", "restaurants"
