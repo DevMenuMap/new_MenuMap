@@ -27,7 +27,9 @@ Rails.application.routes.draw do
 	}
 
 	# Restaurant and related controllers
-	resources :restaurants
+	resources :restaurants do 
+		resources :rest_infos,	 except: [:index],	shallow: true
+	end
 
   # Example resource route with options:
   #   resources :products do

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  restaurant_id: 
+  owner_intro: MyText
+  naver_lat: 9.99
+  naver_lng: 9.99
+  active: false
+
+two:
+  restaurant_id: 
+  owner_intro: MyText
+  naver_lat: 9.99
+  naver_lng: 9.99
+  active: false

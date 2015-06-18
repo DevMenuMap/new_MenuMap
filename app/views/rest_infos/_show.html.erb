@@ -1,0 +1,23 @@
+<h1>RestInfo#show</h1>
+
+<% if @rest_info.nil? %>
+	<%= link_to "new rest_info", new_restaurant_rest_info_path(@restaurant) %>
+<% elsif @rest_info.active %>
+	<table>
+		<% @rest_info.attributes.each do |key, value| %>
+			<tr>
+				<td><%= key %></td>
+				<td><%= value %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td><%= link_to "edit", edit_rest_info_path(@rest_info) %></td>
+			<td><%= link_to "delete", rest_info_path(@rest_info), method: :delete %>
+		</tr>
+	</table>
+<% else %>
+	<!-- only admin can see this -->
+	there is an inactive RestInfo
+	<!-- change this to activate button  -->
+	<td><%= link_to "edit", edit_rest_info_path(@rest_info) %></td>
+<% end %>

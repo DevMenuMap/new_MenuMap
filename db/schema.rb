@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150617091152) do
+ActiveRecord::Schema.define(version: 20150617125315) do
 
   create_table "addrcompletes", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -53,6 +53,18 @@ ActiveRecord::Schema.define(version: 20150617091152) do
   end
 
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
+
+  create_table "rest_infos", force: :cascade do |t|
+    t.integer  "restaurant_id", limit: 4
+    t.text     "owner_intro",   limit: 65535
+    t.decimal  "naver_lat",                   precision: 11, scale: 8
+    t.decimal  "naver_lng",                   precision: 11, scale: 8
+    t.boolean  "active",        limit: 1,                              default: true
+    t.datetime "created_at",                                                          null: false
+    t.datetime "updated_at",                                                          null: false
+  end
+
+  add_index "rest_infos", ["restaurant_id"], name: "index_rest_infos_on_restaurant_id", using: :btree
 
   create_table "rest_registers", force: :cascade do |t|
     t.integer  "user_id",          limit: 4
@@ -120,6 +132,7 @@ ActiveRecord::Schema.define(version: 20150617091152) do
 
   add_foreign_key "category_relationships", "categories"
   add_foreign_key "category_relationships", "subcategories"
+  add_foreign_key "rest_infos", "restaurants"
   add_foreign_key "rest_registers", "categories"
   add_foreign_key "rest_registers", "subcategories"
   add_foreign_key "rest_registers", "users"
