@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
 	# before_action :check_category, only: [:create]
-	# to check if subcategory is not "all thing"
+	# to check if subcategory is not "all thing"; to specify subcategory
 
   def index
 		@restaurants = Restaurant.all
@@ -21,6 +21,8 @@ class RestaurantsController < ApplicationController
 		@restaurant = Restaurant.new(restaurant_params)
 		if @restaurant.save
 			flash[:alert] = "succeed restaurants#create"
+			# Whenever creating a new Restaurant, create RestInfo also
+			create_related_rest_info
 			redirect_to restaurants_url
 		else
 			flash[:alert] = "fail restaurants#create"
@@ -55,5 +57,11 @@ class RestaurantsController < ApplicationController
 			params.require(:restaurant).permit(:name, :addr, :phnum, :delivery,
 																				 :category_id, :subcategory_id, 
 																				 :menu_on, :open_at)
+		end
+
+		def create_related_rest_info
+			if RestInfo.create(id: @restaurant.id, restaurant_id: @restaurant.id)
+				flash[:alert] += " also succeed rest_infos#create"
+			end
 		end
 end
