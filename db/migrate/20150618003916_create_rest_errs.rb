@@ -2,6 +2,7 @@ class CreateRestErrs < ActiveRecord::Migration
   def change
     create_table :rest_errs do |t|
       t.references :restaurant, index: true, foreign_key: true
+      t.references :user, index: true, foreign_key: true
       t.boolean :presence_err, default: false
       t.boolean :menu_err, 		 default: false
       t.boolean :phnum_err, 	 default: false

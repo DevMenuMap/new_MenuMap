@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20150618003916) do
 
   create_table "rest_errs", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
+    t.integer  "user_id",       limit: 4
     t.boolean  "presence_err",  limit: 1,     default: false
     t.boolean  "menu_err",      limit: 1,     default: false
     t.boolean  "phnum_err",     limit: 1,     default: false
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 20150618003916) do
   end
 
   add_index "rest_errs", ["restaurant_id"], name: "index_rest_errs_on_restaurant_id", using: :btree
+  add_index "rest_errs", ["user_id"], name: "index_rest_errs_on_user_id", using: :btree
 
   create_table "rest_infos", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
@@ -147,6 +149,7 @@ ActiveRecord::Schema.define(version: 20150618003916) do
   add_foreign_key "category_relationships", "categories"
   add_foreign_key "category_relationships", "subcategories"
   add_foreign_key "rest_errs", "restaurants"
+  add_foreign_key "rest_errs", "users"
   add_foreign_key "rest_infos", "restaurants"
   add_foreign_key "rest_registers", "categories"
   add_foreign_key "rest_registers", "subcategories"
