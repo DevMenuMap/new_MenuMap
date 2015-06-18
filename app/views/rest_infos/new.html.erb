@@ -1,6 +1,6 @@
 <h1>RestInfos#new</h1>
 
-<%= form_for @rest_info do |f| %>
+<%= form_for [@restaurant, @rest_info] do |f| %>
 	<%= render "field", f: f %>
 	<%= f.submit "gogogogogo" %>
 <% end %>

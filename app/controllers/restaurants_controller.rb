@@ -8,7 +8,7 @@ class RestaurantsController < ApplicationController
 
   def show
 		@restaurant = Restaurant.find(params[:id])
-		@rest_info = @restaurant.rest_info
+		@rest_info = RestInfo.unscoped.find(params[:id])  
   end
 
   def new

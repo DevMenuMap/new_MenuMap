@@ -2,5 +2,9 @@
 
 <%= form_for @rest_info do |f| %>
 	<%= render "field", f: f %>
+
+	<%= f.label :active %>
+	<%= f.check_box :active %>
+
 	<%= f.submit "gogogogogo" %>
 <% end %>
