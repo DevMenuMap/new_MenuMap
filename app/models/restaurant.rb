@@ -12,4 +12,5 @@ class Restaurant < ActiveRecord::Base
   belongs_to :category
   belongs_to :subcategory
 	has_one 	 :rest_info
+	has_many	 :rest_errs
 end
