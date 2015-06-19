@@ -1,5 +1,6 @@
-one:
-  name: restaurant1
+restaurant1:
+  id: 1
+  name: name1
   category_id: 1
   subcategory_id: 1
   addr: restaurant_addr
@@ -9,8 +10,9 @@ one:
   open_at: open1
   active: true
 
-two:
-  name: restaurant2
+restaurant2:
+  id: 2
+  name: name2
   category_id: 1
   subcategory_id: 2
   addr: addr

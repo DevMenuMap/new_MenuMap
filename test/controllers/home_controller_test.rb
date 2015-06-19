@@ -1,7 +1,11 @@
 require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+	# For authentication on header file
+	include Devise::TestHelpers
+
+  test "should get brandpage" do
+		get :brandpage
+    assert_response :success
+  end
 end

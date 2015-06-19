@@ -1,13 +1,11 @@
-one:
-  id: 1
+title1:
   restaurant_id: 1
-  title_name: title1
+  title_name: name1
   title_info: info
   active: true
 
-two:
-  id: 2
+title2:
   restaurant_id: 1
-  title_name: title2
+  title_name: name2
   title_info: infofofo
   active: true
