@@ -1,10 +1,12 @@
 one:
+  id: 1
   restaurant_id: 1
   title_name: title1
   title_info: info
   active: true
 
 two:
+  id: 2
   restaurant_id: 1
   title_name: title2
   title_info: infofofo
