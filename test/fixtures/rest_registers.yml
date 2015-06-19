@@ -1,25 +1,23 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  user_id: 
-  email: MyString
-  name: MyString
-  category_id: 
-  subcategory_id: 
-  addr: MyString
-  phnum: MyString
-  delivery: false
-  open_at: MyString
-  etc: MyText
+  user_id: 1
+  email: 
+  name: register1
+  category_id: 1
+  subcategory_id: 1
+  addr: addr1
+  phnum: 
+  delivery: true
+  open_at: clsed
+  etc: 
 
 two:
   user_id: 
-  email: MyString
-  name: MyString
-  category_id: 
-  subcategory_id: 
-  addr: MyString
-  phnum: MyString
+  email: 
+  name: register2
+  category_id: 1
+  subcategory_id: 2
+  addr: addr2k
+  phnum: 
   delivery: false
-  open_at: MyString
-  etc: MyText
+  open_at: 
+  etc: 

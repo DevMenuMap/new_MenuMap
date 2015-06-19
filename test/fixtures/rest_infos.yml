@@ -1,15 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  restaurant_id: 
-  owner_intro: MyText
-  naver_lat: 9.99
-  naver_lng: 9.99
-  active: false
+  restaurant_id: 1
+  owner_intro: "owner 1"
+  naver_lat: 35.99
+  naver_lng: 125.99
+  active: true
 
 two:
-  restaurant_id: 
-  owner_intro: MyText
-  naver_lat: 9.99
-  naver_lng: 9.99
-  active: false
+  restaurant_id: 2
+  owner_intro: "owner 2"
+  naver_lat: 34.99
+  naver_lng: 127.99
+  active: true

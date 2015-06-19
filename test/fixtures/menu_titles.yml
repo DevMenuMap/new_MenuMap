@@ -1,13 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  restaurant_id: 
-  title_name: MyString
-  title_info: MyString
-  active: false
+  restaurant_id: 1
+  title_name: title1
+  title_info: info
+  active: true
 
 two:
-  restaurant_id: 
-  title_name: MyString
-  title_info: MyString
-  active: false
+  restaurant_id: 1
+  title_name: title2
+  title_info: infofofo
+  active: true
