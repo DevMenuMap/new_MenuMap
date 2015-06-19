@@ -56,4 +56,7 @@ end
 group :test do
 	# Green and Red highlighting for test
 	gem 'minitest-reporters', '~> 1.0.17'
+
+	# Remove unwanted error's backtrace
+	gem 'mini_backtrace', '~> 0.1.3'
 end
