@@ -52,3 +52,8 @@ group :development, :test do
   gem 'spring'
 end
 
+# Test 
+group :test do
+	# Green and Red highlighting for test
+	gem 'minitest-reporters', '~> 1.0.17'
+end
