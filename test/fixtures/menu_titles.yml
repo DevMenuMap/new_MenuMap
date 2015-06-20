@@ -4,8 +4,8 @@ title1:
   title_info: info
   active: true
 
-title2:
+hidden_title:
   restaurant_id: 1
   title_name: name2
   title_info: infofofo
-  active: true
+  active: false

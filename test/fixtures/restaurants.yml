@@ -20,4 +20,4 @@ restaurant2:
   delivery: false
   menu_on: 0 
   open_at: open_3pm
-  active: true
+  active: false

@@ -12,15 +12,21 @@ class QuestionsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-  end
-
-  test "should get edit" do
     get :edit, id: @question1.id
     assert_response :success
-  end
-
-  test "should get show" do
     get :show, id: @question1.id 
     assert_response :success
   end
+
+	test 'index has links' do
+		get :index
+		assert_select 'a[href=?]', edit_question_path(@question1), count: 1
+		assert_select 'a[href=?]', question_path(@question2), count: 2
+	end
+
+	test 'show has links' do
+		get :show, id: @question1
+		assert_select 'a[href=?]', edit_question_path(@question1), count: 1
+		assert_select 'a[href=?]', question_path(@question1), count: 2
+	end
 end

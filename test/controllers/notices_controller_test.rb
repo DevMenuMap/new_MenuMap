@@ -12,15 +12,16 @@ class NoticesControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-  end
-
-  test "should get new" do
     get :new
     assert_response :success
-  end
-
-  test "should get edit" do
     get :edit, id: @notice1.id
     assert_response :success
   end
+
+	test "index has links" do
+		get :index
+		assert_select 'a[href=?]', new_notice_path, count: 1
+		assert_select 'a[href=?]', edit_notice_path(@notice1), count: 1
+		assert_select 'a[href=?]', notice_path(@notice1), count: 1
+	end
 end
