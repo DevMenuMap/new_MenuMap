@@ -8,9 +8,6 @@ class HomeController < ApplicationController
 	def manual
 	end
 
-	def qna
-	end
-
 	def search
 		@categories = Category.all
 		@subcategories = Subcategory.all

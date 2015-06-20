@@ -8,7 +8,7 @@ class RestErrsController < ApplicationController
   end
 
 	def create
-		@rest_err = RestErr.new(create_rest_err_params)
+		@rest_err = RestErr.new(rest_err_params)
 		@rest_err.user_id = current_user.id if current_user
 		if @rest_err.save
 			flash[:alert] = "succeed rest_errs#create"
@@ -24,7 +24,7 @@ class RestErrsController < ApplicationController
 
 	def update
 		@rest_err = RestErr.find(params[:id])
-		if @rest_err.update(edit_rest_err_params)
+		if @rest_err.update(rest_err_params)
 			flash[:alert] = "succeed rest_errs#update"
 		else
 			flash[:alert] = "fail rest_errs#update"
@@ -42,14 +42,9 @@ class RestErrsController < ApplicationController
 	end
 
 	private
-		def create_rest_err_params
+		def rest_err_params
 			params.require(:rest_err).permit(:restaurant_id, :presence_err,
 																			 :menu_err, :phnum_err, 
 																			 :category_err, :etc)
-		end
-		def edit_rest_err_params
-			params.require(:rest_err).permit(:restaurant_id, :presence_err,
-																			 :menu_err, :phnum_err, 
-																			 :category_err, :etc, :active)
 		end
 end

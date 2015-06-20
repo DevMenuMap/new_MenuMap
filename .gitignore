@@ -8,7 +8,7 @@
 *.swp
 
 # Ignore environment variables.
-/config/app_environment_variables.rb
+/config/environment_variables.rb
 
 # Ignore precompiled assets.
 /public/assets
