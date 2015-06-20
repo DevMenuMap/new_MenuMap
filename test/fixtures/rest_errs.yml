@@ -1,19 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  restaurant_id: 
+rest_err1:
+  restaurant_id: 1
+  user_id: 
   presence_err: false
+  menu_err: false
+  phnum_err: true
+  category_err: false
+  etc: "error is good"
+  active: true
+
+rest_err2:
+  restaurant_id: 2
+  user_id: 1
+  presence_err: true
   menu_err: false
   phnum_err: false
   category_err: false
-  etc: MyText
-  active: false
-
-two:
-  restaurant_id: 
-  presence_err: false
-  menu_err: false
-  phnum_err: false
-  category_err: false
-  etc: MyText
-  active: false
+  etc: "gogo two"
+  active: true

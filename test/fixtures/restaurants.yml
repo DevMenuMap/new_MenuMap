@@ -1,23 +1,23 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  name: MyString
-  category_id: 
-  subcategory_id: 
-  addr: MyString
-  phnum: MyString
-  delivery: false
+restaurant1:
+  id: 1
+  name: name1
+  category_id: 1
+  subcategory_id: 1
+  addr: restaurant_addr
+  phnum: 010-222
+  delivery: true
   menu_on: 1
-  open_at: MyString
-  active: false
+  open_at: open1
+  active: true
 
-two:
-  name: MyString
-  category_id: 
-  subcategory_id: 
-  addr: MyString
-  phnum: MyString
+restaurant2:
+  id: 2
+  name: name2
+  category_id: 1
+  subcategory_id: 2
+  addr: addr
+  phnum: 
   delivery: false
-  menu_on: 1
-  open_at: MyString
+  menu_on: 0 
+  open_at: open_3pm
   active: false
