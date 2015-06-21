@@ -32,7 +32,7 @@ class PicturesController < ApplicationController
 		else
 			flash[:alert] = "fail pictures#update"
 		end
-		redirect_to rest_err_url(@picture.imageable)
+		redirect_to pictures_url
 	end
 
 	def destroy

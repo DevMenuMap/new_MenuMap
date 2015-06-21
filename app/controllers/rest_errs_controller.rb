@@ -23,7 +23,7 @@ class RestErrsController < ApplicationController
 		# @rest_err.pictures.create(img: img)
 
 		# Multiple images upload
-		if params[:rest_err][:pictures_attributes]["0"][:img]
+		if params[:rest_err][:pictures_attributes]
 			params[:rest_err][:pictures_attributes]["0"][:img].each do |img|
 				@rest_err.pictures.create(img: img)
 			end
