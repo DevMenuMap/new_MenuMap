@@ -9,4 +9,6 @@
 	<% end %>
 </table>
 
-<%= custom_image_tag(@rest_register) %>
+<% @rest_register.pictures.each do |picture| %>
+	<%= custom_image_tag(@rest_register, picture) %>
+<% end %>

@@ -13,13 +13,13 @@ flash: 더 많이 추가해주세요. 더 정확하고 많은 정보를 제공�
 	<% end %>
 
 	<%= f.label :name, "restaurant's name" %>
-	<%= f.text_field :name %>
+	<%= f.text_field :name, data: { validate: "fill" } %>
 
 	<%= f.label :category_id, "category" %>
 	<%= render "shared/category_select", f: f %>
 
 	<%= f.label :addr, "address" %>
-	<%= f.text_field :addr %>
+	<%= f.text_field :addr, data: { validate: "fill" } %>
 	<%= f.label :phnum, "ph number" %>
 	<%= f.text_field :phnum %>
 	<%= f.label :delivery, "delivery option" %>
@@ -29,9 +29,13 @@ flash: 더 많이 추가해주세요. 더 정확하고 많은 정보를 제공�
 	<%= f.label :etc, "etc" %>
 	<%= f.text_area :etc, class: "gogogo", cols: 30, rows: 10 %>
 
-	<!-- Limit the filetype to choose on user's device -->
-	<%= f.label :img, "image" %>
-	<%= f.file_field :img, accept: "image/jpeg, image/png, image/gif" %>
+	<%= f.label :pictures %>
+	<%= f.fields_for :pictures do |ff| %>
+		<%= ff.label :img %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+	<% end %>
 
 	<%= f.submit "go submit" %>
 <% end %>

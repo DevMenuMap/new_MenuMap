@@ -15,11 +15,17 @@ class RestaurantsController < ApplicationController
 
 		# partial forms
 		@rest_err = RestErr.new
+		@rest_err.pictures.build
 		@menu_title = MenuTitle.new
+
+		# pictures on this restaurant
+		@pictures = @restaurant.pictures
   end
 
   def new
 		@restaurant = Restaurant.new
+		@restaurant.pictures.build
+
 		@categories = Category.all
 		@subcategories = Subcategory.all
   end
@@ -29,11 +35,19 @@ class RestaurantsController < ApplicationController
 		if @restaurant.save
 			flash[:alert] = "succeed restaurants#create"
 			# Whenever creating a new Restaurant, create RestInfo also
-			create_related_rest_info
-			redirect_to restaurants_url
+			RestInfo.create(id: @restaurant.id, restaurant_id: @restaurant.id)
+
+			# Multiple images upload
+			if params[:restaurant][:pictures_attributes]
+				params[:restaurant][:pictures_attributes]["0"][:img].each do |img|
+					@restaurant.pictures.create(img: img)
+				end
+			end
+
+			redirect_to restaurant_url(@restaurant)
 		else
 			flash[:alert] = "fail restaurants#create"
-			redirect_to :back
+			redirect_to new_restaurant_url
 		end
 	end
 
@@ -64,12 +78,6 @@ class RestaurantsController < ApplicationController
 		def restaurant_params
 			params.require(:restaurant).permit(:name, :addr, :phnum, :delivery,
 																				 :category_id, :subcategory_id, 
-																				 :menu_on, :open_at)
-		end
-
-		def create_related_rest_info
-			if RestInfo.create(id: @restaurant.id, restaurant_id: @restaurant.id)
-				flash[:alert] += " also succeed rest_infos#create"
-			end
+																				 :menu_on, :open_at, :pictures)
 		end
 end

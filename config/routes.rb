@@ -23,18 +23,26 @@ Rails.application.routes.draw do
 		# omniauth_callbacks: "users/omniauth_callbacks"
 	}
 
-	# Restaurant and related controllers
+	# Restaurant and nested controllers
 	resources :restaurants, shallow: true do 
 		resources :rest_infos,	 except: [:index, :show]
 		resources :rest_errs, 	 except: [:index, :new]
-		resources :menu_titles,  except: [:index, :new, :show]
+		resources :menu_titles,  except: [:index, :show, :new]
+		# resources :rest_infos,	 only: [:new, :create]
+		# resources :rest_errs, 	 only: [:create]
+		# resources :menu_titles,  only: [:create]
 	end
 
-	# rest_errs#index without associations to restaurants
-	get "rest_errs" => "rest_errs#index", as: "rest_errs"
+	# Index pages which is not bounded with :restaurants
+	get 'rest_errs' 	=> 'rest_errs#index', 	as: :rest_errs
+	get 'menu_titles' => 'menu_titles#index', as: :menu_titles
 
-	# menu_titles#index without associations to restaurants
-	get "menu_titles" => "menu_titles#index", as: "menu_titles"
+	# Polymorphic picture controller
+	resources :pictures
+
+	# resources :rest_infos,	 only: [:edit, :update, :destroy]
+	# resources :rest_errs, 	 only: [:index, :show, :edit, :update, :destroy]
+	# resources :menu_titles,  only: [:index, :edit, :update, :destroy]
 
   # Example resource route with options:
   #   resources :products do
