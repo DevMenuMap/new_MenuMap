@@ -15,6 +15,7 @@ class RestaurantsController < ApplicationController
 
 		# partial forms
 		@rest_err = RestErr.new
+		@rest_err.pictures.build
 		@menu_title = MenuTitle.new
   end
 

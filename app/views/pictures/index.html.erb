@@ -5,7 +5,8 @@
 <% @pictures.each do |picture| %>
 	<br />
 	<%= picture.id %> |
-	<%= picture.imageable_id %>
+	<%= picture.imageable_id %> |
+	<%= picture.created_at %>
 	<br />
 	<%= image_tag picture.img.url %>
 	<br />
