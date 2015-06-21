@@ -5,6 +5,7 @@ class RestErrsController < ApplicationController
 
   def show
 		@rest_err = RestErr.find(params[:id])
+		@pictures = @rest_err.pictures
   end
 
 	def create
@@ -17,26 +18,16 @@ class RestErrsController < ApplicationController
 			flash[:alert] = "fail rest_errs#create"
 		end
 
-		img = params[:rest_err][:pictures_attributes]["0"][:img]
-		@rest_err.pictures.create(img: img)
+		# Single image upload
+		# img = params[:rest_err][:pictures_attributes]["0"][:img]
+		# @rest_err.pictures.create(img: img)
 
-		# if params[:rest_err][:pictures_attributes][:img]
-		# 	params[:rest_err][:pictures_attributes][:img].each do |img|
-		# 		@rest_err.pictures.create(img: img)
-		# 	end
-		# end
-
-		# if @rest_err.save
-		# 	byebug
-		# 	if params[:rest_err][:pictures_attributes][:img]
-		# 		params[:rest_err][:pictures_attributes][:img].each do |img|
-		# 			@rest_err.pictures.create(img: img)
-		# 		end
-		# 	end
-		# 	flash[:alert] = "succeed rest_errs#create"
-		# else
-		# 	flash[:alert] = "fail rest_errs#create"
-		# end
+		# Multiple images upload
+		if params[:rest_err][:pictures_attributes]["0"][:img]
+			params[:rest_err][:pictures_attributes]["0"][:img].each do |img|
+				@rest_err.pictures.create(img: img)
+			end
+		end
 
 		redirect_to restaurant_path(@rest_err.restaurant)
 	end
@@ -49,24 +40,26 @@ class RestErrsController < ApplicationController
 	def update
 		@rest_err = RestErr.find(params[:id])
 
-		img = params[:rest_err][:pictures_attributes]["0"][:img]
-		@rest_err.pictures.create(img: img)
-
-		# if params[:rest_err][:pictures_attributes]
-		# 	byebug
-		# 	params = params[:rest_err][:pictures_attributes]
-		# 	0.upto(params.length - 1) do |k|
-		# 		img = params[:rest_err][:pictures_attributes]["#{k}"][:img]
-		# 		@rest_err.pictures.create(img: img)
-		# 	end
-		# end
-
 		if @rest_err.update(rest_err_params)
 			flash[:alert] = "succeed rest_errs#update"
 		else
 			flash[:alert] = "fail rest_errs#update"
 		end
+
 		redirect_to rest_errs_url
+
+		# Single image update
+		# img = params[:rest_err][:pictures_attributes]["0"][:img]
+		# @rest_err.pictures.create(img: img)
+
+		# Multiple images update
+		# should catch each picture's id and match it
+		# if params[:rest_err][:pictures_attributes]["0"][:img]
+		# 	0.upto(params.length - 1) do |k|
+		# 		img = params[:rest_err][:pictures_attributes]["#{k}"][:img]
+		# 		@rest_err.pictures.create(img: img)
+		# 	end
+		# end
 	end
 
 	def destroy
@@ -84,7 +77,5 @@ class RestErrsController < ApplicationController
 																			 :menu_err, :phnum_err, 
 																			 :category_err, :etc, 
 																			 :pictures_attributes)
-																			 # pictures_attribute: [:img])
-																			 # :pictures_attribute)
 		end
 end
