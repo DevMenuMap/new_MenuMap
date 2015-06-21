@@ -1,2 +1,8 @@
 <h1>Pictures#edit</h1>
-<p>Find me in app/views/pictures/edit.html.erb</p>
+
+<%= form_for @picture, html: { multipart: true } do |f| %>
+	<%= f.label :img %>
+	<%= f.file_field :img %>
+
+	<%= f.submit %>
+<% end %>
