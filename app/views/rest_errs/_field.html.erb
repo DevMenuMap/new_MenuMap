@@ -12,3 +12,11 @@
 
 <%= f.label :etc %>
 <%= f.text_area :etc %>
+
+<%= f.label :pictures %>
+<!-- file_field_tag "img[]", type: :file, multiple: true -->
+<%= f.fields_for :pictures do |ff| %>
+	<%= ff.label :img %>
+	<%= ff.file_field :img, mutiple: true %>
+ 	<!-- ff.file_field :img  -->
+<% end %>

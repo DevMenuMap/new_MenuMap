@@ -1,2 +1,12 @@
 <h1>Pictures#index</h1>
-<p>Find me in app/views/pictures/index.html.erb</p>
+
+<%= link_to "new picture", new_picture_path %>
+
+<% @pictures.each do |picture| %>
+	<br />
+	<%= picture.id %> |
+	<%= picture.imageable_id %>
+	<br />
+	<%= image_tag picture.img.url %>
+	<br />
+<% end %>

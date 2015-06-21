@@ -5,6 +5,9 @@ class RestErr < ActiveRecord::Base
 
 	has_many :pictures, as: :imageable
 
+	# Associated attributes
+	accepts_nested_attributes_for :pictures
+
 	# Validations
 	validates :restaurant_id, presence: true
 
