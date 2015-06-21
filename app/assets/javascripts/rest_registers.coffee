@@ -19,7 +19,7 @@ jQuery ->
 			false
 
 	# Check if image file's size is over 15 megabytes
-	$("#rest_register_img").bind "change", (event) ->
+	$("#rest_register_pictures_attributes_0_img").bind "change", (event) ->
 		fileSize = this.files[0].size/1024/1024
 		if fileSize > 15
 			alert("so big image")

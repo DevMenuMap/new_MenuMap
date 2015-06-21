@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150620153500) do
+ActiveRecord::Schema.define(version: 20150621062846) do
 
   create_table "addrcompletes", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -109,22 +109,18 @@ ActiveRecord::Schema.define(version: 20150620153500) do
   add_index "rest_infos", ["restaurant_id"], name: "index_rest_infos_on_restaurant_id", using: :btree
 
   create_table "rest_registers", force: :cascade do |t|
-    t.integer  "user_id",          limit: 4
-    t.string   "email",            limit: 255
-    t.string   "name",             limit: 255
-    t.integer  "category_id",      limit: 4
-    t.integer  "subcategory_id",   limit: 4
-    t.string   "addr",             limit: 255
-    t.string   "phnum",            limit: 255
-    t.boolean  "delivery",         limit: 1
-    t.string   "open_at",          limit: 255
-    t.text     "etc",              limit: 65535
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.string   "img_file_name",    limit: 255
-    t.string   "img_content_type", limit: 255
-    t.integer  "img_file_size",    limit: 4
-    t.datetime "img_updated_at"
+    t.integer  "user_id",        limit: 4
+    t.string   "email",          limit: 255
+    t.string   "name",           limit: 255
+    t.integer  "category_id",    limit: 4
+    t.integer  "subcategory_id", limit: 4
+    t.string   "addr",           limit: 255
+    t.string   "phnum",          limit: 255
+    t.boolean  "delivery",       limit: 1
+    t.string   "open_at",        limit: 255
+    t.text     "etc",            limit: 65535
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "rest_registers", ["category_id"], name: "index_rest_registers_on_category_id", using: :btree

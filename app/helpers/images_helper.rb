@@ -1,7 +1,7 @@
 module ImagesHelper
 	# Model specific image_tag
-	def custom_image_tag(instance)
-		image_tag instance.img.url, alt: "#{image_tag_alt(instance)}"
+	def custom_image_tag(instance, picture)
+		image_tag picture.img.url, alt: "#{image_tag_alt(instance)}"
 	end
 
 	# Get method name for printing instance's alt attribute

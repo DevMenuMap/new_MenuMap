@@ -29,9 +29,13 @@ flash: 더 많이 추가해주세요. 더 정확하고 많은 정보를 제공�
 	<%= f.label :etc, "etc" %>
 	<%= f.text_area :etc, class: "gogogo", cols: 30, rows: 10 %>
 
-	<!-- Limit the filetype to choose on user's device -->
-	<%= f.label :img, "image" %>
-	<%= f.file_field :img, accept: "image/jpeg, image/png, image/gif" %>
+	<%= f.label :pictures %>
+	<%= f.fields_for :pictures do |ff| %>
+		<%= ff.label :img %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif" %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif" %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif" %>
+	<% end %>
 
 	<%= f.submit "go submit" %>
 <% end %>
