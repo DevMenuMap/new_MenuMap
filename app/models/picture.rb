@@ -10,6 +10,7 @@ class Picture < ActiveRecord::Base
 	# Validations
 	# validates :img, presence: true
 	validates_attachment	:img, 
+												# :presence			=> true,
 												:content_type => { content_type: /\Aimage\/.*\Z/ },
 												:size					=> { in: 0..15.megabyte }
 
