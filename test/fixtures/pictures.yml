@@ -1,9 +1,7 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+picture1:
+  imageable_id: 1
+  imageable_type: Restaurant
 
-one:
-  imageable_id: 
-  imageable_type: Imageable
-
-two:
-  imageable_id: 
-  imageable_type: Imageable
+picture2:
+  imageable_id: 2
+  imageable_type: RestImg
