@@ -1,6 +1,6 @@
 # Check if image file's size is over 15 megabytes
 sizeChecker = (file_size) ->
-	if file_size > 0.2
+	if file_size > 15
 		alert("so big image")
 
 # Check if the file has image filetype

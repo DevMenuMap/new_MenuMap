@@ -1,0 +1,8 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+address1:
+  # id: 11000000000, bigint
+  name: address1
+
+address2:
+  name: address2

@@ -15,3 +15,6 @@
 
 # Images
 /app/assets/images
+
+# Seed data
+/db/seed_data

@@ -1,24 +1,20 @@
 require 'test_helper'
 
 class PicturesControllerTest < ActionController::TestCase
-  test "should get index" do
+	# For authentication on header file
+	include Devise::TestHelpers
+
+	def setup
+		@picture1 = pictures(:picture1)
+		@picture2 = pictures(:picture2)
+	end
+
+  test "should get static pages" do
     get :index
     assert_response :success
-  end
-
-  test "should get new" do
     get :new
     assert_response :success
-  end
-
-  test "should get show" do
-    get :show
+    get :edit, id: @picture2.id
     assert_response :success
   end
-
-  test "should get edit" do
-    get :edit
-    assert_response :success
-  end
-
 end
