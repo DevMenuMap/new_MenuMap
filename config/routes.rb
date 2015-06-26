@@ -28,9 +28,6 @@ Rails.application.routes.draw do
 		resources :rest_infos,	 except: [:index, :show]
 		resources :rest_errs, 	 except: [:index, :new]
 		resources :menu_titles,  except: [:index, :show, :new]
-		# resources :rest_infos,	 only: [:new, :create]
-		# resources :rest_errs, 	 only: [:create]
-		# resources :menu_titles,  only: [:create]
 	end
 
 	# Index pages which is not bounded with :restaurants
@@ -40,9 +37,8 @@ Rails.application.routes.draw do
 	# Polymorphic picture controller
 	resources :pictures
 
-	# resources :rest_infos,	 only: [:edit, :update, :destroy]
-	# resources :rest_errs, 	 only: [:index, :show, :edit, :update, :destroy]
-	# resources :menu_titles,  only: [:index, :edit, :update, :destroy]
+	# Address and related resources
+	resources :addresses, only: :index
 
   # Example resource route with options:
   #   resources :products do
