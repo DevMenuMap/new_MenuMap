@@ -5,5 +5,7 @@ class CreateAddresses < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+
+		change_column :addresses, :id, :bigint
   end
 end
