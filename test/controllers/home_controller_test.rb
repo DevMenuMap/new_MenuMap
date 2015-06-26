@@ -21,9 +21,10 @@ class HomeControllerTest < ActionController::TestCase
 		assert_select "a[href=?]", rest_errs_path, count: 1 
 		assert_select "a[href=?]", menu_titles_path, count: 1 
 		assert_select "a[href=?]", pictures_path, count: 1 
+		assert_select "a[href=?]", addresses_path, count: 1 
 		assert_select "a[href=?]", new_user_registration_path, count: 1 
 		assert_select "a[href=?]", new_user_session_path, count: 1 
-		assert_select "a", count: 12
+		assert_select "a", count: 13
 		get :search
 		assert_select "input[type=submit]", count: 1
   end
