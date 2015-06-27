@@ -1,8 +1,7 @@
 var oMap;
-/*
 var marker;
-var polygons;
-*/
+// var polygons;
+
 /* latlng여러개 저장을 위한 변수 */
 // var k = 0
 /* 다각형 꼭지점 저장을 위한 변수 */
@@ -23,32 +22,38 @@ function initialize(){
 																	size : new nhn.api.map.Size(1000, 700),
 																	minMaxLevel : [ 1, 14 ]
 														});
-	/*
-	oMap.attach("click", Setmarker);
-	oMap.attach("contextmenu", draw_polygon);
-	*/
+
+	oMap.attach("click", setMarker);
+	// oMap.attach("contextmenu", draw_polygon);
 };
 
-/*
-function Setmarker(event) {
+// Show marker on mouse click
+function setMarker(event) {
 	var oSize = new nhn.api.map.Size(28, 37);
-		var oOffset = new nhn.api.map.Size(14, 37);
-		var oIcon = new nhn.api.map.Icon('http://static.naver.com/maps2/icons/pin_spot2.png', oSize, oOffset);
-	marker = new nhn.api.map.Marker(oIcon, {title : '마커'});
+	var oOffset = new nhn.api.map.Size(14, 37);
+	var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
+
+	marker = new nhn.api.map.Marker(oIcon, {title : "marker"});
 	marker.setPoint(event.point);
 	oMap.addOverlay(marker);
 
-	polygonCoords.push(event.point);
+	var lat = document.getElementById("addr_rule_01_lat");
+	var lng = document.getElementById("addr_rule_01_lng");
 
-	var lats = document.getElementsByClassName("lat");
-	var lngs = document.getElementsByClassName("lng");
+	lat.value = event.point.getY();
+	lng.value = event.point.getX();
+
+	// polygonCoords.push(event.point);
 	
+	/*
 	lats[k].value = event.point.getY();
 	lngs[k].value = event.point.getX();
 
 	k += 1;
+	*/
 };
 
+/*
 function draw_polygon(event){
 	polygons = new nhn.api.map.Polygon(polygonCoords, {
 		strokeColor: "blue",
