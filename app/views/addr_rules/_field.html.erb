@@ -3,12 +3,9 @@
 
 <%= f.label :coordinates %>
 <%= f.fields_for :coordinates do |ff| %>
-	<%= ff.number_field :lat, id: "addr_rule_01_lat", multiple: true, step: "any" %>
-	<%= ff.number_field :lng, id: "addr_rule_01_lng", multiple: true, step: "any" %>
-	<!--
-	ff.number_field :lat, multiple: true, step: "any"
-	ff.number_field :lng, multiple: true, step: "any"
-	ff.number_field :lat, multiple: true, step: "any"
-	ff.number_field :lng, multiple: true, step: "any"
-	-->
+	<% 10.times do |n| %>
+		<%= ff.number_field :lat, id: "addr_rule_lat_#{n}", multiple: true, step: "any" %>
+		<%= ff.number_field :lng, id: "addr_rule_lng_#{n}", multiple: true, step: "any" %>
+		<br />
+	<% end %>
 <% end %>
