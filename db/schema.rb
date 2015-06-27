@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150627032543) do
+ActiveRecord::Schema.define(version: 20150627145329) do
 
   create_table "addr_rules", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150627032543) do
   add_index "category_relationships", ["subcategory_id"], name: "index_category_relationships_on_subcategory_id", using: :btree
 
   create_table "coordinates", force: :cascade do |t|
-    t.integer  "latlng_id",   limit: 4
+    t.integer  "latlng_id",   limit: 8
     t.string   "latlng_type", limit: 255
     t.decimal  "lat",                     precision: 11, scale: 8
     t.decimal  "lng",                     precision: 11, scale: 8
