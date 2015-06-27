@@ -2,12 +2,14 @@
 <html>
 	<head>
 		<!-- Compatibility issue -->
-		<%= render 'layouts/shim' %>
+		<%= render "layouts/shim" %>
 
 		<!-- Meta data for MenuMap -->
 		<title>MenuMap</title>
 
 		<!-- js, css assets -->
+		<!-- API loading -->
+		<%= render "layouts/api_key" %>
 		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
