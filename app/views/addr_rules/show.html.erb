@@ -1,0 +1,11 @@
+<h1>AddrRules#show</h1>
+
+<%= link_to "addr_rule index", addr_rules_path %>
+<%= link_to "destroy", addr_rule_path(@addr_rule), method: :delete %>
+
+<p>id: <%= @addr_rule.id %></p>
+<p>user_id: <%= @addr_rule.user_id %></p>
+<p>name: <%= @addr_rule.name %></p>
+<% @addr_rule.coordinates.each do |coordinate| %>
+	<p><%= coordinate.lat %> | <%= coordinate.lng %></p>
+<% end %>

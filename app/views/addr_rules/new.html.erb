@@ -1,0 +1,7 @@
+<h1>AddrRules#new</h1>
+
+<!-- form_for @addr_rule do |f| -->
+<%= form_for @addr_rule, html: { multipart: true } do |f| %>
+	<%= render "field", f: f %>
+	<%= f.submit %>
+<% end %>
