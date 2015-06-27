@@ -1,14 +1,10 @@
 # MySQL.  Versions 5.0+ are recommended.
-#
-# And be sure to use new-style password hashing:
-#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+
 default: &default
   adapter: mysql2
   encoding: utf8
-  # pool: 5
   username: <%= ENV['RDS_USERNAME'] %>
   password: <%= ENV['RDS_PASSWORD'] %>
-  # socket: /var/lib/mysql/mysql.sock
   host: <%= ENV['RDS_HOSTNAME'] %>
   port: <%= ENV['RDS_PORT'] %>
 
@@ -16,26 +12,16 @@ development:
   <<: *default
   database: <%= ENV['RDS_DB_NAME'] %>
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   adapter: mysql2
   encoding: utf8
-  pool: 5
   username: root
   password: 
   # Jeongbin's Ubuntu 14.04
+  pool: 5
   socket: /var/run/mysqld/mysqld.sock
   database: new_MenuMap_test
 
-# Instead, provide the password as a unix environment variable when you boot
-# the app. Read http://guides.rubyonrails.org/configuring.html#configuring-a-database
-# for a full rundown on how to provide these environment variables in a
-# production deployment.
 production:
   <<: *default
   database: <%= ENV['RDS_DB_NAME'] %>
-  # database: new_MenuMap_production
-  # username: new_MenuMap
-  # password: <%= ENV['NEW_MENUMAP_DATABASE_PASSWORD'] %>
