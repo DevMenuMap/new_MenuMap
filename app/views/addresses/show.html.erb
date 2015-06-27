@@ -1,0 +1,14 @@
+<h1>addresses#show</h1>
+
+<h2><%= @address.name %></h2>
+<%= link_to "edit", edit_address_path(@address) %><br />
+
+<% @address.coordinates.each do |coordinate| %>
+	<%= coordinate.lat %> | <%= coordinate.lng %><br />
+<% end %>
+
+<div id="naver_map"></div>
+
+<script>
+	$(document).on("page:load", loadNaverMap());
+</script>

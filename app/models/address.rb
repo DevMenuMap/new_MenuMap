@@ -1,4 +1,11 @@
 class Address < ActiveRecord::Base
+	### Associations
+	has_many :coordinates, as: :latlng
+
+	# Associated attributes
+	accepts_nested_attributes_for :coordinates
+
+
 	### Validations
 	validates :name, presence: true, uniqueness: true
 

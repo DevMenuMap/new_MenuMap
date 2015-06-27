@@ -24,7 +24,7 @@ class AddrRulesController < ApplicationController
 			end
 
 			flash[:alert] = "succeed in addr_rules#create"
-			redirect_to addr_rules_url
+			redirect_to addr_rule_url(@addr_rule)
 		else
 			flash[:alert] = "fail in addr_rules#create"
 			redirect_to :back
