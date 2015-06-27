@@ -4,8 +4,7 @@
 <%= f.label :coordinates %>
 <%= f.fields_for :coordinates do |ff| %>
 	<% 10.times do |n| %>
-		<%= ff.number_field :lat, id: "addr_rule_lat_#{n}", multiple: true, step: "any" %>
-		<%= ff.number_field :lng, id: "addr_rule_lng_#{n}", multiple: true, step: "any" %>
+		<%= render "shared/coordinate_field", f: ff, n: n %>
 		<br />
 	<% end %>
 <% end %>
