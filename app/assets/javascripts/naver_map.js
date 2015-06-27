@@ -8,7 +8,7 @@ var k = 0
 /* 다각형 꼭지점 저장을 위한 변수 */
 var polygonCoords = new Array();
 
-function initialize(){
+function loadNaverMap(){
 	var oSeoulNatlSubway = new nhn.api.map.LatLng(37.48121, 126.952712);
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
 																	point : oSeoulNatlSubway,
