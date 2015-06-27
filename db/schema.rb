@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150627030759) do
+ActiveRecord::Schema.define(version: 20150627032543) do
 
   create_table "addr_rules", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -52,6 +52,17 @@ ActiveRecord::Schema.define(version: 20150627030759) do
 
   add_index "category_relationships", ["category_id"], name: "index_category_relationships_on_category_id", using: :btree
   add_index "category_relationships", ["subcategory_id"], name: "index_category_relationships_on_subcategory_id", using: :btree
+
+  create_table "coordinates", force: :cascade do |t|
+    t.integer  "latlng_id",   limit: 4
+    t.string   "latlng_type", limit: 255
+    t.decimal  "lat",                     precision: 11, scale: 8
+    t.decimal  "lng",                     precision: 11, scale: 8
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+  end
+
+  add_index "coordinates", ["latlng_type", "latlng_id"], name: "index_coordinates_on_latlng_type_and_latlng_id", using: :btree
 
   create_table "menu_titles", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
