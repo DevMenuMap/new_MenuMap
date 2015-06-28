@@ -1,6 +1,7 @@
 class Address < ActiveRecord::Base
 	### Associations
 	has_many :coordinates, as: :latlng
+	has_many :addr_conversions
 
 	# Associated attributes
 	accepts_nested_attributes_for :coordinates

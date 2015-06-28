@@ -1,0 +1,20 @@
+<h1>AddrConversions#index</h1>
+
+<table>
+	<tr>
+		<td>address_id</td>
+		<td>convert_to</td>
+		<td>convert_from</td>
+		<td colspan="3"></td>
+	</tr>
+	<% @addr_conversions.each do |con| %>
+		<tr>
+			<td><%= con.address_id %></td>
+			<td><%= con.convert_to %></td>
+			<td><%= con.convert_from %></td>
+			<td><%= link_to "add convert_from", new_address_addr_conversion_path(con.address_id) %></td>
+			<td><%= link_to "edit", edit_addr_conversion_path(con) %></td>
+			<td><%= link_to "destroy", addr_conversion_path(con), method: :delete %></td>
+		</tr>
+	<% end %>
+</table>
