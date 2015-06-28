@@ -1,7 +1,11 @@
 <h1>addresses#show</h1>
 
 <h2><%= @address.name %></h2>
-<%= link_to "destroy coordinates", address_path(@address), method: :delete %><br />
+<% if @address.coordinates.blank? %>
+	<%= link_to "make a new coordinates", edit_address_path(@address) %>
+<% else %>
+	<%= link_to "destroy coordinates", address_path(@address), method: :delete %><br />
+<% end %>
 
 <% @address.coordinates.each do |coordinate| %>
 	<%= coordinate.lat %> | <%= coordinate.lng %><br />

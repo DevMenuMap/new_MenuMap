@@ -21,6 +21,8 @@ class AddressesController < ApplicationController
 	end
 
 	def edit
+		@address = Address.find(params[:id])
+		@address.coordinates.build
 	end
 
 	def update
