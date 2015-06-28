@@ -38,7 +38,13 @@ Rails.application.routes.draw do
 	resources :pictures
 
 	# Address and related resources
-	resources :addresses
+	resources :addresses, shallow: true do
+		resources :addr_conversions, except: [:index, :show]
+	end
+
+	# Index page which is not bounded with :addresses
+	get 'addr_conversions' => 'addr_conversions#index', as: :addr_conversions
+
 	resources :addr_rules, except: [:edit, :update]
 
   # Example resource route with options:

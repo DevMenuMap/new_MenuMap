@@ -11,14 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150628051631) do
+ActiveRecord::Schema.define(version: 20150628112140) do
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
     t.string   "convert_to",   limit: 255
     t.string   "convert_from", limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "active",       limit: 1,   default: true
   end
 
   add_index "addr_conversions", ["address_id"], name: "index_addr_conversions_on_address_id", using: :btree
