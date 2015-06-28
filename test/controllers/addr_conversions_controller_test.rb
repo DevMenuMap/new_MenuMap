@@ -1,18 +1,20 @@
 require 'test_helper'
 
 class AddrConversionsControllerTest < ActionController::TestCase
-  test "should get index" do
-    get :index
-    assert_response :success
-  end
+	# For authentication on header file
+	include Devise::TestHelpers
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
+	def setup
+		@addr_conversion1 = addr_conversions(:addr_conversion1)
+		@addr_conversion2 = addr_conversions(:addr_conversion2)
 
-  test "should get edit" do
-    get :edit
+		@address1 = addresses(:address1)
+	end
+
+  test "should get static pages" do
+    get :new, address_id: @address1.id
+    assert_response :success
+    get :edit, id: @addr_conversion1.id
     assert_response :success
   end
 end

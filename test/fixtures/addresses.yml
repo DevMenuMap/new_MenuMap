@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 address1:
-  # id: 11000000000, bigint
+  id: 11000000000
   name: address1
 
 address2:
