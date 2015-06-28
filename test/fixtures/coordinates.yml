@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  latlng_id: 
+  latlng_type: Latlng
+  lat: 9.99
+  lng: 9.99
+
+two:
+  latlng_id: 
+  latlng_type: Latlng
+  lat: 9.99
+  lng: 9.99

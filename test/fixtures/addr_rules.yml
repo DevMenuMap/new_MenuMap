@@ -1,0 +1,9 @@
+addr_rule1:
+  user_id: 
+  name: addr_rule1
+  active: true
+
+addr_rule2:
+  user_id: 
+  name: addr_rule2
+  active: true

@@ -38,7 +38,8 @@ Rails.application.routes.draw do
 	resources :pictures
 
 	# Address and related resources
-	resources :addresses, only: :index
+	resources :addresses
+	resources :addr_rules, except: [:edit, :update]
 
   # Example resource route with options:
   #   resources :products do
