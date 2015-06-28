@@ -17,4 +17,7 @@
 
 <script>
 	$(document).on("page:load", loadNaverMap());
+	$(document).ready(function(){
+		oMap.attach("click", setMarker);
+	});
 </script>
