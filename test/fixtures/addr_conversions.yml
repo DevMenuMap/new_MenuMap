@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  address_id: 
+  convert_to: MyString
+  convert_from: MyString
+
+two:
+  address_id: 
+  convert_to: MyString
+  convert_from: MyString
