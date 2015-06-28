@@ -5,6 +5,12 @@ class AddrRulesController < ApplicationController
 
   def show
 		@addr_rule = AddrRule.find(params[:id])
+
+		# Change this to normal data passing codes to js
+		@coord_array = []
+		@addr_rule.coordinates.each do |c|
+			@coord_array << c.lat.to_f << c.lng.to_f
+		end
   end
 
   def new

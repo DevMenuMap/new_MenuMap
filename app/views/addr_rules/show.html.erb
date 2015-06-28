@@ -5,7 +5,16 @@
 
 <p>id: <%= @addr_rule.id %></p>
 <p>user_id: <%= @addr_rule.user_id %></p>
-<p>name: <%= @addr_rule.name %></p>
-<% @addr_rule.coordinates.each do |coordinate| %>
-	<p><%= coordinate.lat %> | <%= coordinate.lng %></p>
+<h2>name: <%= @addr_rule.name %></h2>
+
+<% @addr_rule.coordinates.each do |c| %>
+	<%= c.lat %> | <%= c.lng %><br />
 <% end %>
+
+<div id="naver_map" data-markers="<%= @addr_rule.coordinates %>"></div>
+
+<script>
+	$(document).on("page:load", loadNaverMap());
+	// Change this to normal data passing codes to js
+	$(document).ready(showMarkers(<%= @coord_array %>));
+</script>

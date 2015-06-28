@@ -24,7 +24,6 @@ function loadNaverMap(){
 																	minMaxLevel : [ 1, 14 ]
 														});
 
-	oMap.attach("click", setMarker);
 	oMap.attach("contextmenu", drawPolygon);
 };
 
@@ -40,8 +39,8 @@ function setMarker(event) {
 	oMap.addOverlay(marker);
 
 	// Put latitude and longitude on input
-	var latString = "addr_rule_lat_";
-	var lngString = "addr_rule_lng_";
+	var latString = "coord_lat_";
+	var lngString = "coord_lng_";
 	document.getElementById(latString.concat(k)).value = oLatLng.getY();
 	document.getElementById(lngString.concat(k)).value = oLatLng.getX();
 	k += 1;
@@ -53,6 +52,37 @@ function setMarker(event) {
 // Draw polygon when right-click
 function drawPolygon(event){
 	polygons = new nhn.api.map.Polygon(polygonCoords, {
+		strokeColor: "blue",
+		strokeOpacity: 1,
+		strokeWidth: 2,
+		fillColor: "lightblue",
+		fillOpacity: 0.5
+	});
+
+	oMap.addOverlay(polygons);
+};
+
+// Show markers when there are created points e.g. addresses#show
+function showMarkers(coordArray){
+	var oSize = new nhn.api.map.Size(28, 37);
+	var oOffset = new nhn.api.map.Size(14, 37);
+	var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
+	
+	var oLatLng;
+	var showPolygon = new Array();
+
+	// Change this to normal data passing codes to js
+	for(var i=0; i < coordArray.length; i = i + 2){
+		oLatLng = new nhn.api.map.LatLng(coordArray[i], coordArray[i+1]);
+
+		marker = new nhn.api.map.Marker(oIcon, {title : "marker"});
+		marker.setPoint(oLatLng);
+		oMap.addOverlay(marker);
+
+		showPolygon.push(oLatLng);
+	};
+
+	polygons = new nhn.api.map.Polygon(showPolygon, {
 		strokeColor: "blue",
 		strokeOpacity: 1,
 		strokeWidth: 2,

@@ -1,7 +1,7 @@
 <h1>addresses#show</h1>
 
 <h2><%= @address.name %></h2>
-<%= link_to "edit", edit_address_path(@address) %><br />
+<%= link_to "destroy coordinates", address_path(@address), method: :delete %><br />
 
 <% @address.coordinates.each do |coordinate| %>
 	<%= coordinate.lat %> | <%= coordinate.lng %><br />
@@ -11,4 +11,6 @@
 
 <script>
 	$(document).on("page:load", loadNaverMap());
+	// Change this to normal data passing codes to js
+	$(document).ready(showMarkers(<%= @coord_array %>));
 </script>

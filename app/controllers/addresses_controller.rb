@@ -6,6 +6,12 @@ class AddressesController < ApplicationController
 
 	def show
 		@address = Address.find(params[:id])
+
+		# Change this to normal data passing codes to js
+		@coord_array = []
+		@address.coordinates.each do |c|
+			@coord_array << c.lat.to_f << c.lng.to_f
+		end
 	end
 
 	def new
@@ -15,8 +21,6 @@ class AddressesController < ApplicationController
 	end
 
 	def edit
-		@address = Address.find(params[:id])
-		@address.coordinates.build
 	end
 
 	def update
@@ -30,7 +34,13 @@ class AddressesController < ApplicationController
 		redirect_to address_url(@address)
 	end
 
+	# It destroys assciated "coordinates", not "address"
 	def destroy
+		@address = Address.find(params[:id])
+		@address.coordinates.each do |c|
+			c.destroy
+		end
+		redirect_to address_url(@address)
 	end
 
 	private
