@@ -1,0 +1,23 @@
+<h1>Restaurants#index</h1>
+
+<%= link_to "new restaurant", new_restaurant_path %>
+
+<table>
+	<tr>
+		<% Restaurant.column_names.each do |column| %>
+			<th><%= column %></th>
+		<% end %>
+		<th></th>
+		<th></th>
+	</tr>
+
+	<% @restaurants.each do |restaurant| %>
+		<tr>
+			<% restaurant.attributes.each_value do |value| %>
+				<td><%= value %></td>
+			<% end %>
+			<td><%= link_to "show", restaurant_path(restaurant) %></td>
+			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
+		</tr>
+	<% end %>
+</table>

@@ -1,0 +1,11 @@
+title1:
+  restaurant_id: 1
+  title_name: name1
+  title_info: info
+  active: true
+
+hidden_title:
+  restaurant_id: 1
+  title_name: name2
+  title_info: infofofo
+  active: false

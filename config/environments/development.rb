@@ -16,6 +16,9 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+	# Set default url for mailer according to Devise gem.
+	config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -38,4 +41,17 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+	# Let paperclip to know where the utilities from ImageMagick are located
+	Paperclip.options[:command_path] = "/usr/bin/"
+
+	# Configure paperclip for AWS S3
+	config.paperclip_defaults = {
+		storage: :s3,
+		s3_credentials: {
+			:bucket 					 => ENV['S3_BUCKET'],
+			:access_key_id		 => ENV['S3_ACCESS_KEY'],
+			:secret_access_key => ENV['S3_SECRET_KEY']
+		}
+	}
 end

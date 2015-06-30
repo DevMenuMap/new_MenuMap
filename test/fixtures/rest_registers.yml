@@ -1,0 +1,23 @@
+register1:
+  user_id: 1
+  email: 
+  name: register_name1
+  category_id: 1
+  subcategory_id: 1
+  addr: addr1
+  phnum: 
+  delivery: true
+  open_at: clsed
+  etc: 
+
+register2:
+  user_id: 
+  email: 
+  name: register_name2
+  category_id: 1
+  subcategory_id: 2
+  addr: addr2k
+  phnum: 
+  delivery: false
+  open_at: 
+  etc: 

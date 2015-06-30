@@ -1,0 +1,9 @@
+<h1>RestErrs#new</h1>
+
+<%= form_for [@restaurant, @rest_err], html: { mutipart: true } do |f| %>
+	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+
+	<!-- Specify field because of controller subordination -->
+	<%= render "rest_errs/field", f: f %>
+	<%= f.submit "gogo rest_errs#create" %>
+<% end %>

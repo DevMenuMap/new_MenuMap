@@ -1,0 +1,22 @@
+<%= f.label :presence_err %>
+<%= f.check_box :presence_err %>
+
+<%= f.label :menu_err %>
+<%= f.check_box :menu_err %>
+
+<%= f.label :phnum_err %>
+<%= f.check_box :phnum_err %>
+
+<%= f.label :category_err %>
+<%= f.check_box :category_err %>
+
+<%= f.label :etc %>
+<%= f.text_area :etc %>
+
+<%= f.label :pictures %>
+<%= f.fields_for :pictures do |ff| %>
+	<%= ff.label :img %>
+	<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+	<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+	<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+<% end %>

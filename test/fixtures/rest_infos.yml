@@ -1,0 +1,11 @@
+rest_info1:
+  id: 1
+  restaurant_id: 1
+  owner_intro: "owner 1"
+  active: true
+
+rest_info2:
+  id: 2
+  restaurant_id: 2
+  owner_intro: "owner 2"
+  active: true

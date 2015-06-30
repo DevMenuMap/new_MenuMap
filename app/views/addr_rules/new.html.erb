@@ -1,0 +1,15 @@
+<h1>AddrRules#new</h1>
+
+<div id="naver_map" style="width: 1000px; heigth: 300px;"></div>
+
+<%= form_for @addr_rule, html: { multipart: true } do |f| %>
+	<%= render "field", f: f %>
+	<%= f.submit %>
+<% end %>
+
+<script>
+	$(document).on("page:load", loadNaverMap());
+	$(document).ready(function(){
+		oMap.attach("click", setMarker);
+	});
+</script>

@@ -1,0 +1,15 @@
+<h1>Restaurants#new</h1>
+
+<%= form_for @restaurant, html: { multipart: true } do |f| %>
+	<%= render "field", f: f %>
+
+	<%= f.label :pictures %>
+	<%= f.fields_for :pictures do |ff| %>
+		<%= ff.label :img %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif" %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif" %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif" %>
+	<% end %>
+
+	<%= f.submit "go submit" %>
+<% end %>

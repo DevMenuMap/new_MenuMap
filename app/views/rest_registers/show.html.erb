@@ -1,0 +1,14 @@
+<h1>RestRegisters#show</h1>
+
+<table>
+	<% @rest_register.attributes.each do |key, value| %>
+		<tr>
+			<td><%= key %></td>
+			<td><%= value %></td>
+		</tr>
+	<% end %>
+</table>
+
+<% @rest_register.pictures.each do |picture| %>
+	<%= custom_image_tag(@rest_register, picture) %>
+<% end %>

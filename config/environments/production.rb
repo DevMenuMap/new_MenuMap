@@ -64,6 +64,9 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+	# Set dafault url for mailer
+	config.action_mailer.default_url_options = { host: '52.69.51.63' }
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
@@ -76,4 +79,17 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+	# Let paperclip to know where the utilities from ImageMagick are located
+	Paperclip.options[:command_path] = "/usr/bin/"
+
+	# Configure paperclip for AWS S3
+	config.paperclip_defaults = {
+		storage: :s3,
+		s3_credentials: {
+			:bucket 					 => ENV['S3_BUCKET'],
+			:access_key_id		 => ENV['S3_ACCESS_KEY'],
+			:secret_access_key => ENV['S3_SECRET_KEY']
+		}
+	}
 end

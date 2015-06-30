@@ -1,0 +1,9 @@
+<%= f.label :email, "email" %>
+<% if current_user %>
+	<%= f.text_field :email, value: current_user.email, readonly: true %>
+<% else %>
+	<%= f.text_field :email %>
+<% end %>
+
+<%= f.label :contents, "contents" %>
+<%= f.text_field :contents %>

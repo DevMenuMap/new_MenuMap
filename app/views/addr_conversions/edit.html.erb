@@ -1,0 +1,11 @@
+<h1>AddrConversions#edit</h1>
+
+<%= form_for @addr_conversion do |f| %>
+	<%= f.label :convert_to %>
+	<%= f.text_field :convert_to, value: @addr_conversion.convert_to, disabled: true %>
+
+	<%= f.label :convert_from %>
+	<%= f.text_field :convert_from %>
+		
+	<%= f.submit %>
+<% end %>

@@ -1,0 +1,3 @@
+$("#subcategory_select").html("<%= 
+	j(options_for_select(@subcategories.map{ |s| [s.name, s.id]}, nil)) 
+	%>")

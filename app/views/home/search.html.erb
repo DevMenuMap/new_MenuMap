@@ -1,0 +1,21 @@
+<h1>Search page</h1>
+
+<%= form_tag search_path, method: :get, name: nil do %>
+	<!-- Autocomplete recommended address name with Addrcomplete model 
+			 by jquery-ui autocomplete function 											 -->
+	<%= label_tag :address, "set addr" %>
+	<%= text_field_tag :address, nil, 
+							{ id: "addrcomplete", placeholder: "gogo placeholder" } %>
+
+	<%= label_tag :category, "category" %>
+
+	<!-- options_for_select(options[text, value], selected) -->
+	<%= select_tag nil, 
+				options_for_select(@categories.map{ |c| [c.name, c.id] }, nil), 
+																					{ id: "category_select" } %>
+	<%= select_tag :category, 
+				options_for_select(@subcategories.map{ |s| [s.name, s.id] }, nil),
+																					{ id: "subcategory_select" } %>
+
+	<%= submit_tag "gogogo", name: nil %>
+<% end %>

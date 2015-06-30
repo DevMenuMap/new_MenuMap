@@ -1,0 +1,23 @@
+<h1>Addresses#edit</h1>
+<h2><%= @address.name %></h2>
+
+<div id="naver_map"></div>
+
+<%= form_for @address, html: { multipart: true } do |f| %>
+	<%= f.label :coordinates %>
+	<%= f.fields_for :coordinates do |ff| %>
+		<% 10.times do |n| %>
+			<%= render "shared/coordinate_field", f: ff, n: n %>
+			<br />
+		<% end %>
+	<% end %>
+
+	<%= f.submit %>
+<% end %>
+
+<script>
+	$(document).on("page:load", loadNaverMap());
+	$(document).ready(function(){
+		oMap.attach("click", setMarker);
+	});
+</script>

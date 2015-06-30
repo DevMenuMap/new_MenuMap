@@ -1,0 +1,41 @@
+<h1>RestRegisters#new</h1>
+<!--
+flash: 더 많이 추가해주세요. 더 정확하고 많은 정보를 제공할수록
+빠르게 추가해드립니다.
+-->
+
+<%= form_for @rest_register, html: { multipart: true } do |f| %>
+	<%= f.label :email, "email" %>
+	<% if current_user %>
+		<%= f.text_field :email, value: current_user.email, readonly: true %>
+	<% else %>
+		<%= f.text_field :email %>
+	<% end %>
+
+	<%= f.label :name, "restaurant's name" %>
+	<%= f.text_field :name, data: { validate: "fill" } %>
+
+	<%= f.label :category_id, "category" %>
+	<%= render "shared/category_select", f: f %>
+
+	<%= f.label :addr, "address" %>
+	<%= f.text_field :addr, data: { validate: "fill" } %>
+	<%= f.label :phnum, "ph number" %>
+	<%= f.text_field :phnum %>
+	<%= f.label :delivery, "delivery option" %>
+	<%= f.check_box :delivery, { class: "gogo_delivery" } %>
+	<%= f.label :open_at, "open timing" %>
+	<%= f.text_field :open_at %>
+	<%= f.label :etc, "etc" %>
+	<%= f.text_area :etc, class: "gogogo", cols: 30, rows: 10 %>
+
+	<%= f.label :pictures %>
+	<%= f.fields_for :pictures do |ff| %>
+		<%= ff.label :img %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+	<% end %>
+
+	<%= f.submit "go submit" %>
+<% end %>

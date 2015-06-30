@@ -1,0 +1,20 @@
+<h1>addresses#show</h1>
+
+<h2><%= @address.name %></h2>
+<% if @address.coordinates.blank? %>
+	<%= link_to "make a new coordinates", edit_address_path(@address) %>
+<% else %>
+	<%= link_to "destroy coordinates", address_path(@address), method: :delete %><br />
+<% end %>
+
+<% @address.coordinates.each do |coordinate| %>
+	<%= coordinate.lat %> | <%= coordinate.lng %><br />
+<% end %>
+
+<div id="naver_map"></div>
+
+<script>
+	$(document).on("page:load", loadNaverMap());
+	// Change this to normal data passing codes to js
+	$(document).ready(showMarkers(<%= @coord_array %>));
+</script>

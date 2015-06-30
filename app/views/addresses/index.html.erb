@@ -1,0 +1,68 @@
+<h1>Addresses#index</h1>
+
+<table>
+	<!-- Address for AddrTag -->
+	<% @addr_tag_categories.each do |category| %>
+		<tr>
+			<td><%= number_with_delimiter(category.id) %></td>
+			<td><%= category.name %></td>
+			<td colspan="6"></td>
+		</tr>
+		<% category.addr_tag(1).each do |subcategory| %>
+			<tr>
+				<td colspan="2"></td>
+				<td><%= number_with_delimiter(subcategory.id) %></td>
+				<td><%= subcategory.name %></td>
+				<td colspan="4"></td>
+			</tr>
+			<% subcategory.addr_tag(2).each do |minicategory| %>
+				<tr>
+					<td colspan="4"></td>
+					<td><%= number_with_delimiter(minicategory.id) %></td>
+					<td><%= minicategory.name %></td>
+					<td colspan="2"></td>
+				</tr>
+				<% minicategory.addr_tag(3).each do |addr_tag| %>
+					<tr>
+						<td colspan="5"></td>
+						<td><%= number_with_delimiter(addr_tag.id) %></td>
+						<td><%= addr_tag.name %></td>
+						<td><%= link_to "show", address_path(addr_tag) %></td>
+					</tr>
+				<% end %>	
+			<% end %>
+		<% end %>
+	<% end %>
+
+	<!-- Seoul -->
+	<tr>
+		<td><%= @seoul.id %></td>
+		<td><%= @seoul.name %></td>
+		<td colspan="6"></td>
+	</tr>
+	<% @seoul.admin_addr(1).each do |gu| %>
+		<tr>
+			<td colspan="2"></td>
+			<td><%= gu.id %></td>
+			<td><%= gu.name %></td>
+			<td colspan="4"></td>
+		</tr>
+		<% gu.admin_addr(2).each do |legal_dong| %>
+			<tr>
+				<td colspan="4"></td>
+				<td><%= legal_dong.id %></td>
+				<td><%= legal_dong.name %></td>
+				<td colspan="2"></td>
+			</tr>
+		<% end %>
+		<tr><td colspan="6" style="height: 10px;"></td></tr>
+		<% gu.admin_addr(3).each do |admin_dong| %>
+			<tr>
+				<td colspan="4"></td>
+				<td><%= admin_dong.id %></td>
+				<td><%= admin_dong.name %></td>
+				<td colspan="2"></td>
+			</tr>	
+		<% end %>
+	<% end %>
+</table>

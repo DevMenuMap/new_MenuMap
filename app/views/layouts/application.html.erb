@@ -1,14 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>NewMenumap</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+		<!-- Compatibility issue -->
+		<%= render "layouts/shim" %>
 
-<%= yield %>
+		<!-- Meta data for MenuMap -->
+		<title>MenuMap</title>
 
-</body>
+		<!-- js, css assets -->
+		<!-- API loading -->
+		<%= render "layouts/api_key" %>
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+		<!-- Security issue -->
+		<%= csrf_meta_tags %>
+	</head>
+	<body>
+
+		<!-- Navigation -->
+		<%= render "layouts/header" %>
+
+		<!-- Flash -->
+		<%= render "layouts/flash" %>
+
+		<%= yield %>
+
+		<!-- Callback javascript codes for specific pages -->
+		<%= render "shared/callback_scripts" %>
+	</body>
 </html>

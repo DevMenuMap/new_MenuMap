@@ -1,0 +1,7 @@
+picture1:
+  imageable_id: 1
+  imageable_type: Restaurant
+
+picture2:
+  imageable_id: 2
+  imageable_type: RestImg

@@ -1,0 +1,9 @@
+<h1>Restaurants#edit</h1>
+
+<%= form_for @restaurant, html: { multipart: true } do |f| %>
+	<%= render "field", f: f %>
+	<%= f.submit "go submit" %>
+<% end %>
+
+<!-- Original category and subcategory -->
+<%= @restaurant.category.name %> | <%= @restaurant.subcategory.name %>
