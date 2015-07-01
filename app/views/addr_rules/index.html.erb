@@ -2,6 +2,9 @@
 
 <%= link_to "new", new_addr_rule_path %><br />
 
+<!-- Add pagination bar on top of the table -->
+<%= will_paginate @addr_rules %>
+
 <table>
 	<% @addr_rules.each do |addr_rule| %>
 		<tr>
@@ -12,6 +15,7 @@
 			<td><%= link_to "show", addr_rule_path(addr_rule) %> 
 			<td><%= link_to "delete", addr_rule_path(addr_rule), method: :delete %> 
 		</tr>
+		<!--
 		<% addr_rule.coordinates.each do |coordinate| %>
 			<tr>
 				<td colspan="2"></td>
@@ -21,5 +25,6 @@
 				<td></td>
 			</tr>
 		<% end %>
+		-->
 	<% end %>
 </table>

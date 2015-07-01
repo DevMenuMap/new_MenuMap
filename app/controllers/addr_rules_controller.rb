@@ -1,6 +1,7 @@
 class AddrRulesController < ApplicationController
   def index
-		@addr_rules = AddrRule.all
+  		# 10 items per page
+		@addr_rules = AddrRule.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show

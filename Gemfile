@@ -60,3 +60,9 @@ group :test do
 	# Remove unwanted error's backtrace
 	gem 'mini_backtrace', '~> 0.1.3'
 end
+
+gem 'tzinfo'
+gem 'tzinfo-data'
+
+# Pagination
+gem 'will_paginate'
