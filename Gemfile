@@ -32,6 +32,9 @@ gem 'devise'
 gem 'paperclip', '~> 4.2'
 gem 'aws-sdk', 	 '~> 1.6'
 
+# Pagination
+gem 'will_paginate'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -60,3 +63,6 @@ group :test do
 	# Remove unwanted error's backtrace
 	gem 'mini_backtrace', '~> 0.1.3'
 end
+
+gem 'tzinfo'
+gem 'tzinfo-data'
