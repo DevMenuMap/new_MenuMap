@@ -2,6 +2,11 @@ class AddrRulesController < ApplicationController
   def index
   		# 10 items per page
 		@addr_rules = AddrRule.paginate(:page => params[:page], :per_page => 10)
+		respond_to do |format|
+			format.html
+			format.json { render json: @addr_rules}
+			format.js
+		end
   end
 
   def show

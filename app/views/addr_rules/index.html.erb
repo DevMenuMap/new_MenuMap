@@ -2,29 +2,12 @@
 
 <%= link_to "new", new_addr_rule_path %><br />
 
-<!-- Add pagination bar on top of the table -->
-<%= will_paginate @addr_rules %>
+<div id="addr_rules">
+	<%= render 'addr_rules/page' %>
+</div>
 
-<table>
-	<% @addr_rules.each do |addr_rule| %>
-		<tr>
-			<td><%= addr_rule.id %></td>
-			<td><%= addr_rule.user_id %></td>
-			<td><%= addr_rule.name %></td>
-			<td><%= addr_rule.created_at %></td>
-			<td><%= link_to "show", addr_rule_path(addr_rule) %> 
-			<td><%= link_to "delete", addr_rule_path(addr_rule), method: :delete %> 
-		</tr>
-		<!--
-		<% addr_rule.coordinates.each do |coordinate| %>
-			<tr>
-				<td colspan="2"></td>
-				<td><%= coordinate.id %></td>
-				<td><%= coordinate.lat %></td>
-				<td><%= coordinate.lng %></td>
-				<td></td>
-			</tr>
-		<% end %>
-		-->
-	<% end %>
-</table>
+<script>
+	$(function(){
+		$('.pagination a').attr('data-remote', 'true')
+	});
+</script>
