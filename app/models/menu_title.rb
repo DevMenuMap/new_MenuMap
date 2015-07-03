@@ -7,5 +7,6 @@ class MenuTitle < ActiveRecord::Base
 	validates :title_name, presence: true
 
 	# Associations
-  belongs_to :restaurant
+ 	belongs_to :restaurant
+ 	has_many :menus
 end

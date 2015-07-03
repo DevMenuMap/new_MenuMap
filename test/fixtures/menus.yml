@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  menu_title_id: 
+  user_id: 
+  name: MyString
+  side_info: MyString
+  price: 1
+  info: MyString
+  sitga: false
+  active: false
+
+two:
+  menu_title_id: 
+  user_id: 
+  name: MyString
+  side_info: MyString
+  price: 1
+  info: MyString
+  sitga: false
+  active: false
