@@ -1,6 +1,6 @@
 class MenuTitlesController < ApplicationController
   def index
-		@menu_titles = MenuTitle.all.paginate(:page => params[:page], :per_page => 10)
+		@menu_titles = MenuTitle.all
   end
 
 	def create

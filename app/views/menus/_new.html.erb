@@ -2,7 +2,7 @@
 
 <!-- Should be called by Ajax like menu_titles#edit -->
 <%= form_for [@restaurant, @menu] do |f| %>
-	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+	<!-- %= f.hidden_field :restaurant_id, value: @restaurant.id % -->
 
 	<!-- Specify field because of controller subordination -->
 	<%= render "menus/field", f: f %>
