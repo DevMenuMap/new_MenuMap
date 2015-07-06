@@ -4,7 +4,7 @@ class Menu < ActiveRecord::Base
   	belongs_to :user
 
   	### Validations
-  	validates :menu_title_id, presence: true
+  	#validates :menu_title_id, presence: true
   	validates :name, presence: true
   	validates :price, presence: true
 

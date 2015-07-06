@@ -1,0 +1,9 @@
+<tr>
+	<td><%= menu.name %></td>
+	<td><%= menu.side_info %></td>
+	<td><%= menu.price %></td>
+	<td><%= menu.info %></td>
+	<td><%= menu.sitga %></td>
+	<td><%= link_to "edit", edit_menu_path(menu) %>
+	<td><%= link_to "delete", menu_path(menu), method: :delete %>
+</tr>

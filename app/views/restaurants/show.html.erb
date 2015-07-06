@@ -16,7 +16,7 @@
 <%= render "rest_infos/show" %>
 <%= render "rest_errs/new" %>
 
-<h1>Menu section</h1>
+<h1>Menu title section</h1>
 <table>
 	<tr>
 		<th>title_name</th>
@@ -28,6 +28,20 @@
 </table>
 
 <%= render "menu_titles/new" %>
+
+<h1>Menu section</h1>
+<table>
+	<tr>
+		<th>name</th>
+		<th>side_info</th>
+		<th>price</th>
+		<th>info</th>
+		<th>sitga</th>
+	</tr>
+	<%= render @menus %>
+</table>
+
+<%= render "menus/new" %>
 
 <h1>restaurant.pictures</h1>
 <% @pictures.each do |picture| %>

@@ -1,0 +1,7 @@
+<h1>Menu#edit</h1>
+
+<!-- change edit page to be loaded by Ajax call -->
+<%= form_for @menu do |f| %>
+	<%= render "field", f: f %>
+	<%= f.submit "update menu" %>
+<% end %>

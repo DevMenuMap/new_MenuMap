@@ -3,7 +3,7 @@ class RestaurantsController < ApplicationController
 	# to check if subcategory is not "all thing"; to specify subcategory
 
   def index
-		@restaurants = Restaurant.all
+		@restaurants = Restaurant.all.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
@@ -12,11 +12,13 @@ class RestaurantsController < ApplicationController
 		# @rest_info = RestInfo.find(params[:id])  
 		@rest_info = RestInfo.unscoped.find(params[:id])  
 		@menu_titles = @restaurant.menu_titles
+		@menus = @restaurant.menus
 
 		# partial forms
 		@rest_err = RestErr.new
 		@rest_err.pictures.build
 		@menu_title = MenuTitle.new
+		@menu = Menu.new
 
 		# pictures on this restaurant
 		@pictures = @restaurant.pictures

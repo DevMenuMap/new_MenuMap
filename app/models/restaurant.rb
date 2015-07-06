@@ -8,6 +8,7 @@ class Restaurant < ActiveRecord::Base
 
 	has_many	 :rest_errs
 	has_many	 :menu_titles
+	has_many	 :menus, through: :menu_titles
 	has_many 	 :pictures, 		as: :imageable
 
 
