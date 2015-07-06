@@ -13,12 +13,14 @@ class RestaurantsController < ApplicationController
 		@rest_info = RestInfo.unscoped.find(params[:id])  
 		@menu_titles = @restaurant.menu_titles
 		@menus = @restaurant.menus
+		@comments = @restaurant.comments
 
 		# partial forms
 		@rest_err = RestErr.new
 		@rest_err.pictures.build
 		@menu_title = MenuTitle.new
 		@menu = Menu.new
+		@comment = Comment.new
 
 		# pictures on this restaurant
 		@pictures = @restaurant.pictures
