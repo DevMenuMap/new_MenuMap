@@ -28,13 +28,15 @@ class RestInfo < ActiveRecord::Base
 
 	# Save Google's coordinates to rest_info's nested attributes(coordinate
 	# model) based on that area.
-	def self.save_latlngs(area = nil)
-		puts "Get coordinates from Google and save them on rest_infos"
-		self.in_area(area).without_latlng.each do |rest_info|
-			latlng = rest_info.get_latlng
-			puts "Get Google's latitude: #{latlng[0]} and longitude: #{latlng[1]}"
+	def self.save_latlngs(area = nil, log_file)
+		log_file.puts "Get coordinates from Google and save them on rest_infos"
 
-			rest_info.save_latlng(latlng)
+		# Google only gets 2,500 requests daily for one API key.
+		self.in_area(area).without_latlng.take(2500).each do |rest_info|
+			latlng = rest_info.get_latlng
+			log_file.puts "Get Google's latitude: #{latlng[0]} and longitude: #{latlng[1]}"
+
+			rest_info.save_latlng(latlng, log_file)
 		end
 	end
 
@@ -48,12 +50,12 @@ class RestInfo < ActiveRecord::Base
 		coordinate ? coordinate.lng : nil
 	end
 
-	def save_latlng(latlng)
+	def save_latlng(latlng, log_file)
 		if valid_latlng?(latlng)
 			create_coordinate(lat: latlng[0], lng: latlng[1])
-			puts "Saved rest_info #{self.id}'s latlng(Google)"
+			log_file.puts "Saved rest_info #{self.id}'s latlng(Google)"
 		else
-			puts "***** Fail rest_info #{self.id}"	
+			log_file.puts "***** Fail rest_info #{self.id}"	
 		end		
 	end
 

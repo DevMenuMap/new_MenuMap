@@ -35,12 +35,12 @@ class Restaurant < ActiveRecord::Base
 	### Class methods
 	# Find restaurants which has no associated rest_info and make one for
 	# one to one association.
-	def self.create_rest_infos
+	def self.create_rest_infos(log_file)
 		self.where("id NOT IN (SELECT DISTINCT(restaurant_id) FROM rest_infos)").each do |restaurant|
 			if restaurant.create_rest_info(id: restaurant.id)
-				puts "Succeed in making rest_info id: #{restaurant.id}"
+				log_file.puts "Succeed in making rest_info id: #{restaurant.id}"
 			else
-				puts "***** Fail restaurant id: #{restaurant.id}"
+				log_file.puts "***** Fail restaurant id: #{restaurant.id}"
 			end
 		end
 	end
@@ -52,16 +52,17 @@ class Restaurant < ActiveRecord::Base
 
 	# Save Naver's coordinates to restaurant's nested attributes(coordinate
 	# model) based on that area.
-	def self.save_latlngs(area = nil)
-		puts "Check if there is restaurants without rest_info"
-		create_rest_infos
+	def self.save_latlngs(area = nil, log_file)
+		log_file.puts "Check if there is restaurants without rest_info"
+		create_rest_infos(log_file)
 
-		puts "Get coordinates from Naver and save them on restaurants"
-		self.in_area(area).without_latlng.each do |restaurant|
+		log_file.puts "Get coordinates from Naver and save them on restaurants"
+		# Naver only gets 100,000 requests daily for one API key.
+		self.in_area(area).without_latlng.take(100000).each do |restaurant|
 			latlng = restaurant.get_latlng
-			puts "Get Naver's latitude: #{latlng[0]} and longitude: #{latlng[1]}"
+			log_file.puts "Get Naver's latitude: #{latlng[0]} and longitude: #{latlng[1]}"
 
-			restaurant.save_latlng(latlng)
+			restaurant.save_latlng(latlng, log_file)
 		end
 	end
 
@@ -85,12 +86,12 @@ class Restaurant < ActiveRecord::Base
 		rest_info.coordinate ? rest_info.coordinate.lng : nil
 	end
 
-	def save_latlng(latlng)
+	def save_latlng(latlng, log_file)
 		if valid_latlng?(latlng)
 			create_coordinate(lat: latlng[0], lng: latlng[1])
-			puts "Saved restaurant #{self.id}'s latlng(Naver)"
+			log_file.puts "Saved restaurant #{self.id}'s latlng(Naver)"
 		else
-			puts "***** Fail restaurant #{self.id}"	
+			log_file.puts "***** Fail restaurant #{self.id}"	
 		end		
 	end
 
