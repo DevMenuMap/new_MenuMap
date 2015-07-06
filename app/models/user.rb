@@ -9,4 +9,5 @@ class User < ActiveRecord::Base
 	has_many :rest_registers
 	has_many :rest_errs
 	has_many :menus
+	has_many :comments
 end
