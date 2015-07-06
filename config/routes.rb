@@ -28,11 +28,13 @@ Rails.application.routes.draw do
 		resources :rest_infos,	 except: [:index, :show]
 		resources :rest_errs, 	 except: [:index, :new]
 		resources :menu_titles,  except: [:index, :show, :new]
+		resources :menus, 		 except: [:index]
 	end
 
 	# Index pages which is not bounded with :restaurants
 	get 'rest_errs' 	=> 'rest_errs#index', 	as: :rest_errs
 	get 'menu_titles' => 'menu_titles#index', as: :menu_titles
+	get 'menus'	=> 'menus#index', as: :menus
 
 	# Polymorphic picture controller
 	resources :pictures

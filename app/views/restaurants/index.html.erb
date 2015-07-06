@@ -2,6 +2,8 @@
 
 <%= link_to "new restaurant", new_restaurant_path %>
 
+<%= will_paginate @restaurants %>
+
 <table>
 	<tr>
 		<% Restaurant.column_names.each do |column| %>

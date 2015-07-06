@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
 	has_many :questions
 	has_many :rest_registers
 	has_many :rest_errs
+	has_many :menus
 end
