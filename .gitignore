@@ -18,3 +18,6 @@
 
 # Seed data
 /db/seed_data
+
+# Different OS has different local path to mysql
+/config/database.yml
