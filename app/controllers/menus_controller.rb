@@ -1,6 +1,6 @@
 class MenusController < ApplicationController
 	def index
-		@menus = Menu.all
+		@menus = Menu.paginate(:page => params[:page], :per_page => 10)
 	end
 
 	def create
@@ -37,6 +37,6 @@ class MenusController < ApplicationController
 	private
 		def menu_params
 			params.require(:menu).permit(:name, :side_info,
-										 :price, :info, :sitga)
+										 							 :price, :info, :sitga)
 		end
 end

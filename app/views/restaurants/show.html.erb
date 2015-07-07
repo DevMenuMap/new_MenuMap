@@ -13,34 +13,21 @@
 	</tr>
 </table>
 
-<%= render "rest_infos/show" %>
+<!-- Need partial symbol to pass local variables -->
+<!-- :locals can pass symbol to partial -->
+<%= render partial: "rest_infos/show", locals: { rest_info: @restaurant.rest_info } %>
 <%= render "rest_errs/new" %>
-
-<h1>Menu title section</h1>
-<table>
-	<tr>
-		<th>title_name</th>
-		<th>title_info</th>
-		<th></th>
-		<th></th>
-	</tr>
-	<%= render @menu_titles %>
-</table>
-
-<%= render "menu_titles/new" %>
 
 <h1>Menu section</h1>
 <table>
 	<tr>
-		<th>name</th>
-		<th>side_info</th>
-		<th>price</th>
-		<th>info</th>
-		<th>sitga</th>
-		<th></th>
-		<th></th>
+		<th>title_name</th>
+		<th>title_info</th>
+		<th colspan="6"></th>
 	</tr>
-	<%= render @menus %>
+
+	<!-- Collection can pass each related menu_title with :as -->
+	<%= render partial: "menu_titles/show", collection: @restaurant.menu_titles, as: :menu_title %>
 </table>
 
 <%= render "menus/new" %>
