@@ -3,6 +3,8 @@ class Menu < ActiveRecord::Base
   belongs_to :menu_title
   belongs_to :user
 
+  has_many :comments, through: :menu_comments
+
 
   ### Validations
   # validates :menu_title, presence: true
