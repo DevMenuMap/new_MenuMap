@@ -19,6 +19,7 @@ class RestaurantsController < ApplicationController
 		@rest_err.pictures.build
 		@menu_title = MenuTitle.new
 		@menu = Menu.new
+		@comment = Comment.new
 
 		# pictures on this restaurant
 		@pictures = @restaurant.pictures

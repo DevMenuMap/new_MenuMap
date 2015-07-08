@@ -37,11 +37,25 @@
 		<th>price</th>
 		<th>info</th>
 		<th>sitga</th>
+		<th></th>
+		<th></th>
 	</tr>
 	<%= render @menus %>
 </table>
 
 <%= render "menus/new" %>
+
+<h1>Comment section</h1>
+<table>
+	<tr>
+		<th>contents</th>
+		<th></th>
+		<th></th>
+	</tr>
+	<%= render partial: "comments/show", collection: @restaurant.comments, as: :comment %>
+</table>
+
+<%= render "comments/new" %>
 
 <h1>restaurant.pictures</h1>
 <% @pictures.each do |picture| %>

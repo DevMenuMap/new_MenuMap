@@ -1,0 +1,21 @@
+<h1>Comment#index</h1>
+
+<table>
+	<tr>
+		<% Comment.column_names.each do |column| %>
+			<th><%= column %></th>
+		<% end %>
+		<th></th>
+		<th></th>
+	</tr>
+
+	<% @comments.each do |title| %>
+		<tr>
+			<% title.attributes.each_value do |value| %>
+				<td><%= value %></td>
+			<% end %>
+			<td><%= link_to "edit", edit_comment_path(title) %></td>
+			<td><%= link_to "destroy", comment_path(title), method: :delete %></td>
+		</tr>
+	<% end %>
+</table>
