@@ -34,22 +34,6 @@ class CommentsController < ApplicationController
 		redirect_to(:back)
 	end
 
-	def add_menu
-		@comment = Comment.find(params[:id])
-	end
-
-	def update_menu
-		menu = Menu.find(params[:menu_id])
-		comment = Comment.find(params[:id])
-		menu_of_comment = MenuComment.new(:menu => menu, :comment => comment)
-		if menu_of_comment.save
-			flash[:alert] = "Succeed comment#update_menu"
-		else
-			flash[:alert] = "Fail comment#update_menu"
-		end
-		redirect_to(:back)
-	end
-
 	private
 		def comment_params
 			params.require(:comment).permit(:restaurant_id,

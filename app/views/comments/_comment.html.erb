@@ -2,5 +2,4 @@
 	<td><%= comment.contents %></td>
 	<td><%= link_to "edit", edit_comment_path(comment) %>
 	<td><%= link_to "delete", comment_path(comment), method: :delete %>
-	<td><a href="/comments/add_menu/?id=<%=comment.id%>">Add Menu</a>
 </tr>

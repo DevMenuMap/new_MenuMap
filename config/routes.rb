@@ -11,9 +11,6 @@ Rails.application.routes.draw do
 	get "home/update_subcategories"		# cascading select box 
 	get "home/addrcomplete"						# autocomplete for address text_field
 
-	get "comments/add_menu" => "comments#add_menu"
-	get "comments/update_menu" => "comments#update_menu"
-
 	resources :notices, 			 except: [:index, :show]
 	resources :questions, 		 except: [:new]
 	resources :rest_registers, except: [:edit, :update]
