@@ -15,6 +15,7 @@ class MenusController < ApplicationController
 		if @menu.save
 			flash[:alert] = "Succeed menu#create"
 		else
+			@menu.menu_title.update(active: false)
 			flash[:alert] = "Fail menu#create"
 		end
 
