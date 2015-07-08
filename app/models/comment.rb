@@ -5,6 +5,7 @@ class Comment < ActiveRecord::Base
 
   # has_many :menu_comments
   has_many :pictures, as: :imageable
+  has_many :menu_comments
   has_many :menus, through: :menu_comments
 
 

@@ -3,6 +3,7 @@ class Menu < ActiveRecord::Base
   belongs_to :menu_title
   belongs_to :user
 
+  has_many :menu_comments
   has_many :comments, through: :menu_comments
 
 
