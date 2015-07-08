@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707074702) do
+ActiveRecord::Schema.define(version: 20150708081917) do
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
@@ -120,10 +120,24 @@ ActiveRecord::Schema.define(version: 20150707074702) do
     t.boolean  "active",        limit: 1,   default: true
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+    t.boolean  "unidentified",  limit: 1,   default: false
+    t.integer  "best",          limit: 4,   default: 0
   end
 
   add_index "menus", ["menu_title_id"], name: "index_menus_on_menu_title_id", using: :btree
   add_index "menus", ["user_id"], name: "index_menus_on_user_id", using: :btree
+
+  create_table "my_maps", force: :cascade do |t|
+    t.integer  "restaurant_id", limit: 4
+    t.integer  "user_id",       limit: 4
+    t.integer  "rating",        limit: 4
+    t.string   "contents",      limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "my_maps", ["restaurant_id"], name: "index_my_maps_on_restaurant_id", using: :btree
+  add_index "my_maps", ["user_id"], name: "index_my_maps_on_user_id", using: :btree
 
   create_table "notices", force: :cascade do |t|
     t.string   "question",   limit: 255
@@ -238,8 +252,12 @@ ActiveRecord::Schema.define(version: 20150707074702) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.string   "confirmation_token",     limit: 255
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
@@ -254,6 +272,8 @@ ActiveRecord::Schema.define(version: 20150707074702) do
   add_foreign_key "menu_titles", "restaurants"
   add_foreign_key "menus", "menu_titles"
   add_foreign_key "menus", "users"
+  add_foreign_key "my_maps", "restaurants"
+  add_foreign_key "my_maps", "users"
   add_foreign_key "rest_errs", "restaurants"
   add_foreign_key "rest_errs", "users"
   add_foreign_key "rest_infos", "restaurants"
