@@ -1,10 +1,11 @@
-<h1>MenuTitles#new</h1>
+<!-- Select one of the menu_titles of this restaurant or make a new menu_title -->
+<%= f.select :menu_title_id, 
+			options_for_select(@menu_titles.map{ |m| [m.title_name, m.id] }.unshift(["new menu_title", "new"]), nil), 
+			{ prompt: "select a menu_title" } %>
 
-<!-- Should be called by Ajax like menu_titles#edit -->
-<%= form_for [@restaurant, @menu_title] do |f| %>
-	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+<!-- Only when user wants to make a new menu_title for new menu -->
+<%= label :menu_title, :title_name %>
+<%= text_field :menu_title, :title_name %>
 
-	<!-- Specify field because of controller subordination -->
-	<%= render "menu_titles/field", f: f %>
-	<%= f.submit "update menu_title" %>
-<% end %>
+<%= label :menu_title, :title_info %>
+<%= text_field :menu_title, :title_info %>
