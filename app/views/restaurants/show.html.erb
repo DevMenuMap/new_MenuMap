@@ -52,7 +52,7 @@
 		<th></th>
 		<th></th>
 	</tr>
-	<%= render @comments %>
+	<%= render partial: "comments/show", collection: @restaurant.comments, as: :comment %>
 </table>
 
 <%= render "comments/new" %>

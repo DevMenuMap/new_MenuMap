@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
 		else
 			flash[:alert] = "Fail comment#create"
 		end
-		redirect_to(:back)
+		redirect_to restaurant_url(@comment.restaurant)
 	end
 
   def edit
@@ -24,19 +24,18 @@ class CommentsController < ApplicationController
 		else
 			flash[:alert] = "Fail comment#update"
 		end
-		redirect_to(:back)
+		redirect_to restaurant_url(@comment.restaurant)
 	end
 
   def destroy
 		@comment = Comment.find(params[:id])
 		@comment.update(active: false)
 		flash[:alert] = "Succeed comment#destroy"
-		redirect_to(:back)
+		redirect_to restaurant_url(@comment.restaurant)
 	end
 
 	private
 		def comment_params
-			params.require(:comment).permit(:restaurant_id,
-										 :contents)
+			params.require(:comment).permit(:restaurant_id, :contents)
 		end
 end
