@@ -100,6 +100,11 @@ class Restaurant < ActiveRecord::Base
 		rest_info.coordinate ? rest_info.coordinate.lng : nil
 	end
 
+	# Find most recent menus updated_at
+	def menus_updated_at
+		menus.select(:updated_at).limit(1).order("updated_at DESC").first.updated_at
+	end
+
 	def save_latlng(latlng, log_file)
 		if valid_latlng?(latlng)
 			create_coordinate(lat: latlng[0], lng: latlng[1])
