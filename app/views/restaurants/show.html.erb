@@ -27,10 +27,9 @@
 	</tr>
 
 	<!-- Collection can pass each related menu_title with :as -->
-	<%= render partial: "menu_titles/show", collection: @restaurant.menu_titles, as: :menu_title %>
+	<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
 </table>
 
-<%= render "menu_titles/new" %>
 <%= render "menus/new" %>
 
 <h1>restaurant.pictures</h1>

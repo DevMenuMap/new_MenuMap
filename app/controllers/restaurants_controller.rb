@@ -8,6 +8,7 @@ class RestaurantsController < ApplicationController
 
   def show
 		@restaurant = Restaurant.find(params[:id])
+		@menu_titles = @restaurant.menu_titles
 
 		# pictures on this restaurant
 		@pictures = @restaurant.pictures
