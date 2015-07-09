@@ -47,7 +47,14 @@ class MenusController < ApplicationController
 		@menu.update(active: false)
 		flash[:alert] = "Succeed menu#destroy"
 
-		redirect_to_restaurant_page
+		if destroy_menu_title
+			respond_to do |format|
+				format.html { redirect_to restaurant_url(@menu_title.restaurant) }
+				format.js		{ render action: "destroy_menu_title", layout: false }
+			end
+		else
+			redirect_to_restaurant_page
+		end
 	end
 
 	private
@@ -72,6 +79,16 @@ class MenusController < ApplicationController
 
 			# Set menu_title_id to new menu_title's id.
 			@menu.menu_title_id = @menu_title.id
+		end
+
+		# If there is no menus left after destroy action, delete menu_title.
+		def destroy_menu_title
+			@menu_title = @menu.menu_title
+			no_menu_title = false
+			if @menu_title.menus.blank?
+				@menu_title.update(active: false)
+				no_menu_title = true
+			end
 		end
 
 		# Redirect to associated restaurant page(Ajax or not)
