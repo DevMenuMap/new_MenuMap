@@ -1,4 +1,8 @@
 class Menu < ActiveRecord::Base
+	### Mixins
+	include ActionView::Helpers::NumberHelper
+
+			
 	### Associations
 	belongs_to :menu_title
 	belongs_to :user
@@ -35,5 +39,9 @@ class Menu < ActiveRecord::Base
 		if unidentified && ( price.present? || sitga )
 			errors.add(:unidentified, "no price when unidentified")
 		end
+	end
+
+	def price_in_won
+		number_with_delimiter(self.price).to_s + "원"
 	end
 end
