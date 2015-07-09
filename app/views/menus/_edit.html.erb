@@ -1,0 +1,9 @@
+<!-- Edit inside the menu table -->
+<tr>
+	<td colspan="7">
+		<%= form_for(@menu, remote: true) do |f| %>
+			<%= render "field", f: f %>
+			<%= f.submit "update menu" %>
+		<% end %>
+	</td>
+</tr>

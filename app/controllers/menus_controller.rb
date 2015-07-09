@@ -22,10 +22,17 @@ class MenusController < ApplicationController
 		redirect_to restaurant_url(@restaurant)
 	end
 
+	# GET /menus/:id/edit
 	def edit
 		@menu = Menu.find(params[:id])
+		
+		respond_to do |format|
+			format.html { redirect_to restaurant_url(@menu.menu_title.restaurant) }
+			format.js		{ render layout: false }
+		end
 	end
 
+	# PUT /menus/:id
 	def update
 		@menu = Menu.find(params[:id])
 		if @menu.update(menu_params)
@@ -33,7 +40,11 @@ class MenusController < ApplicationController
 		else
 			flash[:alert] = "Fail menu#update"
 		end
-		redirect_to(:back)
+
+		respond_to do |format|
+			format.html { redirect_to restaurant_url(@menu.menu_title.restaurant) }
+			format.js		{ render layout: false }
+		end
 	end
 
 	def destroy
