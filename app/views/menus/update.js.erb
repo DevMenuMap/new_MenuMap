@@ -1,0 +1,3 @@
+$("#edit_menu_<%= @menu.id %>").bind("ajax:success", function() {
+	$(this).closest("tr").replaceWith("<%= j(render partial: "menus/show", locals: { menu: @menu }) %>");
+});

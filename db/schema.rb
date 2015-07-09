@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707074702) do
+ActiveRecord::Schema.define(version: 20150708081917) do
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
@@ -88,16 +88,6 @@ ActiveRecord::Schema.define(version: 20150707074702) do
 
   add_index "coordinates", ["latlng_type", "latlng_id"], name: "index_coordinates_on_latlng_type_and_latlng_id", using: :btree
 
-  create_table "menu_comments", force: :cascade do |t|
-    t.integer  "menu_id",    limit: 4
-    t.integer  "comment_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "menu_comments", ["comment_id"], name: "index_menu_comments_on_comment_id", using: :btree
-  add_index "menu_comments", ["menu_id"], name: "index_menu_comments_on_menu_id", using: :btree
-
   create_table "menu_titles", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
     t.string   "title_name",    limit: 255
@@ -120,6 +110,8 @@ ActiveRecord::Schema.define(version: 20150707074702) do
     t.boolean  "active",        limit: 1,   default: true
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+    t.boolean  "unidentified",  limit: 1,   default: false
+    t.integer  "best",          limit: 4,   default: 0
   end
 
   add_index "menus", ["menu_title_id"], name: "index_menus_on_menu_title_id", using: :btree
@@ -249,8 +241,6 @@ ActiveRecord::Schema.define(version: 20150707074702) do
   add_foreign_key "category_relationships", "subcategories"
   add_foreign_key "comments", "restaurants"
   add_foreign_key "comments", "users"
-  add_foreign_key "menu_comments", "comments"
-  add_foreign_key "menu_comments", "menus"
   add_foreign_key "menu_titles", "restaurants"
   add_foreign_key "menus", "menu_titles"
   add_foreign_key "menus", "users"

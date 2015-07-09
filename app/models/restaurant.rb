@@ -35,6 +35,18 @@ class Restaurant < ActiveRecord::Base
 
 
 	### Class methods
+	# Find restaurants which is not relevant with menu_on and menus related
+	def self.menu_on_err(n)
+		if n > 0
+			# restaurants without any menu_titles(menu_title.without_menus can
+			# check if all menu_titles have menus) but menu_on is bigger than 0.
+			where("menu_on > 0 AND id NOT IN ( SELECT DISTINCT restaurant_id FROM menu_titles )")
+		else
+			# restaurants which have menus but menu_on equals 0.
+			where("menu_on = 0 AND id IN ( SELECT DISTINCT restaurant_id FROM menu_titles )")
+		end
+	end
+
 	# Find restaurants which has no associated rest_info and make one for
 	# one to one association.
 	def self.create_rest_infos(log_file)
@@ -86,6 +98,11 @@ class Restaurant < ActiveRecord::Base
 
 	def g_lng
 		rest_info.coordinate ? rest_info.coordinate.lng : nil
+	end
+
+	# Find most recent menus updated_at
+	def menus_updated_at
+		menus.select(:updated_at).limit(1).order("updated_at DESC").first.updated_at
 	end
 
 	def save_latlng(latlng, log_file)

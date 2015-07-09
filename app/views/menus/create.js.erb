@@ -1,0 +1,3 @@
+$("#new_menu").bind("ajax:success", function() {
+	$("#menu_title_<%= @menu.menu_title_id %> table").append("<%= j(render partial: "menus/show", locals: { menu: @menu }) %>");
+});

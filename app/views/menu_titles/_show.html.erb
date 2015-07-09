@@ -1,0 +1,12 @@
+<div id="menu_title_<%= menu_title.id %>">
+	<%= menu_title.title_name %> |
+	<%= menu_title.title_info %> |
+	<%= link_to "edit", edit_menu_title_path(menu_title) %> |
+	<%= link_to "delete", menu_title_path(menu_title), method: :delete %>
+	<br />
+
+	<table>
+		<%= render partial: "menus/show", collection: menu_title.menus, as: :menu %>
+	</table>
+</div>
+<br />
