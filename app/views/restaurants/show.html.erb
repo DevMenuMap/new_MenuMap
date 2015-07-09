@@ -1,5 +1,5 @@
+<!-- Restaurant -->
 <h1>Restaurants#show</h1>
-
 <table>
 	<% @restaurant.attributes.each do |key, value| %>
 		<tr>
@@ -13,25 +13,29 @@
 	</tr>
 </table>
 
+
+<!-- RestInfo and RestErr -->
 <!-- Need partial symbol to pass local variables -->
 <!-- :locals can pass symbol to partial -->
 <%= render partial: "rest_infos/show", locals: { rest_info: @restaurant.rest_info } %>
 <%= render "rest_errs/new" %>
 
-<h1>Menu section</h1>
-<table>
-	<tr>
-		<th>title_name</th>
-		<th>title_info</th>
-		<th colspan="6"></th>
-	</tr>
 
+<!-- MenuTitle and Menu -->
+<h1>Menu section</h1>
+<div>
+	<p>title_name | title_info</p>
+</div>
+
+<div id="menu_section">
 	<!-- Collection can pass each related menu_title with :as -->
 	<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
-</table>
+</div>
 
 <%= render "menus/new" %>
 
+
+<!-- Comment -->
 <h1>Comment section</h1>
 <table>
 	<tr>
@@ -44,6 +48,8 @@
 
 <%= render "comments/new" %>
 
+
+<!-- Picture -->
 <h1>restaurant.pictures</h1>
 <% @pictures.each do |picture| %>
 	<%= image_tag picture.img.url %>

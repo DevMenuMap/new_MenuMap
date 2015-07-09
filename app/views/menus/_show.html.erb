@@ -1,10 +1,9 @@
-<tr>
-	<td colspan="1"></td>
-	<td><%= menu.name %></td>
-	<td><%= menu.side_info %></td>
-	<td><%= menu.price %></td>
-	<td><%= menu.info %></td>
-	<td><%= menu.sitga %></td>
+<tr id="menu_<%= menu.id %>">
+	<td style="width: 100px;"><%= menu.name %></td>
+	<td style="width: 160px;"><%= menu.side_info %></td>
+	<td style="width: 80px;"><%= menu.price %></td>
+	<td style="width: 600px;"><%= menu.info %></td>
+	<td style="width: 20px;"><%= menu.sitga %></td>
 	<td><%= link_to "edit", edit_menu_path(menu) %>
 	<td><%= link_to "delete", menu_path(menu), method: :delete %>
 </tr>
