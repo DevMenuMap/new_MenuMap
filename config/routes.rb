@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 	
-  get 'comments/index'
+	# SEO
+  get "sitemap.xml" => "sitemap#index", :defaults => { format: 'xml' }
 
 	root "home#brandpage"
 
@@ -37,8 +38,8 @@ Rails.application.routes.draw do
 	# Index pages which is not bounded with :restaurants
 	get 'rest_errs' 	=> 'rest_errs#index', 	as: :rest_errs
 	get 'menu_titles' => 'menu_titles#index', as: :menu_titles
-	get 'menus'	=> 'menus#index', as: :menus
-	get 'commets' => 'comments#index', as: :comments
+	get 'menus'				=> 'menus#index', 			as: :menus
+	get 'comments' 		=> 'comments#index', 		as: :comments
 
 	# Polymorphic picture controller
 	resources :pictures
