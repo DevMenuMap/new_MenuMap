@@ -20,42 +20,34 @@ class MenusController < ApplicationController
 			flash[:alert] = "Fail menu#create"
 		end
 
-		respond_to do |format|
-			format.html { redirect_to restaurant_url(@restaurant) }
-			format.js		{ render layout: false }
-		end
+		redirect_to_restaurant_page
 	end
 
 	# GET /menus/:id/edit
 	def edit
 		@menu = Menu.find(params[:id])
-		
-		respond_to do |format|
-			format.html { redirect_to restaurant_url(@menu.menu_title.restaurant) }
-			format.js		{ render layout: false }
-		end
+		redirect_to_restaurant_page
 	end
 
 	# PUT /menus/:id
 	def update
 		@menu = Menu.find(params[:id])
+
 		if @menu.update(menu_params)
 			flash[:alert] = "Succeed menu#update"
 		else
 			flash[:alert] = "Fail menu#update"
 		end
 
-		respond_to do |format|
-			format.html { redirect_to restaurant_url(@menu.menu_title.restaurant) }
-			format.js		{ render layout: false }
-		end
+		redirect_to_restaurant_page
 	end
 
 	def destroy
 		@menu = Menu.find(params[:id])
 		@menu.update(active: false)
 		flash[:alert] = "Succeed menu#destroy"
-		redirect_to(:back)
+
+		redirect_to_restaurant_page
 	end
 
 	private
@@ -80,5 +72,15 @@ class MenusController < ApplicationController
 
 			# Set menu_title_id to new menu_title's id.
 			@menu.menu_title_id = @menu_title.id
+		end
+
+		# Redirect to associated restaurant page(Ajax or not)
+		def redirect_to_restaurant_page
+			@restaurant = @menu.menu_title.restaurant unless @restaurant
+
+			respond_to do |format|
+				format.html { redirect_to restaurant_url(@restaurant) }
+				format.js		{ render layout: false }
+			end
 		end
 end
