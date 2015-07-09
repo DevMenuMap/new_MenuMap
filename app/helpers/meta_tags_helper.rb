@@ -6,7 +6,7 @@ module MetaTagsHelper
 
 	### Meta Title tags
 	def meta_title
-		content_tag :title, case params[:controller]
+		case params[:controller]
 		when "home"
 			home_meta_title
 		# Notices, rest_registers are handled with static_meta_title
@@ -72,5 +72,29 @@ module MetaTagsHelper
 		else
 			DEFAULT_META_TITLE
 		end			
+	end
+
+
+	### Meta Description tags
+	def meta_description
+		if params[:controller] == "restaurants" && params[:action] = "show"
+			restaurants_meta_description
+		end
+	end
+
+	def restaurants_meta_description
+		description	 = "음식점 #{@restaurant.name}("
+		description	+= "#{@restaurant.category.name}) "
+		# description =  "주요상권 및 위치: [#{additional_addr}] #{@restaurant.addr}, "
+		description += "주요상권 및 위치: "
+		description += "주요 메뉴의 메뉴판, 가격: " 
+		# description	+= "#{@restaurant.title_menu_and_price}, "
+		if @restaurant.phnum
+			if @restaurant.delivery
+				description	+= ", 배달주문 전화번호: #{@restaurant.phnum}" 
+			else
+				description	+= ", 전화번호: #{@restaurant.phnum}" 
+			end
+		end
 	end
 end
