@@ -88,16 +88,6 @@ ActiveRecord::Schema.define(version: 20150708081917) do
 
   add_index "coordinates", ["latlng_type", "latlng_id"], name: "index_coordinates_on_latlng_type_and_latlng_id", using: :btree
 
-  create_table "menu_comments", force: :cascade do |t|
-    t.integer  "menu_id",    limit: 4
-    t.integer  "comment_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "menu_comments", ["comment_id"], name: "index_menu_comments_on_comment_id", using: :btree
-  add_index "menu_comments", ["menu_id"], name: "index_menu_comments_on_menu_id", using: :btree
-
   create_table "menu_titles", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
     t.string   "title_name",    limit: 255
@@ -126,18 +116,6 @@ ActiveRecord::Schema.define(version: 20150708081917) do
 
   add_index "menus", ["menu_title_id"], name: "index_menus_on_menu_title_id", using: :btree
   add_index "menus", ["user_id"], name: "index_menus_on_user_id", using: :btree
-
-  create_table "my_maps", force: :cascade do |t|
-    t.integer  "restaurant_id", limit: 4
-    t.integer  "user_id",       limit: 4
-    t.integer  "rating",        limit: 4
-    t.string   "contents",      limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
-
-  add_index "my_maps", ["restaurant_id"], name: "index_my_maps_on_restaurant_id", using: :btree
-  add_index "my_maps", ["user_id"], name: "index_my_maps_on_user_id", using: :btree
 
   create_table "notices", force: :cascade do |t|
     t.string   "question",   limit: 255
@@ -252,12 +230,8 @@ ActiveRecord::Schema.define(version: 20150708081917) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.string   "confirmation_token",     limit: 255
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
@@ -267,13 +241,9 @@ ActiveRecord::Schema.define(version: 20150708081917) do
   add_foreign_key "category_relationships", "subcategories"
   add_foreign_key "comments", "restaurants"
   add_foreign_key "comments", "users"
-  add_foreign_key "menu_comments", "comments"
-  add_foreign_key "menu_comments", "menus"
   add_foreign_key "menu_titles", "restaurants"
   add_foreign_key "menus", "menu_titles"
   add_foreign_key "menus", "users"
-  add_foreign_key "my_maps", "restaurants"
-  add_foreign_key "my_maps", "users"
   add_foreign_key "rest_errs", "restaurants"
   add_foreign_key "rest_errs", "users"
   add_foreign_key "rest_infos", "restaurants"
