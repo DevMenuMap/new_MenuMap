@@ -119,4 +119,23 @@ class Restaurant < ActiveRecord::Base
 		latlng = get_latlng
 		create_coordinate(lat: latlng[0], lng: latlng[1])
 	end
+
+	# Best menus with name, side_info and price for meta description.
+	# Arguments n defines the number of outputs. 
+	def title_menus_and_prices(n)
+		title_menus = []
+		menus.order(best: :desc, id: :asc).limit(n).each do |m|
+			title_menus << ( m.name + m.side_info + " " + m.price_in_won )
+		end
+		title_menus.join(", ")
+	end
+
+	# Short version of best menus with only name and side_info.
+	def title_menus(n)
+		title_menus = []
+		menus.order(best: :desc, id: :asc).limit(n).each do |m|
+			title_menus << ( m.name + m.side_info )
+		end
+		title_menus.join(", ")
+	end
 end

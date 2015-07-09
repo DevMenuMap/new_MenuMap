@@ -85,10 +85,15 @@ module MetaTagsHelper
 	def restaurants_meta_description
 		description	 = "음식점 #{@restaurant.name}("
 		description	+= "#{@restaurant.category.name}) "
-		# description =  "주요상권 및 위치: [#{additional_addr}] #{@restaurant.addr}, "
-		description += "주요상권 및 위치: "
-		description += "주요 메뉴의 메뉴판, 가격: " 
-		# description	+= "#{@restaurant.title_menu_and_price}, "
+		# description =  "주요상권 및 위치: [#{additional_addr}] #{@restaurant.addr}"
+		description += "주요상권 및 위치: #{@restaurant.addr}"
+
+		# 4~5 menus would appear on meta description.
+		if @restaurant.menus.present?
+			description += ", 주요 메뉴의 메뉴판, 가격: " 
+			description	+= "#{@restaurant.title_menus_and_prices(5)}"
+		end
+
 		if @restaurant.phnum
 			if @restaurant.delivery
 				description	+= ", 배달주문 전화번호: #{@restaurant.phnum}" 
