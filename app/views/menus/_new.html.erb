@@ -1,10 +1,10 @@
 <h1>Menu#new</h1>
 
-<%= form_for [@restaurant, @menu] do |f| %>
+<%= form_for([@restaurant, @menu], remote: true) do |f| %>
 	<%= render "menu_titles/new", f: f %>
 	<br />
 
 	<!-- Specify field because of controller subordination -->
 	<%= render "menus/field", f: f %>
-	<%= f.submit "update menu" %>
+	<%= f.submit "create menu" %>
 <% end %>

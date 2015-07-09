@@ -15,11 +15,15 @@ class MenusController < ApplicationController
 		if @menu.save
 			flash[:alert] = "Succeed menu#create"
 		else
+			# If a new menu is invalid, destroy newly created menu_title also.
 			@menu.menu_title.update(active: false)
 			flash[:alert] = "Fail menu#create"
 		end
 
-		redirect_to restaurant_url(@restaurant)
+		respond_to do |format|
+			format.html { redirect_to restaurant_url(@restaurant) }
+			format.js		{ render layout: false }
+		end
 	end
 
 	# GET /menus/:id/edit
