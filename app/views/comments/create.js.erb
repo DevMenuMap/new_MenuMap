@@ -1,0 +1,3 @@
+$("#new_comment").bind("ajax:success", function() {
+	$("#comment_section").html("<%= j(render partial: "comments/show", collection: @restaurant.comments, as: :comment) %>");
+});

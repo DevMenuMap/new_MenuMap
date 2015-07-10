@@ -43,7 +43,9 @@
 		<th></th>
 		<th></th>
 	</tr>
-	<%= render partial: "comments/show", collection: @restaurant.comments, as: :comment %>
+	<tbody id="comment_section">
+		<%= render partial: "comments/show", collection: @restaurant.comments, as: :comment %>
+	</tbody>
 </table>
 
 <%= render "comments/new" %>
