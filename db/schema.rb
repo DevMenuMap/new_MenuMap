@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150710055136) do
+ActiveRecord::Schema.define(version: 20150710070628) do
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 20150710055136) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "admin_addrs", force: :cascade do |t|
+    t.string   "gu",         limit: 255
+    t.string   "dong",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -87,6 +94,25 @@ ActiveRecord::Schema.define(version: 20150710055136) do
   end
 
   add_index "coordinates", ["latlng_type", "latlng_id"], name: "index_coordinates_on_latlng_type_and_latlng_id", using: :btree
+
+  create_table "legal_addrs", force: :cascade do |t|
+    t.string   "gu",         limit: 255
+    t.string   "dong",       limit: 255
+    t.boolean  "mt",         limit: 1,   default: false
+    t.string   "jibun",      limit: 255
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  create_table "legal_admins", force: :cascade do |t|
+    t.integer  "legal_addr_id", limit: 4
+    t.integer  "admin_addr_id", limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "legal_admins", ["admin_addr_id"], name: "index_legal_admins_on_admin_addr_id", using: :btree
+  add_index "legal_admins", ["legal_addr_id"], name: "index_legal_admins_on_legal_addr_id", using: :btree
 
   create_table "menu_comments", force: :cascade do |t|
     t.integer  "menu_id",    limit: 4
@@ -240,6 +266,8 @@ ActiveRecord::Schema.define(version: 20150710055136) do
     t.datetime "updated_at",                            null: false
   end
 
+  add_index "slangs", ["name"], name: "index_slangs_on_name", using: :btree
+
   create_table "subcategories", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -274,6 +302,8 @@ ActiveRecord::Schema.define(version: 20150710055136) do
   add_foreign_key "category_relationships", "subcategories"
   add_foreign_key "comments", "restaurants"
   add_foreign_key "comments", "users"
+  add_foreign_key "legal_admins", "admin_addrs"
+  add_foreign_key "legal_admins", "legal_addrs"
   add_foreign_key "menu_comments", "comments"
   add_foreign_key "menu_comments", "menus"
   add_foreign_key "menu_titles", "restaurants"
