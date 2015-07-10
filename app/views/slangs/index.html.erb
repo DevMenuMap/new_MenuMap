@@ -1,0 +1,23 @@
+<h1>Slang#index</h1>
+
+<%= link_to "new slang", new_slang_path %>
+
+<table>
+	<tr>
+		<% Slang.column_names.each do |column| %>
+			<th><%= column %></th>
+		<% end %>
+		<th></th>
+		<th></th>
+	</tr>
+
+	<% @slangs.each do |title| %>
+		<tr>
+			<% title.attributes.each_value do |value| %>
+				<td><%= value %></td>
+			<% end %>
+			<td><%= link_to "edit", edit_slang_path(title) %></td>
+			<td><%= link_to "destroy", slang_path(title), method: :delete %></td>
+		</tr>
+	<% end %>
+</table>
