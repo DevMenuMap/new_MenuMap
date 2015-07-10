@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  gu: MyString
+  dong: MyString
+  mt: false
+  jibun: MyString
+
+two:
+  gu: MyString
+  dong: MyString
+  mt: false
+  jibun: MyString
