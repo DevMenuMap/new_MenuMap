@@ -54,6 +54,8 @@ Rails.application.routes.draw do
 
 	resources :addr_rules, except: [:edit, :update]
 
+	resources :slangs
+
   # Example resource route with options:
   #   resources :products do
   #     member do

@@ -1,0 +1,13 @@
+<h1>Slangs#show</h1>
+<table>
+	<% @slang.attributes.each do |key, value| %>
+		<tr>
+			<td><%= key %></td>
+			<td><%= value %></td>
+		</tr>
+	<% end %>
+	<tr>
+		<td><%= link_to "edit", edit_slang_path(@slang) %></td>
+		<td><%= link_to "delete", slang_path(@slang), method: :delete %>
+	</tr>
+</table>
