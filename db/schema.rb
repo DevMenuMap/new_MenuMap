@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150710085938) do
+ActiveRecord::Schema.define(version: 20150712100648) do
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
@@ -217,8 +217,10 @@ ActiveRecord::Schema.define(version: 20150710085938) do
     t.boolean  "active",         limit: 1,   default: true
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.integer  "addr_code",      limit: 8
   end
 
+  add_index "restaurants", ["addr_code"], name: "index_restaurants_on_addr_code", using: :btree
   add_index "restaurants", ["category_id"], name: "index_restaurants_on_category_id", using: :btree
   add_index "restaurants", ["subcategory_id"], name: "index_restaurants_on_subcategory_id", using: :btree
 
