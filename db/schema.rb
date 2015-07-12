@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150710070628) do
+ActiveRecord::Schema.define(version: 20150712101510) do
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
@@ -45,13 +45,6 @@ ActiveRecord::Schema.define(version: 20150710070628) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  create_table "admin_addrs", force: :cascade do |t|
-    t.string   "gu",         limit: 255
-    t.string   "dong",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -95,35 +88,6 @@ ActiveRecord::Schema.define(version: 20150710070628) do
 
   add_index "coordinates", ["latlng_type", "latlng_id"], name: "index_coordinates_on_latlng_type_and_latlng_id", using: :btree
 
-  create_table "legal_addrs", force: :cascade do |t|
-    t.string   "gu",         limit: 255
-    t.string   "dong",       limit: 255
-    t.boolean  "mt",         limit: 1,   default: false
-    t.string   "jibun",      limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-  end
-
-  create_table "legal_admins", force: :cascade do |t|
-    t.integer  "legal_addr_id", limit: 4
-    t.integer  "admin_addr_id", limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  add_index "legal_admins", ["admin_addr_id"], name: "index_legal_admins_on_admin_addr_id", using: :btree
-  add_index "legal_admins", ["legal_addr_id"], name: "index_legal_admins_on_legal_addr_id", using: :btree
-
-  create_table "menu_comments", force: :cascade do |t|
-    t.integer  "menu_id",    limit: 4
-    t.integer  "comment_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "menu_comments", ["comment_id"], name: "index_menu_comments_on_comment_id", using: :btree
-  add_index "menu_comments", ["menu_id"], name: "index_menu_comments_on_menu_id", using: :btree
-
   create_table "menu_titles", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
     t.string   "title_name",    limit: 255
@@ -152,18 +116,6 @@ ActiveRecord::Schema.define(version: 20150710070628) do
 
   add_index "menus", ["menu_title_id"], name: "index_menus_on_menu_title_id", using: :btree
   add_index "menus", ["user_id"], name: "index_menus_on_user_id", using: :btree
-
-  create_table "my_maps", force: :cascade do |t|
-    t.integer  "restaurant_id", limit: 4
-    t.integer  "user_id",       limit: 4
-    t.integer  "rating",        limit: 4
-    t.string   "contents",      limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
-
-  add_index "my_maps", ["restaurant_id"], name: "index_my_maps_on_restaurant_id", using: :btree
-  add_index "my_maps", ["user_id"], name: "index_my_maps_on_user_id", using: :btree
 
   create_table "notices", force: :cascade do |t|
     t.string   "question",   limit: 255
@@ -214,11 +166,12 @@ ActiveRecord::Schema.define(version: 20150710070628) do
   add_index "rest_errs", ["user_id"], name: "index_rest_errs_on_user_id", using: :btree
 
   create_table "rest_infos", force: :cascade do |t|
-    t.integer  "restaurant_id", limit: 4
-    t.text     "owner_intro",   limit: 65535
-    t.boolean  "active",        limit: 1,     default: true
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.integer  "restaurant_id",   limit: 4
+    t.text     "owner_intro",     limit: 65535
+    t.boolean  "active",          limit: 1,     default: true
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.datetime "addr_updated_at"
   end
 
   add_index "rest_infos", ["restaurant_id"], name: "index_rest_infos_on_restaurant_id", using: :btree
@@ -254,8 +207,10 @@ ActiveRecord::Schema.define(version: 20150710070628) do
     t.boolean  "active",         limit: 1,   default: true
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
+    t.integer  "addr_code",      limit: 8
   end
 
+  add_index "restaurants", ["addr_code"], name: "index_restaurants_on_addr_code", using: :btree
   add_index "restaurants", ["category_id"], name: "index_restaurants_on_category_id", using: :btree
   add_index "restaurants", ["subcategory_id"], name: "index_restaurants_on_subcategory_id", using: :btree
 
@@ -287,12 +242,8 @@ ActiveRecord::Schema.define(version: 20150710070628) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.string   "confirmation_token",     limit: 255
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
@@ -302,15 +253,9 @@ ActiveRecord::Schema.define(version: 20150710070628) do
   add_foreign_key "category_relationships", "subcategories"
   add_foreign_key "comments", "restaurants"
   add_foreign_key "comments", "users"
-  add_foreign_key "legal_admins", "admin_addrs"
-  add_foreign_key "legal_admins", "legal_addrs"
-  add_foreign_key "menu_comments", "comments"
-  add_foreign_key "menu_comments", "menus"
   add_foreign_key "menu_titles", "restaurants"
   add_foreign_key "menus", "menu_titles"
   add_foreign_key "menus", "users"
-  add_foreign_key "my_maps", "restaurants"
-  add_foreign_key "my_maps", "users"
   add_foreign_key "rest_errs", "restaurants"
   add_foreign_key "rest_errs", "users"
   add_foreign_key "rest_infos", "restaurants"

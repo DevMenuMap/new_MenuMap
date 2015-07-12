@@ -10,9 +10,8 @@ module Google
 	### Instance methods
 	# Return array of latitude, longitude from Google
   def get_latlng
-    xml_page = google_request_url
-		# 필요??????
-    xml_page.remove_namespaces!
+    url = google_request_url
+    xml_page = encode_and_open_xml(url)
     xml_finder(xml_page)
   end
 
@@ -20,8 +19,6 @@ module Google
     request_url = "https://maps.googleapis.com/maps/api/geocode/xml"
     request_url += "?address=" + self.restaurant.addr +
                    "&key="     + API_KEY
-
-    encode_and_open_xml(request_url)
   end
 
   def encode_and_open_xml(url)

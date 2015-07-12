@@ -125,7 +125,11 @@ class Restaurant < ActiveRecord::Base
 	def title_menus_and_prices(n)
 		title_menus = []
 		menus.order(best: :desc, id: :asc).limit(n).each do |m|
-			title_menus << ( m.name + m.side_info + " " + m.price_in_won )
+			if m.side_info
+				title_menus << ( m.name + m.side_info + " " + m.price_in_won )
+			else
+				title_menus << ( m.name + " " + m.price_in_won )
+			end
 		end
 		title_menus.join(", ")
 	end
@@ -137,5 +141,17 @@ class Restaurant < ActiveRecord::Base
 			title_menus << ( m.name + m.side_info )
 		end
 		title_menus.join(", ")
+	end
+
+	# If restaurant's address is changed, delete addr_code, addr_tags and
+	# coordinates and update addr_updated_at.
+	def destroy_related_when_addr_updated(params)
+		if addr != params[:restaurant][:addr]
+			update(addr_code: nil)
+			# addr_tags.destroy_all
+			coordinate.destroy						if coordinate.present?
+			rest_info.coordinate.destroy	if rest_info.coordinate.present?
+			rest_info.update(addr_updated_at: Time.now)
+		end
 	end
 end
