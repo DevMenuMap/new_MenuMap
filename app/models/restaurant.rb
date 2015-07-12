@@ -125,7 +125,11 @@ class Restaurant < ActiveRecord::Base
 	def title_menus_and_prices(n)
 		title_menus = []
 		menus.order(best: :desc, id: :asc).limit(n).each do |m|
-			title_menus << ( m.name + m.side_info + " " + m.price_in_won )
+			if m.side_info
+				title_menus << ( m.name + m.side_info + " " + m.price_in_won )
+			else
+				title_menus << ( m.name + " " + m.price_in_won )
+			end
 		end
 		title_menus.join(", ")
 	end

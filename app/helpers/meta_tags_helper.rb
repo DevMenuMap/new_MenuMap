@@ -77,7 +77,7 @@ module MetaTagsHelper
 
 	### Meta Description tags
 	def meta_description
-		if params[:controller] == "restaurants" && params[:action] = "show"
+		if params[:controller] == "restaurants" && params[:action] == "show"
 			restaurants_meta_description
 		end
 	end
