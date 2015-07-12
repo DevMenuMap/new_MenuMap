@@ -138,4 +138,16 @@ class Restaurant < ActiveRecord::Base
 		end
 		title_menus.join(", ")
 	end
+
+	# If restaurant's address is changed, delete addr_code, addr_tags and
+	# coordinates and update addr_updated_at.
+	def destroy_related_when_addr_updated(params)
+		if addr != params[:restaurant][:addr]
+			update(addr_code: nil)
+			# addr_tags.destroy_all
+			coordinate.destroy						if coordinate.present?
+			rest_info.coordinate.destroy	if rest_info.coordinate.present?
+			rest_info.update(addr_updated_at: Time.now)
+		end
+	end
 end

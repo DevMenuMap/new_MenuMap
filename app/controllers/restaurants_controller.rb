@@ -58,6 +58,11 @@ class RestaurantsController < ApplicationController
 
 	def update
 		@restaurant = Restaurant.find(params[:id])
+
+		# If address is changed, destroy related coordinates, addr_code 
+		# and addr_tags.
+		@restaurant.destroy_related_when_addr_updated(params)
+
 		if @restaurant.update(restaurant_params)
 			flash[:alert] = "succeed restaurants#update"
 			redirect_to restaurants_url(@restaurant)
