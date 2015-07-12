@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150710061905) do
+ActiveRecord::Schema.define(version: 20150710085938) do
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20150710061905) do
     t.datetime "updated_at",                               null: false
   end
 
+  add_index "comments", ["created_at"], name: "index_comments_on_created_at", using: :btree
   add_index "comments", ["restaurant_id"], name: "index_comments_on_restaurant_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
@@ -265,6 +266,8 @@ ActiveRecord::Schema.define(version: 20150710061905) do
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end
+
+  add_index "slangs", ["name"], name: "index_slangs_on_name", using: :btree
 
   create_table "subcategories", force: :cascade do |t|
     t.string   "name",       limit: 255

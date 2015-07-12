@@ -1,9 +1,0 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  legal_addr_id: 
-  admin_addr_id: 
-
-two:
-  legal_addr_id: 
-  admin_addr_id: 
