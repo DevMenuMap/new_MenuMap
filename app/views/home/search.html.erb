@@ -1,7 +1,7 @@
 <% provide(:page_title, "MenuMap 검색") %>
 <h1>Search page</h1>
 
-<%= form_tag search_path, method: :get, name: nil do %>
+<%= form_tag restaurants_path, method: :get, name: nil do %>
 	<!-- Autocomplete recommended address name with Addrcomplete model 
 			 by jquery-ui autocomplete function 											 -->
 	<%= label_tag :address, "set addr" %>
@@ -17,6 +17,9 @@
 	<%= select_tag :category, 
 				options_for_select(@subcategories.map{ |s| [s.name, s.id] }, nil),
 																					{ id: "subcategory_select" } %>
+
+	<%= label_tag :delivery %>
+	<%= check_box_tag :delivery %>
 
 	<%= submit_tag "gogogo", name: nil %>
 <% end %>

@@ -35,6 +35,19 @@ class Restaurant < ActiveRecord::Base
 
 
 	### Class methods
+	# Find restaurants with user's query
+	def self.search(delivery)
+		search_delivery(delivery)	
+	end
+
+	def self.search_delivery(delivery)
+		if delivery.to_i == 1
+			where("delivery = ?", 1)	
+		else
+			all
+		end
+	end
+
 	# Find restaurants which is not relevant with menu_on and menus related
 	def self.menu_on_err(n)
 		if n > 0
