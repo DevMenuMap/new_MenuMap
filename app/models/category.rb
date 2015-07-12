@@ -1,9 +1,12 @@
 class Category < ActiveRecord::Base
-	validates :name, presence: true
-	
+	### Associations
 	has_many :category_relationships, dependent: :destroy
 	has_many :subcategories, through: :category_relationships
 
-	# Restaurant related associations
+	has_many :restaurants
 	has_many :rest_registers
+
+
+	### Validations
+	validates :name, presence: true
 end

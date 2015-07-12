@@ -36,16 +36,21 @@ class Restaurant < ActiveRecord::Base
 
 	### Class methods
 	# Find restaurants with user's query
-	def self.search(delivery)
-		search_delivery(delivery)	
+	def self.search(delivery, category)
+		search_by_delivery(delivery).search_by_category(category)
 	end
 
-	def self.search_delivery(delivery)
+	def self.search_by_delivery(delivery)
 		if delivery.to_i == 1
 			where("delivery = ?", 1)	
 		else
 			all
 		end
+	end
+
+	def self.search_by_category(category)
+		range = Subcategory.range(category)
+		where("subcategory_id >= ? AND subcategory_id < ?", range[:min], range[:max])
 	end
 
 	# Find restaurants which is not relevant with menu_on and menus related
