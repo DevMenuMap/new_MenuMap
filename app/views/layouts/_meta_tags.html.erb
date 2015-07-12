@@ -1,0 +1,6 @@
+<% if params[:controller] == "restaurants" && params[:action] == "show" %>
+	<title><%= restaurant_meta_title %></title>
+	<meta name="description" content="<%= restaurant_meta_description %>" />
+<% else %>
+	<title><%= meta_title(yield(:page_title)) %></title>
+<% end %>
