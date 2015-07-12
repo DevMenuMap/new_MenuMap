@@ -36,8 +36,8 @@ class Restaurant < ActiveRecord::Base
 
 	### Class methods
 	# Find restaurants with user's query
-	def self.search(delivery, category)
-		search_by_delivery(delivery).search_by_category(category)
+	def self.search(delivery, category, name)
+		search_by_delivery(delivery).search_by_category(category).search_by_name(name)
 	end
 
 	def self.search_by_delivery(delivery)
@@ -51,6 +51,22 @@ class Restaurant < ActiveRecord::Base
 	def self.search_by_category(category)
 		range = Subcategory.range(category)
 		where("subcategory_id >= ? AND subcategory_id < ?", range[:min], range[:max])
+	end
+
+	def self.search_by_name(name)
+		# Split the name query and find all restaurants which name includes 
+		# all queries.
+		if name.present?
+			sql = []
+			# () automatically changes into \s.(why?)
+			name.gsub!(/[,.;:'"-_&]/, ' ')
+			name.split.each do |s|
+				sql << "name LIKE '%#{s}%'"	
+			end
+			where(sql.join(" AND "))
+		else
+			all
+		end
 	end
 
 	# Find restaurants which is not relevant with menu_on and menus related
