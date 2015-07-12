@@ -65,11 +65,11 @@ class RestaurantsController < ApplicationController
 
 		if @restaurant.update(restaurant_params)
 			flash[:alert] = "succeed restaurants#update"
-			redirect_to restaurants_url(@restaurant)
 		else
 			flash[:alert] = "fail restaurants#update"
-			redirect_to :back
 		end
+
+		redirect_to restaurant_url(@restaurant)
 	end
 
 	def destroy

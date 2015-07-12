@@ -11,7 +11,8 @@ module Naver
 	### Instance methods
 	# Return array of latitude, longitude 
 	def get_latlng
-		xml_page = naver_request_url
+		url = naver_request_url
+		xml_page = encode_and_open_xml(url)
 		xml_page.remove_namespaces!			# Remove "xmlns:" part.
 		xml_finder(xml_page)
 	end
@@ -25,7 +26,6 @@ module Naver
 									 "&encoding=" + options[0] +
 									 "&coord=" 		+ options[1] +
 									 "&query=" 		+ self.addr
-		encode_and_open_xml(request_url)
 	end
 
 	def encode_and_open_xml(url)
