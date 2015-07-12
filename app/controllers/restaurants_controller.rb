@@ -3,7 +3,7 @@ class RestaurantsController < ApplicationController
 	# to check if subcategory is not "all thing"; to specify subcategory
 
   def index
-		@restaurants = Restaurant.paginate(:page => params[:page], :per_page => 10)
+		@restaurants = Restaurant.search(params[:delivery]).paginate(page: params[:page], per_page: 10)
   end
 
   def show
