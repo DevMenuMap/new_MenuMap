@@ -1,0 +1,3 @@
+$("#comment_<%= @comment.id %> .edit_comment").bind("ajax:success", function() {
+	$("#comment_<%= @comment.id %>").replaceWith("<%= j(render "edit") %>");
+});

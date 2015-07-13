@@ -1,0 +1,9 @@
+<!-- Edit inside the comment table -->
+<tr>
+	<td colspan="3">
+		<%= form_for(@comment, remote: true) do |f| %>
+			<%= render "field", f: f %>
+			<%= f.submit "update comment" %>
+		<% end %>
+	</td>
+</tr>

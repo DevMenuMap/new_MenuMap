@@ -1,0 +1,4 @@
+$(".delete_comment").bind("ajax:success", function() {
+	$("#comment_count").html("<%= @restaurant.comments.count %>");
+	$(this).closest("tr").fadeOut();
+});

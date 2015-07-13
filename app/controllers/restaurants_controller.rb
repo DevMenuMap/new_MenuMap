@@ -9,6 +9,7 @@ class RestaurantsController < ApplicationController
   def show
 		@restaurant = Restaurant.find(params[:id])
 		@menu_titles = @restaurant.menu_titles
+		@comments = @restaurant.comments.order(created_at: :desc).paginate(:page => params[:page], :per_page => 10)
 
 		# pictures on this restaurant
 		@pictures = @restaurant.pictures
@@ -19,6 +20,12 @@ class RestaurantsController < ApplicationController
 		@menu_title = MenuTitle.new
 		@menu = Menu.new
 		@comment = Comment.new
+
+		respond_to do |format|
+			format.html
+			format.json { render json: @comments }
+			format.js
+		end
   end
 
   def new

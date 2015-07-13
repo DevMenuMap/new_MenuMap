@@ -1,0 +1,5 @@
+$("#new_comment").bind("ajax:success", function() {
+	$("#comment_count").html("<%= @restaurant.comments.count %>");
+	$("#comment_section").html("<%= j(render 'comments/page') %>");
+	$('.pagination a').attr('data-remote', 'true');
+});

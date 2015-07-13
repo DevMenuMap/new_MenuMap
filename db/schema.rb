@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20150712101510) do
     t.datetime "updated_at",                               null: false
   end
 
+  add_index "comments", ["created_at"], name: "index_comments_on_created_at", using: :btree
   add_index "comments", ["restaurant_id"], name: "index_comments_on_restaurant_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
