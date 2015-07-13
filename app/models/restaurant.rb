@@ -138,9 +138,10 @@ class Restaurant < ActiveRecord::Base
 	def title_menus(n)
 		title_menus = []
 		menus.order(best: :desc, id: :asc).limit(n).each do |m|
-			title_menus << ( m.name + m.side_info )
+			title_menus << m
+			# title_menus << ( m.name + m.side_info )
 		end
-		title_menus.join(", ")
+		# title_menus.join(", ")
 	end
 
 	# If restaurant's address is changed, delete addr_code, addr_tags and

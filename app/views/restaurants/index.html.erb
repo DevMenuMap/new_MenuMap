@@ -9,6 +9,8 @@
 		<% Restaurant.column_names.each do |column| %>
 			<th><%= column %></th>
 		<% end %>
+		<th>Best Menu 1</th>
+		<th>Best Menu 2</th> 
 		<th></th>
 		<th></th>
 	</tr>
@@ -17,6 +19,15 @@
 		<tr data-url="<%= restaurant_path(restaurant) %>">
 			<% restaurant.attributes.each_value do |value| %>
 				<td><%= value %></td>
+			<% end %>
+			<% best_menus = restaurant.title_menus(2) %>
+			<% if best_menus==[] %>
+				<td>Empty</td>
+				<td>Empty</td> 
+			<% else %>
+				<% best_menus.each do |menu| %>
+					<td><%= menu.name %></td>
+				<% end %>
 			<% end %>
 			<td><%= link_to "show", restaurant_path(restaurant) %></td>
 			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
