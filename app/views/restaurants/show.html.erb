@@ -4,7 +4,13 @@
 	<% @restaurant.attributes.each do |key, value| %>
 		<tr>
 			<td><%= key %></td>
-			<td><%= value %></td>
+			<% if key == 'phnum' %>
+				<td><article><a href="tel:<%= value %>"><%= value %></a></article></td>
+			<% elsif key == 'addr' %>
+				<td><article><%= value %></article></td>
+			<% else %>
+				<td><%= value %></td>
+			<% end %>
 		</tr>
 	<% end %>
 	<tr>
