@@ -54,4 +54,20 @@ Rails.application.configure do
 			:secret_access_key => ENV['S3_SECRET_KEY']
 		}
 	}
+
+  # Configure mailer for SES
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default :charset => "utf-8"
+ 
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  config.action_mailer.smtp_settings = {
+    address: ENV['SES_ADDRESS'],
+    port: ENV['SES_PORT'],
+    authentication: :login,
+    enable_starttls_auto: true,
+    user_name: ENV['SES_USER_NAME'],
+    password:  ENV['SES_PASSWORD']
+  }
 end
