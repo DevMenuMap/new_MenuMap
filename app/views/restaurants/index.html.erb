@@ -4,7 +4,7 @@
 
 <%= will_paginate @restaurants %>
 
-<table>
+<table class="table">
 	<tr>
 		<% Restaurant.column_names.each do |column| %>
 			<th><%= column %></th>
@@ -14,7 +14,7 @@
 	</tr>
 
 	<% @restaurants.each do |restaurant| %>
-		<tr>
+		<tr data-url="<%= restaurant_path(restaurant) %>">
 			<% restaurant.attributes.each_value do |value| %>
 				<td><%= value %></td>
 			<% end %>
@@ -23,3 +23,11 @@
 		</tr>
 	<% end %>
 </table>
+
+<script>
+	$(function () {
+    $('table.table tr').click(function () {
+        window.location.href = $(this).data('url');
+    });
+	})
+</script>
