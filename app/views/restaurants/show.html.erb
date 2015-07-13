@@ -38,18 +38,11 @@
 <!-- Comment -->
 <h1>Comment section</h1>
 <div id="comment_count">
-	<%= @restaurant.comments.count %>
+	<%= @comments.count %>
 </div> 
-<table>
-	<tr>
-		<th>contents</th>
-		<th></th>
-		<th></th>
-	</tr>
-	<tbody id="comment_section">
-		<%= render partial: "comments/show", collection: @restaurant.comments, as: :comment %>
-	</tbody>
-</table>
+<div id="comment_section">
+	<%= render "comments/page" %>
+</div>
 
 <%= render "comments/new" %>
 
@@ -61,3 +54,9 @@
 	<%= link_to "edit", edit_picture_path(picture) %>
 	<%= link_to "destroy", picture_path(picture), method: :delete %>
 <% end %>
+
+<script>
+	$(function(){
+		$('.pagination a').attr('data-remote', 'true')
+	});
+</script>

@@ -1,5 +1,5 @@
-	<tr id="comment_<%= comment.id %>">
-		<td style="width: 340px;"><%= comment.contents %></td>
-		<td><%= link_to "edit", edit_comment_path(comment), class: "edit_comment", remote: true %>
-		<td><%= link_to "delete", comment_path(comment), class: "delete_comment", method: :delete, remote: true, data: { confirm: "gogo?" } %>
-	</tr>
+<tr id="comment_<%= comment.id %>">
+	<td style="width: 340px;"><%= comment.contents %></td>
+	<td><%= link_to "edit", edit_comment_path(comment), class: "edit_comment", remote: true %>
+	<td><%= link_to "delete", comment_path(comment), class: "delete_comment", method: :delete, remote: true, data: { confirm: "gogo?" } %>
+</tr>

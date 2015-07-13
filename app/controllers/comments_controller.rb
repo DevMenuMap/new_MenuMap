@@ -47,6 +47,7 @@ class CommentsController < ApplicationController
 
 		def redirect_to_restaurant_page
 			@restaurant = @comment.restaurant
+			@comments = @restaurant.comments.paginate(:page => params[:page], :per_page => 10)
 
 			respond_to do |format|
 				format.html	{ redirect_to restaurant_url(@restaurant) }
