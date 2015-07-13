@@ -11,6 +11,7 @@
 		<% end %>
 		<th>Best Menu 1</th>
 		<th>Best Menu 2</th> 
+		<th>메뉴 등록</th>
 		<th></th>
 		<th></th>
 	</tr>
@@ -21,13 +22,18 @@
 				<td><%= value %></td>
 			<% end %>
 			<% best_menus = restaurant.title_menus(2) %>
-			<% if best_menus==[] %>
+			<% if best_menus == [] %>
 				<td>Empty</td>
 				<td>Empty</td> 
 			<% else %>
 				<% best_menus.each do |menu| %>
 					<td><%= menu.name %></td>
 				<% end %>
+			<% end %>
+			<% if restaurant.menu_on == 0 %>
+				<td><%= link_to "등록 중", restaurant_path(restaurant, anchor: "new_menu_section") %></td>
+			<% else %>
+				<td><%= link_to "등록 중", restaurant_path(restaurant, anchor: "menu_section_top") %></td>
 			<% end %>
 			<td><%= link_to "show", restaurant_path(restaurant) %></td>
 			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>

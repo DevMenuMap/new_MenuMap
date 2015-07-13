@@ -28,7 +28,7 @@
 
 
 <!-- MenuTitle and Menu -->
-<h1>Menu section</h1>
+<h1 id="menu_section_top">Menu section</h1>
 <div>
 	<p>title_name | title_info</p>
 </div>
@@ -38,7 +38,9 @@
 	<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
 </div>
 
-<%= render "menus/new" %>
+<div id="new_menu_section">
+	<%= render "menus/new" %>
+</div>
 
 
 <!-- Comment -->
