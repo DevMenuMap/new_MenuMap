@@ -1,4 +1,8 @@
 class Address < ActiveRecord::Base
+	### Mixins
+	include Addressable
+
+
 	### Associations
 	has_many :coordinates, as: :latlng
 	has_many :addr_conversions
@@ -22,6 +26,22 @@ class Address < ActiveRecord::Base
 
 
 	### Instance methods
+	# Save address tags on addr_bounds
+	def save_addr_tags
+		if addr_taggable?(id) && coordinates.present? && addr_bounds.present?
+			addr_bounds.each do |bound|
+				range = get_addr_range_hash(bound.addr_code)
+				Restaurant.without_addr_tag(self.id).where("addr_code >= ? AND addr_code < ?", range[:min], range[:max]).each do |r|
+					if r.inside_polygon?(self)
+						r.addr_tags.create(address_id: self.id, active: true)
+					else
+						r.addr_tags.create(address_id: self.id, active: false)
+					end
+				end
+			end
+		end
+	end
+
 	# 광역지방자치단체(1), 기초지방자치단체(2), 법정동(3), 행정동(4)
 	# Administritive district factor
 	def admin_addr_factor(n)

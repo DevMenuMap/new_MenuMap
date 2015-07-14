@@ -221,6 +221,12 @@ class Restaurant < ActiveRecord::Base
 		joins("LEFT JOIN coordinates ON restaurants.id = coordinates.latlng_id AND coordinates.latlng_type = 'Restaurant'").where("coordinates.id IS NULL")
 	end
 
+	# Find Restaurant without addr_tag relationship with address id = args.
+	# Restaurant with inactive addr_tag is considered to have addr_tag.
+	def self.without_addr_tag(id)
+		unscoped.distinct.joins("LEFT JOIN (SELECT addr_tags.* FROM addr_tags WHERE address_id = #{id}) AS temp ON restaurants.id = temp.restaurant_id").where("temp.id IS NULL")
+	end
+
 	# Save Naver's coordinates to restaurant's nested attributes(coordinate
 	# model) based on that area.
 	def self.save_latlngs(area = nil, log_file)

@@ -6,6 +6,6 @@ class AddrTag < ActiveRecord::Base
 
 	### Validations
 	validates :address, presence: true,
-											uniquness: { scope: :restaurant_id }
+											uniqueness: { scope: :restaurant_id }
 	validates :restaurant, presence: true
 end
