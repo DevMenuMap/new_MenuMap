@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714091357) do
+ActiveRecord::Schema.define(version: 20150714092356) do
+
+  create_table "addr_bounds", force: :cascade do |t|
+    t.integer  "address_id", limit: 8
+    t.integer  "addr_code",  limit: 8
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "addr_bounds", ["address_id"], name: "index_addr_bounds_on_address_id", using: :btree
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
@@ -273,6 +282,7 @@ ActiveRecord::Schema.define(version: 20150714091357) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "addr_bounds", "addresses"
   add_foreign_key "addr_conversions", "addresses"
   add_foreign_key "addr_rules", "users"
   add_foreign_key "addr_tags", "addresses"

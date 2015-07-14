@@ -3,9 +3,11 @@ class Address < ActiveRecord::Base
 	has_many :coordinates, as: :latlng
 	has_many :addr_conversions
 	has_many :addr_tags
+	has_many :addr_bounds
 
 	# Associated attributes
 	accepts_nested_attributes_for :coordinates
+	accepts_nested_attributes_for :addr_bounds
 
 
 	### Validations
