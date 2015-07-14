@@ -71,16 +71,21 @@
 	                                      minMaxLevel : [ 1, 14 ],
 	                                      size : new nhn.api.map.Size(800, 480)});
 
-    <% @restaurants.each do |restaurant| %>
-    	var lat = <%= restaurant.lat %>;
-    	var lng = <%= restaurant.lng %>;
-    	var restaurant_name = '<%= restaurant.name %>';
-    	var latlng = new nhn.api.map.LatLng(lat, lng);
-    	var oMarker = new nhn.api.map.Marker(oIcon, {point: latlng, title: restaurant_name});
-			var oLabel = new nhn.api.map.MarkerLabel();
-      oMap.addOverlay(oMarker);
-      oMap.addOverlay(oLabel);
-      oLabel.setVisible(true, oMarker);
+    <% @restaurants.each_with_index do |restaurant, index| %>
+	    <% if restaurant.lat != nil && restaurant.lng != nil %>
+	    	var lat = <%= restaurant.lat %>;
+	    	var lng = <%= restaurant.lng %>;
+	    	var restaurant_name = '<%= restaurant.name %>';
+	    	var latlng = new nhn.api.map.LatLng(lat, lng);
+	    	var oMarker = new nhn.api.map.Marker(oIcon, {point: latlng, title: restaurant_name});
+				var oLabel = new nhn.api.map.MarkerLabel();
+	      oMap.addOverlay(oMarker);
+	      oMap.addOverlay(oLabel);
+	      oLabel.setVisible(true, oMarker);
+	      <% if index==5 %>
+	      	oMap.setCenter(latlng);
+	      <% end %>
+	    <% end %>
     <% end %>
 	};
 </script>
