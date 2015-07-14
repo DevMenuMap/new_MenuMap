@@ -15,6 +15,7 @@ class Restaurant < ActiveRecord::Base
 	has_many	 :menus, through: :menu_titles
 	has_many 	 :comments
 	has_many 	 :pictures, 		as: :imageable
+	has_many 	 :addr_tags
 
 
 	### Associated attributes

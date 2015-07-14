@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713004845) do
+ActiveRecord::Schema.define(version: 20150714091357) do
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(version: 20150713004845) do
   end
 
   add_index "addr_rules", ["user_id"], name: "index_addr_rules_on_user_id", using: :btree
+
+  create_table "addr_tags", force: :cascade do |t|
+    t.integer  "address_id",    limit: 8
+    t.integer  "restaurant_id", limit: 4
+    t.boolean  "active",        limit: 1, default: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "addr_tags", ["address_id"], name: "index_addr_tags_on_address_id", using: :btree
+  add_index "addr_tags", ["restaurant_id"], name: "index_addr_tags_on_restaurant_id", using: :btree
 
   create_table "addrcompletes", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -264,6 +275,8 @@ ActiveRecord::Schema.define(version: 20150713004845) do
 
   add_foreign_key "addr_conversions", "addresses"
   add_foreign_key "addr_rules", "users"
+  add_foreign_key "addr_tags", "addresses"
+  add_foreign_key "addr_tags", "restaurants"
   add_foreign_key "category_relationships", "categories"
   add_foreign_key "category_relationships", "subcategories"
   add_foreign_key "comments", "restaurants"
