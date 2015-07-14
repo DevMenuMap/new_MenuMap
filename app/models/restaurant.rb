@@ -90,20 +90,22 @@ class Restaurant < ActiveRecord::Base
 
 	# Find restaurants which is not relevant with menu_on and menus related
 	def self.menu_on_err(n)
-		if n > 0
+		if n > 0 
 			# restaurants without any menu_titles(menu_title.without_menus can
 			# check if all menu_titles have menus) but menu_on is bigger than 0.
-			where("menu_on > 0 AND id NOT IN ( SELECT DISTINCT restaurant_id FROM menu_titles )")
+			joins("LEFT JOIN menu_titles ON restaurants.id = menu_titles.restaurant_id").where("menu_on > 0 AND menu_titles.id IS NULL")
 		else
 			# restaurants which have menus but menu_on equals 0.
-			where("menu_on = 0 AND id IN ( SELECT DISTINCT restaurant_id FROM menu_titles )")
+			# It needs distinct option because join table will return duplicate 
+			# restaurants.
+			distinct.joins("LEFT JOIN menu_titles ON restaurants.id = menu_titles.restaurant_id").where("menu_on = 0 AND menu_titles.id IS NOT NULL")
 		end
 	end
 
 	# Find restaurants which has no associated rest_info and make one for
 	# one to one association.
 	def self.create_rest_infos(log_file)
-		self.where("id NOT IN (SELECT DISTINCT(restaurant_id) FROM rest_infos)").each do |restaurant|
+		joins("LEFT JOIN rest_infos ON restaurants.id = rest_infos.id").where("rest_infos.id IS NULL").each do |restaurant|
 			if restaurant.create_rest_info(id: restaurant.id)
 				log_file.puts "Succeed in making rest_info id: #{restaurant.id}"
 			else
@@ -112,9 +114,14 @@ class Restaurant < ActiveRecord::Base
 		end
 	end
 
-	# Find Restaurant without one of the coordinates
+	# Find Restaurant with Naver's coordinate.
+	def self.with_latlng
+		joins("LEFT JOIN coordinates ON restaurants.id = coordinates.latlng_id AND coordinates.latlng_type = 'Restaurant'").where("coordinates.id IS NOT NULL")
+	end
+	
+	# Find Restaurant without Naver's coordinate.
 	def self.without_latlng
-		self.where("id NOT IN ( SELECT latlng_id FROM coordinates WHERE latlng_type = ? AND lat IS NOT NULL AND lng IS NOT NULL)", "Restaurant")
+		joins("LEFT JOIN coordinates ON restaurants.id = coordinates.latlng_id AND coordinates.latlng_type = 'Restaurant'").where("coordinates.id IS NULL")
 	end
 
 	# Save Naver's coordinates to restaurant's nested attributes(coordinate
@@ -151,6 +158,11 @@ class Restaurant < ActiveRecord::Base
 
 	def g_lng
 		rest_info.coordinate ? rest_info.coordinate.lng : nil
+	end
+
+	# If a restaurant has Naver's coordinate.
+	def with_latlng?
+		coordinate.present?
 	end
 
 	# Find most recent menus updated_at
