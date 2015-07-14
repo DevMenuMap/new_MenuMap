@@ -89,6 +89,102 @@ class Restaurant < ActiveRecord::Base
 		end
 	end
 
+	def self.convert_addr_to_unique_address_ids(addr)
+		AddrConversion.where("'#{addr}' LIKE CONCAT('%', convert_from, '%')").distinct.pluck(:address_id)
+	end
+
+	# Return hash for address_id's ranges for each district.
+	def self.address_range_hash(addr_array)
+		# :gu_2 exists just for matching the numbers.
+		addr_hash = { addr_tag: [], si: [], gu: [], gu_2: [], 
+									legal_dong: [], admin_dong: [] }
+		addr_array.each do |id|
+			if id > 10**11					# :addr_tag
+				n = 0
+			elsif id % 10**9 == 0		# :si
+				n = 1
+			elsif id % 10**7 == 0		# :gu
+				n = 2
+			elsif id % 10**3 == 0		# :legal_dong
+				n = 4 
+			else										# :admin_dong	
+				n = 5 								
+			end
+
+			# Key for addr_hash
+			key = addr_hash.keys[n]
+			if n == 0
+				addr_hash[key] << id
+			elsif n < 3
+				addr_hash[key] << { min: id, max: id + 10**(11 - 2*n) }
+			elsif n > 3
+				# Divider for not subordinate dongs.
+				divider = 16 - 3*n
+				# When it is not subordinate dong. e.g. 신림동(o), 신림3동(x)
+				if id % 10**divider == 0
+					addr_hash[key] << { min: id, max: id + 10**divider }
+				# When it is subordinate dong. e.g. 대치2동, 개포1동
+				else							 
+					addr_hash[key] << { min: id, max: id + 10**(divider - 1) }
+				end
+			end
+		end
+
+		addr_hash
+	end
+
+	# Return sql query statement for searching by address.
+	# addr_hash = { :addr_tag, :si, :gu, :gu_2, :legal_dong, :admin_dong }
+	def self.addr_sql_query(addr_hash)
+		sql = { addr_tag: [], si: [], gu: [], legal_dong: [], admin_dong: [] }
+		addr_hash.each_key do |key|
+			# if addr_hash[key].present?
+			if addr_hash[key].present? && key != :addr_tag
+					
+				temp = []
+				addr_hash[key].each do |range|
+					# if key == :addr_tag
+						# temp << "id IN (SELECT DISTINCT addr_tags.restaurant_id 
+						# FROM addr_tags WHERE addr_tags.address_id = #{n})"
+					# elsif key != :admin_dong
+					if key != :admin_dong
+						temp << "( addr_code >= #{range[:min]} AND addr_code < #{range[:max]} )"
+					else
+						admin =  "MOD(addr_code, 1000) >= #{range[:min] % 1000} AND "
+						admin += "MOD(addr_code, 1000) <  #{range[:max] % 1000} AND "
+						admin += "(addr_code div POW(10,6))	= #{range[:min] / 10**6}"
+						temp << ( "(" + admin + ")" )
+					end
+				end
+				
+				sql[key] = "(" + temp.join(" OR ") + ")"
+			end
+		end
+
+		temp = []
+		sql.each do |key, value|
+			if key != :legal_dong && key != :admin_dong
+				temp << value
+			end
+		end
+		temp.flatten!
+		
+		sql_query = ""
+		if temp.present?
+			temp.map{ |q| sql_query += q + " AND " }
+		end
+		if sql[:legal_dong].present? && sql[:admin_dong].present?
+			sql_query += "(" + sql[:legal_dong] + " OR " + sql[:admin_dong] + ")"
+		elsif sql[:legal_dong].present? 
+			sql_query += sql[:legal_dong]
+		elsif sql[:admin_dong].present?
+			sql_query += sql[:admin_dong]
+		else
+			sql_query.gsub!(/\sAND\s$/, '')
+		end
+		sql_query
+	end
+
 	# Find restaurants which is not relevant with menu_on and menus related
 	def self.menu_on_err(n)
 		if n > 0 
@@ -221,105 +317,35 @@ class Restaurant < ActiveRecord::Base
 		end
 	end
 
-	### Private Class methods
-	class << self
+	# Return true if restaurant is inside that address.(address_taggable)
+	def inside_polygon?(address)
+		latlng_array = address.coordinates
+		contains_point = false
+		# contains_point = true 
 
-	private
-
-		def convert_addr_to_unique_address_ids(addr)
-			AddrConversion.where("'#{addr}' LIKE CONCAT('%', convert_from, '%')").distinct.pluck(:address_id)
+		i = -1
+		j = latlng_array.size - 1
+		while (i += 1) < latlng_array.size
+			base_point = latlng_array[i]
+			trailing_point = latlng_array[j]
+			if point_is_between_lats_of_line_segment?(base_point, trailing_point)
+				if ray_crosses_through_line_segment?(base_point, trailing_point)
+					contains_point = !contains_point
+				end
+			end
+			j = i
 		end
+		contains_point
+	end
 
-		# Return hash for address_id's ranges for each district.
-		def address_range_hash(addr_array)
-			# :gu_2 exists just for matching the numbers.
-			addr_hash = { addr_tag: [], si: [], gu: [], gu_2: [], 
-										legal_dong: [], admin_dong: [] }
-			addr_array.each do |id|
-				if id > 10**11					# :addr_tag
-					n = 0
-				elsif id % 10**9 == 0		# :si
-					n = 1
-				elsif id % 10**7 == 0		# :gu
-					n = 2
-				elsif id % 10**3 == 0		# :legal_dong
-					n = 4 
-				else										# :admin_dong	
-					n = 5 								
-				end
+	# Check if point's latitude is between base and trailing's latitude.
+	def point_is_between_lats_of_line_segment?(base_point, trailing_point)
+		(base_point.lat <= self.lat && self.lat < trailing_point.lat) ||
+		(trailing_point.lat <= self.lat && self.lat < base_point.lat)
+	end
 
-				# Key for addr_hash
-				key = addr_hash.keys[n]
-				if n == 0
-					addr_hash[key] << id
-				elsif n < 3
-					addr_hash[key] << { min: id, max: id + 10**(11 - 2*n) }
-				elsif n > 3
-					# Divider for not subordinate dongs.
-					divider = 16 - 3*n
-					# When it is not subordinate dong. e.g. 신림동(o), 신림3동(x)
-					if id % 10**divider == 0
-						addr_hash[key] << { min: id, max: id + 10**divider }
-					# When it is subordinate dong. e.g. 대치2동, 개포1동
-					else							 
-						addr_hash[key] << { min: id, max: id + 10**(divider - 1) }
-					end
-				end
-			end
-
-			addr_hash
-		end
-	
-		# Return sql query statement for searching by address.
-		# addr_hash = { :addr_tag, :si, :gu, :gu_2, :legal_dong, :admin_dong }
-		def addr_sql_query(addr_hash)
-			sql = { addr_tag: [], si: [], gu: [], legal_dong: [], admin_dong: [] }
-			addr_hash.each_key do |key|
-				# if addr_hash[key].present?
-				if addr_hash[key].present? && key != :addr_tag
-						
-					temp = []
-					addr_hash[key].each do |range|
-						# if key == :addr_tag
-							# temp << "id IN (SELECT DISTINCT addr_tags.restaurant_id 
-							# FROM addr_tags WHERE addr_tags.address_id = #{n})"
-						# elsif key != :admin_dong
-						if key != :admin_dong
-							temp << "( addr_code >= #{range[:min]} AND addr_code < #{range[:max]} )"
-						else
-							admin =  "MOD(addr_code, 1000) >= #{range[:min] % 1000} AND "
-							admin += "MOD(addr_code, 1000) <  #{range[:max] % 1000} AND "
-							admin += "(addr_code div POW(10,6))	= #{range[:min] / 10**6}"
-							temp << ( "(" + admin + ")" )
-						end
-					end
-					
-					sql[key] = "(" + temp.join(" OR ") + ")"
-				end
-			end
-
-			temp = []
-			sql.each do |key, value|
-				if key != :legal_dong && key != :admin_dong
-					temp << value
-				end
-			end
-			temp.flatten!
-			
-			sql_query = ""
-			if temp.present?
-				temp.map{ |q| sql_query += q + " AND " }
-			end
-			if sql[:legal_dong].present? && sql[:admin_dong].present?
-				sql_query += "(" + sql[:legal_dong] + " OR " + sql[:admin_dong] + ")"
-			elsif sql[:legal_dong].present? 
-				sql_query += sql[:legal_dong]
-			elsif sql[:admin_dong].present?
-				sql_query += sql[:admin_dong]
-			else
-				sql_query.gsub!(/\sAND\s$/, '')
-			end
-			sql_query
-		end
+	# Compare slopes from base_point to other points.
+	def ray_crosses_through_line_segment?(base_point, trailing_point)
+		(self.lng - base_point.lng) < (trailing_point.lng - base_point.lng) * (self.lat - base_point.lat) / (trailing_point.lat - base_point.lat)
 	end
 end
