@@ -36,8 +36,8 @@ class Restaurant < ActiveRecord::Base
 
 	### Class methods
 	# Find restaurants with user's query
-	def self.search(delivery, category, name)
-		search_by_delivery(delivery).search_by_category(category).search_by_name(name)
+	def self.search(delivery = nil, category = nil, name = nil, addr = nil)
+		search_by_delivery(delivery).search_by_category(category).search_by_name(name).search_by_addr(addr)
 	end
 
 	def self.search_by_delivery(delivery)
@@ -64,6 +64,25 @@ class Restaurant < ActiveRecord::Base
 				sql << "name LIKE '%#{s}%'"	
 			end
 			where(sql.join(" AND "))
+		else
+			all
+		end
+	end
+
+	def self.search_by_addr(addr)
+		if addr.present?
+			# Search unique addresses with addr query return addr_hash
+			address_id_array = convert_addr_to_unique_address_ids(addr)
+
+			# Return empty activerecord relation []
+			return Restaurant.none if address_id_array.blank?
+
+			# Return addr_hash based on district category. 
+			# {:addr_tag, :si, :gu, :gu_2, :legal_dong, :admin_dong}
+			address_hash = address_range_hash(address_id_array)
+
+			# addr_sql_query returns real query statement for searching by addr.
+			where(addr_sql_query(address_hash))
 		else
 			all
 		end
@@ -186,6 +205,108 @@ class Restaurant < ActiveRecord::Base
 			coordinate.destroy						if coordinate.present?
 			rest_info.coordinate.destroy	if rest_info.coordinate.present?
 			rest_info.update(addr_updated_at: Time.now)
+		end
+	end
+
+	### Private Class methods
+	class << self
+
+	private
+
+		def convert_addr_to_unique_address_ids(addr)
+			AddrConversion.where("'#{addr}' LIKE CONCAT('%', convert_from, '%')").distinct.pluck(:address_id)
+		end
+
+		# Return hash for address_id's ranges for each district.
+		def address_range_hash(addr_array)
+			# :gu_2 exists just for matching the numbers.
+			addr_hash = { addr_tag: [], si: [], gu: [], gu_2: [], 
+										legal_dong: [], admin_dong: [] }
+			addr_array.each do |id|
+				if id > 10**11					# :addr_tag
+					n = 0
+				elsif id % 10**9 == 0		# :si
+					n = 1
+				elsif id % 10**7 == 0		# :gu
+					n = 2
+				elsif id % 10**3 == 0		# :legal_dong
+					n = 4 
+				else										# :admin_dong	
+					n = 5 								
+				end
+
+				# Key for addr_hash
+				key = addr_hash.keys[n]
+				if n == 0
+					addr_hash[key] << id
+				elsif n < 3
+					addr_hash[key] << { min: id, max: id + 10**(11 - 2*n) }
+				elsif n > 3
+					# Divider for not subordinate dongs.
+					divider = 16 - 3*n
+					# When it is not subordinate dong. e.g. 신림동(o), 신림3동(x)
+					if id % 10**divider == 0
+						addr_hash[key] << { min: id, max: id + 10**divider }
+					# When it is subordinate dong. e.g. 대치2동, 개포1동
+					else							 
+						addr_hash[key] << { min: id, max: id + 10**(divider - 1) }
+					end
+				end
+			end
+
+			addr_hash
+		end
+	
+		# Return sql query statement for searching by address.
+		# addr_hash = { :addr_tag, :si, :gu, :gu_2, :legal_dong, :admin_dong }
+		def addr_sql_query(addr_hash)
+			sql = { addr_tag: [], si: [], gu: [], legal_dong: [], admin_dong: [] }
+			addr_hash.each_key do |key|
+				# if addr_hash[key].present?
+				if addr_hash[key].present? && key != :addr_tag
+						
+					temp = []
+					addr_hash[key].each do |range|
+						# if key == :addr_tag
+							# temp << "id IN (SELECT DISTINCT addr_tags.restaurant_id 
+							# FROM addr_tags WHERE addr_tags.address_id = #{n})"
+						# elsif key != :admin_dong
+						if key != :admin_dong
+							temp << "( addr_code >= #{range[:min]} AND addr_code < #{range[:max]} )"
+						else
+							admin =  "MOD(addr_code, 1000) >= #{range[:min] % 1000} AND "
+							admin += "MOD(addr_code, 1000) <  #{range[:max] % 1000} AND "
+							admin += "(addr_code div POW(10,6))	= #{range[:min] / 10**6}"
+							temp << ( "(" + admin + ")" )
+						end
+					end
+					
+					sql[key] = "(" + temp.join(" OR ") + ")"
+				end
+			end
+
+			temp = []
+			sql.each do |key, value|
+				if key != :legal_dong && key != :admin_dong
+					temp << value
+				end
+			end
+			temp.flatten!
+			
+			sql_query = ""
+			if temp.present?
+				temp.map{ |q| sql_query += q + " AND " }
+			end
+			if sql[:legal_dong].present? && sql[:admin_dong].present?
+				sql_query += "(" + sql[:legal_dong] + " OR " + sql[:admin_dong] + ")"
+			elsif sql[:legal_dong].present? 
+				sql_query += sql[:legal_dong]
+			elsif sql[:admin_dong].present?
+				sql_query += sql[:admin_dong]
+			else
+				sql_query.gsub!(/\sAND\s$/, '')
+			end
+			sql_query
 		end
 	end
 end
