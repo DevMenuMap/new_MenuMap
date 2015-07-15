@@ -20,7 +20,7 @@ class Address < ActiveRecord::Base
 
 	### Class methods
 	# Return Address for AddrTag
-	def Address.addr_tag_category
+	def self.addr_tag_category
 		where("MOD(id, 1000000000) = ? AND id > ?", 0, 100000000000)
 	end
 
@@ -40,6 +40,13 @@ class Address < ActiveRecord::Base
 				end
 			end
 		end
+	end
+
+	# Return original addr_bounds' addr_codes as array.
+	def addr_bound_array
+		array = []
+		addr_bounds.map{ |ab| array << ab.addr_code }
+		array.sort
 	end
 
 	# 광역지방자치단체(1), 기초지방자치단체(2), 법정동(3), 행정동(4)

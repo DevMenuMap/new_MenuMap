@@ -31,7 +31,7 @@ class Restaurant < ActiveRecord::Base
 
 	
 	### Scopes
-	default_scope { where active: true }
+	default_scope { where(active: true) }
 	
 	scope :in_area, -> (area) { where("addr LIKE ?", "%#{area}%") if area }
 

@@ -8,4 +8,8 @@ class AddrTag < ActiveRecord::Base
 	validates :address, presence: true,
 											uniqueness: { scope: :restaurant_id }
 	validates :restaurant, presence: true
+
+
+	### Scopes
+	default_scope { where(active: true) }
 end
