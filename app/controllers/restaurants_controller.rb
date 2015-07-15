@@ -4,6 +4,11 @@ class RestaurantsController < ApplicationController
 
   def index
 		@restaurants = Restaurant.paginate(:page => params[:page], :per_page => 10)
+		if @restaurants.present?
+			render 'index'
+		else
+			render 'no_result'
+		end
   end
 
   def show
