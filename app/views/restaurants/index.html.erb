@@ -30,13 +30,13 @@
 				<td>Empty</td> 
 			<% else %>
 				<% best_menus.each do |menu| %>
-					<td><%= menu.name %></td>
+					<td><%= menu %></td>
 				<% end %>
 			<% end %>
-			<% if restaurant.menu_on == 0 %>
-				<td><%= link_to "등록 중", restaurant_path(restaurant, anchor: "new_menu_section") %></td>
-			<% else %>
+			<% if restaurant.menu_on? %>
 				<td><%= link_to "등록 중", restaurant_path(restaurant, anchor: "menu_section_top") %></td>
+			<% else %>
+				<td><%= link_to "미등록", restaurant_path(restaurant, anchor: "new_menu_section") %></td>
 			<% end %>
 			<td><%= link_to "show", restaurant_path(restaurant) %></td>
 			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
