@@ -290,6 +290,30 @@ class Restaurant < ActiveRecord::Base
 		title_menus.join(", ")
 	end
 
+	# n > 2 because title_addr_tags will return nil.
+	def title_addrs(n)
+		[legal_dong, admin_dong, title_addr_tags(n - 2)].flatten.join(', ')
+	end
+
+	# Return legal_dong for this restaurant.
+	def legal_dong
+		Address.find(( self.addr_code / LEGAL_DONG ) * LEGAL_DONG ).name.gsub(/^[^\s]*\s[^\s]*\s/, '').gsub(/\s\(.*\)$/, '')
+	end
+
+	# Return admin_dong for this restaurant.
+	def admin_dong 
+		mod = self.addr_code % LEGAL_DONG 
+		address_id = ( self.addr_code / ADMIN_GU ) * ADMIN_GU + mod
+		Address.find(address_id).name.gsub(/^[^\s]*\s[^\s]*\s/, '').gsub(/\s\(.*\)$/, '')
+	end
+
+	# Return representative addr_tags for this restaurant.
+	def title_addr_tags(n) 
+		title = []
+		addresses.take(n).map{ |a| title << a.name.gsub(/^.*\s\-\s/, '') }
+		title.join(', ')
+	end
+
 	# If restaurant's address is changed, delete addr_code, addr_tags and
 	# coordinates and update addr_updated_at.
 	def destroy_related_when_addr_updated(params)
