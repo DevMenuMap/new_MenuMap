@@ -28,13 +28,15 @@ module Addressable
 			divider = divider_for_non_subordinate_dong(n)
 			divider == LEGAL_DONG * 10 ? key = :legal_dong : key = :admin_dong
 			# When it is not subordinate dong. e.g. 신림동(o), 신림3동(x)
-			if id % divider == 0
-				addr_range_hash[key] = { min: id, max: id + divider }
+			if n % divider == 0
+				addr_range_hash[key] = { min: n, max: n + divider }
 			# When it is subordinate dong. e.g. 대치2동, 개포1동
 			else							 
-				addr_range_hash[key] = { min: id, max: id + ( divider / 10 ) }
+				addr_range_hash[key] = { min: n, max: n + ( divider / 10 ) }
 			end
 		end
+		
+		addr_range_hash
 	end
 
 	# Return divider which can determine if the dong is subordinate or not.

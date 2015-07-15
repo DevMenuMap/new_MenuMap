@@ -1,6 +1,7 @@
 class Restaurant < ActiveRecord::Base
 	### Mixins
 	include Naver
+	include Addressable
 
 
 	### Associations
@@ -93,41 +94,19 @@ class Restaurant < ActiveRecord::Base
 		AddrConversion.where("'#{addr}' LIKE CONCAT('%', convert_from, '%')").distinct.pluck(:address_id)
 	end
 
-	# Return hash for address_id's ranges for each district.
+	# Return hash for address_id's ranges for each addr_tag or district.
 	def self.address_range_hash(addr_array)
-		# :gu_2 exists just for matching the numbers.
-		addr_hash = { addr_tag: [], si: [], gu: [], gu_2: [], 
+		addr_hash = { addr_tag: [], 	si: [], gu: [], 
 									legal_dong: [], admin_dong: [] }
-		addr_array.each do |id|
-			if id > 10**11					# :addr_tag
-				n = 0
-			elsif id % 10**9 == 0		# :si
-				n = 1
-			elsif id % 10**7 == 0		# :gu
-				n = 2
-			elsif id % 10**3 == 0		# :legal_dong
-				n = 4 
-			else										# :admin_dong	
-				n = 5 								
-			end
+		# To call instance methods from Addressable.
+		instance = self.new
 
-			# Key for addr_hash
-			key = addr_hash.keys[n]
-			if n == 0
-				addr_hash[key] << id
-			elsif n < 3
-				addr_hash[key] << { min: id, max: id + 10**(11 - 2*n) }
-			elsif n > 3
-				# Divider for not subordinate dongs.
-				divider = 16 - 3*n
-				# When it is not subordinate dong. e.g. 신림동(o), 신림3동(x)
-				if id % 10**divider == 0
-					addr_hash[key] << { min: id, max: id + 10**divider }
-				# When it is subordinate dong. e.g. 대치2동, 개포1동
-				else							 
-					addr_hash[key] << { min: id, max: id + 10**(divider - 1) }
-				end
-			end
+		addr_array.each do |id|
+			# Return { key: { :min, :max } }
+			hash = instance.get_addr_range_hash(id)
+			key  = hash.keys.first	
+			value = hash.values.first
+			addr_hash[key] << value
 		end
 
 		addr_hash
