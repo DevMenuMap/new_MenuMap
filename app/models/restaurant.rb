@@ -113,20 +113,17 @@ class Restaurant < ActiveRecord::Base
 	end
 
 	# Return sql query statement for searching by address.
-	# addr_hash = { :addr_tag, :si, :gu, :gu_2, :legal_dong, :admin_dong }
+	# addr_hash = { :addr_tag, :si, :gu, :legal_dong, :admin_dong }
 	def self.addr_sql_query(addr_hash)
 		sql = { addr_tag: [], si: [], gu: [], legal_dong: [], admin_dong: [] }
 		addr_hash.each_key do |key|
-			# if addr_hash[key].present?
-			if addr_hash[key].present? && key != :addr_tag
+			if addr_hash[key].present?
 					
 				temp = []
 				addr_hash[key].each do |range|
-					# if key == :addr_tag
-						# temp << "id IN (SELECT DISTINCT addr_tags.restaurant_id 
-						# FROM addr_tags WHERE addr_tags.address_id = #{n})"
-					# elsif key != :admin_dong
-					if key != :admin_dong
+					if key == :addr_tag
+						temp << "id IN (SELECT addr_tags.restaurant_id FROM addr_tags WHERE addr_tags.address_id = #{range} AND active = 1)"
+					elsif key != :admin_dong
 						temp << "( addr_code >= #{range[:min]} AND addr_code < #{range[:max]} )"
 					else
 						admin =  "MOD(addr_code, 1000) >= #{range[:min] % 1000} AND "
@@ -140,6 +137,7 @@ class Restaurant < ActiveRecord::Base
 			end
 		end
 
+		# Flatten legal_dongs and addr_dongs because they are in the same level.
 		temp = []
 		sql.each do |key, value|
 			if key != :legal_dong && key != :admin_dong
@@ -159,6 +157,7 @@ class Restaurant < ActiveRecord::Base
 		elsif sql[:admin_dong].present?
 			sql_query += sql[:admin_dong]
 		else
+			# Remove ' AND ' when there is no dong query.
 			sql_query.gsub!(/\sAND\s$/, '')
 		end
 		sql_query
