@@ -17,6 +17,7 @@ class Restaurant < ActiveRecord::Base
 	has_many 	 :comments
 	has_many 	 :pictures, 		as: :imageable
 	has_many 	 :addr_tags
+	has_many	 :addresses, through: :addr_tags
 
 
 	### Associated attributes
@@ -202,7 +203,7 @@ class Restaurant < ActiveRecord::Base
 	# Find Restaurant without addr_tag relationship with address id = args.
 	# Restaurant with inactive addr_tag is considered to have addr_tag.
 	def self.without_addr_tag(id)
-		unscoped.distinct.joins("LEFT JOIN (SELECT addr_tags.* FROM addr_tags WHERE address_id = #{id}) AS temp ON restaurants.id = temp.restaurant_id").where("temp.id IS NULL")
+		unscoped.distinct.joins("LEFT JOIN (SELECT addr_tags.* FROM addr_tags WHERE address_id = #{id}) AS temp ON restaurants.id = temp.restaurant_id").where("temp.id IS NULL AND restaurants.active = 1")
 	end
 
 	# Save Naver's coordinates to restaurant's nested attributes(coordinate

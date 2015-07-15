@@ -7,6 +7,7 @@ class Address < ActiveRecord::Base
 	has_many :coordinates, as: :latlng
 	has_many :addr_conversions
 	has_many :addr_tags
+	has_many :restaurants, through: :addr_tags
 	has_many :addr_bounds
 
 	# Associated attributes
@@ -30,12 +31,15 @@ class Address < ActiveRecord::Base
 	def save_addr_tags
 		if addr_taggable?(id) && coordinates.present? && addr_bounds.present?
 			addr_bounds.each do |bound|
-				range = get_addr_range_hash(bound.addr_code)
+				range = get_addr_range_hash(bound.addr_code).values.first
 				Restaurant.without_addr_tag(self.id).where("addr_code >= ? AND addr_code < ?", range[:min], range[:max]).each do |r|
 					if r.inside_polygon?(self)
 						r.addr_tags.create(address_id: self.id, active: true)
 					else
-						r.addr_tags.create(address_id: self.id, active: false)
+						# default scope makes addr_tags always active: true
+						t = r.addr_tags.new(address_id: self.id)
+						t.active = false
+						t.save
 					end
 				end
 			end
