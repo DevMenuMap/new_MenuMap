@@ -46,8 +46,8 @@ class RestaurantsController < ApplicationController
 		if @restaurant.save
 			flash[:alert] = "succeed restaurants#create"
 			# Whenever creating a new Restaurant, create RestInfo also
-			RestInfo.create(id: @restaurant.id, restaurant_id: @restaurant.id)
-
+			# RestInfo.create(id: @restaurant.id, restaurant_id: @restaurant.id)
+			create_rest_info
 			# Multiple images upload
 			if params[:restaurant][:pictures_attributes]
 				params[:restaurant][:pictures_attributes]["0"][:img].each do |img|
@@ -85,8 +85,11 @@ class RestaurantsController < ApplicationController
 	end
 
 	def destroy
-		Restaurant.find(params[:id]).update(active: false)
+		@restaurant = Restaurant.find(params[:id])
+		@restaurant.update(active: false)
+		# Restaurant.find(params[:id]).update(active: false)
 		# inactivate belongings
+		inactivate_related
 		redirect_to restaurants_url
 	end
 
@@ -95,5 +98,15 @@ class RestaurantsController < ApplicationController
 			params.require(:restaurant).permit(:name, :addr, :phnum, :delivery,
 																				 :category_id, :subcategory_id, 
 																				 :menu_on, :open_at, :pictures)
+		end
+
+		def inactivate_related
+			@restaurant.rest_info.coordinate.destroy if @restaurant.rest_info.coordinate.present? 
+			@restaurant.rest_info.update(active: false)
+			@restaurant.coordinate.destroy if @restaurant.coordinate.present?
+		end
+
+		def create_rest_info
+			RestInfo.create(id: @restaurant.id, restaurant_id: @restaurant.id)
 		end
 end

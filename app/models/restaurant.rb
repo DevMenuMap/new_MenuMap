@@ -27,6 +27,8 @@ class Restaurant < ActiveRecord::Base
 	validates :category_id, presence: true
 	validates :subcategory_id, presence: true
 
+	validate :no_subcategory_divided_by_10000
+	validate :no_category_divided_by_1000000
 	
 	### Scopes
 	default_scope { where active: true }
@@ -161,5 +163,17 @@ class Restaurant < ActiveRecord::Base
 
 	def menu_on?
 		menu_on == 0 ? false : true
+	end
+
+	def no_subcategory_divided_by_10000
+		if subcategory_id % 10000 == 0
+			errors.add(:subcategory_id, "no subcategory_id divide by 10000")
+		end
+	end
+
+	def no_category_divided_by_1000000
+		if category_id % 1000000 == 0
+			errors.add(:category_id, "no category_id divide by 1000000")
+		end
 	end
 end
