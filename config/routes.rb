@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 		resources :menu_titles,  except: [:index, :show, :new]
 		resources :menus, 		 	 except: [:index]
 		resources :comments, 		 except: [:index, :add_menu, :update_menu]
-		resource	:mymap, 			 only: 	 [:new, :create]
+		resources	:mymap, 			 only: 	 [:new, :create]
 	end
 
 	# Index pages which is not bounded with :restaurants
@@ -62,7 +62,7 @@ Rails.application.routes.draw do
 	resources :slangs
 
 	# MyMap :new, :create depends on restaurants.
-	resource :mymap, except: [:new, :create]
+	resources :mymap, except: [:index, :new, :create]
 	# change :id to :username
 	get '/users/:id/MyMap' => 'mymap#index', as: :mymap_index
 	# Case insensitive redirection to users' MyMap page

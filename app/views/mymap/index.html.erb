@@ -2,12 +2,13 @@
 
 <table>
 	<tr>
+		<th>mymap_id</th>
 		<th>restaurant_id</th>
 		<th>restaurant_name</th>
 		<th>mymap_button</th>
 	</tr>
 
-	<%= render partial: "mymap", collection: @restaurants, as: :restaurant %>
+	<%= render partial: "mymap", collection: @mymaps %>
 </table>
 
 <div id="modal">
