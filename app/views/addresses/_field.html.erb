@@ -1,0 +1,16 @@
+<%= f.label :coordinates %>
+<%= f.fields_for :coordinates do |ff| %>
+	<% 10.times do |n| %>
+		<%= render "shared/coordinate_field", f: ff, n: n %>
+		<br />
+	<% end %>
+<% end %>
+
+<% if @address.addr_taggable?(@address.id) %>
+	<%= f.label :addr_bounds %>
+	<%= f.fields_for :addr_bounds do |ff| %>
+		<% 5.times do |n| %>
+			<%= ff.number_field :addr_code, multiple: true %>
+		<% end %>
+	<% end %>
+<% end %>

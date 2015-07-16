@@ -16,6 +16,6 @@ class MenuTitle < ActiveRecord::Base
 	### Class methods
 	# Find menu_titles without menus
 	def self.without_menus
-		where("id NOT IN ( SELECT DISTINCT menu_title_id FROM menus )")
+		joins("LEFT JOIN menus ON menu_titles.id = menus.menu_title_id").where("menus.id IS NULL")
 	end
 end

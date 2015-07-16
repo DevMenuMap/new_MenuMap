@@ -10,15 +10,13 @@ module MetaTagsHelper
 
 	# Each restaurants#show page specific meta title
 	def restaurant_meta_title
-		# if params[:action] == "show"
-			title = "[" + @restaurant.subcategory.name + "] " 	# subcategory
-			title += @restaurant.name + " - "										# name
-			# title += @restaurant.title_addr + " "							# title_addr
-			title	+= "배달가능" if @restaurant.delivery					# delivery
-			title += " || MenuMap 온라인 메뉴제공 서비스"				# MenuMap
-		# else
-		# 	DEFAULT_META_TITLE
-		# end			
+		title = "[" + @restaurant.subcategory.name + "] " 	# subcategory
+		title += @restaurant.name + " - "										# name
+		title += @restaurant.legal_dong 										# legal_dong 
+		title += ", " 				if @restaurant.title_addr_tags(1).present?
+		title += @restaurant.title_addr_tags(1) 						# title_addr
+		title	+= "(배달가능)" if @restaurant.delivery				# delivery
+		title += " || MenuMap 온라인 메뉴제공 서비스"				# MenuMap
 	end
 
 
@@ -27,8 +25,9 @@ module MetaTagsHelper
 	def restaurant_meta_description
 		description	 = "음식점 #{@restaurant.name}("
 		description	+= "#{@restaurant.category.name}) "
-		# description =  "주요상권 및 위치: [#{additional_addr}] #{@restaurant.addr}"
-		description += "주요상권 및 위치: #{@restaurant.addr}"
+		description += "주요상권 및 위치: "
+		description += "[#{@restaurant.title_addr_tags(2)}] " if @restaurant.title_addr_tags(1).present?
+		description += "(#{@restaurant.admin_dong}) #{@restaurant.addr}"
 
 		# 4~5 menus would appear on meta description.
 		if @restaurant.menus.present?

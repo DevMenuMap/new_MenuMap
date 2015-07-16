@@ -1,6 +1,7 @@
 class Restaurant < ActiveRecord::Base
 	### Mixins
 	include Naver
+	include Addressable
 
 
 	### Associations
@@ -15,6 +16,8 @@ class Restaurant < ActiveRecord::Base
 	has_many	 :menus, through: :menu_titles
 	has_many 	 :comments
 	has_many 	 :pictures, 		as: :imageable
+	has_many 	 :addr_tags
+	has_many	 :addresses, through: :addr_tags
 
 
 	### Associated attributes
@@ -29,7 +32,7 @@ class Restaurant < ActiveRecord::Base
 
 	
 	### Scopes
-	default_scope { where active: true }
+	default_scope { where(active: true) }
 	
 	scope :in_area, -> (area) { where("addr LIKE ?", "%#{area}%") if area }
 
@@ -49,8 +52,12 @@ class Restaurant < ActiveRecord::Base
 	end
 
 	def self.search_by_category(category)
-		range = Subcategory.range(category)
-		where("subcategory_id >= ? AND subcategory_id < ?", range[:min], range[:max])
+		if category.to_i % 10**6 != 0
+			range = Subcategory.range(category)
+			where("subcategory_id >= ? AND subcategory_id < ?", range[:min], range[:max])
+		else
+			all
+		end
 	end
 
 	def self.search_by_name(name)
@@ -88,22 +95,97 @@ class Restaurant < ActiveRecord::Base
 		end
 	end
 
+	def self.convert_addr_to_unique_address_ids(addr)
+		AddrConversion.where("'#{addr}' LIKE CONCAT('%', convert_from, '%')").distinct.pluck(:address_id)
+	end
+
+	# Return hash for address_id's ranges for each addr_tag or district.
+	def self.address_range_hash(addr_array)
+		addr_hash = { addr_tag: [], 	si: [], gu: [], 
+									legal_dong: [], admin_dong: [] }
+		# To call instance methods from Addressable.
+		instance = self.new
+
+		addr_array.each do |id|
+			# Return { key: { :min, :max } }
+			hash = instance.get_addr_range_hash(id)
+			key  = hash.keys.first	
+			value = hash.values.first
+			addr_hash[key] << value
+		end
+
+		addr_hash
+	end
+
+	# Return sql query statement for searching by address.
+	# addr_hash = { :addr_tag, :si, :gu, :legal_dong, :admin_dong }
+	def self.addr_sql_query(addr_hash)
+		sql = { addr_tag: [], si: [], gu: [], legal_dong: [], admin_dong: [] }
+		addr_hash.each_key do |key|
+			if addr_hash[key].present?
+					
+				temp = []
+				addr_hash[key].each do |range|
+					if key == :addr_tag
+						temp << "id IN (SELECT addr_tags.restaurant_id FROM addr_tags WHERE addr_tags.address_id = #{range} AND active = 1)"
+					elsif key != :admin_dong
+						temp << "( addr_code >= #{range[:min]} AND addr_code < #{range[:max]} )"
+					else
+						admin =  "MOD(addr_code, 1000) >= #{range[:min] % 1000} AND "
+						admin += "MOD(addr_code, 1000) <  #{range[:max] % 1000} AND "
+						admin += "(addr_code div POW(10,6))	= #{range[:min] / 10**6}"
+						temp << ( "(" + admin + ")" )
+					end
+				end
+				
+				sql[key] = "(" + temp.join(" OR ") + ")"
+			end
+		end
+
+		# Flatten legal_dongs and addr_dongs because they are in the same level.
+		temp = []
+		sql.each do |key, value|
+			if key != :legal_dong && key != :admin_dong
+				temp << value
+			end
+		end
+		temp.flatten!
+		
+		sql_query = ""
+		if temp.present?
+			temp.map{ |q| sql_query += q + " AND " }
+		end
+		if sql[:legal_dong].present? && sql[:admin_dong].present?
+			sql_query += "(" + sql[:legal_dong] + " OR " + sql[:admin_dong] + ")"
+		elsif sql[:legal_dong].present? 
+			sql_query += sql[:legal_dong]
+		elsif sql[:admin_dong].present?
+			sql_query += sql[:admin_dong]
+		else
+			# Remove ' AND ' when there is no dong query.
+			sql_query.gsub!(/\sAND\s$/, '')
+		end
+		sql_query
+	end
+
 	# Find restaurants which is not relevant with menu_on and menus related
 	def self.menu_on_err(n)
-		if n > 0
+		if n > 0 
 			# restaurants without any menu_titles(menu_title.without_menus can
 			# check if all menu_titles have menus) but menu_on is bigger than 0.
-			where("menu_on > 0 AND id NOT IN ( SELECT DISTINCT restaurant_id FROM menu_titles )")
+			joins("LEFT JOIN menu_titles ON restaurants.id = menu_titles.restaurant_id").where("menu_on > 0 AND menu_titles.id IS NULL")
 		else
 			# restaurants which have menus but menu_on equals 0.
-			where("menu_on = 0 AND id IN ( SELECT DISTINCT restaurant_id FROM menu_titles )")
+			# It needs distinct option because join table will return duplicate 
+			# restaurants.
+			distinct.joins("LEFT JOIN menu_titles ON restaurants.id = menu_titles.restaurant_id").where("menu_on = 0 AND menu_titles.id IS NOT NULL")
 		end
 	end
 
 	# Find restaurants which has no associated rest_info and make one for
 	# one to one association.
 	def self.create_rest_infos(log_file)
-		self.where("id NOT IN (SELECT DISTINCT(restaurant_id) FROM rest_infos)").each do |restaurant|
+		joins("LEFT JOIN rest_infos ON restaurants.id = rest_infos.id").where("rest_infos.id IS NULL").each do |restaurant|
 			if restaurant.create_rest_info(id: restaurant.id)
 				log_file.puts "Succeed in making rest_info id: #{restaurant.id}"
 			else
@@ -112,9 +194,20 @@ class Restaurant < ActiveRecord::Base
 		end
 	end
 
-	# Find Restaurant without one of the coordinates
+	# Find Restaurant with Naver's coordinate.
+	def self.with_latlng
+		joins("LEFT JOIN coordinates ON restaurants.id = coordinates.latlng_id AND coordinates.latlng_type = 'Restaurant'").where("coordinates.id IS NOT NULL")
+	end
+	
+	# Find Restaurant without Naver's coordinate.
 	def self.without_latlng
-		self.where("id NOT IN ( SELECT latlng_id FROM coordinates WHERE latlng_type = ? AND lat IS NOT NULL AND lng IS NOT NULL)", "Restaurant")
+		joins("LEFT JOIN coordinates ON restaurants.id = coordinates.latlng_id AND coordinates.latlng_type = 'Restaurant'").where("coordinates.id IS NULL")
+	end
+
+	# Find Restaurant without addr_tag relationship with address id = args.
+	# Restaurant with inactive addr_tag is considered to have addr_tag.
+	def self.without_addr_tag(id)
+		unscoped.distinct.joins("LEFT JOIN (SELECT addr_tags.* FROM addr_tags WHERE address_id = #{id}) AS temp ON restaurants.id = temp.restaurant_id").where("temp.id IS NULL AND restaurants.active = 1")
 	end
 
 	# Save Naver's coordinates to restaurant's nested attributes(coordinate
@@ -151,6 +244,11 @@ class Restaurant < ActiveRecord::Base
 
 	def g_lng
 		rest_info.coordinate ? rest_info.coordinate.lng : nil
+	end
+
+	# If a restaurant has Naver's coordinate.
+	def with_latlng?
+		coordinate.present?
 	end
 
 	# Find most recent menus updated_at
@@ -196,6 +294,30 @@ class Restaurant < ActiveRecord::Base
 		title_menus.join(", ")
 	end
 
+	# n defines the number of addr_tags that will appear.
+	def title_addrs(n)
+		[legal_dong, admin_dong, title_addr_tags(n)].flatten.join(', ')
+	end
+
+	# Return legal_dong for this restaurant.
+	def legal_dong
+		Address.find(( self.addr_code / LEGAL_DONG ) * LEGAL_DONG ).name.gsub(/^[^\s]*\s[^\s]*\s/, '').gsub(/\s\(.*\)$/, '')
+	end
+
+	# Return admin_dong for this restaurant.
+	def admin_dong 
+		mod = self.addr_code % LEGAL_DONG 
+		address_id = ( self.addr_code / ADMIN_GU ) * ADMIN_GU + mod
+		Address.find(address_id).name.gsub(/^[^\s]*\s[^\s]*\s/, '').gsub(/\s\(.*\)$/, '')
+	end
+
+	# Return representative addr_tags for this restaurant.
+	def title_addr_tags(n) 
+		title = []
+		addresses.take(n).map{ |a| title << a.name.gsub(/^.*\s\-\s/, '') }
+		title.join(', ')
+	end
+
 	# If restaurant's address is changed, delete addr_code, addr_tags and
 	# coordinates and update addr_updated_at.
 	def destroy_related_when_addr_updated(params)
@@ -208,105 +330,35 @@ class Restaurant < ActiveRecord::Base
 		end
 	end
 
-	### Private Class methods
-	class << self
+	# Return true if restaurant is inside that address.(address_taggable)
+	def inside_polygon?(address)
+		latlng_array = address.coordinates
+		contains_point = false
+		# contains_point = true 
 
-	private
-
-		def convert_addr_to_unique_address_ids(addr)
-			AddrConversion.where("'#{addr}' LIKE CONCAT('%', convert_from, '%')").distinct.pluck(:address_id)
+		i = -1
+		j = latlng_array.size - 1
+		while (i += 1) < latlng_array.size
+			base_point = latlng_array[i]
+			trailing_point = latlng_array[j]
+			if point_is_between_lats_of_line_segment?(base_point, trailing_point)
+				if ray_crosses_through_line_segment?(base_point, trailing_point)
+					contains_point = !contains_point
+				end
+			end
+			j = i
 		end
+		contains_point
+	end
 
-		# Return hash for address_id's ranges for each district.
-		def address_range_hash(addr_array)
-			# :gu_2 exists just for matching the numbers.
-			addr_hash = { addr_tag: [], si: [], gu: [], gu_2: [], 
-										legal_dong: [], admin_dong: [] }
-			addr_array.each do |id|
-				if id > 10**11					# :addr_tag
-					n = 0
-				elsif id % 10**9 == 0		# :si
-					n = 1
-				elsif id % 10**7 == 0		# :gu
-					n = 2
-				elsif id % 10**3 == 0		# :legal_dong
-					n = 4 
-				else										# :admin_dong	
-					n = 5 								
-				end
+	# Check if point's latitude is between base and trailing's latitude.
+	def point_is_between_lats_of_line_segment?(base_point, trailing_point)
+		(base_point.lat <= self.lat && self.lat < trailing_point.lat) ||
+		(trailing_point.lat <= self.lat && self.lat < base_point.lat)
+	end
 
-				# Key for addr_hash
-				key = addr_hash.keys[n]
-				if n == 0
-					addr_hash[key] << id
-				elsif n < 3
-					addr_hash[key] << { min: id, max: id + 10**(11 - 2*n) }
-				elsif n > 3
-					# Divider for not subordinate dongs.
-					divider = 16 - 3*n
-					# When it is not subordinate dong. e.g. 신림동(o), 신림3동(x)
-					if id % 10**divider == 0
-						addr_hash[key] << { min: id, max: id + 10**divider }
-					# When it is subordinate dong. e.g. 대치2동, 개포1동
-					else							 
-						addr_hash[key] << { min: id, max: id + 10**(divider - 1) }
-					end
-				end
-			end
-
-			addr_hash
-		end
-	
-		# Return sql query statement for searching by address.
-		# addr_hash = { :addr_tag, :si, :gu, :gu_2, :legal_dong, :admin_dong }
-		def addr_sql_query(addr_hash)
-			sql = { addr_tag: [], si: [], gu: [], legal_dong: [], admin_dong: [] }
-			addr_hash.each_key do |key|
-				# if addr_hash[key].present?
-				if addr_hash[key].present? && key != :addr_tag
-						
-					temp = []
-					addr_hash[key].each do |range|
-						# if key == :addr_tag
-							# temp << "id IN (SELECT DISTINCT addr_tags.restaurant_id 
-							# FROM addr_tags WHERE addr_tags.address_id = #{n})"
-						# elsif key != :admin_dong
-						if key != :admin_dong
-							temp << "( addr_code >= #{range[:min]} AND addr_code < #{range[:max]} )"
-						else
-							admin =  "MOD(addr_code, 1000) >= #{range[:min] % 1000} AND "
-							admin += "MOD(addr_code, 1000) <  #{range[:max] % 1000} AND "
-							admin += "(addr_code div POW(10,6))	= #{range[:min] / 10**6}"
-							temp << ( "(" + admin + ")" )
-						end
-					end
-					
-					sql[key] = "(" + temp.join(" OR ") + ")"
-				end
-			end
-
-			temp = []
-			sql.each do |key, value|
-				if key != :legal_dong && key != :admin_dong
-					temp << value
-				end
-			end
-			temp.flatten!
-			
-			sql_query = ""
-			if temp.present?
-				temp.map{ |q| sql_query += q + " AND " }
-			end
-			if sql[:legal_dong].present? && sql[:admin_dong].present?
-				sql_query += "(" + sql[:legal_dong] + " OR " + sql[:admin_dong] + ")"
-			elsif sql[:legal_dong].present? 
-				sql_query += sql[:legal_dong]
-			elsif sql[:admin_dong].present?
-				sql_query += sql[:admin_dong]
-			else
-				sql_query.gsub!(/\sAND\s$/, '')
-			end
-			sql_query
-		end
+	# Compare slopes from base_point to other points.
+	def ray_crosses_through_line_segment?(base_point, trailing_point)
+		(self.lng - base_point.lng) < (trailing_point.lng - base_point.lng) * (self.lat - base_point.lat) / (trailing_point.lat - base_point.lat)
 	end
 end

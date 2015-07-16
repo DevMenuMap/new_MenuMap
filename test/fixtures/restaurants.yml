@@ -9,6 +9,7 @@ restaurant1:
   menu_on: 1
   open_at: open1
   active: true
+  addr_code: 11000000000
 
 restaurant2:
   id: 2
@@ -21,3 +22,4 @@ restaurant2:
   menu_on: 0 
   open_at: open_3pm
   active: false
+  addr_code: 11000000000

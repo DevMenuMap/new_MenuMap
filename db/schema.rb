@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713004845) do
+ActiveRecord::Schema.define(version: 20150715160227) do
+
+  create_table "addr_bounds", force: :cascade do |t|
+    t.integer  "address_id", limit: 8
+    t.integer  "addr_code",  limit: 8
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "addr_bounds", ["address_id"], name: "index_addr_bounds_on_address_id", using: :btree
 
   create_table "addr_conversions", force: :cascade do |t|
     t.integer  "address_id",   limit: 8
@@ -34,6 +43,17 @@ ActiveRecord::Schema.define(version: 20150713004845) do
   end
 
   add_index "addr_rules", ["user_id"], name: "index_addr_rules_on_user_id", using: :btree
+
+  create_table "addr_tags", force: :cascade do |t|
+    t.integer  "address_id",    limit: 8
+    t.integer  "restaurant_id", limit: 4
+    t.boolean  "active",        limit: 1, default: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "addr_tags", ["address_id"], name: "index_addr_tags_on_address_id", using: :btree
+  add_index "addr_tags", ["restaurant_id"], name: "index_addr_tags_on_restaurant_id", using: :btree
 
   create_table "addrcompletes", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -241,29 +261,37 @@ ActiveRecord::Schema.define(version: 20150713004845) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                    limit: 255, default: "", null: false
+    t.string   "encrypted_password",       limit: 255, default: "", null: false
+    t.string   "reset_password_token",     limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",            limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "confirmation_token",     limit: 255
+    t.string   "current_sign_in_ip",       limit: 255
+    t.string   "last_sign_in_ip",          limit: 255
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.string   "confirmation_token",       limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.string   "username",                 limit: 255
+    t.string   "profile_img_file_name",    limit: 255
+    t.string   "profile_img_content_type", limit: 255
+    t.integer  "profile_img_file_size",    limit: 4
+    t.datetime "profile_img_updated_at"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "addr_bounds", "addresses"
   add_foreign_key "addr_conversions", "addresses"
   add_foreign_key "addr_rules", "users"
+  add_foreign_key "addr_tags", "addresses"
+  add_foreign_key "addr_tags", "restaurants"
   add_foreign_key "category_relationships", "categories"
   add_foreign_key "category_relationships", "subcategories"
   add_foreign_key "comments", "restaurants"
