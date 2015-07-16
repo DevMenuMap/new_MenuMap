@@ -18,6 +18,8 @@ class Restaurant < ActiveRecord::Base
 	has_many 	 :pictures, 		as: :imageable
 	has_many 	 :addr_tags
 	has_many	 :addresses, through: :addr_tags
+	has_many	 :mymaps
+	has_many	 :users, through: :mymaps
 
 
 	### Associated attributes
