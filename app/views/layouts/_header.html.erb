@@ -1,5 +1,9 @@
 <%= link_to "MenuMap", root_path %>
 
+<% if current_user %>
+	<br><%= current_user.username %>
+<% end %>
+
 <ul>
 	<li>
 		<%= link_to "about page", about_path %>
