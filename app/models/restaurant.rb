@@ -52,8 +52,12 @@ class Restaurant < ActiveRecord::Base
 	end
 
 	def self.search_by_category(category)
-		range = Subcategory.range(category)
-		where("subcategory_id >= ? AND subcategory_id < ?", range[:min], range[:max])
+		if category.to_i % 10**6 != 0
+			range = Subcategory.range(category)
+			where("subcategory_id >= ? AND subcategory_id < ?", range[:min], range[:max])
+		else
+			all
+		end
 	end
 
 	def self.search_by_name(name)
@@ -290,9 +294,9 @@ class Restaurant < ActiveRecord::Base
 		title_menus.join(", ")
 	end
 
-	# n > 2 because title_addr_tags will return nil.
+	# n defines the number of addr_tags that will appear.
 	def title_addrs(n)
-		[legal_dong, admin_dong, title_addr_tags(n - 2)].flatten.join(', ')
+		[legal_dong, admin_dong, title_addr_tags(n)].flatten.join(', ')
 	end
 
 	# Return legal_dong for this restaurant.
