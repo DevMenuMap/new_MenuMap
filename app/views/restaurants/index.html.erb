@@ -1,25 +1,91 @@
 <h1>Restaurants#index</h1>
 
+<h2>Map</h2>
+<div id="map_canvas" style="width: 80%; height: 60%"></div>
+
 <%= link_to "new restaurant", new_restaurant_path %>
 
 <%= will_paginate @restaurants %>
 
-<table>
+<table class="table">
 	<tr>
 		<% Restaurant.column_names.each do |column| %>
 			<th><%= column %></th>
 		<% end %>
+		<th>Best Menu 1</th>
+		<th>Best Menu 2</th> 
+		<th>메뉴 등록</th>
 		<th></th>
 		<th></th>
 	</tr>
 
 	<% @restaurants.each do |restaurant| %>
-		<tr>
+		<tr data-url="<%= restaurant_path(restaurant) %>">
 			<% restaurant.attributes.each_value do |value| %>
 				<td><%= value %></td>
+			<% end %>
+			<% if restaurant.title_menus(2).blank? %>
+				<td>Empty</td>
+				<td>Empty</td> 
+			<% else %>
+				<% restaurant.title_menus(2).each do |menu| %>
+					<td><%= menu %></td>
+				<% end %>
+			<% end %>
+			<% if restaurant.menu_on? %>
+				<td><%= link_to "등록 중", restaurant_path(restaurant, anchor: "menu_section_top") %></td>
+			<% else %>
+				<td><%= link_to "미등록", restaurant_path(restaurant, anchor: "new_menu_section") %></td>
 			<% end %>
 			<td><%= link_to "show", restaurant_path(restaurant) %></td>
 			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
 		</tr>
 	<% end %>
 </table>
+
+<script>
+	$(function () {
+		// Specify table's row more directly just for restaurant table's row.
+    $('table.table tr').click(function () {
+        window.location.href = $(this).data('url');
+    });
+	})
+
+	$(document).on("page:load", initialize());
+
+	function initialize(){
+		var oSize = new nhn.api.map.Size(28, 37);
+		var oOffset = new nhn.api.map.Size(14, 37);
+		var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
+		var oSeoulNatlSubway = new nhn.api.map.LatLng(37.48121, 126.952712);
+		var defaultLevel = 11;
+    oMap = new nhn.api.map.Map(document.getElementById('map_canvas'), { 
+                                    		point : oSeoulNatlSubway,
+	                                      zoom : defaultLevel,
+	                                      enableWheelZoom : true,
+	                                      enableDragPan : true,
+	                                      enableDblClickZoom : false,
+	                                      mapMode : 0,
+	                                      activateTrafficMap : false,
+	                                      activateBicycleMap : false,
+	                                      minMaxLevel : [ 1, 14 ],
+	                                      size : new nhn.api.map.Size(800, 480)});
+
+    <% @restaurants.each_with_index do |restaurant, index| %>
+	    <% if restaurant.lat != nil && restaurant.lng != nil %>
+	    	var lat = <%= restaurant.lat %>;
+	    	var lng = <%= restaurant.lng %>;
+	    	var restaurant_name = '<%= restaurant.name %>';
+	    	var latlng = new nhn.api.map.LatLng(lat, lng);
+	    	var oMarker = new nhn.api.map.Marker(oIcon, {point: latlng, title: restaurant_name});
+				var oLabel = new nhn.api.map.MarkerLabel();
+	      oMap.addOverlay(oMarker);
+	      oMap.addOverlay(oLabel);
+	      oLabel.setVisible(true, oMarker);
+	      <% if index==5 %>
+	      	oMap.setCenter(latlng);
+	      <% end %>
+	    <% end %>
+    <% end %>
+	};
+</script>
