@@ -1,11 +1,12 @@
 class FoursquaresController < ApplicationController
 	def parse
-		@images = []
-		@images << Foursquare.new(username: params[:name], url: "test_url")
-		@images << Foursquare.new(username: params[:name], url: "test 2222")
+		venue_id = Foursquare.get_venue_id(params[:name], params[:lat], params[:lng])
+		@images = Foursquare.get_venue_images(venue_id) if venue_id.present?
 
-		respond_to do |format|
-			format.js
+		unless @images.blank?
+			respond_to do |format|
+				format.js { render layout: false }
+			end
 		end
 	end
 end
