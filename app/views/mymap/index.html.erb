@@ -1,2 +1,14 @@
 <h1>Mymap#index</h1>
-<p>Find me in app/views/mymap/index.html.erb</p>
+
+<table>
+	<tr>
+		<th>restaurant_id</th>
+		<th>restaurant_name</th>
+		<th>mymap_button</th>
+	</tr>
+
+	<%= render partial: "mymap", collection: @restaurants, as: :restaurant %>
+</table>
+
+<div id="modal">
+</div>
