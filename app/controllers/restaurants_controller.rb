@@ -29,7 +29,8 @@ class RestaurantsController < ApplicationController
 
 		respond_to do |format|
 			format.html
-			format.json { render json: @comments }
+			# format.json { render json: @comments }
+			format.json
 			format.js
 		end
   end
