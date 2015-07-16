@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
 											 	with: /\A[a-zA-Z_\p{Hangul}][a-zA-Z0-9_\p{Hangul}]+\z/,
 											 	message: "invalid username"
 											 }, length: { maximum: 20 }
+	validates :email, format: {
+										 with: /\A(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Z‌​a-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}\z/i,
+										 message: "invalid email"
+										}
 
 	# Custom validators
 	validate :no_slang
