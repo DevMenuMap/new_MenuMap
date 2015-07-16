@@ -41,6 +41,8 @@ Rails.application.routes.draw do
 	get 'menus'				=> 'menus#index', 			as: :menus
 	get 'comments' 		=> 'comments#index', 		as: :comments
 
+	get 'foursquares/parse' => 'foursquares#parse'
+
 	# Polymorphic picture controller
 	resources :pictures
 

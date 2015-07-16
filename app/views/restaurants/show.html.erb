@@ -57,11 +57,13 @@
 
 <!-- Picture -->
 <h1>restaurant.pictures</h1>
-<% @pictures.each do |picture| %>
-	<%= image_tag picture.img.url %>
-	<%= link_to "edit", edit_picture_path(picture) %>
-	<%= link_to "destroy", picture_path(picture), method: :delete %>
-<% end %>
+<div id="picture_section">
+	<% @pictures.each do |picture| %>
+		<%= image_tag picture.img.url %>
+		<%= link_to "edit", edit_picture_path(picture) %>
+		<%= link_to "destroy", picture_path(picture), method: :delete %>
+	<% end %>
+</div>
 
 <h1>Map</h1>
 <div id="map_canvas" style="width: 80%; height: 60%"></div>
