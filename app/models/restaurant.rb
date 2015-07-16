@@ -30,6 +30,8 @@ class Restaurant < ActiveRecord::Base
 	validates :category_id, presence: true
 	validates :subcategory_id, presence: true
 
+	validate :category_should_not_be_all
+	validate :subcategory_should_not_be_all
 	
 	### Scopes
 	default_scope { where(active: true) }
@@ -289,9 +291,13 @@ class Restaurant < ActiveRecord::Base
 	def title_menus(n)
 		title_menus = []
 		menus.order(best: :desc, id: :asc).limit(n).each do |m|
-			title_menus << ( m.name + m.side_info )
+			if m.side_info
+				title_menus << (m.name + m.side_info)
+			else
+				title_menus << m.name
+			end
 		end
-		title_menus.join(", ")
+		title_menus
 	end
 
 	# n defines the number of addr_tags that will appear.
@@ -360,5 +366,21 @@ class Restaurant < ActiveRecord::Base
 	# Compare slopes from base_point to other points.
 	def ray_crosses_through_line_segment?(base_point, trailing_point)
 		(self.lng - base_point.lng) < (trailing_point.lng - base_point.lng) * (self.lat - base_point.lat) / (trailing_point.lat - base_point.lat)
+	end
+
+	def menu_on?
+		menu_on == 0 ? false : true
+	end
+
+	def category_should_not_be_all
+		if category_id % 1000000 == 0
+			errors.add(:category_id, "no category_id divide by 1000000")
+		end
+	end
+
+	def subcategory_should_not_be_all
+		if subcategory_id % 10000 == 0
+			errors.add(:subcategory_id, "no subcategory_id divide by 10000")
+		end
 	end
 end
