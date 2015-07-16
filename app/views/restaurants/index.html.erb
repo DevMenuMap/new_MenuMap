@@ -32,11 +32,7 @@
 					<td><%= menu %></td>
 				<% end %>
 			<% end %>
-			<% if restaurant.menu_on? %>
-				<td><%= link_to "등록 중", restaurant_path(restaurant, anchor: "menu_section_top") %></td>
-			<% else %>
-				<td><%= link_to "미등록", restaurant_path(restaurant, anchor: "new_menu_section") %></td>
-			<% end %>
+			<td><%= menu_on_helper(restaurant) %></td>
 			<td><%= link_to "show", restaurant_path(restaurant) %></td>
 			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
 		</tr>
