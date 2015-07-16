@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150715160227) do
+ActiveRecord::Schema.define(version: 20150716052038) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -261,26 +261,22 @@ ActiveRecord::Schema.define(version: 20150715160227) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                    limit: 255, default: "", null: false
-    t.string   "encrypted_password",       limit: 255, default: "", null: false
-    t.string   "reset_password_token",     limit: 255
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",            limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",       limit: 255
-    t.string   "last_sign_in_ip",          limit: 255
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
-    t.string   "confirmation_token",       limit: 255
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "confirmation_token",     limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "username",                 limit: 255
-    t.string   "profile_img_file_name",    limit: 255
-    t.string   "profile_img_content_type", limit: 255
-    t.integer  "profile_img_file_size",    limit: 4
-    t.datetime "profile_img_updated_at"
+    t.string   "username",               limit: 255
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
