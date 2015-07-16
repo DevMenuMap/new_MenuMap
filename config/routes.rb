@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 		resources :menu_titles,  except: [:index, :show, :new]
 		resources :menus, 		 	 except: [:index]
 		resources :comments, 		 except: [:index, :add_menu, :update_menu]
+		resource	:mymap, 			 only: 	 [:new, :create]
 	end
 
 	# Index pages which is not bounded with :restaurants
@@ -42,6 +43,7 @@ Rails.application.routes.draw do
 	get 'menus'				=> 'menus#index', 			as: :menus
 	get 'comments' 		=> 'comments#index', 		as: :comments
 
+	# Parsing foursquare images by Ajax loading.
 	get 'foursquares/parse' => 'foursquares#parse'
 
 	# Polymorphic picture controller
@@ -58,6 +60,15 @@ Rails.application.routes.draw do
 	resources :addr_rules, except: [:edit, :update]
 
 	resources :slangs
+
+	# MyMap :new, :create depends on restaurants.
+	resource :mymap, except: [:new, :create]
+	# change :id to :username
+	get '/users/:id/MyMap' => 'mymap#index', as: :mymap_index
+	# Case insensitive redirection to users' MyMap page
+	get '/users/:id/myMap' => redirect('users/%{id}/MyMap')
+	get '/users/:id/Mymap' => redirect('users/%{id}/MyMap')
+	get '/users/:id/mymap' => redirect('users/%{id}/MyMap')
 
   # Example resource route with options:
   #   resources :products do
