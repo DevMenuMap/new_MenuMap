@@ -36,7 +36,7 @@
 			<td><%= menu_on_helper(restaurant) %></td>
 			<td><%= link_to "show", restaurant_path(restaurant) %></td>
 			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
-			<td><%= mymap_button(@user, restaurant) %></td>
+			<td id="mymap_button_<%= restaurant.id %>"><%= mymap_button(@user, restaurant) %></td>
 		</tr>
 	<% end %>
 </table>
