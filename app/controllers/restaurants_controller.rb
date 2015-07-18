@@ -3,6 +3,7 @@ class RestaurantsController < ApplicationController
 	# to check if subcategory is not "all thing"; to specify subcategory
 
   def index
+		@user = current_user
 		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
 
 		if @restaurants.present?
@@ -13,6 +14,7 @@ class RestaurantsController < ApplicationController
   end
 
   def show
+		@user = current_user
 		@restaurant = Restaurant.find(params[:id])
 		@menu_titles = @restaurant.menu_titles
 		@comments = @restaurant.comments.order(created_at: :desc).paginate(:page => params[:page], :per_page => 10)

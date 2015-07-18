@@ -61,4 +61,12 @@ class User < ActiveRecord::Base
   		errors.add(:username, "Too short")
   	end
   end
+
+	def saved_mymap?(restaurant)
+		find_mymap(restaurant).present?
+	end
+
+	def find_mymap(restaurant)
+		mymaps.find_by(restaurant_id: restaurant.id)
+	end
 end

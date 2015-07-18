@@ -17,7 +17,13 @@
 		<td><%= link_to "edit", edit_restaurant_path(@restaurant) %></td>
 		<td><%= link_to "delete", restaurant_path(@restaurant), method: :delete %>
 	</tr>
+	<tr>
+		<td>mymap</td>
+		<td><%= mymap_button(@user, @restaurant) %></td>
+	</tr>
 </table>
+
+<div id="modal"></div>
 
 
 <!-- RestInfo and RestErr -->

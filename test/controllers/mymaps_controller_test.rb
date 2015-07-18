@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MymapControllerTest < ActionController::TestCase
+class MymapsControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
