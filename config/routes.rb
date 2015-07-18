@@ -63,12 +63,18 @@ Rails.application.routes.draw do
 
 	# MyMap :new, :create depends on restaurants.
 	resources :mymaps, except: [:index, :new, :create]
-	# change :id to :username
+
 	get '/users/:id/MyMap' => 'mymaps#index', as: :mymap_index
 	# Case insensitive redirection to users' MyMap page
 	get '/users/:id/myMap' => redirect('users/%{id}/MyMap')
 	get '/users/:id/Mymap' => redirect('users/%{id}/MyMap')
 	get '/users/:id/mymap' => redirect('users/%{id}/MyMap')
+
+	get '/users/:id/MyMap_list' => 'mymaps#list'
+	# Redirection to MyMap_list
+	get '/users/:id/mymap_list' => redirect('users/%{id}/MyMap_list')
+	get '/users/:id/Mymap_list' => redirect('users/%{id}/MyMap_list')
+	get '/users/:id/mymap_list' => redirect('users/%{id}/MyMap_list')
 
   # Example resource route with options:
   #   resources :products do

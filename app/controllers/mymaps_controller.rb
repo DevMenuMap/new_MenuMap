@@ -2,7 +2,23 @@ class MymapsController < ApplicationController
   def index
 		@user = User.find(params[:id])
 		@mymaps = @user.mymaps
+
+		@coord_array = []
+		@mymaps.each do |m|
+			@coord_array << m.restaurant.lat.to_f << m.restaurant.lng.to_f
+		end
+
+		respond_to do |format|
+			format.html
+			format.json
+		end
   end
+
+	# GET /users/:username/MyMap_list
+	def list
+		@user = User.find(params[:id])
+		@mymaps = @user.mymaps
+	end
 
 	def show
 		@mymap = Mymap.find(params[:id])
