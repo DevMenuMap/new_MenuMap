@@ -1,0 +1,5 @@
+<h2>mymaps#edit edit = <%= @mymap.id %></h2>
+<%= form_for @mymap, remote: true do |f| %>
+	<%= render "field", f: f %>
+	<%= f.submit %>
+<% end %>

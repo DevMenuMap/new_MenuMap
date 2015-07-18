@@ -6,17 +6,13 @@ class MymapsController < ApplicationController
 
 	def show
 		@mymap = Mymap.find(params[:id])
-		respond_to do |format|
-			format.js { render layout: false }
-		end
+		respond_to_js
 	end
 
 	def new
 		@mymap = Mymap.new
 		@restaurant = Restaurant.find(params[:restaurant_id])
-		respond_to do |format|
-			format.js { render layout: false }
-		end
+		respond_to_js
 	end
 
 	def create
@@ -26,13 +22,22 @@ class MymapsController < ApplicationController
 		@mymap.user_id = @user.id
 		@mymap.save
 
-		respond_to do |format|
-			format.js { render layout: false }
-		end
+		respond_to_js
+	end
+
+	def edit
+		@mymap = Mymap.find(params[:id])
+		respond_to_js
 	end
 
 	private
 		def mymap_params
 			params.require(:mymap).permit(:rating, :group, :contents)
+		end
+
+		def respond_to_js
+			respond_to do |format|
+				format.js { render layout: false }
+			end
 		end
 end
