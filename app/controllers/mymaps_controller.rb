@@ -30,6 +30,12 @@ class MymapsController < ApplicationController
 		respond_to_js
 	end
 
+	def update
+		@mymap = Mymap.find(params[:id])
+		@mymap.update(mymap_params)
+		respond_to_js
+	end
+
 	private
 		def mymap_params
 			params.require(:mymap).permit(:rating, :group, :contents)
