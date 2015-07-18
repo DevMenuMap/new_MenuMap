@@ -36,6 +36,13 @@ class MymapsController < ApplicationController
 		respond_to_js
 	end
 
+	def destroy
+		@user = current_user
+		@mymap = Mymap.find(params[:id])
+		@mymap.destroy
+		respond_to_js
+	end
+
 	private
 		def mymap_params
 			params.require(:mymap).permit(:rating, :group, :contents)

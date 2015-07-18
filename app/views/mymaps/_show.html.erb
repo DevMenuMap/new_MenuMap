@@ -16,7 +16,7 @@
 	</tr>
 
 	<tr>
-		<td><%= link_to "edit_mymap_button", edit_mymap_path(@mymap), { id: "edit_mymap_button", remote: true } %></td>
-		<td colspan="4"></td>
+		<td><%= link_to "edit_mymap", edit_mymap_path(@mymap), { id: "edit_mymap_button", remote: true } %></td>
+		<td><%= link_to "destroy_mymap", mymap_path(@mymap), { id: "destroy_mymap_button", method: :delete, remote: true } %></td>
 	</tr>
 </table>
