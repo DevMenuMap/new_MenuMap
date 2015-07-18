@@ -2,7 +2,10 @@
 <%= f.text_field :rating %>
 
 <%= f.label :group %>
-<%= f.text_field :group %>
+<% 1.upto(10) do |n| %>
+	<%= image_tag s3_image_url("mymap_group_icon_#{n}.png"), id: "mymap_group_icon_#{n}", style: "height: 20px; width: 20px;" %> 
+	<%= f.radio_button :group, n %>
+<% end %>
 
 <%= f.label :contents %>
 <%= f.text_field :contents %>
