@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 	get "home/update_subcategories"		# cascading select box 
 	get "home/addrcomplete"						# autocomplete for address text_field
 	get "users/profiles/:username" => "users/profiles#edit", as: :user_profile
+	get "admin/index" => "admin/monitors#index", as: :admin_index
 
 	resources :notices, 			 except: [:index, :show]
 	resources :questions, 		 except: [:new]

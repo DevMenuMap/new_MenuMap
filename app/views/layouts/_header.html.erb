@@ -58,6 +58,11 @@
 			<%= link_to "signin page" , new_user_session_path %>
 		</li>
 	<% else %>
+		<% if current_user.admin? %>
+			<li>
+				<%= link_to "admin monitor page" , admin_index_path %>
+			</li>
+		<% end %>
 		<li>
 			<%= link_to "my page" , user_profile_path(current_user.username) %>
 		</li>
