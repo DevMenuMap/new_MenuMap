@@ -10,8 +10,11 @@
 	<tr>
 		<td><%= @mymap.id %></td>
 		<td><%= @mymap.restaurant_id %></td>
-		<!-- <td><!--%= @mymap.rating %--></td> -->
-		<td class="star_rating" data-score=<%= @mymap.rating%>></td>
+		<% if !@mymap.rating.blank? && @mymap.rating != 0 %>
+			<td class="star_rating" data-score=<%= @mymap.rating%>></td>
+		<% else %>
+			<td></td>
+		<% end %>
 		<td><%= @mymap.group %></td>
 		<td><%= @mymap.contents %></td>
 	</tr>

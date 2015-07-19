@@ -32,6 +32,7 @@ class MymapsController < ApplicationController
 	end
 
 	def create
+		double_rating_score
 		@restaurant = Restaurant.find(params[:restaurant_id])
 		@user = current_user
 		@mymap = @restaurant.mymaps.new(mymap_params)
@@ -47,6 +48,7 @@ class MymapsController < ApplicationController
 	end
 
 	def update
+		double_rating_score
 		@mymap = Mymap.find(params[:id])
 		@mymap.update(mymap_params)
 		respond_to_js
@@ -68,5 +70,10 @@ class MymapsController < ApplicationController
 			respond_to do |format|
 				format.js { render layout: false }
 			end
+		end
+
+		# Double the number to match integer format(1..10)
+		def double_rating_score
+			params[:mymap][:rating] = (params[:mymap][:rating].to_f * 2).to_i
 		end
 end
