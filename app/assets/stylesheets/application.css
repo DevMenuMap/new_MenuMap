@@ -2,6 +2,7 @@
  *= require jquery-ui.structure
  *= require jquery-ui.theme
  *= require jquery-ui
+ *= require jquery.raty
  *= require_tree .
  *= require_self
  */

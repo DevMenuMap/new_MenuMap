@@ -10,7 +10,8 @@
 	<tr>
 		<td><%= @mymap.id %></td>
 		<td><%= @mymap.restaurant_id %></td>
-		<td><%= @mymap.rating %></td>
+		<!-- <td><!--%= @mymap.rating %--></td> -->
+		<td class="star_rating" data-score=<%= @mymap.rating%>></td>
 		<td><%= @mymap.group %></td>
 		<td><%= @mymap.contents %></td>
 	</tr>
@@ -20,3 +21,13 @@
 		<td><%= link_to "destroy_mymap", mymap_path(@mymap), { id: "destroy_mymap_button", method: :delete, remote: true } %></td>
 	</tr>
 </table>
+
+<script>
+	$(".star_rating").raty({
+		path: "<%= s3_image_url %>",
+		readOnly: true,
+		score: function() {
+			return parseInt($(this).attr("data-score")) / 2;
+		}
+	});
+</script>
