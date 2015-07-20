@@ -15,6 +15,7 @@
 
 # Images
 /app/assets/images
+/public/images
 
 # Seed data
 /db/seed_data

@@ -114,6 +114,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    phantomjs (1.9.8.0)
     rack (1.6.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -200,6 +201,7 @@ DEPENDENCIES
   minitest-reporters (~> 1.0.17)
   mysql2
   paperclip (~> 4.2)
+  phantomjs
   rails (= 4.2.1)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

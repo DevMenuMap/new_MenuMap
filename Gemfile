@@ -35,6 +35,9 @@ gem 'aws-sdk', 	 '~> 1.6'
 # Pagination
 gem 'will_paginate'
 
+# Snapshot
+gem 'phantomjs'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
