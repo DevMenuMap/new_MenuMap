@@ -25,7 +25,6 @@ class User < ActiveRecord::Base
 
 	# Custom validators
 	validate :no_slang
-	validate :uniqueness_in_mysql
 	validate :no_particular_word
 	validate :size_in_byte
 
@@ -35,12 +34,6 @@ class User < ActiveRecord::Base
     if Slang.where("? LIKE CONCAT('%', name, '%')", username).present?
       errors.add(:username, "Slang")
     end
-  end
-
-  def uniqueness_in_mysql
-  	if User.where(username: username).present?
-  		errors.add(:username, "Duplicate")
-  	end
   end
 
   def no_particular_word
