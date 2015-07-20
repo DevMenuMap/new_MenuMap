@@ -1,5 +1,9 @@
 <%= link_to "MenuMap", root_path %>
 
+<% if current_user %>
+	<br><%= current_user.username %>
+<% end %>
+
 <ul>
 	<li>
 		<%= link_to "about page", about_path %>
@@ -54,6 +58,9 @@
 			<%= link_to "signin page" , new_user_session_path %>
 		</li>
 	<% else %>
+		<li>
+			<%= link_to "my page" , user_profile_path(current_user.username) %>
+		</li>
 		<li>
 			<%= link_to "signout page" , destroy_user_session_path, method: :delete %>
 		</li>
