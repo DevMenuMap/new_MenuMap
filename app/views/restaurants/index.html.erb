@@ -17,6 +17,7 @@
 		<th>메뉴 등록</th>
 		<th></th>
 		<th></th>
+		<th>mymap 보기||등록</th>
 	</tr>
 
 	<% @restaurants.each do |restaurant| %>
@@ -35,17 +36,20 @@
 			<td><%= menu_on_helper(restaurant) %></td>
 			<td><%= link_to "show", restaurant_path(restaurant) %></td>
 			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
+			<td id="mymap_button_<%= restaurant.id %>"><%= mymap_button(@user, restaurant) %></td>
 		</tr>
 	<% end %>
 </table>
 
+<div id="modal"></div>
+
 <script>
-	$(function () {
-		// Specify table's row more directly just for restaurant table's row.
-    $('table.table tr').click(function () {
-        window.location.href = $(this).data('url');
-    });
-	})
+	//$(function () {
+	//	Specify table's row more directly just for restaurant table's row.
+  //	$('table.table tr').click(function () {
+  //  	window.location.href = $(this).data('url');
+  //	});
+	//})
 
 	$(document).on("page:load", initialize());
 

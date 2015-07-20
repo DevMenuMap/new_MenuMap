@@ -4,12 +4,15 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-	# Associations
+
+	### Associations
 	has_many :questions
 	has_many :rest_registers
 	has_many :rest_errs
 	has_many :menus
 	has_many :comments
+	has_many :mymaps
+	has_many :restaurants, through: :mymaps
 
 
 	### Validations
@@ -58,4 +61,12 @@ class User < ActiveRecord::Base
   		errors.add(:username, "Too short")
   	end
   end
+
+	def saved_mymap?(restaurant)
+		find_mymap(restaurant).present?
+	end
+
+	def find_mymap(restaurant)
+		mymaps.find_by(restaurant_id: restaurant.id)
+	end
 end

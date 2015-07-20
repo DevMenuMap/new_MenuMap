@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714092356) do
+ActiveRecord::Schema.define(version: 20150716135238) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -109,16 +109,6 @@ ActiveRecord::Schema.define(version: 20150714092356) do
 
   add_index "coordinates", ["latlng_type", "latlng_id"], name: "index_coordinates_on_latlng_type_and_latlng_id", using: :btree
 
-  create_table "menu_comments", force: :cascade do |t|
-    t.integer  "menu_id",    limit: 4
-    t.integer  "comment_id", limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "menu_comments", ["comment_id"], name: "index_menu_comments_on_comment_id", using: :btree
-  add_index "menu_comments", ["menu_id"], name: "index_menu_comments_on_menu_id", using: :btree
-
   create_table "menu_titles", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
     t.string   "title_name",    limit: 255
@@ -147,6 +137,20 @@ ActiveRecord::Schema.define(version: 20150714092356) do
 
   add_index "menus", ["menu_title_id"], name: "index_menus_on_menu_title_id", using: :btree
   add_index "menus", ["user_id"], name: "index_menus_on_user_id", using: :btree
+
+  create_table "mymaps", force: :cascade do |t|
+    t.integer  "restaurant_id", limit: 4
+    t.integer  "user_id",       limit: 4
+    t.integer  "rating",        limit: 4
+    t.integer  "group",         limit: 4,   default: 0
+    t.string   "contents",      limit: 255
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "mymaps", ["restaurant_id"], name: "index_mymaps_on_restaurant_id", using: :btree
+  add_index "mymaps", ["user_id", "restaurant_id"], name: "index_mymaps_on_user_id_and_restaurant_id", unique: true, using: :btree
+  add_index "mymaps", ["user_id"], name: "index_mymaps_on_user_id", using: :btree
 
   create_table "notices", force: :cascade do |t|
     t.string   "question",   limit: 255
@@ -276,6 +280,7 @@ ActiveRecord::Schema.define(version: 20150714092356) do
     t.string   "confirmation_token",     limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.string   "username",               limit: 255
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -291,11 +296,11 @@ ActiveRecord::Schema.define(version: 20150714092356) do
   add_foreign_key "category_relationships", "subcategories"
   add_foreign_key "comments", "restaurants"
   add_foreign_key "comments", "users"
-  add_foreign_key "menu_comments", "comments"
-  add_foreign_key "menu_comments", "menus"
   add_foreign_key "menu_titles", "restaurants"
   add_foreign_key "menus", "menu_titles"
   add_foreign_key "menus", "users"
+  add_foreign_key "mymaps", "restaurants"
+  add_foreign_key "mymaps", "users"
   add_foreign_key "rest_errs", "restaurants"
   add_foreign_key "rest_errs", "users"
   add_foreign_key "rest_infos", "restaurants"

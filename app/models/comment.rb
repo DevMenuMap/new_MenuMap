@@ -28,11 +28,5 @@ class Comment < ActiveRecord::Base
     if Slang.where("? LIKE CONCAT('%', name, '%')", contents).present?
       errors.add(:contents, "Slang")
     end
-    #slangs = Slang.all
-    #slangs.each do |slang|
-    #  if contents.include?(slang.name)
-    #    errors.add(:contents, "Slang")
-    #  end
-    #end
   end
 end

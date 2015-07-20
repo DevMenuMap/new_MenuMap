@@ -1,0 +1,3 @@
+$("#show_mymap_<%= @mymap.id %>").bind("ajax:success", function(){
+	$("#modal").html("<%= j(render "show") %>");
+});

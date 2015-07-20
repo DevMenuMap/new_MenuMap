@@ -1,0 +1,22 @@
+<h1>Mymap#index</h1>
+
+<div id="naver_map"></div>
+
+<table>
+	<tr>
+		<th>mymap_id</th>
+		<th>restaurant_id</th>
+		<th>restaurant_name</th>
+		<th>mymap_button</th>
+	</tr>
+
+	<%= render @mymaps %>
+</table>
+
+<div id="modal">
+</div>
+
+<script>
+	$(document).on("page:load", loadNaverMap());
+	$(document).ready(function(){ showMarkers(<%= @coord_array %>)});
+</script>
