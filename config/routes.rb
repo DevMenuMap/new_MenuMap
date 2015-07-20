@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 	get "home/update_subcategories"		# cascading select box 
 	get "home/addrcomplete"						# autocomplete for address text_field
 	get "users/profiles/:username" => "users/profiles#edit", as: :user_profile
-	get "admin/index" => "admin/monitors#index", as: :admin_index
+	get "no_admin" => "admin/monitors#no_admin", as: :no_admin
 
 	resources :notices, 			 except: [:index, :show]
 	resources :questions, 		 except: [:new]
@@ -76,6 +76,10 @@ Rails.application.routes.draw do
 	get '/users/:id/mymap_list' => redirect('users/%{id}/MyMap_list')
 	get '/users/:id/Mymap_list' => redirect('users/%{id}/MyMap_list')
 	get '/users/:id/mymap_list' => redirect('users/%{id}/MyMap_list')
+
+	scope module: 'admin' do
+		resources :monitors
+	end
 
   # Example resource route with options:
   #   resources :products do
