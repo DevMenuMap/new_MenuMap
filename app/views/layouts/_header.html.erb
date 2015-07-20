@@ -45,6 +45,9 @@
 		<%= link_to "addr_rules" , addr_rules_path %>
 	</li>
 	<li>
+		<%= link_to "new addr_rule" , new_addr_rule_path %>
+	</li>
+	<li>
 		<%= link_to "addr_conversions" , addr_conversions_path %>
 	</li>
 	<li>
@@ -58,6 +61,11 @@
 			<%= link_to "signin page" , new_user_session_path %>
 		</li>
 	<% else %>
+		<% if current_user.admin? %>
+			<li>
+				<%= link_to "admin monitor page" , monitors_path %>
+			</li>
+		<% end %>
 		<li>
 			<%= link_to "my page" , user_profile_path(current_user.username) %>
 		</li>

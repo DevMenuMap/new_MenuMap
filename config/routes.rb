@@ -76,6 +76,13 @@ Rails.application.routes.draw do
 	get '/users/:id/Mymap_list' => redirect('users/%{id}/MyMap_list')
 	get '/users/:id/mymap_list' => redirect('users/%{id}/MyMap_list')
 
+	scope module: 'admin' do
+		resources :monitors
+	end
+
+	get "no_admin" => "admin/monitors#no_admin", as: :no_admin
+
+
   # Example resource route with options:
   #   resources :products do
   #     member do

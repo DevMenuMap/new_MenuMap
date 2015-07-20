@@ -1,4 +1,5 @@
 class NoticesController < ApplicationController
+	before_action :admin?, :except => [:index]
 
   def index
 		@notices = Notice.all

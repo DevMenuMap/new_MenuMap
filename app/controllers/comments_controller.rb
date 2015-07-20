@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+	before_action :admin?, :only => [:index]
+	
   def index
   	@comments = Comment.all
   end

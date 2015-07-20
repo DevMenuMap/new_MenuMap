@@ -20,4 +20,10 @@ class ApplicationController < ActionController::Base
   			redirect_to(root_url) 
   		end
   	end
+
+    def admin?
+      if current_user.admin == false
+        redirect_to no_admin_url and return
+      end 
+    end
 end

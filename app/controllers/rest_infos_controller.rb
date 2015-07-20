@@ -1,4 +1,6 @@
 class RestInfosController < ApplicationController
+	before_action :admin?
+
   def new
 		@restaurant = Restaurant.find(params[:restaurant_id])
 		@rest_info = RestInfo.new

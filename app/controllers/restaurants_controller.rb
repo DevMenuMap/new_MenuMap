@@ -1,4 +1,5 @@
 class RestaurantsController < ApplicationController
+	before_action :admin?, :except => [:index, :show, :no_result]
 	# before_action :check_category, only: [:create]
 	# to check if subcategory is not "all thing"; to specify subcategory
 

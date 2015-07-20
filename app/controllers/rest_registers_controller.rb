@@ -1,4 +1,6 @@
 class RestRegistersController < ApplicationController
+	before_action :admin?, :except => [:new, :create]
+
   def index
 		@rest_registers = RestRegister.all
   end

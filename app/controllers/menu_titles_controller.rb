@@ -1,4 +1,6 @@
 class MenuTitlesController < ApplicationController
+	before_action :admin?, :except => [:create]
+	
   def index
 		@menu_titles = MenuTitle.all
   end
