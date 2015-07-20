@@ -1,4 +1,6 @@
 class SlangsController < ApplicationController
+	before_action :admin?
+	
 	def index
 		@slangs = Slang.all
 	end

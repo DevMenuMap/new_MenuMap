@@ -1,4 +1,6 @@
 class AddrConversionsController < ApplicationController
+	before_action :admin?
+	
   def index
 		@addr_conversions = AddrConversion.all.order(:address_id)
   end

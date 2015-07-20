@@ -1,4 +1,6 @@
 class AddrRulesController < ApplicationController
+	before_action :admin?, :except => [:new, :create]
+	
   def index
 		# 10 items per page
 		@addr_rules = AddrRule.paginate(:page => params[:page], :per_page => 10)

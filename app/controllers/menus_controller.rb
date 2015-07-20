@@ -1,4 +1,6 @@
 class MenusController < ApplicationController
+	before_action :admin?, :except => [:create]
+
 	def index
 		@menus = Menu.paginate(:page => params[:page], :per_page => 10)
 	end

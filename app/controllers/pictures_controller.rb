@@ -1,4 +1,6 @@
 class PicturesController < ApplicationController
+	before_action :admin?
+	
   def index
 		@pictures = Picture.all
   end

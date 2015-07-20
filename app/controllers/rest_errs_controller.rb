@@ -1,4 +1,6 @@
 class RestErrsController < ApplicationController
+	before_action :admin?, :except => [:create]
+	
   def index
 		@rest_errs = RestErr.all
   end
