@@ -1,3 +1,5 @@
+require 'net/http'
+
 class Restaurant < ActiveRecord::Base
 	### Mixins
 	include Naver
@@ -228,6 +230,28 @@ class Restaurant < ActiveRecord::Base
 
 			restaurant.save_latlng(latlng, log_file)
 		end
+	end
+
+	def self.ping
+		header = {
+			"User-agent" => "request",
+			"Host" => "apis.naver.com",
+			"Progma" => "no-cache",
+			"Content-type" => "application/x-www-form-urlencoded",
+			"Accept" => "*/*",
+			"Authorization" => "Bearer " + ENV['NAVER_SYNDICATION_TOKEN'] 
+		}
+
+		uri = URI.parse('https://apis.naver.com/crawl/nsyndi/v2')
+
+		http = Net::HTTP.new(uri.host, uri.port)
+		http.use_ssl = true
+
+		args = { ping_url: 'http://52.69.51.63:3000/sitemap.atom' }
+		uri.query = URI.encode_www_form(args)
+
+		request = Net::HTTP::Post.new(uri.request_uri, header)
+		http.request(request)
 	end
 
 

@@ -11,4 +11,12 @@ class SitemapController < ApplicationController
 			format.xml 
 		end
   end
+
+  def naver_seo
+  	@restaurant = Restaurant.find(1000000 + Time.now.min)
+
+  	respond_to do |format|
+  		format.atom
+  	end
+  end
 end
