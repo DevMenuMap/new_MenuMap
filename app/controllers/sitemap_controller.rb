@@ -12,8 +12,8 @@ class SitemapController < ApplicationController
 		end
   end
 
-  def nseo
-  	@restaurants = Restaurant.all.limit(10)
+  def naver_seo
+  	@restaurant = Restaurant.find(1000000 + Time.now.min)
 
   	respond_to do |format|
   		format.atom
