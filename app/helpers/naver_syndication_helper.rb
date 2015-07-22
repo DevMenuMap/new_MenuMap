@@ -1,5 +1,5 @@
 module NaverSyndicationHelper
-	def atom_feed(options = {}, &block)
+	def naver_atom_feed(options = {}, &block)
     if options[:schema_date]
       options[:schema_date] = options[:schema_date].strftime("%Y-%m-%d") if options[:schema_date].respond_to?(:strftime)
     else

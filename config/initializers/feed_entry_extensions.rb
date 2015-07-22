@@ -2,7 +2,7 @@ module ActionView
 	module Helpers
 		module AtomFeedHelper
 			class AtomFeedBuilder
-				def entry(record, options = {})
+				def naver_entry(record, options = {})
           @xml.entry do
             @xml.id(options[:id] || "tag:#{@view.request.host},#{@feed_options[:schema_date]}:#{record.class}/#{record.id}")
 

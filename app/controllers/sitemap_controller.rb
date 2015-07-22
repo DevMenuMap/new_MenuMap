@@ -11,4 +11,12 @@ class SitemapController < ApplicationController
 			format.xml 
 		end
   end
+
+  def nseo
+  	@restaurants = Restaurant.all.limit(10)
+
+  	respond_to do |format|
+  		format.atom
+  	end
+  end
 end
