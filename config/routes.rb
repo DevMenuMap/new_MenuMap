@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 	
 	# SEO
   get "sitemap.xml" => "sitemap#index", :defaults => { format: 'xml' }
-  get "sitemap.atom" => "sitemap#nseo", :defaults => { format: 'atom' }
+  get "sitemap.atom" => "sitemap#nseo", :defaults => { format: 'atom' }, as: :naver_seo_atom
 
 	root "home#brandpage"
 

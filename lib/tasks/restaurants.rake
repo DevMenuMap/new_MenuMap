@@ -27,4 +27,9 @@ namespace :restaurants do
 			Restaurant.save_latlngs(args.area, f)
 		end
 	end
+
+	desc 'Ping naver for seo'
+	task :ping => :environment do
+		puts Restaurant.ping
+	end
 end
