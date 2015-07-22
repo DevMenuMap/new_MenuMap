@@ -13,6 +13,8 @@
 	<%= render @mymaps %>
 </table>
 
+<%= link_to "share MyMap", new_user_mymap_snapshot_path(@user), id: "share_mymap_button", remote: true %>
+
 <div id="modal">
 </div>
 

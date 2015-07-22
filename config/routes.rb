@@ -62,6 +62,12 @@ Rails.application.routes.draw do
 
 	resources :slangs
 
+	# User specific routes
+	# 'resources :users' needs just for nesting.
+	resources :users, shallow: true do 
+		resource :mymap_snapshot
+	end
+
 	# MyMap :new, :create depends on restaurants.
 	resources :mymaps, except: [:index, :new, :create]
 
