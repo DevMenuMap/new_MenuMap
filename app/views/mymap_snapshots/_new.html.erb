@@ -1,12 +1,9 @@
-<%= form_tag user_mymap_snapshot_path, method: :create %>
+<%= form_tag(user_mymap_snapshot_path) do %>
 	<%= hidden_field_tag 'lat', '' %>
 	<%= hidden_field_tag 'lng', '' %>
 	<%= hidden_field_tag 'level', '' %>
 	<%= submit_tag 'take a new MyMap snapshot' %>
 <% end %>
-
-
-<%# button_to "take a new MyMap snapshot", user_mymap_snapshot_path %>
 
 <script>
 	$(document).ready(function(){
