@@ -115,6 +115,7 @@ GEM
       cocaine (~> 0.5.3)
       mime-types
     phantomjs (1.9.8.0)
+    phantomjs.rb (2.1.0)
     rack (1.6.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -202,6 +203,7 @@ DEPENDENCIES
   mysql2
   paperclip (~> 4.2)
   phantomjs
+  phantomjs.rb
   rails (= 4.2.1)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
