@@ -1,6 +1,7 @@
 var page = require('webpage').create();
-page.clipRect = { top: 300, left: 0, width: 1024, height: 300 };
-page.open('http://52.69.51.63:3000/home/show', function() {
-  page.render('./public/images/1.png');
+var target = 'http://52.69.51.63/users/' + phantom.args[3] + '/mymap_snapshot/?' + 'lat=' + phantom.args[0] + '&' + 'lng=' + phantom.args[1] + '&' + 'level=' + phantom.args[2];
+						 
+page.open(target, function() {
+  page.render('./public/images/temp.png');
   phantom.exit();
 });

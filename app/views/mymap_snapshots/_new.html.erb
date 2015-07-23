@@ -1,1 +1,17 @@
-<%= button_to "take a new MyMap snapshot", user_mymap_snapshot_path %>
+<%= form_tag user_mymap_snapshot_path, method: :create %>
+	<%= hidden_field_tag 'lat', '' %>
+	<%= hidden_field_tag 'lng', '' %>
+	<%= hidden_field_tag 'level', '' %>
+	<%= submit_tag 'take a new MyMap snapshot' %>
+<% end %>
+
+
+<%# button_to "take a new MyMap snapshot", user_mymap_snapshot_path %>
+
+<script>
+	$(document).ready(function(){
+		$("#lat").value = oMap.getCenter().getLat();
+		$("#lng").value = oMap.getCenter().getLng();
+		$("#level").value = oMap.getLevel();
+	});
+</script>

@@ -1,0 +1,11 @@
+<div id="naver_map"></div>
+
+<script>
+	$(document).on("page:load", loadNaverMap());
+	$(document).ready(function(){ showMarkers(<%= @coord_array %>)});
+	$(document).ready(function(){
+		var center = new nhn.api.map.LatLng(<%= @lat %>, <%= @lng %>);
+		oMap.setCenter(center);
+		oMap.setLevel(<%= @level %>);
+	});
+</script>
