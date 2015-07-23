@@ -12,7 +12,7 @@ class MymapSnapshotsController < ApplicationController
 		lat = params[:lat]
 		lng = params[:lng]
 		level = params[:level]
-		Phantomjs.run("../new_MenuMap/app/assets/javascripts/snapshot.js", "37.48121", "126.952712", "10", "10")
+		Phantomjs.run("../new_MenuMap/app/assets/javascripts/snapshot.js", lat, lng, level, current_user.id.to_s)
 		redirect_to root_url
 	end
 	
