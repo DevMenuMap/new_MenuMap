@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
 	has_many :mymaps
 	has_many :restaurants, through: :mymaps
 
+	has_one :mymap_snapshot
+
 
 	### Validations
 	validates :username, presence: true, uniqueness: { case_sensitive: false },
