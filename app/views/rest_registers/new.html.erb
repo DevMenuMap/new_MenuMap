@@ -10,17 +10,21 @@ flash: 더 많이 추가해주세요. 더 정확하고 많은 정보를 제공�
 	<% if current_user %>
 		<%= f.text_field :email, value: current_user.email, readonly: true %>
 	<% else %>
-		<%= f.text_field :email %>
+		<%= f.text_field :email, data: { rule_required: "true",
+		rule_email: "true", msg_required: "Please enter SOMETHING",
+		msg_email: "Enter a valid email address" } %>
 	<% end %>
 
 	<%= f.label :name, "restaurant's name" %>
-	<%= f.text_field :name, data: { validate: "fill" } %>
+	<%= f.text_field :name, data: { rule_required: "true",
+	msg_required: "Please enter SOMETHING" } %>
 
 	<%= f.label :category_id, "category" %>
 	<%= render "shared/category_select", f: f %>
 
 	<%= f.label :addr, "address" %>
-	<%= f.text_field :addr, data: { validate: "fill" } %>
+	<%= f.text_field :addr, data: { rule_required: "true",
+	msg_required: "Please enter SOMETHING" } %>
 	<%= f.label :phnum, "ph number" %>
 	<%= f.text_field :phnum %>
 	<%= f.label :delivery, "delivery option" %>
@@ -40,3 +44,8 @@ flash: 더 많이 추가해주세요. 더 정확하고 많은 정보를 제공�
 
 	<%= f.submit "go submit" %>
 <% end %>
+
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script>
+	$("#new_rest_register").validate();
+</script>

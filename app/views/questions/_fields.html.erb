@@ -2,8 +2,11 @@
 <% if current_user %>
 	<%= f.text_field :email, value: current_user.email, readonly: true %>
 <% else %>
-	<%= f.text_field :email, data: { validate: "email" } %>
+	<%= f.text_field :email, data: { rule_required: "true", 
+	rule_email: "true",	msg_required: "Please enter SOMETHING",
+	msg_email: "Enter a valid email address" } %>
 <% end %>
 
 <%= f.label :contents, "contents" %>
-<%= f.text_field :contents, data: { validate: "contents" } %>
+<%= f.text_field :contents, data: { rule_required: "true",
+	msg_required: "Please enter SOMETHING" } %>

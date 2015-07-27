@@ -5,8 +5,14 @@
 	<%= f.submit "gogogo" %>
 <% end %>
 
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script>
+	$("#new_question").validate();
+</script>
+<!--
 <script>
 	$("#new_question").submit( function(e) {
 		formValidation(e, "#new_question");
 	});
 </script>
+--!>
