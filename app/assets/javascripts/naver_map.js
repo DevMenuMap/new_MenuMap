@@ -15,9 +15,9 @@ function loadNaverMap(lat, lng, level){
 		lng = 126.952712;
 	if(typeof level == 'undefined')
 		level = 10
-	var oSeoulNatlSubway = new nhn.api.map.LatLng(lat, lng);
+	var oCenter = new nhn.api.map.LatLng(lat, lng);
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
-																	point : oSeoulNatlSubway,
+																	point : oCenter,
 																	zoom : level,
 																	// move on map with mouse dragging
 																	enableDragPan : true,  

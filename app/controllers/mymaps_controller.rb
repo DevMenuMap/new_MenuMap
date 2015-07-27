@@ -1,6 +1,6 @@
 class MymapsController < ApplicationController
   def index
-		@user = User.find(params[:id])
+		@user = User.find_by(username: params[:username])
 		@mymaps = @user.mymaps
 
 		@coord_array = []
@@ -16,7 +16,7 @@ class MymapsController < ApplicationController
 
 	# GET /users/:username/MyMap_list
 	def list
-		@user = User.find(params[:id])
+		@user = User.find_by(username: params[:username])
 		@mymaps = @user.mymaps
 	end
 
