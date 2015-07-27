@@ -4,3 +4,9 @@
 	<%= render "questions/fields", f: f %>
 	<%= f.submit "gogogo" %>
 <% end %>
+
+<script>
+	$("#new_question").submit( function(e) {
+		formValidation(e);
+	});
+</script>
