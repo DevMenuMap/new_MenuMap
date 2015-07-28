@@ -5,7 +5,10 @@
 	<%= submit_tag 'take a new MyMap snapshot' %>
 <% end %>
 
-<div id="kakaostory-share-button"></div>
+<% unless @user.mymap_snapshot.blank? %>
+	<div id="kakaostory-share-button"></div>
+	<a href="http://www.facebook.com/sharer/sharer.php?u=http://52.69.51.63/users/<%= @user.username %>/MyMap">Facebook share</a>
+<% end %>
 
 <script>
 	Kakao.init('<%= ENV['KAKAO_APP_KEY'] %>');

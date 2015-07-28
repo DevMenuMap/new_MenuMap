@@ -20,6 +20,17 @@ class MymapSnapshotsController < ApplicationController
 		else
 			user.mymap_snapshot.update(:snapshot => File.open(file_path))
 		end
+		
+		fb_id = "http://52.69.51.63/users/" + user.username + "/MyMap"
+		uri = URI.parse("https://graph.facebook.com")
+		http = Net::HTTP.new(uri.host, uri.port)
+		http.use_ssl = true
+
+		request = Net::HTTP::Post.new(uri.request_uri)
+		request.set_form_data({"id" => fb_id, "scrape" => "true"})
+
+		response = http.request(request)
+
 		redirect_to mymap_index_url(user.username) 
 	end
 	
