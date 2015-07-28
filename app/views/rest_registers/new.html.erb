@@ -47,5 +47,13 @@ flash: 더 많이 추가해주세요. 더 정확하고 많은 정보를 제공�
 
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script>
+$(document).ready( function() {
 	$("#new_rest_register").validate();
+	$("input:file").change( function() {
+		formValidation.call( this, "input:file" );
+	});
+	$("#new_rest_register").submit( function(e) {
+		checkValidation(e);
+	});
+});
 </script>
