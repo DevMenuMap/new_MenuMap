@@ -2,6 +2,12 @@
 
 <% unless @user.mymap_snapshot.blank? %>
 	<% content_for :head do %>
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@luke9407" />
+		<meta name="twitter:creator" content="@luke9407" />
+		<meta name="twitter:title" content="MenuMap" />
+		<meta name="twitter:description" content="MyMap" />
+		<meta name="twitter:image" content="<%= @user.mymap_snapshot.snapshot.url %>" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="MenuMap" />
 		<meta property="og:url" content="http://52.69.51.63/users/<%= @user.username %>/MyMap" />
