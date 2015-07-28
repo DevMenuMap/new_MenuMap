@@ -5,10 +5,19 @@
 	<%= submit_tag 'take a new MyMap snapshot' %>
 <% end %>
 
+<div id="kakaostory-share-button"></div>
+
 <script>
+	Kakao.init('<%= ENV['KAKAO_APP_KEY'] %>');
+
 	$("#new_snapshot").submit(function(){
 		$("#lat").val(oMap.getCenter().getLat());
 		$("#lng").val(oMap.getCenter().getLng());
 		$("#level").val(oMap.getLevel());
+	});
+
+	Kakao.Story.createShareButton({
+		container: '#kakaostory-share-button',
+		text: 'MenuMap MyMap'
 	});
 </script>

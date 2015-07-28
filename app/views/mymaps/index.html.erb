@@ -1,5 +1,13 @@
 <h1>Mymap#index</h1>
 
+<% content_for :head do %>
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="MenuMap" />
+	<meta property="og:url" content="http://52.69.51.63/users/<%= @user.username %>/MyMap" />
+	<meta property="og:description" content="MyMap" />
+	<meta property="og:image" content="<%= @user.mymap_snapshot.snapshot.url %>" />
+<% end %>
+
 <div id="naver_map"></div>
 
 <table>
