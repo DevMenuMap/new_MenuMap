@@ -5,5 +5,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery.raty
+//= require jquery.MultiFile
 //= require_tree .
 //= require turbolinks
