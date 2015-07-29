@@ -22,3 +22,6 @@
 
 # Different OS has different local path to mysql
 /config/database.yml
+
+# Macbook
+*.DS_Store
