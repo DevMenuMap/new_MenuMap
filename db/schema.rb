@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150726132127) do
+ActiveRecord::Schema.define(version: 20150729075159) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -108,6 +108,12 @@ ActiveRecord::Schema.define(version: 20150726132127) do
   end
 
   add_index "coordinates", ["latlng_type", "latlng_id"], name: "index_coordinates_on_latlng_type_and_latlng_id", using: :btree
+
+  create_table "franchises", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "menu_titles", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
@@ -255,10 +261,12 @@ ActiveRecord::Schema.define(version: 20150726132127) do
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
     t.integer  "addr_code",      limit: 8
+    t.integer  "franchise_id",   limit: 4
   end
 
   add_index "restaurants", ["addr_code"], name: "index_restaurants_on_addr_code", using: :btree
   add_index "restaurants", ["category_id"], name: "index_restaurants_on_category_id", using: :btree
+  add_index "restaurants", ["franchise_id"], name: "index_restaurants_on_franchise_id", using: :btree
   add_index "restaurants", ["subcategory_id"], name: "index_restaurants_on_subcategory_id", using: :btree
 
   create_table "slangs", force: :cascade do |t|
@@ -322,5 +330,6 @@ ActiveRecord::Schema.define(version: 20150726132127) do
   add_foreign_key "rest_registers", "subcategories"
   add_foreign_key "rest_registers", "users"
   add_foreign_key "restaurants", "categories"
+  add_foreign_key "restaurants", "franchises"
   add_foreign_key "restaurants", "subcategories"
 end
