@@ -21,15 +21,7 @@ class MymapSnapshotsController < ApplicationController
 			user.mymap_snapshot.update(:snapshot => File.open(file_path))
 		end
 		
-		fb_id = "http://52.69.51.63/users/" + user.username + "/MyMap"
-		uri = URI.parse("https://graph.facebook.com")
-		http = Net::HTTP.new(uri.host, uri.port)
-		http.use_ssl = true
-
-		request = Net::HTTP::Post.new(uri.request_uri)
-		request.set_form_data({"id" => fb_id, "scrape" => "true"})
-
-		response = http.request(request)
+		request_to_fb(user)
 
 		redirect_to mymap_index_url(user.username) 
 	end
@@ -47,4 +39,17 @@ class MymapSnapshotsController < ApplicationController
 			@coord_array << m.restaurant.lat.to_f << m.restaurant.lng.to_f
 		end
 	end
+
+	private
+		def request_to_fb(user)
+			fb_id = "http://52.69.51.63/users/" + user.username + "/MyMap"
+			uri = URI.parse("https://graph.facebook.com")
+			http = Net::HTTP.new(uri.host, uri.port)
+			http.use_ssl = true
+
+			request = Net::HTTP::Post.new(uri.request_uri)
+			request.set_form_data({"id" => fb_id, "scrape" => "true"})
+
+			response = http.request(request)
+		end
 end
