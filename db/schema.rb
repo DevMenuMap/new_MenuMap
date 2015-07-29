@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150719105654) do
+ActiveRecord::Schema.define(version: 20150726132127) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -137,6 +137,18 @@ ActiveRecord::Schema.define(version: 20150719105654) do
 
   add_index "menus", ["menu_title_id"], name: "index_menus_on_menu_title_id", using: :btree
   add_index "menus", ["user_id"], name: "index_menus_on_user_id", using: :btree
+
+  create_table "mymap_snapshots", force: :cascade do |t|
+    t.integer  "user_id",               limit: 4
+    t.string   "snapshot_file_name",    limit: 255
+    t.string   "snapshot_content_type", limit: 255
+    t.integer  "snapshot_file_size",    limit: 4
+    t.datetime "snapshot_updated_at"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "mymap_snapshots", ["user_id"], name: "index_mymap_snapshots_on_user_id", using: :btree
 
   create_table "mymaps", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
@@ -300,6 +312,7 @@ ActiveRecord::Schema.define(version: 20150719105654) do
   add_foreign_key "menu_titles", "restaurants"
   add_foreign_key "menus", "menu_titles"
   add_foreign_key "menus", "users"
+  add_foreign_key "mymap_snapshots", "users"
   add_foreign_key "mymaps", "restaurants"
   add_foreign_key "mymaps", "users"
   add_foreign_key "rest_errs", "restaurants"

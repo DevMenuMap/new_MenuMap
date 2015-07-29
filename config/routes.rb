@@ -62,20 +62,26 @@ Rails.application.routes.draw do
 
 	resources :slangs
 
+	# User specific routes
+	# 'resources :users' needs just for nesting.
+	resources :users, shallow: true do 
+		resource :mymap_snapshot
+	end
+
 	# MyMap :new, :create depends on restaurants.
 	resources :mymaps, except: [:index, :new, :create]
 
-	get '/users/:id/MyMap' => 'mymaps#index', as: :mymap_index
+	get '/users/:username/MyMap' => 'mymaps#index', as: :mymap_index
 	# Case insensitive redirection to users' MyMap page
-	get '/users/:id/myMap' => redirect('users/%{id}/MyMap')
-	get '/users/:id/Mymap' => redirect('users/%{id}/MyMap')
-	get '/users/:id/mymap' => redirect('users/%{id}/MyMap')
+	get '/users/:username/myMap' => redirect('users/%{username}/MyMap')
+	get '/users/:username/Mymap' => redirect('users/%{username}/MyMap')
+	get '/users/:username/mymap' => redirect('users/%{username}/MyMap')
 
-	get '/users/:id/MyMap_list' => 'mymaps#list'
+	get '/users/:username/MyMap_list' => 'mymaps#list'
 	# Redirection to MyMap_list
-	get '/users/:id/mymap_list' => redirect('users/%{id}/MyMap_list')
-	get '/users/:id/Mymap_list' => redirect('users/%{id}/MyMap_list')
-	get '/users/:id/mymap_list' => redirect('users/%{id}/MyMap_list')
+	get '/users/:username/mymap_list' => redirect('users/%{username}/MyMap_list')
+	get '/users/:username/Mymap_list' => redirect('users/%{username}/MyMap_list')
+	get '/users/:username/mymap_list' => redirect('users/%{username}/MyMap_list')
 
 	scope module: 'admin' do
 		resources :monitors

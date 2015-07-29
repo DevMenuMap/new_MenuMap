@@ -1,0 +1,26 @@
+<%= form_tag(user_mymap_snapshot_path, id: "new_snapshot") do %>
+	<%= hidden_field_tag 'lat', '' %>
+	<%= hidden_field_tag 'lng', '' %>
+	<%= hidden_field_tag 'level', '' %>
+	<%= submit_tag 'take a new MyMap snapshot' %>
+<% end %>
+
+<% unless @user.mymap_snapshot.blank? %>
+	<div id="kakaostory-share-button"></div>
+	<a href="http://www.facebook.com/sharer/sharer.php?u=http://52.69.51.63/users/<%= @user.username %>/MyMap">Facebook share</a>
+<% end %>
+
+<script>
+	Kakao.init('<%= ENV['KAKAO_APP_KEY'] %>');
+
+	$("#new_snapshot").submit(function(){
+		$("#lat").val(oMap.getCenter().getLat());
+		$("#lng").val(oMap.getCenter().getLng());
+		$("#level").val(oMap.getLevel());
+	});
+
+	Kakao.Story.createShareButton({
+		container: '#kakaostory-share-button',
+		text: 'MenuMap MyMap'
+	});
+</script>

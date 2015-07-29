@@ -8,11 +8,17 @@ var k = 0
 /* 다각형 꼭지점 저장을 위한 변수 */
 var polygonCoords = new Array();
 
-function loadNaverMap(){
-	var oSeoulNatlSubway = new nhn.api.map.LatLng(37.48121, 126.952712);
+function loadNaverMap(lat, lng, level){
+	if(typeof lat == 'undefined')
+		lat = 37.48121;
+	if(typeof lng == 'undefined')
+		lng = 126.952712;
+	if(typeof level == 'undefined')
+		level = 10
+	var oCenter = new nhn.api.map.LatLng(lat, lng);
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
-																	point : oSeoulNatlSubway,
-																	zoom : 10,
+																	point : oCenter,
+																	zoom : level,
 																	// move on map with mouse dragging
 																	enableDragPan : true,  
 																	enableWheelZoom : true,

@@ -4,3 +4,7 @@
 <% else %>
 	<title><%= meta_title(yield(:page_title)) %></title>
 <% end %>
+
+<% if content_for?(:head) %>
+	<%= yield(:head) %>
+<% end %>
