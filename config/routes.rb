@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 	resources :notices, 			 except: [:index, :show]
 	resources :questions, 		 except: [:new]
 	resources :rest_registers, except: [:edit, :update]
+	resources :franchises
 
 	# User & Admin with devise gem.
   devise_for :users, controllers: {
