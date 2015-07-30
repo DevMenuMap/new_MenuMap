@@ -1,0 +1,15 @@
+<%= link_to "new franchise", "#new_franchise" %>
+
+<%= render "franchises/new" %>
+
+<h1>Franchise#index</h1>
+
+<table>
+	<tr>
+		<th>franchise_id</th>
+		<th>name</th>
+	</tr>
+
+	<!-- Each questions in franchise/_franchise.html.erb -->
+	<%= render @franchise %>
+</table>

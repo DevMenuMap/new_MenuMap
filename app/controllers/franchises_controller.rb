@@ -3,6 +3,7 @@ class FranchisesController < ApplicationController
 	
   def index
   	@franchise = Franchise.all
+		@franchise_new = Franchise.new
   end
 
   def create
@@ -19,7 +20,6 @@ class FranchisesController < ApplicationController
 
   def edit
   	@franchise = Franchise.find(params[:id])
-		redirect_to franchises_url
   end
 
   def update
@@ -41,8 +41,12 @@ class FranchisesController < ApplicationController
 		redirect_to franchises_url
 	end
 
+	def show
+		@franchise = Franchise.find(params[:id])
+	end
+
 	private
 		def franchise_params
-			params.require(:franchise).permit(:name)
+			params.require(:franchise).permit(:id, :name)
 		end
 end

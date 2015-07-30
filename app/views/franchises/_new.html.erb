@@ -1,0 +1,12 @@
+<h1>Franchise#new</h1>
+
+<%= form_for(@franchise_new) do |f| %>
+	<%= render "franchises/fields", f: f %>
+	<%= f.submit "gogogo" %>
+<% end %>
+
+<script>
+$(document).ready( function() {
+	$("#new_franchise").validate();
+});
+</script>
