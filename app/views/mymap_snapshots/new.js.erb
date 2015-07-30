@@ -1,3 +1,12 @@
 $("#share_mymap_button").bind("ajax:success", function() {
+	$(".modal-title").html("Share MyMap");
+	$(".modal-body").html("<%= j(render "mymap_snapshots/new") %>");
+});
+
+
+
+/*
+$("#share_mymap_button").bind("ajax:success", function() {
 	$("#modal").html("<%= j(render "mymap_snapshots/new") %>");
 });
+*/
