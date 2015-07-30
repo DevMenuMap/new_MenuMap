@@ -5,6 +5,7 @@
 <%= form_for @addr_rule, html: { multipart: true } do |f| %>
 	<%= render "field", f: f %>
 	<%= f.submit %>
+	<input type="button" onclick="clear_data()" value="clear">
 <% end %>
 
 <script>
@@ -18,5 +19,10 @@
 				'addr_rule[coordinates_attributes][0][lng][]': { required: true }
 			}
 		});
+		function clear_data() {
+			document.getElementById("new_addr_rule").reset();
+			oMap.clearOverlay();
+			k = 0;
+		};
 	});
 </script>
