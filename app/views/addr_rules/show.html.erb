@@ -16,5 +16,10 @@
 <script>
 	$(document).on("page:load", loadNaverMap());
 	// Change this to normal data passing codes to js
-	$(document).ready(function(){ showMarkers(<%= @coord_array %>) });
+	$(document).ready(function(){ 
+		showMarkers(<%= @coord_array %>);
+		$("._nmap_marker").click(function(){
+			$(".nmap_infowindow_content").toggle();
+		});
+	});
 </script>

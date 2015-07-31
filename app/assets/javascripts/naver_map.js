@@ -31,6 +31,25 @@ function loadNaverMap(lat, lng, level){
 														});
 
 	oMap.attach("contextmenu", drawPolygon);
+
+	//infoWindow
+	var oInfoWnd = new nhn.api.map.InfoWindow();
+	oMap.addOverlay(oInfoWnd);
+	oInfoWnd.setVisible(true);
+	oMap.attach('click', function(oCustomEvent) {
+		var oTarget = oCustomEvent.target;
+		if (oTarget instanceof nhn.api.map.Marker) {
+			//if (oCustomEvent.clickCoveredMarker) {
+			//	return;
+			//};
+			var oMarker = oTarget;
+			oInfoWnd.setContent('<strong style="color: red">' + oMarker.getPoint().getY() + ',' + oMarker.getPoint().getX() + '</strong>');
+			oInfoWnd.setPoint(oMarker.getPoint());
+			oInfoWnd.setPosition({right : 10, top : 0});
+			oInfoWnd.autoPosition();
+		}
+	});
+
 };
 
 // Show marker on mouse click
