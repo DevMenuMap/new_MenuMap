@@ -1,5 +1,5 @@
 <h2>mymaps#new restaurant = <%= @restaurant.id %></h2>
-<%= form_for([@restaurant, @mymap], remote: true) do |f| %>
+<%= form_for([@restaurant, @mymap], remote: true, html: {:onsubmit => "$('#myModal').modal('hide');"}) do |f| %>
 	<%= render "mymaps/field", f: f %>
 	<%= f.submit %>
 <% end %>

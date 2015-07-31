@@ -1,3 +1,4 @@
 $("#new_mymap_<%= @restaurant.id %>").bind("ajax:success", function() { 
-	$("#modal").html("<%= j(render partial: "mymaps/new") %>");
+	$(".modal-title").html("New MyMap");
+	$(".modal-body").html("<%= j(render partial: "mymaps/new") %>");
 });

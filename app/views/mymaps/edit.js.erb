@@ -1,3 +1,4 @@
 $("#edit_mymap_button").bind("ajax:success", function() {
-	$("#modal").html("<%= j(render "edit") %>");
+	$(".modal-title").html("Edit MyMap");
+	$(".modal-body").html("<%= j(render "edit") %>");
 });
