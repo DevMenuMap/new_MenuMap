@@ -15,7 +15,7 @@
 		<% else %>
 			<td></td>
 		<% end %>
-		<td><%= @mymap.group %></td>
+		<td><%= image_tag s3_image_url("mymap_group_icon_" + @mymap.group.to_s + ".png"), id: "mymap_group_icon_" + @mymap.group.to_s, style: "height: 20px; width: 20px;" %></td>
 		<td><%= @mymap.contents %></td>
 	</tr>
 
