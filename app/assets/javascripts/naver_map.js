@@ -9,12 +9,10 @@ var k = 0
 var polygonCoords = new Array();
 
 function loadNaverMap(lat, lng, level){
-	if(typeof lat == 'undefined')
+	if ( lat == 0 || lng == 0 || isNaN(lat) || isNaN(lng)){
 		lat = 37.48121;
-	if(typeof lng == 'undefined')
 		lng = 126.952712;
-	if(typeof level == 'undefined')
-		level = 10
+	};
 	var oCenter = new nhn.api.map.LatLng(lat, lng);
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
 																	point : oCenter,

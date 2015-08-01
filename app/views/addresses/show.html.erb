@@ -14,7 +14,8 @@
 <div id="naver_map"></div>
 
 <script>
-	$(document).on("page:load", loadNaverMap());
+	$(document).on("page:load",
+			loadNaverMap(<%= @center_y %>, <%= @center_x %>, 10) );
 	// Change this to normal data passing codes to js
 	$(document).ready(function(){ showMarkers(<%= @coord_array %>) });
 </script>
