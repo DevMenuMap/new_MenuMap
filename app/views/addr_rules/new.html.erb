@@ -25,9 +25,11 @@
 			k = 0;
 		};
 	});
+	$('body').on('contextmenu', '#naver_map', function(e){ return false; });
 	function clear_data() {
 		document.getElementById("new_addr_rule").reset();
 		oMap.clearOverlay();
+		polygonCoords = [];
 		k = 0;
 	};
 </script>
