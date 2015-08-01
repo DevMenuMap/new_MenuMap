@@ -60,6 +60,7 @@ function setMarker(event) {
 	marker = new nhn.api.map.Marker(oIcon, {title : "marker"});
 	marker.setPoint(oLatLng);
 	oMap.addOverlay(marker);
+	addRow();
 
 	// Put latitude and longitude on input
 	var latString = "coord_lat_";
@@ -114,4 +115,28 @@ function showMarkers(coordArray){
 	});
 
 	oMap.addOverlay(polygons);
+};
+
+// add input box
+function addRow() {
+	var row = $("#latlng_table tr:eq(2)").clone();
+	var td_lat = row.find("td:eq(0)").children();
+	var td_lng = row.find("td:eq(1)").children();
+	
+	td_lat.attr("id", "coord_lat_".concat(k+1));
+	td_lng.attr("id", "coord_lng_".concat(k+1));
+	td_lat.val("");
+	td_lng.val("");
+
+	$("#latlng_table").append(row);
+};
+
+function delRows() {
+	var table = document.getElementById("latlng_table");
+	var l = table.rows.length;
+	var i;	
+	
+	for(i = l - 1; i > 2; i--) {
+		table.deleteRow(i);
+	};
 };

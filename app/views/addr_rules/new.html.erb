@@ -26,10 +26,12 @@
 		};
 	});
 	$('body').on('contextmenu', '#naver_map', function(e){ return false; });
+	$(':input[type="number"]').prop("readonly", true);
 	function clear_data() {
 		document.getElementById("new_addr_rule").reset();
 		oMap.clearOverlay();
 		polygonCoords = [];
 		k = 0;
+		delRows();
 	};
 </script>
