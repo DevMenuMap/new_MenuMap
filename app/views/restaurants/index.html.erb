@@ -5,7 +5,7 @@
 
 <%= link_to "new restaurant", new_restaurant_path %>
 
-<%= will_paginate @restaurants %>
+<!-- will_paginate @restaurants -->
 
 <table class="table">
 	<tr>
@@ -51,16 +51,23 @@
   //	});
 	//})
 
-	$(document).on("page:load", initialize());
+	$(document).on("page:load", initialize(<%= @curr_lat %>, <%= @curr_lng %>));
 
-	function initialize(){
+	function initialize(curr_lat, curr_lng){
 		var oSize = new nhn.api.map.Size(28, 37);
 		var oOffset = new nhn.api.map.Size(14, 37);
 		var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
-		var oSeoulNatlSubway = new nhn.api.map.LatLng(37.48121, 126.952712);
-		var defaultLevel = 11;
+		var defaultLevel = 10;
+		var centerPosition;
+		if ( curr_lat == 0 || curr_lng == 0 || isNaN(curr_lat) || isNaN(curr_lng)){
+			//default center
+			centerPosition = new nhn.api.map.LatLng(37.48121, 126.952712);
+		} else {
+			//if currentPosition was checked 
+			centerPosition = new nhn.api.map.LatLng(curr_lat, curr_lng);
+		};
     oMap = new nhn.api.map.Map(document.getElementById('map_canvas'), { 
-                                    		point : oSeoulNatlSubway,
+                                    		point : centerPosition,
 	                                      zoom : defaultLevel,
 	                                      enableWheelZoom : true,
 	                                      enableDragPan : true,
@@ -82,8 +89,11 @@
 	      oMap.addOverlay(oMarker);
 	      oMap.addOverlay(oLabel);
 	      oLabel.setVisible(true, oMarker);
-	      <% if index==5 %>
-	      	oMap.setCenter(latlng);
+	      <% if index == 0 %>
+					//if currentPosition was not checked
+					if ( curr_lat == 0 || curr_lng == 0 || isNaN(curr_lat) || isNaN(curr_lng)){
+	      		oMap.setCenter(latlng);
+					};
 	      <% end %>
 	    <% end %>
     <% end %>
