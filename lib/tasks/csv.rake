@@ -103,3 +103,14 @@ namespace :rest_errs do
 		end
   end
 end
+
+namespace :franchises do
+	task :create => :environment do
+		CSV.foreach('db/seed_data/rest_fran.csv', headers: true) do |row|
+		
+			a = Restaurant.unscoped.find(row[0].to_i)
+			a.franchise = Franchise.find(row[1].to_i)
+			a.save
+		end
+	end
+end

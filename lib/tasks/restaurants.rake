@@ -32,16 +32,4 @@ namespace :restaurants do
 	task :ping => :environment do
 		puts Restaurant.ping
 	end
-
-	task :create_franchise => :environment do
-		CSV.foreach('db/seed_data/rest_fran.csv', headers: true) do |row|
-		
-			a = Restaurant.unscoped.find(row[0].to_i)
-			a.franchise = Franchise.find(row[1].to_i)
-			a.save
-
-		end
-		
-	end
-
 end

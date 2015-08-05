@@ -4,3 +4,9 @@
 	<%= render "fields", f: f %>
 	<%= f.submit "gogogo" %>
 <% end %>
+
+<script>
+$(document).ready( function() {
+	$(".edit_franchise").validate();
+});
+</script>

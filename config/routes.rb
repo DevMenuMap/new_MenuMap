@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 	resources :notices, 			 except: [:index, :show]
 	resources :questions, 		 except: [:new]
 	resources :rest_registers, except: [:edit, :update]
-	resources :franchises
 
 	# User & Admin with devise gem.
   devise_for :users, controllers: {
@@ -40,6 +39,7 @@ Rails.application.routes.draw do
 	end
 
 	# Index pages which is not bounded with :restaurants
+	resources :franchises
 	get 'rest_errs' 	=> 'rest_errs#index', 	as: :rest_errs
 	get 'menu_titles' => 'menu_titles#index', as: :menu_titles
 	get 'menus'				=> 'menus#index', 			as: :menus

@@ -6,5 +6,10 @@
 		<th>name</th>
 	</tr>
 
-	<%= render @franchise %>
+	<tr>
+		<td><%= @franchise.id %></td>
+		<td><%= @franchise.name %></td>
+		<td><%= link_to "edit", edit_franchise_path(@franchise) %></td>
+		<td><%= link_to "destroy", @franchise, method: :delete %></td>
+	</tr>
 </table>

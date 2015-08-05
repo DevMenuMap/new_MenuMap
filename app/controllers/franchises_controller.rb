@@ -2,9 +2,13 @@ class FranchisesController < ApplicationController
 	before_action :admin?
 	
   def index
-  	@franchise = Franchise.all
-		@franchise_new = Franchise.new
+  	@franchises = Franchise.all
+		@franchise = Franchise.new
   end
+
+	def show
+		@franchise = Franchise.find(params[:id])
+	end
 
   def create
 		@franchise = Franchise.new(franchise_params)
@@ -39,10 +43,6 @@ class FranchisesController < ApplicationController
 		@franchise.destroy
 		flash[:alert] = "Succeed franchise#destroy"
 		redirect_to franchises_url
-	end
-
-	def show
-		@franchise = Franchise.find(params[:id])
 	end
 
 	private

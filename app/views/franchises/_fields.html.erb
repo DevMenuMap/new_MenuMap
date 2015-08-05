@@ -1,12 +1,3 @@
-<%= f.label :email, "email" %>
-<% if current_user %>
-	<%= f.text_field :email, value: current_user.email, readonly: true %>
-<% else %>
-	<%= f.text_field :email, data: { rule_required: "true", 
-	rule_email: "true",	msg_required: "Please enter SOMETHING",
-	msg_email: "Enter a valid email address" } %>
-<% end %>
-
 <%= f.label :id, "id" %>
 <%= f.text_field :id, data: { rule_required: "true",
 	msg_required: "Please enter SOMETHING" } %>

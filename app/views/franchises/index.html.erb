@@ -10,6 +10,13 @@
 		<th>name</th>
 	</tr>
 
-	<!-- Each questions in franchise/_franchise.html.erb -->
-	<%= render @franchise %>
+	<% @franchises.each do |franchise| %>
+		<tr>
+			<td><%= franchise.id %></td>
+			<td><%= franchise.name %></td>
+			<td><%= link_to "show", franchise %></td>
+			<td><%= link_to "edit", edit_franchise_path(franchise) %></td>
+			<td><%= link_to "destroy", franchise, method: :delete %></td>
+		</tr>
+	<% end %>
 </table>
