@@ -35,11 +35,6 @@
 
 <%= render 'shared/modal' %>
 
-<!--
-<div id="modal">
-</div>
--->
-
 <script>
 	$(document).on("page:load", loadNaverMap());
 	$(document).ready(function(){ showMarkers(<%= @coord_array %>)});

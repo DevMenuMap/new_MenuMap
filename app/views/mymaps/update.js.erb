@@ -1,4 +1,4 @@
-$("#edit_mymap").bind("ajax:success", function() {
-	alert("mymaps#udpate succeed");
-	// close the modal
+$("#edit_mymap_<%= @mymap.id %>").bind("ajax:success", function() {
+	$(".modal-title").html("Show MyMap");
+	$(".modal-body").html("<%= j(render "show") %>");
 });
