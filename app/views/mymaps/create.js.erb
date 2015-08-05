@@ -1,4 +1,5 @@
 $("#new_mymap").bind("ajax:success", function() {
 	$("#mymap_button_<%= @restaurant.id %>").html("<%= j(mymap_button(@user, @restaurant)) %>");
-	// remove modal
+	$(".modal-title").html("Show MyMap");
+	$(".modal-body").html("<%= j(render "show") %>");
 });

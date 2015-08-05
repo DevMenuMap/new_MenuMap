@@ -31,10 +31,9 @@
 	<%= render @mymaps %>
 </table>
 
-<%= link_to "share MyMap", new_user_mymap_snapshot_path(@user), id: "share_mymap_button", remote: true %>
+<%= link_to "share MyMap", new_user_mymap_snapshot_path(@user), id: "share_mymap_button", remote: true, data: {toggle: "modal", target: "#myModal"} %>
 
-<div id="modal">
-</div>
+<%= render 'shared/modal' %>
 
 <script>
 	$(document).on("page:load", loadNaverMap());
