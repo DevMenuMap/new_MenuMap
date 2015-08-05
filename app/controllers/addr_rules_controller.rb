@@ -23,27 +23,21 @@ class AddrRulesController < ApplicationController
 		# Find Center point
 		y = []
 		x = []
-		area = 0
-		@center_x = 0
 		@center_y = 0
-		l = @coord_array.length / 2
-		for i in 0..(l-1)
-			y << @coord_array[2*i]
-			x << @coord_array[2*i+1]
+		@center_x = 0
+		
+		if( @coord_array != [] )
+			l = @coord_array.length / 2
+			for i in 0..(l-1)
+				y << @coord_array[2*i]
+				x << @coord_array[2*i+1]
+			end
+			x.uniq!
+			y.uniq!
+
+			@center_x = (x.inject{|sum, n| sum + n}) / x.length
+			@center_y = (y.inject{|sum, n| sum + n}) / y.length
 		end
-		x << x[0]
-		y << y[0]
-		for i in 0..(l-1)
-			area += (x[i].to_f * y[i+1].to_f - x[i+1].to_f * y[i].to_f ) / 2
-		end
-		for i in 0..(l-1)
-			@center_x += ( (x[i].to_f + x[i+1].to_f) *
-			(x[i].to_f * y[i+1].to_f - x[i+1].to_f * y[i].to_f) ) / (6 * area)
-			@center_y += ( (y[i].to_f + y[i+1].to_f) *
-			(x[i].to_f * y[i+1].to_f - x[i+1].to_f * y[i].to_f) ) / (6 * area)
-		end
-		@center_x = @center_x.abs
-		@center_y = @center_y.abs
   end
 
   def new

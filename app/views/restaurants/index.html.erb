@@ -5,7 +5,7 @@
 
 <%= link_to "new restaurant", new_restaurant_path %>
 
-<!-- will_paginate @restaurants -->
+<%= will_paginate @restaurants %>
 
 <table class="table">
 	<tr>
@@ -51,20 +51,25 @@
   //	});
 	//})
 
-	$(document).on("page:load", initialize(<%= @curr_lat %>, <%= @curr_lng %>));
+	$(document).on("page:load", initialize(<%= @center_y %>, <%= @center_x %>, 8));
 
-	function initialize(curr_lat, curr_lng){
+	function initialize(curr_lat, curr_lng, level){
 		var oSize = new nhn.api.map.Size(28, 37);
 		var oOffset = new nhn.api.map.Size(14, 37);
 		var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
-		var defaultLevel = 10;
+		var defaultLevel;
 		var centerPosition;
 		if ( curr_lat == 0 || curr_lng == 0 || isNaN(curr_lat) || isNaN(curr_lng)){
 			//default center
 			centerPosition = new nhn.api.map.LatLng(37.48121, 126.952712);
 		} else {
-			//if currentPosition was checked 
+			//if currentPosition was checked or center point was set
 			centerPosition = new nhn.api.map.LatLng(curr_lat, curr_lng);
+		};
+		if ( level == 0 || isNaN(level) ) {
+			defaultLevel = 10;
+		} else {
+			defaultLevel = level;
 		};
     oMap = new nhn.api.map.Map(document.getElementById('map_canvas'), { 
                                     		point : centerPosition,
@@ -89,12 +94,12 @@
 	      oMap.addOverlay(oMarker);
 	      oMap.addOverlay(oLabel);
 	      oLabel.setVisible(true, oMarker);
-	      <% if index == 0 %>
-					//if currentPosition was not checked
-					if ( curr_lat == 0 || curr_lng == 0 || isNaN(curr_lat) || isNaN(curr_lng)){
-	      		oMap.setCenter(latlng);
-					};
-	      <% end %>
+	      //<% if index == 0 %>
+					// if currentPosition was not checked
+				//	if ( curr_lat == 0 || curr_lng == 0 || isNaN(curr_lat) || isNaN(curr_lng)){
+	      //		oMap.setCenter(latlng);
+				//	};
+	      //<% end %>
 	    <% end %>
     <% end %>
 	};

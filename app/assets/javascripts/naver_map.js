@@ -13,6 +13,9 @@ function loadNaverMap(lat, lng, level){
 		lat = 37.48121;
 		lng = 126.952712;
 	};
+	if ( level == 0 || isNaN(level) ) {
+		level = 10;
+	};
 	var oCenter = new nhn.api.map.LatLng(lat, lng);
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
 																	point : oCenter,
@@ -29,35 +32,32 @@ function loadNaverMap(lat, lng, level){
 														});
 
 	oMap.attach("contextmenu", drawPolygon);
+};
 
-	//infoWindow
-	var oInfoWnd = new nhn.api.map.InfoWindow();
-	oMap.addOverlay(oInfoWnd);
-	oInfoWnd.setVisible(true);
+function showLabels() {
+	var oLabel = new nhn.api.map.MarkerLabel();
+	oMap.addOverlay(oLabel);
 	oMap.attach('click', function(oCustomEvent) {
 		var oTarget = oCustomEvent.target;
 		if (oTarget instanceof nhn.api.map.Marker) {
-			//if (oCustomEvent.clickCoveredMarker) {
-			//	return;
-			//};
 			var oMarker = oTarget;
-			oInfoWnd.setContent('<strong style="color: red">' + oMarker.getPoint().getY() + ',' + oMarker.getPoint().getX() + '</strong>');
-			oInfoWnd.setPoint(oMarker.getPoint());
-			oInfoWnd.setPosition({right : 10, top : 0});
-			oInfoWnd.autoPosition();
-		}
+			if (oLabel.getVisible()){
+				oLabel.setVisible(false, oMarker);
+			} else {
+				oLabel.setVisible(true, oMarker);
+			};
+		};
 	});
-
 };
 
-// Show marker on mouse click
+// Set marker on mouse click ( new_addr_rule )
 function setMarker(event) {
 	var oSize = new nhn.api.map.Size(28, 37);
 	var oOffset = new nhn.api.map.Size(14, 37);
 	var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
 	
 	var oLatLng = event.point
-	marker = new nhn.api.map.Marker(oIcon, {title : "marker"});
+	marker = new nhn.api.map.Marker(oIcon, {title : "title"});
 	marker.setPoint(oLatLng);
 	oMap.addOverlay(marker);
 	addRow();
@@ -87,7 +87,7 @@ function drawPolygon(event){
 };
 
 // Show markers when there are created points e.g. addresses#show
-function showMarkers(coordArray){
+function showMarkers(coordArray, noPolygon){
 	var oSize = new nhn.api.map.Size(28, 37);
 	var oOffset = new nhn.api.map.Size(14, 37);
 	var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
@@ -99,25 +99,28 @@ function showMarkers(coordArray){
 	for(var i=0; i < coordArray.length; i = i + 2){
 		oLatLng = new nhn.api.map.LatLng(coordArray[i], coordArray[i+1]);
 
-		marker = new nhn.api.map.Marker(oIcon, {title : "marker"});
+		// Title will be shown when showLabel() is called
+		marker = new nhn.api.map.Marker(oIcon, {title : oLatLng});
 		marker.setPoint(oLatLng);
 		oMap.addOverlay(marker);
 
 		showPolygon.push(oLatLng);
 	};
 
-	polygons = new nhn.api.map.Polygon(showPolygon, {
-		strokeColor: "blue",
-		strokeOpacity: 1,
-		strokeWidth: 2,
-		fillColor: "lightblue",
-		fillOpacity: 0.5
-	});
+	if ( noPolygon != 1 ) {
+		polygons = new nhn.api.map.Polygon(showPolygon, {
+			strokeColor: "blue",
+			strokeOpacity: 1,
+			strokeWidth: 2,
+			fillColor: "lightblue",
+			fillOpacity: 0.5
+		});
 
-	oMap.addOverlay(polygons);
+		oMap.addOverlay(polygons);
+	};
 };
 
-// add input box
+// For new addr_rule page
 function addRow() {
 	var row = $("#latlng_table tr:eq(2)").clone();
 	var td_lat = row.find("td:eq(0)").children();
@@ -138,5 +141,21 @@ function delRows() {
 	
 	for(i = l - 1; i > 2; i--) {
 		table.deleteRow(i);
+	};
+};
+
+// For mymap page 
+function showGroupImage(groups, coords) {
+	var i;
+	var l = groups.length;
+	for (i = 0; i < l; i++) {
+		var infoWindow = new nhn.api.map.InfoWindow();
+		var	oPoint = new nhn.api.map.LatLng(coords[2 * i], coords[2 * i + 1]);
+		infoWindow.setPoint(oPoint);
+		infoWindow.setPosition({right : 15, top : 30});
+		infoWindow.autoPosition();
+		infoWindow.setVisible(true);
+		infoWindow.setContent('<img style="height: 20px"src="http://menumap-s3-development.s3-ap-southeast-1.amazonaws.com/static_assets/images/mymap_group_icon_' + 	groups[i] + '.png">');
+		oMap.addOverlay(infoWindow);
 	};
 };
