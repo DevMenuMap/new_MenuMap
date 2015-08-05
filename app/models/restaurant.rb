@@ -9,6 +9,7 @@ class Restaurant < ActiveRecord::Base
 	### Associations
   belongs_to :category
   belongs_to :subcategory
+	belongs_to :franchise
 
 	has_one 	 :rest_info
 	has_one 	 :coordinate,  as: :latlng

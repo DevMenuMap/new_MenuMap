@@ -1,0 +1,15 @@
+<h1>Franchise#show</h1>
+
+<table>
+	<tr>
+		<th>franchise_id</th>
+		<th>name</th>
+	</tr>
+
+	<tr>
+		<td><%= @franchise.id %></td>
+		<td><%= @franchise.name %></td>
+		<td><%= link_to "edit", edit_franchise_path(@franchise) %></td>
+		<td><%= link_to "destroy", @franchise, method: :delete %></td>
+	</tr>
+</table>
