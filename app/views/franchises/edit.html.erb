@@ -6,7 +6,12 @@
 <% end %>
 
 <script>
-$(document).ready( function() {
-	$(".edit_franchise").validate();
-});
+	$(document).ready( function() {
+		$(".edit_franchise").validate({
+			rules: {
+				'franchise[id]': { required: true, digits: true },
+				'franchise[name]': { required: true }
+			}
+		});
+	});
 </script>

@@ -4,3 +4,14 @@
 	<%= render "fields", f: f %>
 	<%= f.submit "gogo" %>
 <% end %>
+
+<script>
+	$(document).ready( function() {
+		$('#new_notice').validate({
+			rules: {
+				'notice[question]': { required: true },
+				'notice[answer]': { required: true }
+			}
+		});
+	});
+</script>

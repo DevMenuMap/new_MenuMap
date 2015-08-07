@@ -2,7 +2,18 @@
 
 <%= form_for @picture, html: { multipart: true } do |f| %>
 	<%= f.label :img %>
-	<%= f.file_field :img, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+	<%= f.file_field :img, multiple: true, class: "uploadImage" %>
 
 	<%= f.submit %>
 <% end %>
+
+<script>
+	$(document).ready( function() {
+		$('.edit_picture').validate({
+			rules: {
+				'picture[img][]': { required: true }
+			}
+		});
+		imageUploadValidate();
+	});
+</script>

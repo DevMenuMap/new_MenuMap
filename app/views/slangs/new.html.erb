@@ -4,3 +4,13 @@
 	<%= render "field", f: f %>
 	<%= f.submit "submit" %>
 <% end %>
+
+<script>
+	$(document).ready( function() {
+		$('#new_slang').validate({
+			rules: {
+				'slang[name]': { required: true }
+			}
+		});
+	});
+</script>

@@ -10,21 +10,17 @@ flash: 더 많이 추가해주세요. 더 정확하고 많은 정보를 제공�
 	<% if current_user %>
 		<%= f.text_field :email, value: current_user.email, readonly: true %>
 	<% else %>
-		<%= f.text_field :email, data: { rule_required: "true",
-		rule_email: "true", msg_required: "Please enter SOMETHING",
-		msg_email: "Enter a valid email address" } %>
+		<%= f.text_field :email %>
 	<% end %>
 
 	<%= f.label :name, "restaurant's name" %>
-	<%= f.text_field :name, data: { rule_required: "true",
-	msg_required: "Please enter SOMETHING" } %>
+	<%= f.text_field :name %>
 
 	<%= f.label :category_id, "category" %>
 	<%= render "shared/category_select", f: f %>
 
 	<%= f.label :addr, "address" %>
-	<%= f.text_field :addr, data: { rule_required: "true",
-	msg_required: "Please enter SOMETHING" } %>
+	<%= f.text_field :addr %>
 	<%= f.label :phnum, "ph number" %>
 	<%= f.text_field :phnum %>
 	<%= f.label :delivery, "delivery option" %>
@@ -45,13 +41,13 @@ flash: 더 많이 추가해주세요. 더 정확하고 많은 정보를 제공�
 
 <script>
 	$(document).ready( function() {
-		$("#new_rest_register").validate();
+		$("#new_rest_register").validate({
+			rules: {
+				//'rest_register[email]': { required: true, email: true },
+				'rest_register[name]': { required: true },
+				'rest_register[addr]': { required: true }
+			}
+		});
 		imageUploadValidate();
-		//$("input.uploadImage").change( function() {
-		//	formValidation.call( this, "input.uploadImage" );
-		//});
-		//$("#new_rest_register").submit( function(e) {
-		//	checkValidation(e);
-		//});
 	});
 </script>

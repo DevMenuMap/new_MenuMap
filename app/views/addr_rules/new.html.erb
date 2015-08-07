@@ -11,5 +11,12 @@
 	$(document).on("page:load", loadNaverMap());
 	$(document).ready(function(){
 		oMap.attach("click", setMarker);
+		$('#new_addr_rule').validate({
+			rules: {
+				'addr_rule[name]': { required: true },
+				'addr_rule[coordinates_attributes][0][lat][]': { required: true },
+				'addr_rule[coordinates_attributes][0][lng][]': { required: true }
+			}
+		});
 	});
 </script>
