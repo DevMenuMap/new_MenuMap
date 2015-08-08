@@ -1,17 +1,17 @@
 <%= f.label :presence_err %>
-<%= f.check_box :presence_err, class: "checkboxes" %>
+<%= f.check_box :presence_err, class: "rest_errs_group" %>
 
 <%= f.label :menu_err %>
-<%= f.check_box :menu_err, class: "checkboxes" %>
+<%= f.check_box :menu_err, class: "rest_errs_group" %>
 
 <%= f.label :phnum_err %>
-<%= f.check_box :phnum_err, class: "checkboxes" %>
+<%= f.check_box :phnum_err, class: "rest_errs_group" %>
 
 <%= f.label :category_err %>
-<%= f.check_box :category_err, class: "checkboxes" %>
+<%= f.check_box :category_err, class: "rest_errs_group" %>
 
 <%= f.label :etc %>
-<%= f.text_area :etc %>
+<%= f.text_area :etc, class: "rest_errs_group" %>
 
 <%= f.label :pictures %>
 <%= f.fields_for :pictures do |ff| %>

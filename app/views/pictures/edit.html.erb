@@ -6,14 +6,3 @@
 
 	<%= f.submit %>
 <% end %>
-
-<script>
-	$(document).ready( function() {
-		$('.edit_picture').validate({
-			rules: {
-				'picture[img][]': { required: true }
-			}
-		});
-		imageUploadValidate();
-	});
-</script>

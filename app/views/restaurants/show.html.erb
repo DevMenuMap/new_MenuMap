@@ -84,15 +84,15 @@
 	$(document).ready( function() {
 		$("#new_rest_err").validate({
 			rules: {
-				'rest_err[presence_err]': { require_from_group: [1, ".checkboxes"] },
-				'rest_err[menu_err]': { require_from_group: [1, ".checkboxes"] },
-				'rest_err[phnum_err]': { require_from_group: [1, ".checkboxes"] },
-				'rest_err[category_err]': { require_from_group: [1, ".checkboxes"] }
+				'rest_err[presence_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[menu_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[phnum_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[category_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[etc]': { require_from_group: [1, ".rest_errs_group"] }
 			}
 		});
 		$('#new_menu').validate({
 			rules: {
-				'menu[menu_title_id]': { required: true	},
 				'menu[name]': { required: true }
 			}
 		});
