@@ -103,7 +103,11 @@
 		});
 		imageUploadValidate();
 		slangCheck("#new_comment", "#comment_contents");
-
+		
+		$('#comment_contents').bind("paste", function(e) {
+			alert("붙여넣기는 금지되어 있습니다.");
+			e.preventDefault(); 
+		});
 		$('#update_comment').click( function(event) {
 			if ( <%= current_user.nil? %> ) {
 				alert("로그인 후 댓글 작성 가능합니다.");
