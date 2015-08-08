@@ -12,8 +12,6 @@ Rails.application.routes.draw do
 	get "search"	=> "home#search"
 	get "home/update_subcategories"		# cascading select box 
 	get "home/addrcomplete"						# autocomplete for address text_field
-	get "home/slang"
-	get "users/profiles/:username" => "users/profiles#edit", as: :user_profile
 
 	resources :notices, 			 except: [:index, :show]
 	resources :questions, 		 except: [:new]
@@ -28,6 +26,7 @@ Rails.application.routes.draw do
 		# unlocks: "users/unlocks",
 		# omniauth_callbacks: "users/omniauth_callbacks"
 	}
+	get "users/profiles/:username" => "users/profiles#edit", as: :user_profile
 
 	# Restaurant and nested controllers
 	resources :restaurants, shallow: true do 
@@ -63,6 +62,7 @@ Rails.application.routes.draw do
 	resources :addr_rules, except: [:edit, :update]
 
 	resources :slangs
+	get "home/slang"
 
 	# User specific routes
 	# 'resources :users' needs just for nesting.

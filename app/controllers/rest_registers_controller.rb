@@ -30,10 +30,10 @@ class RestRegistersController < ApplicationController
 				end
 			end
 
-			redirect_to rest_registers_path
+			redirect_to rest_registers_url
 		else
 			flash[:alert] = "fail in rest_registers#create"
-			redirect_to new_rest_register_path
+			redirect_to new_rest_register_url
 		end
 	end
 
