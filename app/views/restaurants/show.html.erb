@@ -102,6 +102,7 @@
 			}
 		});
 		imageUploadValidate();
+		slangCheck("#new_comment", "#comment_contents");
 
 		$('#update_comment').click( function(event) {
 			if ( <%= current_user.nil? %> ) {
