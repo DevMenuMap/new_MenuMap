@@ -71,7 +71,14 @@
 	<% end %>
 </div>
 
-<%= render "pictures/new" %>
+<%= form_for @picture, html: { multipart: true } do |f| %>
+	<%= f.hidden_field :imageable_id, value: @picture.imageable_id %>
+	<%= f.hidden_field :imageable_type, value: @picture.imageable_type %>
+
+	<%= render "pictures/field", f: f %>
+
+	<%= f.submit %>
+<% end %>
 
 <h1>Map</h1>
 <div id="naver_map" style="width: 80%; height: 60%"></div>
@@ -111,7 +118,9 @@
 				'comment[contents]': { required: true }
 			}
 		});
+		$("#new_rest_register").validate();
 		imageUploadValidate();
+
 		slangCheck("#new_comment", "#comment_contents");
 		
 		$('#comment_contents').bind("paste", function(e) {
@@ -124,20 +133,6 @@
 				event.preventDefault();
 			};
 		});
-	});
 
-	//	// Show nearby restaurants on map
-	//	<% @nearbyRestaurants.each_with_index do |restaurant, index| %>
-	//		<% if restaurant.lat != nil && restaurant.lng != nil %>
-	//    	var lat = <%= restaurant.lat %>;
-	//    	var lng = <%= restaurant.lng %>;
-	//    	var restaurant_name = '<%= restaurant.name %>';
-	//    	var latlng = new nhn.api.map.LatLng(lat, lng);
-	//    	var oMarker = new nhn.api.map.Marker(oIcon, {point: latlng, title: restaurant_name});
-	//			var oLabel = new nhn.api.map.MarkerLabel();
-	//      oMap.addOverlay(oMarker);
-	//      oMap.addOverlay(oLabel);
-	//      oLabel.setVisible(true, oMarker);
-	//    <% end %>
-	//	<% end %>
+	});
 </script>

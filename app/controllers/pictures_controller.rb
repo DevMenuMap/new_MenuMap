@@ -13,12 +13,10 @@ class PicturesController < ApplicationController
   end
 
 	def create
-		@picture = Picture.new(picture_params)
-		@picture.user_id = current_user.id if current_user
-		if @picture.save
-			flash[:alert] = "succeed pictures#create"
-		else
-			flash[:alert] = "fail pictures#create"
+		params[:picture][:img].each do |img|
+			@picture = Picture.new(img: img)
+			@picture.attributes = picture_params
+			@picture.save
 		end
 
 		redirect_to :back
@@ -50,6 +48,6 @@ class PicturesController < ApplicationController
 	private
 		def picture_params
 			params.require(:picture).permit(:imageable_type, :imageable_id, 
-																			:user_id, :img)
+																			:user_id)
 		end
 end
