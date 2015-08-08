@@ -5,5 +5,5 @@
 
 	<!-- Specify field because of controller subordination -->
 	<%= render "comments/field", f: f %>
-	<%= f.submit "update comment" %>
+	<%= f.submit "update comment", { id: "update_comment" }  %>
 <% end %>

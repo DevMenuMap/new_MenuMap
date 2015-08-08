@@ -102,6 +102,13 @@
 			}
 		});
 		imageUploadValidate();
+
+		$('#update_comment').click( function(event) {
+			if ( <%= current_user.nil? %> ) {
+				alert("로그인 후 댓글 작성 가능합니다.");
+				event.preventDefault();
+			};
+		});
 	});
 
 	$(document).on("page:load", initialize());
