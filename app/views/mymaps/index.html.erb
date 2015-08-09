@@ -38,10 +38,6 @@
 <script>
 	$(document).on("page:load", loadNaverMap(<%= @center_y %>, <%= @center_x %>, 8));
 	$(document).ready(function(){ 
-		showMarkers(<%= @coord_array %>, 1);
-		showGroupImage(<%= @groups  %>, <%= @coord_array %>);
-		$('._nmap_marker').click(function() {
-				$('.nmap_infowindow_content').toggle();
-		});
+		showGroupMarkers(<%= @coord_array %>, <%= @groups %>);
 	});
 </script>

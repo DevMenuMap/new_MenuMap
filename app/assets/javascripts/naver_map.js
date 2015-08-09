@@ -159,3 +159,28 @@ function showGroupImage(groups, coords) {
 		oMap.addOverlay(infoWindow);
 	};
 };
+
+function showGroupMarkers(coordArray, groups){
+	var oOffset = new nhn.api.map.Size(28, 28);
+	var oSize;
+	var oLatLng;
+	var oIcon;
+	var showPolygon = [];
+	var i;
+	var l = groups.length;
+	for (i = 0; i < l; i++) {
+		if (groups[i] != 0) {
+			oSize = new nhn.api.map.Size(28, 28);
+			oIcon = new nhn.api.map.Icon("http://menumap-s3-development.s3-ap-southeast-1.amazonaws.com/static_assets/images/mymap_group_icon_" + groups[i] + ".png", oSize, oOffset);
+		} else {
+			oSize = new nhn.api.map.Size(28, 37);
+			oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
+		};
+		// Change this to normal data passing codes to js
+		oLatLng = new nhn.api.map.LatLng(coordArray[2*i], coordArray[2*i+1]);
+		marker = new nhn.api.map.Marker(oIcon, {title : oLatLng});
+		marker.setPoint(oLatLng);
+		oMap.addOverlay(marker);
+		showPolygon.push(oLatLng);
+	};
+};
