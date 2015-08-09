@@ -30,7 +30,6 @@ class MenusController < ApplicationController
 		end
 
 		@menu_titles = @restaurant.menu_titles.reload
-		# @menu = Menu.new
 		redirect_to_restaurant_page
 	end
 
@@ -77,7 +76,7 @@ class MenusController < ApplicationController
 	private
 		def menu_params
 			params.require(:menu).permit(:menu_title_id, :name, :side_info,
-										 							 :price, :info, :sitga)
+										 							 :price, :info, :sitga, :unidentified)
 		end
 
 		def menu_title_params
