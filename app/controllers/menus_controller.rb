@@ -6,22 +6,31 @@ class MenusController < ApplicationController
 	end
 
 	def create
+		# Check if new menu_title is created.
+		new_title = false
+
 		@menu = Menu.new(menu_params)
+		@menu.user_id = current_user.id if current_user
 		@restaurant = Restaurant.find(params[:restaurant_id])
 
 		# Only when user select "new menu_title" in the select box.
 		if params[:menu][:menu_title_id] == 'new'
+			new_title = true
 			create_menu_title or return
 		end
 
 		if @menu.save
 			flash[:alert] = "Succeed menu#create"
-		else
-			# If a new menu is invalid, destroy newly created menu_title also.
+		# If a new menu is invalid, destroy newly created menu_title also.
+		elsif new_title == true
 			@menu.menu_title.update(active: false)
+			flash[:alert] = "fail menu#create and rollback menu_title#create"
+		else
 			flash[:alert] = "Fail menu#create"
 		end
 
+		@menu_titles = @restaurant.menu_titles.reload
+		# @menu = Menu.new
 		redirect_to_restaurant_page
 	end
 
