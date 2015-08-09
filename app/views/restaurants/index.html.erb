@@ -50,6 +50,9 @@
   //  	window.location.href = $(this).data('url');
   //	});
 	//})
+	$(document).ready( function() {
+		showLabels();
+	});
 
 	$(document).on("page:load", initialize(<%= @center_y %>, <%= @center_x %>, 8));
 
@@ -90,10 +93,8 @@
 	    	var restaurant_name = '<%= restaurant.name %>';
 	    	var latlng = new nhn.api.map.LatLng(lat, lng);
 	    	var oMarker = new nhn.api.map.Marker(oIcon, {point: latlng, title: restaurant_name});
-				var oLabel = new nhn.api.map.MarkerLabel();
-	      oMap.addOverlay(oMarker);
-	      oMap.addOverlay(oLabel);
-	      oLabel.setVisible(true, oMarker);
+				oMap.addOverlay(oMarker);
+
 	      //<% if index == 0 %>
 					// if currentPosition was not checked
 				//	if ( curr_lat == 0 || curr_lng == 0 || isNaN(curr_lat) || isNaN(curr_lng)){

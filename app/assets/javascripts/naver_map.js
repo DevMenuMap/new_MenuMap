@@ -38,9 +38,8 @@ function showLabels() {
 	var oLabel = new nhn.api.map.MarkerLabel();
 	oMap.addOverlay(oLabel);
 	oMap.attach('click', function(oCustomEvent) {
-		var oTarget = oCustomEvent.target;
-		if (oTarget instanceof nhn.api.map.Marker) {
-			var oMarker = oTarget;
+		if (oCustomEvent.target instanceof nhn.api.map.Marker) {
+			var oMarker = oCustomEvent.target;
 			if (oLabel.getVisible()){
 				oLabel.setVisible(false, oMarker);
 			} else {
