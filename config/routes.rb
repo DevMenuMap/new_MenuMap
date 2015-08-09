@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-	
+
 	# SEO
   get "sitemap.xml" => "sitemap#index", :defaults => { format: 'xml' }
   get "sitemap.atom" => "sitemap#naver_seo", :defaults => { format: 'atom' }, as: :naver_seo_atom
@@ -33,7 +33,10 @@ Rails.application.routes.draw do
 		resources :rest_infos,	 except: [:index, :show]
 		resources :rest_errs, 	 except: [:index, :new]
 		resources :menu_titles,  except: [:index, :show, :new]
-		resources :menus, 		 	 except: [:index]
+		resources :menus, 		 	 except: [:index] do
+			# Cancel the menu editing operation.
+			get 'cancel', on: :member
+		end
 		resources :comments, 		 except: [:index, :add_menu, :update_menu]
 		resources	:mymaps, 			 only: 	 [:new, :create]
 	end
@@ -110,19 +113,5 @@ Rails.application.routes.draw do
   #     resources :sales do
   #       get 'recent', on: :collection
   #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
   #   end
 end

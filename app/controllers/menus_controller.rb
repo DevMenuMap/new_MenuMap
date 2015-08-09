@@ -44,6 +44,12 @@ class MenusController < ApplicationController
 		redirect_to_restaurant_page
 	end
 
+	# PUT /menus/:id/cancel
+	def cancel
+		@menu = Menu.find(params[:id])
+		redirect_to_restaurant_page
+	end
+
 	def destroy
 		@menu = Menu.find(params[:id])
 		@menu.update(active: false)
