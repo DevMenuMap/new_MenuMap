@@ -12,8 +12,9 @@ class Comment < ActiveRecord::Base
   ### Validations
   validates :user, presence: true
   validates :restaurant, presence: true
-  validates :contents, presence: true, length: { maximum: 255,
-  	too_long: "%{count} characters is the maximum allowed" }
+  validates :contents, presence: true, 
+											 length: { maximum: 255,
+  															 too_long: "%{count} characters is the maximum allowed" }
 
   # Custom validators
   validate :no_slang
@@ -21,6 +22,7 @@ class Comment < ActiveRecord::Base
 
   ### Scopes
   default_scope { where(active: true) }
+  default_scope { order(created_at: :desc) }
 
 
   ### Instance methods

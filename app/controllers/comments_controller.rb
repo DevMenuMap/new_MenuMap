@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
 
   def create
 		@comment = Comment.new(comment_params)
-		@comment.user_id = current_user.id if current_user
+		@comment.user_id = current_user.id
 
 		if @comment.save
 			flash[:alert] = "Succeed comment#create"
@@ -49,7 +49,7 @@ class CommentsController < ApplicationController
 
 		def redirect_to_restaurant_page
 			@restaurant = @comment.restaurant
-			@comments = @restaurant.comments.paginate(:page => params[:page], :per_page => 10)
+			@comments = @restaurant.comments.paginate(page: params[:page], per_page: 10)
 
 			respond_to do |format|
 				format.html	{ redirect_to restaurant_url(@restaurant) }
