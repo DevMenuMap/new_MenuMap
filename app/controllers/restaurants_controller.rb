@@ -12,18 +12,19 @@ class RestaurantsController < ApplicationController
 		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
 		
 		# Find Center point
-		y = []
-		x = []
 		@center_y = 0
 		@center_x = 0
+		@coord_array = []
+		@names = []
 		@restaurants.each do |r|
 			if( r.lat.to_f != 0 && r.lng.to_f != 0 )
-				x << r.lng.to_f
-				y << r.lat.to_f
+				@coord_array << r.lat.to_f << r.lng.to_f
+				@names << r.name
 			end
 		end
-		x.uniq!
-		y.uniq!
+		x = @coord_array.values_at(* @coord_array.each_index.select { |i| i.even? })
+		y = @coord_array.values_at(* @coord_array.each_index.select { |i| i.odd? })
+		
 
 		# When at least one of lat(and lng) values is not zero
 		if( x != [] && y != [] )

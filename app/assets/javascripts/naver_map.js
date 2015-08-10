@@ -87,23 +87,24 @@ function drawPolygon(event){
 };
 
 // Show markers when there are created points e.g. addresses#show
-function showMarkers(coordArray, noPolygon){
+function showMarkers(coordArray, noPolygon, names){
 	var oSize = new nhn.api.map.Size(28, 37);
 	var oOffset = new nhn.api.map.Size(14, 37);
 	var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
-	
 	var oLatLng;
 	var showPolygon = []; 
+	var i;
+	var l = coordArray.length / 2;
+
+	if ( typeof names == "undefined" ){
+		names = [];
+	};
 
 	// Change this to normal data passing codes to js
-	for(var i=0; i < coordArray.length; i = i + 2){
-		oLatLng = new nhn.api.map.LatLng(coordArray[i], coordArray[i+1]);
-
-		// Title will be shown when toggleLabels() is called
-		marker = new nhn.api.map.Marker(oIcon, {title : oLatLng});
-		marker.setPoint(oLatLng);
+	for(i = 0; i < l; i++){
+		oLatLng = new nhn.api.map.LatLng(coordArray[2*i], coordArray[2*i+1]);
+		marker = new nhn.api.map.Marker(oIcon, {point: oLatLng, title: names[i]});
 		oMap.addOverlay(marker);
-
 		showPolygon.push(oLatLng);
 	};
 
@@ -115,7 +116,6 @@ function showMarkers(coordArray, noPolygon){
 			fillColor: "lightblue",
 			fillOpacity: 0.5
 		});
-
 		oMap.addOverlay(polygons);
 	};
 };
