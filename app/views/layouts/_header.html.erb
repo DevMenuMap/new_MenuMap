@@ -56,6 +56,9 @@
 	<li>
 		<%= link_to "franchises" , franchises_path %>
 	</li>
+	<li>
+		<%= link_to "facebook login" , user_omniauth_authorize_path(:facebook) %>
+	</li>
 	<% if !current_user %>
 		<li>
 			<%= link_to "signup page" , new_user_registration_path %>

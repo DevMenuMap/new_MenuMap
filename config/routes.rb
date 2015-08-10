@@ -21,10 +21,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
 		passwords: "users/passwords",
 		registrations: "users/registrations",
-		sessions: "users/sessions"
-		# confirmations: "users/confirmations",
+		sessions: "users/sessions",
+		confirmations: "users/confirmations",
 		# unlocks: "users/unlocks",
-		# omniauth_callbacks: "users/omniauth_callbacks"
+		omniauth_callbacks: "users/omniauth_callbacks"
 	}
 	get "users/profiles/:username" => "users/profiles#edit", as: :user_profile
 
