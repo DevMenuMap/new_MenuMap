@@ -46,4 +46,29 @@ module Naver
 		lng_range = Coordinate::SEOUL_LNG_RANGE
 		latlng[0].between?(lat_range[:min], lat_range[:max]) && latlng[1].between?(lng_range[:min], lng_range[:max])
 	end
+
+	# Return array of search result
+	def naver_blog_search
+		query = name + " " + short_addrs
+		query = URI.encode("#{query}")
+
+		naver_key = "key=" + SEARCH_KEY
+		naver_options = "&query=#{query}&display=5&target=blog&sort=sim"
+		naver_url = "http://openapi.naver.com/search?#{naver_key}#{naver_options}"
+
+		items = Nokogiri::XML(open(naver_url)).xpath("//item")
+		
+		naver_blogs = []
+		items.each do |item|
+			temp = Hash.new
+			temp[:title] = item.xpath("title").text 
+			temp[:link]  = item.xpath("link").text
+			temp[:description]  = item.xpath("description").text
+			temp[:blogger_name] = item.xpath("bloggername").text
+			temp[:blogger_link] = item.xpath("bloggerlink").text
+			naver_blogs << temp
+		end
+
+		naver_blogs
+	end
 end

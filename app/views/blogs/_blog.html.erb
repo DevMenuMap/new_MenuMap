@@ -1,0 +1,7 @@
+<% blogs.each do |blog| %>
+	<%= link_to "#{blog[:link]}", target: "_blank" do %>
+		<%= blog[:title].html_safe %>
+		<%= blog[:description].html_safe %>
+		<%= blog[:blogger_name] %>
+	<% end %>
+<% end %>

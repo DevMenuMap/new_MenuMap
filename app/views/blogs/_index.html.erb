@@ -1,0 +1,13 @@
+<h2>Naver Blogs</h2>
+<% if !@naver_blogs.blank? %>
+	<%= render partial: "/blogs/blog", locals: { blogs: @naver_blogs } %>
+<% else %>
+	<%= render "/blogs/no_blogs" %>
+<% end %>
+
+<h2>Daum Blogs</h2>
+<% if !@daum_blogs.blank? %>
+	<%= render partial: "/blogs/blog", locals: { blogs: @daum_blogs } %>
+<% else %>
+	<%= render "/blogs/no_blogs" %>
+<% end %>

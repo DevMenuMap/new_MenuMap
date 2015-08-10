@@ -83,6 +83,9 @@
 <h1>Map</h1>
 <div id="naver_map" style="width: 80%; height: 60%"></div>
 
+<h1>Blog</h1>
+<div id="blog_result"></div>
+
 <!-- This script is for require_from_group method -->
 <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
 <script>
@@ -134,5 +137,6 @@
 			};
 		});
 
+		$("#blog_result").html("<%= j(render 'blogs/index') %>");
 	});
 </script>
