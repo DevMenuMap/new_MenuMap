@@ -51,7 +51,7 @@
   //	});
 	//})
 	$(document).ready( function() {
-		showLabels();
+		toggleLabels();
 	});
 
 	$(document).on("page:load", initialize(<%= @center_y %>, <%= @center_x %>, 8));
@@ -94,7 +94,6 @@
 	    	var latlng = new nhn.api.map.LatLng(lat, lng);
 	    	var oMarker = new nhn.api.map.Marker(oIcon, {point: latlng, title: restaurant_name});
 				oMap.addOverlay(oMarker);
-
 	      //<% if index == 0 %>
 					// if currentPosition was not checked
 				//	if ( curr_lat == 0 || curr_lng == 0 || isNaN(curr_lat) || isNaN(curr_lng)){

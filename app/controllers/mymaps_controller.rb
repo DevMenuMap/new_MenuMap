@@ -4,12 +4,14 @@ class MymapsController < ApplicationController
 		@mymaps = @user.mymaps
 		@groups = []
 		@coord_array = []
+		@names = []
 		
 		@mymaps.each do |m|
 			# Check restaurant's lat,lng nil?
 			if( m.restaurant.lat.to_f != 0 && m.restaurant.lng.to_f != 0 )
 				@coord_array << m.restaurant.lat.to_f << m.restaurant.lng.to_f
 				@groups << m.group
+				@names << m.restaurant.name
 			end
 		end
 

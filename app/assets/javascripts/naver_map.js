@@ -6,7 +6,7 @@ var polygons;
 var k = 0
 
 /* 다각형 꼭지점 저장을 위한 변수 */
-var polygonCoords = new Array();
+var polygonCoords = [];
 
 function loadNaverMap(lat, lng, level){
 	if ( lat == 0 || lng == 0 || isNaN(lat) || isNaN(lng)){
@@ -34,7 +34,8 @@ function loadNaverMap(lat, lng, level){
 	oMap.attach("contextmenu", drawPolygon);
 };
 
-function showLabels() {
+// showLabels -> toggleLabels 20150810
+function toggleLabels() {
 	var oLabel = new nhn.api.map.MarkerLabel();
 	oMap.addOverlay(oLabel);
 	oMap.attach('click', function(oCustomEvent) {
@@ -92,13 +93,13 @@ function showMarkers(coordArray, noPolygon){
 	var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
 	
 	var oLatLng;
-	var showPolygon = new Array();
+	var showPolygon = []; 
 
 	// Change this to normal data passing codes to js
 	for(var i=0; i < coordArray.length; i = i + 2){
 		oLatLng = new nhn.api.map.LatLng(coordArray[i], coordArray[i+1]);
 
-		// Title will be shown when showLabel() is called
+		// Title will be shown when toggleLabels() is called
 		marker = new nhn.api.map.Marker(oIcon, {title : oLatLng});
 		marker.setPoint(oLatLng);
 		oMap.addOverlay(marker);
@@ -159,7 +160,7 @@ function showGroupImage(groups, coords) {
 	};
 };
 
-function showGroupMarkers(coordArray, groups){
+function showGroupMarkers(coordArray, groups, names) {
 	var oOffset = new nhn.api.map.Size(28, 28);
 	var oSize;
 	var oLatLng;
@@ -177,8 +178,7 @@ function showGroupMarkers(coordArray, groups){
 		};
 		// Change this to normal data passing codes to js
 		oLatLng = new nhn.api.map.LatLng(coordArray[2*i], coordArray[2*i+1]);
-		marker = new nhn.api.map.Marker(oIcon, {title : oLatLng});
-		marker.setPoint(oLatLng);
+		marker = new nhn.api.map.Marker(oIcon, {point: oLatLng, title: names[i] });
 		oMap.addOverlay(marker);
 		showPolygon.push(oLatLng);
 	};
