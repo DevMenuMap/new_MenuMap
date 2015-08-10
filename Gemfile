@@ -27,6 +27,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # User & Admin
 gem 'devise'
+# Facebook
+gem 'omniauth-facebook'
 
 # Image uploader & processor
 gem 'paperclip', '~> 4.2'
