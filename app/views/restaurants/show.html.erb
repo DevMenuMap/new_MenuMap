@@ -72,7 +72,7 @@
 </div>
 
 <h1>Map</h1>
-<div id="map_canvas" style="width: 80%; height: 60%"></div>
+<div id="naver_map" style="width: 80%; height: 60%"></div>
 
 <!-- This script is for require_from_group method -->
 <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
@@ -82,6 +82,14 @@
 	});
 
 	$(document).ready( function() {
+		loadNaverMap(<%= @curr_lat %>, <%= @curr_lng %>, 12);
+		showMarkers([<%= @curr_lat %>, <%= @curr_lng %>], 1, ["<%= @restaurant.name %>"]);  
+		toggleLabels();
+	
+		<% if @restaurant.with_latlng? %>
+			parseFoursquareImg("<%= request.url %>");
+		<% end %>
+
 		$("#new_rest_err").validate({
 			rules: {
 				'rest_err[presence_err]': { require_from_group: [1, ".rest_errs_group"] },
@@ -116,33 +124,6 @@
 		});
 	});
 
-	$(document).on("page:load", initialize(<%= @curr_lat %>, <%= @curr_lng %>));
-
-	<% if @restaurant.with_latlng? %>
-		$(document).on("page:load", parseFoursquareImg("<%= request.url %>"));
-	<% end %>
-
-	function initialize(curr_lat, curr_lng){
-		var restaurant_name = '<%= @restaurant.name %>';
-		var oSize = new nhn.api.map.Size(28, 37);
-		var oOffset = new nhn.api.map.Size(14, 37);
-		var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
-		var latlng = new nhn.api.map.LatLng(curr_lat, curr_lng);
-		var defaultLevel = 12;
-		var oMarker = new nhn.api.map.Marker(oIcon, {point : latlng});
-		var infoWindow = new nhn.api.map.InfoWindow();
-		infoWindow.setVisible(false);
-    	oMap = new nhn.api.map.Map(document.getElementById('map_canvas'), { 
-                                    	  point : latlng,
-	                                      zoom : defaultLevel,
-	                                      enableWheelZoom : true,
-	                                      enableDragPan : true,
-	                                      enableDblClickZoom : false,
-	                                      mapMode : 0,
-	                                      activateTrafficMap : false,
-	                                      activateBicycleMap : false,
-	                                      minMaxLevel : [ 1, 14 ],
-	                                      size : new nhn.api.map.Size(800, 480)});
 	//	// Show nearby restaurants on map
 	//	<% @nearbyRestaurants.each_with_index do |restaurant, index| %>
 	//		<% if restaurant.lat != nil && restaurant.lng != nil %>
@@ -157,27 +138,4 @@
 	//      oLabel.setVisible(true, oMarker);
 	//    <% end %>
 	//	<% end %>
-    oMap.addOverlay(oMarker);
-    oMap.addOverlay(infoWindow);
-   	oMap.attach('click', function(oCustomEvent) {
-    	var oPoint = oCustomEvent.point;
-    	var oTarget = oCustomEvent.target;
-    	if (oTarget instanceof nhn.api.map.Marker) {
-		  	if(infoWindow.getVisible()){
-		 		infoWindow.setVisible(false);
-				return;
-			}
-		  	else{
-	 	  		infoWindow.setContent('<DIV style="border-top:1px solid; border-bottom:2px groove black; border-left:1px solid; border-right:2px groove black;margin-bottom:1px;color:black;background-color:white; width:auto; height:auto;">' + 
-	 	  			'<span style="color: #000000 !important;display: inline-block;font-size: 12px !important;font-weight: bold !important;letter-spacing: -1px !important;white-space: nowrap !important; padding: 2px 2px 2px 2px !important">' + '<img src=/logo-16x16.png>' + 
-	 	  			restaurant_name + '<span></div>');
-	      		infoWindow.setPoint(oTarget.getPoint());
-	      	infoWindow.setVisible(true);
-	      	infoWindow.setPosition({right : 15, top : 30});
-	      	infoWindow.autoPosition();
-	      	return;
-	  		}
-		}
-    });
-	};
 </script>

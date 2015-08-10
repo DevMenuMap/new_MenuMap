@@ -9,8 +9,8 @@
 <% end %>
 
 <script>
-	$(document).on("page:load", loadNaverMap());
 	$(document).ready(function(){
+		loadNaverMap();
 		oMap.attach("click", setMarker);
 	});
 </script>

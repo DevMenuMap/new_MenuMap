@@ -9,8 +9,8 @@
 <% end %>
 
 <script>
-	$(document).on("page:load", loadNaverMap());
 	$(document).ready(function(){
+		loadNaverMap();
 		oMap.attach("click", setMarker);
 		$('#new_addr_rule').validate({
 			rules: {
@@ -20,6 +20,7 @@
 			}
 		});
 	});
+
 	$('body').on('contextmenu', '#naver_map', function(e){ return false; });
 	$(':input[type="number"]').prop("readonly", true);
 

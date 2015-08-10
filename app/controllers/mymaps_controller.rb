@@ -16,19 +16,17 @@ class MymapsController < ApplicationController
 		end
 
 		# Find Center point
-		y = []
 		x = []
-		@center_y = 0
+		y = []
 		@center_x = 0
+		@center_y = 0
 		
 		if( @coord_array != [] )
 			l = @coord_array.length / 2
 			for i in 0..(l-1)
-				y << @coord_array[2*i]
-				x << @coord_array[2*i+1]
+				x << @coord_array[2*i]
+				y << @coord_array[2*i+1]
 			end
-			x.uniq!
-			y.uniq!
 
 			@center_x = (x.inject{|sum, n| sum + n}) / x.length
 			@center_y = (y.inject{|sum, n| sum + n}) / y.length

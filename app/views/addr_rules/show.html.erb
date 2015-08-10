@@ -13,10 +13,9 @@
 
 <div id="naver_map" data-markers="<%= @addr_rule.coordinates %>"></div>
 <script>
-	$(document).on("page:load",
-			loadNaverMap(<%= @center_y %>, <%= @center_x %>, 10) );
 	// Change this to normal data passing codes to js
 	$(document).ready(function(){ 
+		loadNaverMap(<%= @center_x %>, <%= @center_y %>, 10);
 		showMarkers(<%= @coord_array %>);
 		toggleLabels();
 	});
