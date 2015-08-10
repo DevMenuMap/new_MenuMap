@@ -1,22 +1,20 @@
 <%= f.label :presence_err %>
-<%= f.check_box :presence_err %>
+<%= f.check_box :presence_err, class: "rest_errs_group" %>
 
 <%= f.label :menu_err %>
-<%= f.check_box :menu_err %>
+<%= f.check_box :menu_err, class: "rest_errs_group" %>
 
 <%= f.label :phnum_err %>
-<%= f.check_box :phnum_err %>
+<%= f.check_box :phnum_err, class: "rest_errs_group" %>
 
 <%= f.label :category_err %>
-<%= f.check_box :category_err %>
+<%= f.check_box :category_err, class: "rest_errs_group" %>
 
 <%= f.label :etc %>
-<%= f.text_area :etc %>
+<%= f.text_area :etc, class: "rest_errs_group" %>
 
 <%= f.label :pictures %>
 <%= f.fields_for :pictures do |ff| %>
 	<%= ff.label :img %>
-	<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
-	<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
-	<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
+	<%= ff.file_field :img, multiple: true, class: "uploadImage" %>
 <% end %>

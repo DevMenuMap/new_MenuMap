@@ -7,7 +7,12 @@
 
 <script>
 $(document).ready( function() {
-	$("#new_question").validate();
+	$("#new_question").validate({
+		rules: {
+			'question[email]': { required: true, email: true },
+			'question[contents]': { required: true }
+		}
+	});
 });
 </script>
 <!--

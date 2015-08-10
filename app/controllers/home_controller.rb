@@ -35,4 +35,11 @@ class HomeController < ApplicationController
 			format.json { render :json => @addrcomplete.to_json }
 		end
 	end
+
+	def slang
+    @result = Slang.where("? LIKE CONCAT('%', name, '%')", params[:contents] )
+		respond_to do |format|
+			format.json
+		end
+	end
 end

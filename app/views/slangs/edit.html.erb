@@ -4,3 +4,13 @@
 	<%= render "field", f: f %>
 	<%= f.submit "update slang" %>
 <% end %>
+
+<script>
+	$(document).ready( function() {
+		$('.edit_slang').validate({
+			rules: {
+				'slang[name]': { required: true }
+			}
+		});
+	});
+</script>

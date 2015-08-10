@@ -74,9 +74,46 @@
 <h1>Map</h1>
 <div id="map_canvas" style="width: 80%; height: 60%"></div>
 
+<!-- This script is for require_from_group method --!>
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
 <script>
 	$(function(){
 		$('.pagination a').attr('data-remote', 'true')
+	});
+
+	$(document).ready( function() {
+		$("#new_rest_err").validate({
+			rules: {
+				'rest_err[presence_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[menu_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[phnum_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[category_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[etc]': { require_from_group: [1, ".rest_errs_group"] }
+			}
+		});
+		$('#new_menu').validate({
+			rules: {
+				'menu[name]': { required: true }
+			}
+		});
+		$('#new_comment').validate({
+			rules: {
+				'comment[contents]': { required: true }
+			}
+		});
+		imageUploadValidate();
+		slangCheck("#new_comment", "#comment_contents");
+		
+		$('#comment_contents').bind("paste", function(e) {
+			alert("붙여넣기는 금지되어 있습니다.");
+			e.preventDefault(); 
+		});
+		$('#update_comment').click( function(event) {
+			if ( <%= current_user.nil? %> ) {
+				alert("로그인 후 댓글 작성 가능합니다.");
+				event.preventDefault();
+			};
+		});
 	});
 
 	$(document).on("page:load", initialize());

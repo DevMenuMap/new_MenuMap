@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
 
 
   ### Validations
-  # validates :user, presence: true
+  validates :user, presence: true
   validates :restaurant, presence: true
   validates :contents, presence: true, length: { maximum: 255,
   	too_long: "%{count} characters is the maximum allowed" }
