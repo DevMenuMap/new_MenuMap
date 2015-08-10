@@ -1,18 +1,16 @@
 function slangCheck(formRoute, textRoute) {
 	$( formRoute ).submit( function(event) {
 		var url = window.location.origin + '/home/slang';
-		var result;
 		$.ajax({
-			async: false,
 			url: url,
 			data: {
 				contents: $( textRoute ).val()
 			},
 			success: function( data ) {
-				result = !(data.status);
+				if (data.status) {
+					alert(data.slang + "은(는) 금지된 단어입니다.");
+				}; 
 			}
 		});
-		// if slang exists, result = false
-		return result;
 	});
 };
