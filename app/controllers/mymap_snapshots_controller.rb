@@ -20,7 +20,8 @@ class MymapSnapshotsController < ApplicationController
 		else
 			user.mymap_snapshot.update(:snapshot => File.open(file_path))
 		end
-		
+		File.delete(file_path)
+
 		request_to_fb(user)
 
 		redirect_to mymap_index_url(user.username) 

@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150811103259) do
+
+ActiveRecord::Schema.define(version: 20150811113956) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -307,6 +308,7 @@ ActiveRecord::Schema.define(version: 20150811103259) do
     t.string   "provider",               limit: 255
     t.string   "uid",                    limit: 255
     t.string   "fb_img",                 limit: 255
+    t.boolean  "active",                 limit: 1,   default: true
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

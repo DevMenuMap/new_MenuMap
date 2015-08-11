@@ -35,6 +35,9 @@ class User < ActiveRecord::Base
 	validate :no_particular_word
 	validate :size_in_byte
 
+	
+	### Scopes
+	default_scope { where(active: true) }
 
 	### Class methods
 	# Facebook login
