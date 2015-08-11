@@ -1,5 +1,5 @@
 class PicturesController < ApplicationController
-	before_action :admin?
+	before_action :admin?, except: :create
 	
   def index
 		@pictures = Picture.all
@@ -13,14 +13,13 @@ class PicturesController < ApplicationController
   end
 
 	def create
-		@picture = Picture.new(picture_params)
-		if @picture.save
-			flash[:alert] = "succeed pictures#create"
-			redirect_to pictures_url
-		else
-			flash[:alert] = "fail pictures#create"
-			redirect_to new_picture_url
+		params[:picture][:img].each do |img|
+			@picture = Picture.new(img: img)
+			@picture.attributes = picture_params
+			@picture.save
 		end
+
+		redirect_to :back
 	end
 
   def edit
@@ -48,6 +47,7 @@ class PicturesController < ApplicationController
 
 	private
 		def picture_params
-			params.require(:picture).permit(:img)
+			params.require(:picture).permit(:imageable_type, :imageable_id, 
+																			:user_id)
 		end
 end

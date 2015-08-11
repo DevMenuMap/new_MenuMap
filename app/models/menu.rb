@@ -25,6 +25,7 @@ class Menu < ActiveRecord::Base
 	
 	# Custom validators
 	validate :no_price_when_unidentified_is_true
+	validate :price_needed_when_unidentified_is_false
 
 
 	### Scopes
@@ -38,6 +39,12 @@ class Menu < ActiveRecord::Base
 	def no_price_when_unidentified_is_true
 		if unidentified && ( price.present? || sitga )
 			errors.add(:unidentified, "no price when unidentified")
+		end
+	end
+
+	def price_needed_when_unidentified_is_false
+		if !unidentified && !price.present? && !sitga
+			errors.add(:unidentified, "price is needed")
 		end
 	end
 

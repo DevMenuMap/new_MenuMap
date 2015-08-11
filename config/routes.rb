@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-	
+
 	# SEO
   get "sitemap.xml" => "sitemap#index", :defaults => { format: 'xml' }
   get "sitemap.atom" => "sitemap#naver_seo", :defaults => { format: 'atom' }, as: :naver_seo_atom
@@ -12,8 +12,6 @@ Rails.application.routes.draw do
 	get "search"	=> "home#search"
 	get "home/update_subcategories"		# cascading select box 
 	get "home/addrcomplete"						# autocomplete for address text_field
-	get "home/slang"
-	get "users/profiles/:username" => "users/profiles#edit", as: :user_profile
 
 	resources :notices, 			 except: [:index, :show]
 	resources :questions, 		 except: [:new]
@@ -28,13 +26,17 @@ Rails.application.routes.draw do
 		# unlocks: "users/unlocks",
 		# omniauth_callbacks: "users/omniauth_callbacks"
 	}
+	get "users/profiles/:username" => "users/profiles#edit", as: :user_profile
 
 	# Restaurant and nested controllers
 	resources :restaurants, shallow: true do 
 		resources :rest_infos,	 except: [:index, :show]
 		resources :rest_errs, 	 except: [:index, :new]
 		resources :menu_titles,  except: [:index, :show, :new]
-		resources :menus, 		 	 except: [:index]
+		resources :menus, 		 	 except: [:index] do
+			# Cancel the menu editing operation.
+			get 'cancel', on: :member
+		end
 		resources :comments, 		 except: [:index, :add_menu, :update_menu]
 		resources	:mymaps, 			 only: 	 [:new, :create]
 	end
@@ -63,6 +65,7 @@ Rails.application.routes.draw do
 	resources :addr_rules, except: [:edit, :update]
 
 	resources :slangs
+	get "home/slang"
 
 	# User specific routes
 	# 'resources :users' needs just for nesting.
@@ -110,19 +113,5 @@ Rails.application.routes.draw do
   #     resources :sales do
   #       get 'recent', on: :collection
   #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
   #   end
 end

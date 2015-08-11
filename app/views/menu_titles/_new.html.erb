@@ -1,7 +1,6 @@
 <!-- Select one of the menu_titles of this restaurant or make a new menu_title -->
 <%= f.select :menu_title_id, 
-			options_for_select(@menu_titles.map{ |m| [m.title_name, m.id] }.unshift(["new menu_title", "new"]), nil), 
-			{ prompt: "select a menu_title" } %>
+			options_for_select(@menu_titles.map{ |m| [m.title_name, m.id] }.unshift(["new menu_title", "new"]).unshift(["select a menu_title", "none"]), nil) %>
 
 <!-- Only when user wants to make a new menu_title for new menu -->
 <%= label :menu_title, :title_name %>

@@ -59,6 +59,7 @@ class RestaurantsController < ApplicationController
 		@comments = @restaurant.comments.order(created_at: :desc).paginate(:page => params[:page], :per_page => 10)
 
 		# pictures on this restaurant
+		@picture  = Picture.new(imageable: @restaurant)
 		@pictures = @restaurant.pictures
 
 		# partial forms for new objects

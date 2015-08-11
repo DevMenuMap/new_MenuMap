@@ -1,19 +1,9 @@
-<table>
-	<tr>
-		<th>contents</th>
-		<th>created at</th>
-		<th></th>
-		<th></th>
-	</tr>
+<p>contents | created at</p>
+
+<table id="comment_body">
 	<% @comments.each do |comment| %>
-		<tr id="comment_<%= comment.id %>">
-			<td style="width: 340px;"><%= comment.contents %></td>
-			<td><%= time_ago_in_words(comment.created_at) %> 전</td>
-			<td><%= link_to "edit", edit_comment_path(comment), class: "edit_comment", remote: true %></td>
-			<td><%= link_to "delete", comment_path(comment), class: "delete_comment", method: :delete, remote: true, data: { confirm: "gogo?" } %></td>
-		</tr>
+		<%= render partial: "comments/show", locals: { comment: comment } %>
 	<% end %>
 </table>
 
-<%#= will_paginate @comments %>
-<%= will_paginate @comments, :params => {:controller => "restaurants", :action => "show"} %>
+<%= will_paginate @comments, params: { controller: "restaurants", action: "show" } %>
