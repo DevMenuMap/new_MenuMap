@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150726132127) do
+ActiveRecord::Schema.define(version: 20150811103259) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -109,6 +109,12 @@ ActiveRecord::Schema.define(version: 20150726132127) do
 
   add_index "coordinates", ["latlng_type", "latlng_id"], name: "index_coordinates_on_latlng_type_and_latlng_id", using: :btree
 
+  create_table "franchises", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "menu_titles", force: :cascade do |t|
     t.integer  "restaurant_id", limit: 4
     t.string   "title_name",    limit: 255
@@ -182,9 +188,11 @@ ActiveRecord::Schema.define(version: 20150726132127) do
     t.string   "img_content_type", limit: 255
     t.integer  "img_file_size",    limit: 4
     t.datetime "img_updated_at"
+    t.integer  "user_id",          limit: 4
   end
 
   add_index "pictures", ["imageable_type", "imageable_id"], name: "index_pictures_on_imageable_type_and_imageable_id", using: :btree
+  add_index "pictures", ["user_id"], name: "index_pictures_on_user_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -255,10 +263,12 @@ ActiveRecord::Schema.define(version: 20150726132127) do
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
     t.integer  "addr_code",      limit: 8
+    t.integer  "franchise_id",   limit: 4
   end
 
   add_index "restaurants", ["addr_code"], name: "index_restaurants_on_addr_code", using: :btree
   add_index "restaurants", ["category_id"], name: "index_restaurants_on_category_id", using: :btree
+  add_index "restaurants", ["franchise_id"], name: "index_restaurants_on_franchise_id", using: :btree
   add_index "restaurants", ["subcategory_id"], name: "index_restaurants_on_subcategory_id", using: :btree
 
   create_table "slangs", force: :cascade do |t|
@@ -294,11 +304,16 @@ ActiveRecord::Schema.define(version: 20150726132127) do
     t.datetime "confirmation_sent_at"
     t.string   "username",               limit: 255
     t.boolean  "admin",                  limit: 1,   default: false
+    t.string   "provider",               limit: 255
+    t.string   "uid",                    limit: 255
+    t.string   "fb_img",                 limit: 255
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["provider"], name: "index_users_on_provider", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["uid"], name: "index_users_on_uid", using: :btree
 
   add_foreign_key "addr_bounds", "addresses"
   add_foreign_key "addr_conversions", "addresses"
@@ -315,6 +330,7 @@ ActiveRecord::Schema.define(version: 20150726132127) do
   add_foreign_key "mymap_snapshots", "users"
   add_foreign_key "mymaps", "restaurants"
   add_foreign_key "mymaps", "users"
+  add_foreign_key "pictures", "users"
   add_foreign_key "rest_errs", "restaurants"
   add_foreign_key "rest_errs", "users"
   add_foreign_key "rest_infos", "restaurants"
@@ -322,5 +338,6 @@ ActiveRecord::Schema.define(version: 20150726132127) do
   add_foreign_key "rest_registers", "subcategories"
   add_foreign_key "rest_registers", "users"
   add_foreign_key "restaurants", "categories"
+  add_foreign_key "restaurants", "franchises"
   add_foreign_key "restaurants", "subcategories"
 end
