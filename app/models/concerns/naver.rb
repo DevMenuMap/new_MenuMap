@@ -53,7 +53,7 @@ module Naver
 
 	# Return array of search result
 	def naver_blog_search
-		query = short_addrs + " " + name
+		query = short_addrs + " " + short_name
 		query = URI.encode("#{query}")
 
 		naver_key = "key=" + SEARCH_KEY

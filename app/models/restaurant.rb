@@ -339,6 +339,11 @@ class Restaurant < ActiveRecord::Base
 		addrress[2][0...-1]
 	end
 
+	# Restaurant name except ().
+	def short_name
+		name.split("(")[0]
+	end
+
 	# Return legal_dong for this restaurant.
 	def legal_dong
 		Address.find(( self.addr_code / LEGAL_DONG ) * LEGAL_DONG ).name.gsub(/^[^\s]*\s[^\s]*\s/, '').gsub(/\s\(.*\)$/, '')
