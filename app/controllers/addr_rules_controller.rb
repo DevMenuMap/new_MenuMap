@@ -1,5 +1,5 @@
 class AddrRulesController < ApplicationController
-	before_action :admin?, :except => [:new, :create]
+	before_action :admin?, :except => [:show, :new, :create]
 	
   def index
 		# 10 items per page
