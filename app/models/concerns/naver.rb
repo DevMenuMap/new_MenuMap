@@ -6,6 +6,10 @@ module Naver
 	# API keys
 	MAP_KEY_JB1 = "e9259df9a4dead564ce9d22727f94934"
 	SEARCH_KEY  = "813b2e5e653326da6ff7d7114acf8748"
+	# Filtering
+	FILTER_RULES = ["철거", "용달", "공사", "시공", "경매", "고시원", "원룸", "투룸",
+									"월세", "부동산", "급매", "최고가", "대리운전", "법인", "전세", "매매",
+									"임대", "매물", "역세권", "건설", "미용실", "평형", "시세"] 
 
 
 	### Instance methods
@@ -49,7 +53,7 @@ module Naver
 
 	# Return array of search result
 	def naver_blog_search
-		query = name + " " + short_addrs
+		query = short_addrs + " " + name
 		query = URI.encode("#{query}")
 
 		naver_key = "key=" + SEARCH_KEY
@@ -66,7 +70,11 @@ module Naver
 			temp[:description]  = item.xpath("description").text
 			temp[:blogger_name] = item.xpath("bloggername").text
 			temp[:blogger_link] = item.xpath("bloggerlink").text
-			naver_blogs << temp
+			unless FILTER_RULES.any? {|word| temp[:title].include?(word) || 
+																			 temp[:description].include?(word) ||
+																			 temp[:blogger_name].include?(word)}
+				naver_blogs << temp
+			end
 		end
 
 		naver_blogs
