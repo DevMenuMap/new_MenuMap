@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
 	# Custom validators
 	validate :no_slang
 	validate :no_particular_word
-	# validate :size_in_byte
+	validate :size_in_byte
 
 
 	### Class methods
@@ -43,9 +43,8 @@ class User < ActiveRecord::Base
 			user.email = auth.info.email
 			user.password = Devise.friendly_token[0,20]
 			user.username = "fb_" + auth.uid
-			user.email = "gogo@co.go"
-			# user.name = auth.info.name   
-			# user.image = auth.info.image 
+			user.email 		= "gogo@co.go"
+			user.fb_img 	= auth.info.image 
 			user.confirmed_at = Time.now
 		end
 	end
