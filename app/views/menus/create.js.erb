@@ -1,14 +1,2 @@
-$("#new_menu").bind("ajax:success", function() {
-	$("#menu_section").html("<%= j render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>");
-	
-	// Clear form inputs
-	$("#menu_menu_title_id").val('none');
-	$("#menu_title_title_name").val('');
-	$("#menu_title_title_info").val('');
-	$("#menu_name").val('');
-	$("#menu_side_info").val('');
-	$("#menu_price").val('');
-	$("#menu_info").val('');
-	$("#menu_sitga").removeAttr('checked');
-	$("#menu_unidentified").removeAttr('checked');
-});
+$("#menu_section").html("<%= j render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>");
+$("#new_menu_section").html("<%= j render partial: "menus/new", locals: { menu: Menu.new } %>");
