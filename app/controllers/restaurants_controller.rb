@@ -5,7 +5,45 @@ class RestaurantsController < ApplicationController
 
   def index
 		@user = current_user
+		#@restaurants = []
+		#@curr_lat = 0
+		#@curr_lng = 0
+		#restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
 		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
+		
+		# Find Center point
+		@center_x = 0
+		@center_y = 0
+		@coord_array = []
+		@names = []
+		@restaurants.each do |r|
+			if( r.lat.to_f != 0 && r.lng.to_f != 0 )
+				@coord_array << r.lat.to_f << r.lng.to_f
+				@names << r.name
+			end
+		end
+		x = @coord_array.values_at(* @coord_array.each_index.select { |i| i.even? })
+		y = @coord_array.values_at(* @coord_array.each_index.select { |i| i.odd? })
+		
+
+		# When at least one of lat(and lng) values is not zero
+		if( x != [] && y != [] )
+			@center_x = (x.inject{|sum, n| sum + n}) / x.length
+			@center_y = (y.inject{|sum, n| sum + n}) / y.length
+		end
+
+		#### WHEN USE CURRENT POSITION
+		#if (params[:curr_pos] == '1')
+		#	@curr_lat = params[:lat]
+		#	@curr_lng = params[:lng]
+		#	# limit 100 & latlng_type = Restaurant
+		#	coords = Coordinate.find_by_sql("SELECT id, latlng_id, latlng_type, ( 6371 * acos( cos( radians( #{@curr_lat} ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( #{@curr_lng} ) ) + sin( radians( #{@curr_lat} ) ) * sin( radians( lat ) ) ) ) AS distance FROM coordinates HAVING distance < 100 AND latlng_type = 'Restaurant' ORDER BY distance LIMIT 0 , 100")
+		#	coords.each do |c|
+		#		@restaurants << c.latlng
+		#	end
+		#else
+		#	@restaurants = restaurants
+		#end
 
 		if @restaurants.present?
 			render 'index'
@@ -30,13 +68,23 @@ class RestaurantsController < ApplicationController
 		@menu = Menu.new
 		@comment = Comment.new
 
+		# For nearby restaurants 
+		@curr_lat = @restaurant.lat.to_f 
+		@curr_lng = @restaurant.lng.to_f 
+		@nearbyRestaurants = []
+		# limit 5 & latlng_type = Restaurant
+		coords = Coordinate.find_by_sql("SELECT id, latlng_id, latlng_type, ( 6371 * acos( cos( radians( #{@curr_lat} ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( #{@curr_lng} ) ) + sin( radians( #{@curr_lat} ) ) * sin( radians( lat ) ) ) ) AS distance FROM coordinates HAVING distance < 100 AND latlng_type = 'Restaurant' ORDER BY distance LIMIT 0 , 5")
+		coords.each do |c|
+			@nearbyRestaurants << c.latlng
+		end
+
 		respond_to do |format|
 			format.html
 			# format.json { render json: @comments }
 			format.json
 			format.js
 		end
-  end
+	end
 
   def new
 		@restaurant = Restaurant.new

@@ -14,6 +14,19 @@ class AddressesController < ApplicationController
 		@address.coordinates.each do |c|
 			@coord_array << c.lat.to_f << c.lng.to_f
 		end
+
+		# Find Center point
+		@center_x = 0
+		@center_y = 0
+
+		x = @coord_array.values_at(* @coord_array.each_index.select { |i| i.even? })
+		y = @coord_array.values_at(* @coord_array.each_index.select { |i| i.odd? })
+		
+		# When at least one of lat(and lng) values is not zero
+		if( x != [] && y != [] )
+			@center_x = (x.inject{|sum, n| sum + n}) / x.length
+			@center_y = (y.inject{|sum, n| sum + n}) / y.length
+		end
 	end
 
 	def new

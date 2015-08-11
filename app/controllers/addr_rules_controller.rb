@@ -19,6 +19,23 @@ class AddrRulesController < ApplicationController
 		@addr_rule.coordinates.each do |c|
 			@coord_array << c.lat.to_f << c.lng.to_f
 		end
+		
+		# Find Center point
+		x = []
+		y = []
+		@center_x = 0
+		@center_y = 0
+		
+		if( @coord_array != [] )
+			l = @coord_array.length / 2
+			for i in 0..(l-1)
+				x << @coord_array[2*i]
+				y << @coord_array[2*i+1]
+			end
+
+			@center_x = (x.inject{|sum, n| sum + n}) / x.length
+			@center_y = (y.inject{|sum, n| sum + n}) / y.length
+		end
   end
 
   def new

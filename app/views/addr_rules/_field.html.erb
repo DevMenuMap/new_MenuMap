@@ -1,10 +1,10 @@
-<%= f.label :name %>
-<%= f.text_field :name %>
-
-<%= f.label :coordinates %>
-<%= f.fields_for :coordinates do |ff| %>
-	<% 10.times do |n| %>
-		<%= render "shared/coordinate_field", f: ff, n: n %>
-		<br />
-	<% end %>
-<% end %>
+<table id="latlng_table">
+	<tr><td><%= f.label :name %></td><td><%= f.text_field :name %></td></tr>
+		<tr><td><%= f.label :coordinates %></td></tr>
+		<%= f.fields_for :coordinates do |ff| %>
+			<tr>
+			<td><%= ff.number_field :lat, id: "coord_lat_0", multiple: true, step: "any" %></td>
+			<td><%= ff.number_field :lng, id: "coord_lng_0", multiple: true, step: "any" %></td>
+			</tr>
+		<% end %>
+</table>

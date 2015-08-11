@@ -36,6 +36,9 @@
 <%= render 'shared/modal' %>
 
 <script>
-	$(document).on("page:load", loadNaverMap());
-	$(document).ready(function(){ showMarkers(<%= @coord_array %>)});
+	$(document).ready(function(){ 
+		loadNaverMap(<%= @center_x %>, <%= @center_y %>, 8);
+		showGroupMarkers(<%= @coord_array %>, <%= @groups %>, <%= raw @names %>);
+		toggleLabels();
+	});
 </script>

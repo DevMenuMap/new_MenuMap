@@ -5,11 +5,12 @@
 <%= form_for @addr_rule, html: { multipart: true } do |f| %>
 	<%= render "field", f: f %>
 	<%= f.submit %>
+	<input type="button" onclick="clear_data()" value="clear">
 <% end %>
 
 <script>
-	$(document).on("page:load", loadNaverMap());
 	$(document).ready(function(){
+		loadNaverMap();
 		oMap.attach("click", setMarker);
 		$('#new_addr_rule').validate({
 			rules: {
@@ -19,4 +20,15 @@
 			}
 		});
 	});
+
+	$('body').on('contextmenu', '#naver_map', function(e){ return false; });
+	$(':input[type="number"]').prop("readonly", true);
+
+	function clear_data() {
+		document.getElementById("new_addr_rule").reset();
+		oMap.clearOverlay();
+		polygonCoords = [];
+		k = 0;
+		delRows();
+	};
 </script>
