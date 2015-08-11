@@ -8,6 +8,7 @@ $(document).ready( function() {
 			}
 		});
 	});
+	
 	// variable for autocompleting address name on search page
 	var addrComplete = $("#addrcomplete").autocomplete( {
 		// autoFocus: false

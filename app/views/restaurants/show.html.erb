@@ -83,7 +83,7 @@
 
 	$(document).ready( function() {
 		loadNaverMap(<%= @curr_lat %>, <%= @curr_lng %>, 12);
-		showMarkers([<%= @curr_lat %>, <%= @curr_lng %>], 1, ["<%= @restaurant.name %>"]);  
+		showMarkers([<%= @curr_lat %>, <%= @curr_lng %>], true, ["<%= @restaurant.name %>"]);  
 		toggleLabels();
 	
 		<% if @restaurant.with_latlng? %>

@@ -52,7 +52,7 @@
 	//})
 	$(document).ready( function() {
 		loadNaverMap(<%= @center_x %>, <%= @center_y %>, 8);
-		showMarkers(<%= @coord_array %>, 1, <%= raw @names %>);
+		showMarkers(<%= @coord_array %>, true, <%= raw @names %>);
 		toggleLabels();
 	});
 </script>

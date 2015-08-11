@@ -108,7 +108,7 @@ function showMarkers(coordArray, noPolygon, names){
 		showPolygon.push(oLatLng);
 	};
 
-	if ( noPolygon != 1 ) {
+	if ( noPolygon != true ) {
 		polygons = new nhn.api.map.Polygon(showPolygon, {
 			strokeColor: "blue",
 			strokeOpacity: 1,
