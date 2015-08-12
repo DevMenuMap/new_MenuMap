@@ -222,6 +222,7 @@ DEPENDENCIES
   mini_backtrace (~> 0.1.3)
   minitest-reporters (~> 1.0.17)
   mysql2
+  omniauth
   omniauth-facebook
   paperclip (~> 4.2)
   phantomjs

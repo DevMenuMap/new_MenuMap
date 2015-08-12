@@ -43,9 +43,14 @@ class User < ActiveRecord::Base
 			user.email = auth.info.email
 			user.password = Devise.friendly_token[0,20]
 			user.username = "fb_" + auth.uid
-			user.email 		= "gogo@co.go"
+			if auth.info.email.nil?
+				user.email = "fb_" + auth.uid + "@menumap.co.kr" 
+			else
+				user.email = auth.info.email
+			end
 			user.fb_img 	= auth.info.image 
 			user.confirmed_at = Time.now
+			# user.skip_confirmation_notification!
 		end
 	end
 
