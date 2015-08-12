@@ -335,8 +335,7 @@ class Restaurant < ActiveRecord::Base
 
 	# Return gu and dong for this restaurant.
 	def short_addrs
-		addrress = addr.split(" ")
-		addrress[2][0...-1]
+		addr.split(" ")[2]
 	end
 
 	# Restaurant name except ().
