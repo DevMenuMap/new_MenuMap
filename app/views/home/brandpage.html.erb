@@ -4,7 +4,10 @@
 
 <script>
 	$("#gogo_tag").tagit({
-		availableTags: ["#go go", "#do(do)"],
+		// availableTags: ["#go go", "#do(do)"],
+		autocomplete: {
+			source: window.location.origin + '/restaurants/1000000/menu_complete'
+		},
 		placeholderText: "#메뉴"
 		// removeConfirmation: true,
 	});

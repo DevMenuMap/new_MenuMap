@@ -39,6 +39,9 @@ Rails.application.routes.draw do
 		end
 		resources :comments, 		 except: [:index, :add_menu, :update_menu]
 		resources	:mymaps, 			 only: 	 [:new, :create]
+
+		# Menu tagging autocomplete listg
+		get 'menu_complete', on: :member
 	end
 
 	# Index pages which is not bounded with :restaurants
