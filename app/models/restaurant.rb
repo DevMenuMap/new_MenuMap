@@ -3,6 +3,7 @@ require 'net/http'
 class Restaurant < ActiveRecord::Base
 	### Mixins
 	include Naver
+	include Daum
 	include Addressable
 
 
@@ -330,6 +331,16 @@ class Restaurant < ActiveRecord::Base
 	# n defines the number of addr_tags that will appear.
 	def title_addrs(n)
 		[legal_dong, admin_dong, title_addr_tags(n)].flatten.join(', ')
+	end
+
+	# Return gu and dong for this restaurant.
+	def short_addrs
+		addr.split(" ")[2]
+	end
+
+	# Restaurant name except ().
+	def short_name
+		name.split("(")[0]
 	end
 
 	# Return legal_dong for this restaurant.

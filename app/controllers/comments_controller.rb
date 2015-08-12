@@ -20,26 +20,41 @@ class CommentsController < ApplicationController
 
   def edit
   	@comment = Comment.find(params[:id])
-  	redirect_to_restaurant_page
+  	if correct_user?(@comment.user)
+  		redirect_to_restaurant_page
+  	else
+  		flash[:alert] = "Wrong user"
+  		redirect_to restaurant_url(@comment.restaurant)
+  	end
   end
 
   def update
 		@comment = Comment.find(params[:id])
 
-		if @comment.update(comment_params)
-			flash[:alert] = "Succeed comment#update"
-		else
-			flash[:alert] = "Fail comment#update"
-		end
+		if correct_user?(@comment.user)
+			if @comment.update(comment_params)
+				flash[:alert] = "Succeed comment#update"
+			else
+				flash[:alert] = "Fail comment#update"
+			end
 
-		redirect_to_restaurant_page
+			redirect_to_restaurant_page
+		else
+  		flash[:alert] = "Wrong user"
+  		redirect_to restaurant_url(@comment.restaurant)
+  	end
 	end
 
   def destroy
 		@comment = Comment.find(params[:id])
-		@comment.update(active: false)
-		flash[:alert] = "Succeed comment#destroy"
-		redirect_to_restaurant_page
+		if correct_user?(@comment.user)
+			@comment.update(active: false)
+			flash[:alert] = "Succeed comment#destroy"
+			redirect_to_restaurant_page
+		else
+  		flash[:alert] = "Wrong user"
+  		redirect_to restaurant_url(@comment.restaurant), status: 303
+  	end
 	end
 
 	private

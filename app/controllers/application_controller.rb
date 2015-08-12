@@ -26,4 +26,8 @@ class ApplicationController < ActionController::Base
         redirect_to no_admin_url and return
       end 
     end
+
+    def correct_user?(user)
+      (user.nil? || current_user.nil? || !current_user.admin || current_user.id != user.id)? false : true
+    end
 end
