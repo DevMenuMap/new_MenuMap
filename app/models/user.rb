@@ -4,8 +4,17 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+	# Facebook
+	devise :omniauthable, omniauth_providers: [:facebook]
+
+
+	### Constants
+	USERNAME_FORMAT = /\A[a-zA-Z_\p{Hangul}][a-zA-Z0-9_\p{Hangul}]+\z/
+	EMAIL_FORMAT = /\A(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Z‌​a-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}\z/i
 
 	### Associations
+	has_one :mymap_snapshot
+
 	has_many :questions
 	has_many :rest_registers
 	has_many :rest_errs
@@ -14,24 +23,44 @@ class User < ActiveRecord::Base
 	has_many :mymaps
 	has_many :restaurants, through: :mymaps
 
-	has_one :mymap_snapshot
-
 
 	### Validations
 	validates :username, presence: true, uniqueness: { case_sensitive: false },
-											 format: {
-											 	with: /\A[a-zA-Z_\p{Hangul}][a-zA-Z0-9_\p{Hangul}]+\z/,
-											 	message: "invalid username"
-											 }, length: { maximum: 20 }
-	validates :email, format: {
-										 with: /\A(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Z‌​a-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}\z/i,
-										 message: "invalid email"
-										}
+											 format: { with: USERNAME_FORMAT, message: "invalid username" }, 
+											 length: { maximum: 20 }
+	validates :email, format: { with: EMAIL_FORMAT, message: "invalid email" }
 
 	# Custom validators
 	validate :no_slang
 	validate :no_particular_word
 	validate :size_in_byte
+
+
+	### Class methods
+	# Facebook login
+	def self.from_omniauth(auth)
+		where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+			user.email = auth.info.email
+			user.password = Devise.friendly_token[0,20]
+			user.username = "fb_" + auth.uid
+			if auth.info.email.nil?
+				user.email = "fb_" + auth.uid + "@menumap.co.kr" 
+			else
+				user.email = auth.info.email
+			end
+			user.fb_img 	= auth.info.image 
+			user.confirmed_at = Time.now
+			# user.skip_confirmation_notification!
+		end
+	end
+
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+      end
+    end
+  end
 
 
 	### Instance method

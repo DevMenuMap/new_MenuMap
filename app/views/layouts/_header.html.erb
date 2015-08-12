@@ -2,6 +2,11 @@
 
 <% if current_user %>
 	<br><%= current_user.username %>
+	<% if current_user.fb_img.present? %>
+		<%= image_tag current_user.fb_img %>
+	<% else %>
+		<%= image_tag "profile.png", style: "height: 20px; width: 20px;" %>
+	<% end %>
 <% end %>
 
 <ul>
@@ -55,6 +60,9 @@
 	</li>
 	<li>
 		<%= link_to "franchises" , franchises_path %>
+	</li>
+	<li>
+		<%= link_to "facebook login" , user_omniauth_authorize_path(:facebook) %>
 	</li>
 	<% if !current_user %>
 		<li>
