@@ -3,6 +3,7 @@
  *= require jquery-ui.theme
  *= require jquery-ui
  *= require jquery.raty
+ *= require jquery.tagit
  *= require_tree .
  *= require_self
  */
