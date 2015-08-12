@@ -3,5 +3,9 @@
 <input name="tag_gogo" id="gogo_tag" />
 
 <script>
-	$("#gogo_tag").tagit();
+	$("#gogo_tag").tagit({
+		availableTags: ["#go go", "#do(do)"],
+		placeholderText: "#메뉴"
+		// removeConfirmation: true,
+	});
 </script>
