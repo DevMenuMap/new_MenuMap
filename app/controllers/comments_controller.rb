@@ -7,12 +7,21 @@ class CommentsController < ApplicationController
 
   def create
 		@comment = Comment.new(comment_params)
-		@comment.user_id = current_user.id
+		@comment.user_id = current_user.id if current_user
 
 		if @comment.save
 			flash[:alert] = "Succeed comment#create"
 		else
 			flash[:alert] = "Fail comment#create"
+		end
+
+		# Save MenuComment tags
+		if !params[:menu_comments].blank?
+			@menus = Restaurant.find(params[:comment][:restaurant_id]).menus
+			params[:menu_comments][1..-1].split(',#').each do |tag|
+				@menus.find_by_name(tag).menu_comments.create(comment_id: @comment.id)
+			end
+			byebug
 		end
 
 		redirect_to_restaurant_page
