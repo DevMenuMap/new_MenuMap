@@ -2,8 +2,20 @@
 
 <%= form_for([@restaurant, @comment], remote: true) do |f| %>
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+	<%= text_field_tag :menu_comments, nil, { id: "menu_comments_tag" } %>
 
 	<!-- Specify field because of controller subordination -->
 	<%= render "comments/field", f: f %>
 	<%= f.submit "update comment", { id: "update_comment" }  %>
 <% end %>
+
+<script>
+	// Menu tags for comment
+	$("#menu_comments_tag").tagit({
+		autocomplete: {
+			source: window.location.origin + '/restaurants/<%= @restaurant.id %>/menu_complete'
+		},
+		placeholderText: "#메뉴"
+		// removeConfirmation: true,
+	});
+</script>
