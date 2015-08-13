@@ -1,6 +1,6 @@
 <h1>Comment#new</h1>
 
-<%= form_for([@restaurant, @comment], remote: true) do |f| %>
+<%= form_for([@restaurant, comment], remote: true) do |f| %>
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
 	<%= text_field_tag :menu_comments, nil, { id: "menu_comments_tag" } %>
 
