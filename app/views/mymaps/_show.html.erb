@@ -18,7 +18,7 @@
 		<% end %>
 
 		<% if @mymap.group != 0 %>
-			<td><%= image_tag s3_image_url("mymap_group_icon_" + @mymap.group.to_s + ".png"), id: "mymap_group_icon_" + @mymap.group.to_s, style: "height: 20px; width: 20px;" %></td>
+			<td><%= image_tag "/images/mymaps/mymap_group_icon_" + @mymap.group.to_s + ".png", id: "mymap_group_icon_" + @mymap.group.to_s, style: "height: 20px; width: 20px;" %></td>
 		<% else %>
 			<td></td>
 		<% end %>
@@ -34,7 +34,7 @@
 
 <script>
 	$(".star_rating").raty({
-		path: "<%= s3_image_url %>",
+		path: "/images/star_rating/",
 		readOnly: true,
 		score: function() {
 			return parseInt($(this).attr("data-score")) / 2;

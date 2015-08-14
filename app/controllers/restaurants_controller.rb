@@ -1,5 +1,6 @@
 class RestaurantsController < ApplicationController
-	before_action :admin?, :except => [:index, :show, :no_result]
+	before_action :admin?, :except => [:index, :show, :no_result, 
+																		 :menu_complete]
 	# before_action :check_category, only: [:create]
 	# to check if subcategory is not "all thing"; to specify subcategory
 
@@ -88,6 +89,13 @@ class RestaurantsController < ApplicationController
 			# format.json { render json: @comments }
 			format.json
 			format.js
+		end
+	end
+
+	def menu_complete
+		@menus = Restaurant.find(params[:id]).menus.pluck(:name).uniq.map{|name| "#" + name }
+		respond_to do |format|
+			format.json { render :json => @menus.to_json }
 		end
 	end
 

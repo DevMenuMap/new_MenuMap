@@ -4,7 +4,11 @@ module Naver
 
 	### Constants
 	# API keys
-	MAP_KEY_JB1 = "e9259df9a4dead564ce9d22727f94934"
+	if Rails.env.development?
+		MAP_KEY_JB = "e9259df9a4dead564ce9d22727f94934"
+	elsif Rails.env.production?
+		MAP_KEY_JB = "984b61b8ce2e249ac2ad09436df81845"
+	end
 	SEARCH_KEY  = "813b2e5e653326da6ff7d7114acf8748"
 	# Filtering
 	FILTER_RULES = ["철거", "용달", "공사", "시공", "경매", "고시원", "원룸", "투룸",

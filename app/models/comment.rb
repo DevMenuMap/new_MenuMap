@@ -3,7 +3,6 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :restaurant
 
-  # has_many :menu_comments
   has_many :pictures, as: :imageable
   has_many :menu_comments
   has_many :menus, through: :menu_comments

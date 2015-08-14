@@ -3,18 +3,3 @@
 	<%= render "mymaps/field", f: f %>
 	<%= f.submit %>
 <% end %>
-
-<script>
-	$(document).ready( function() {
-		slangCheck("#new_mymap", "#mymap_contents");
-	});
-	$("#star_rating_form").raty({
-		path: "<%= s3_image_url %>",
-		half: true,
-		scoreName: "mymap[rating]",
-		// In mymaps#edit, star rating should show for references.
-		score: function() {
-			return parseInt($(this).attr("data-score")) / 2;
-		}
-	});
-</script>

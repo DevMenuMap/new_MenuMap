@@ -58,8 +58,9 @@
 	<%= render "comments/page" %>
 </div>
 
-<%= render "comments/new" %>
-
+<div id="new_comment_section">
+	<%= render partial: "comments/new", locals: { comment: @comment } %>
+</div>
 
 <!-- Picture -->
 <h1>restaurant.pictures</h1>

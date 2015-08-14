@@ -1,7 +1,8 @@
 class Picture < ActiveRecord::Base
-	# Associations
+	### Associations
 	# Polymorphic associations to Restaurant, RestErr, RestRegister
   belongs_to :imageable, polymorphic: true
+
 
 	# Paperclip interpoloations for custom save path
 	Paperclip.interpolates :imageable_type do |attachment, style|
@@ -13,12 +14,14 @@ class Picture < ActiveRecord::Base
 										:styles	=> { :medium => "300x300>" },
 										:path => '/:class/:imageable_type/:attachment/:id_partition/:style/:basename.:extension'
 
-	# Validations
+
+	### Validations
 	validates_attachment	:img, 
 												:presence			=> true,
 												:content_type => { content_type: /\Aimage\/.*\Z/ },
 												:size					=> { in: 0..15.megabyte }
 
-	# Scopes
+
+	### Scopes
 	default_scope { where active: true }
 end
