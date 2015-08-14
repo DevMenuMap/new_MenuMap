@@ -6,4 +6,8 @@
 	<% end %>
 </table>
 
-<%= will_paginate @comments, params: { controller: "restaurants", action: "show" } %>
+<% unless @comments.next_page.nil? %>
+  <%= link_to 'show_more', restaurant_path(@restaurant, :page => @comments.next_page), :remote => true, :id => 'show_more_link' %>
+<% end %>
+
+<%# will_paginate @comments, params: { controller: "restaurants", action: "show" } %>
