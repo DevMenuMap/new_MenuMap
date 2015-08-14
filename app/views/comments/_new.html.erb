@@ -4,6 +4,8 @@
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
 	<%= text_field_tag :menu_comments, nil, { id: "menu_comments_tag" } %>
 
+	<div id="star_rating_form" data-score=<%= comment.rating %>></div>
+
 	<!-- Specify field because of controller subordination -->
 	<%= render "comments/field", f: f %>
 	<%= f.submit "update comment", { id: "update_comment" }  %>
@@ -17,5 +19,15 @@
 		},
 		placeholderText: "#메뉴"
 		// removeConfirmation: true,
+	});
+	
+	$("#star_rating_form").raty({
+		path: "/images/star_rating/",
+		half: true,
+		scoreName: "comment[rating]",
+		// In mymaps#edit, star rating should show for references.
+		score: function() {
+			return parseInt($(this).attr("data-score")) / 2;
+		}
 	});
 </script>
