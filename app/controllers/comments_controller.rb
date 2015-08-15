@@ -6,6 +6,8 @@ class CommentsController < ApplicationController
   end
 
   def create
+  	double_rating_score
+
 		@comment = Comment.new(comment_params)
 		@comment.user_id = current_user.id if current_user
 
@@ -21,7 +23,6 @@ class CommentsController < ApplicationController
 			params[:menu_comments][1..-1].split(',#').each do |tag|
 				@menus.find_by_name(tag).menu_comments.create(comment_id: @comment.id)
 			end
-			byebug
 		end
 
 		redirect_to_restaurant_page
@@ -38,6 +39,8 @@ class CommentsController < ApplicationController
   end
 
   def update
+  	double_rating_score
+
 		@comment = Comment.find(params[:id])
 
 		if correct_user?(@comment.user)
@@ -68,7 +71,12 @@ class CommentsController < ApplicationController
 
 	private
 		def comment_params
-			params.require(:comment).permit(:restaurant_id, :contents)
+			params.require(:comment).permit(:rating, :restaurant_id, :contents)
+		end
+
+		# Double the number to match integer format(1..10)
+		def double_rating_score
+			params[:comment][:rating] = (params[:comment][:rating].to_f * 2).to_i
 		end
 
 		def redirect_to_restaurant_page

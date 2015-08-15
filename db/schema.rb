@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813042934) do
+ActiveRecord::Schema.define(version: 20150814074524) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20150813042934) do
     t.boolean  "active",        limit: 1,   default: true
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
+    t.integer  "rating",        limit: 4
   end
 
   add_index "comments", ["created_at"], name: "index_comments_on_created_at", using: :btree
