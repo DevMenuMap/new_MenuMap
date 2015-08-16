@@ -1,5 +1,6 @@
 <% provide(:page_title, "회원가입") %>
 <h2>Sign up</h2>
+<%= link_to "facebook login" , user_omniauth_authorize_path(:facebook) %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
@@ -31,5 +32,3 @@
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
-
-<%= render "users/shared/links" %>

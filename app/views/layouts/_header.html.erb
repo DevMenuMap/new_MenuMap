@@ -5,64 +5,16 @@
 	<% if current_user.fb_img.present? %>
 		<%= image_tag current_user.fb_img %>
 	<% else %>
-		<%= image_tag "profile.png", style: "height: 20px; width: 20px;" %>
+		<%= image_tag "users/default_profile.png", style: "height: 20px; width: 20px;" %>
 	<% end %>
 <% end %>
 
 <ul>
 	<li>
-		<%= link_to "about page", about_path %>
-	</li>
-	<li>
-		<%= link_to "manual page", manual_path %>
-	</li>
-	<li>
 		<%= link_to "qna page", qna_path %>
 	</li>
 	<li>
 		<%= link_to "search page" , search_path %>
-	</li>
-	<li>
-		<%= link_to "restaurant register" , new_rest_register_path %>
-	</li>
-	<li>
-		<%= link_to "restaurants index" , restaurants_path %>
-	</li>
-	<li>
-		<%= link_to "restaurants errors" , rest_errs_path %>
-	</li>
-	<li>
-		<%= link_to "menu titles" , menu_titles_path %>
-	</li>
-	<li>
-		<%= link_to "menus" , menus_path %>
-	</li> 
-	<li>
-		<%= link_to "comments" , comments_path %>
-	</li>
-	<li>
-		<%= link_to "pictures" , pictures_path %>
-	</li>
-	<li>
-		<%= link_to "addresses" , addresses_path %>
-	</li>
-	<li>
-		<%= link_to "addr_rules" , addr_rules_path %>
-	</li>
-	<li>
-		<%= link_to "new addr_rule" , new_addr_rule_path %>
-	</li>
-	<li>
-		<%= link_to "addr_conversions" , addr_conversions_path %>
-	</li>
-	<li>
-		<%= link_to "slangs" , slangs_path %>
-	</li>
-	<li>
-		<%= link_to "franchises" , franchises_path %>
-	</li>
-	<li>
-		<%= link_to "facebook login" , user_omniauth_authorize_path(:facebook) %>
 	</li>
 	<% if !current_user %>
 		<li>

@@ -1,5 +1,50 @@
 <h1>Admin/monitors#index</h1>
 
+<ul>
+	<li>
+		<%= link_to "about page", about_path %>
+	</li>
+	<li>
+		<%= link_to "manual page", manual_path %>
+	</li>
+	<li>
+		<%= link_to "restaurants index" , restaurants_path %>
+	</li>
+	<li>
+		<%= link_to "restaurants errors" , rest_errs_path %>
+	</li>
+	<li>
+		<%= link_to "menu titles" , menu_titles_path %>
+	</li>
+	<li>
+		<%= link_to "menus" , menus_path %>
+	</li> 
+	<li>
+		<%= link_to "comments" , comments_path %>
+	</li>
+	<li>
+		<%= link_to "pictures" , pictures_path %>
+	</li>
+	<li>
+		<%= link_to "addresses" , addresses_path %>
+	</li>
+	<li>
+		<%= link_to "addr_rules" , addr_rules_path %>
+	</li>
+	<li>
+		<%= link_to "new addr_rule" , new_addr_rule_path %>
+	</li>
+	<li>
+		<%= link_to "addr_conversions" , addr_conversions_path %>
+	</li>
+	<li>
+		<%= link_to "slangs" , slangs_path %>
+	</li>
+	<li>
+		<%= link_to "franchises" , franchises_path %>
+	</li>
+</ul>
+
 <%= will_paginate @restaurants %>
 
 <table class="table">
