@@ -1,5 +1,6 @@
 <% provide(:page_title, "로그인") %>
 <h2>Log in</h2>
+<%= link_to "facebook login" , user_omniauth_authorize_path(:facebook) %>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
