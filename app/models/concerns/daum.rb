@@ -10,6 +10,9 @@ module Daum
 	### Instance methods
 	def daum_blog_search
 		query = short_addrs + " " + short_name
+		Naver::FILTER_RULES.each do |rule|
+			query += " -" + rule
+		end
 		query = URI.encode("#{query}")
 
 		daum_key = "?apikey=" + SEARCH_KEY 
@@ -26,11 +29,7 @@ module Daum
 			temp[:description]  = item.xpath("description").text
 			temp[:blogger_name] = item.xpath("author").text
 			temp[:blogger_link] = item.xpath("comment").text
-			unless Naver::FILTER_RULES.any? {|word| temp[:title].include?(word) || 
-																			 temp[:description].include?(word) ||
-																			 temp[:blogger_name].include?(word)}
-				daum_blogs << temp
-			end
+			daum_blogs << temp
 		end
 
 		daum_blogs

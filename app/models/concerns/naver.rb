@@ -13,7 +13,8 @@ module Naver
 	# Filtering
 	FILTER_RULES = ["철거", "용달", "공사", "시공", "경매", "고시원", "원룸", "투룸",
 									"월세", "부동산", "급매", "최고가", "대리운전", "법인", "전세", "매매",
-									"임대", "매물", "역세권", "건설", "미용실", "평형", "시세"] 
+									"임대", "매물", "역세권", "건설", "미용실", "평형", "시세",
+									"공인중개사"] 
 
 
 	### Instance methods
@@ -30,7 +31,7 @@ module Naver
 		# coord = latlng | tm128(default)
 
 		request_url = "http://openapi.map.naver.com/api/geocode.php"
-		request_url += "?key=" 			+ MAP_KEY_JB1 +
+		request_url += "?key=" 			+ MAP_KEY_JB +
 									 "&encoding=" + options[0] +
 									 "&coord=" 		+ options[1] +
 									 "&query=" 		+ self.addr
@@ -58,6 +59,9 @@ module Naver
 	# Return array of search result
 	def naver_blog_search
 		query = short_addrs + " " + short_name
+		FILTER_RULES.each do |rule|
+			query += " -" + rule
+		end
 		query = URI.encode("#{query}")
 
 		naver_key = "key=" + SEARCH_KEY
@@ -74,11 +78,7 @@ module Naver
 			temp[:description]  = item.xpath("description").text
 			temp[:blogger_name] = item.xpath("bloggername").text
 			temp[:blogger_link] = item.xpath("bloggerlink").text
-			unless FILTER_RULES.any? {|word| temp[:title].include?(word) || 
-																			 temp[:description].include?(word) ||
-																			 temp[:blogger_name].include?(word)}
-				naver_blogs << temp
-			end
+			naver_blogs << temp
 		end
 
 		naver_blogs
