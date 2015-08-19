@@ -1,3 +1,6 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
+
 table, th, td {
 	border: 1px solid black;
 }
@@ -9,3 +12,7 @@ ul.tagit li.tagit-choice a.tagit-close .text-icon {
   margin-left: 2px;
   line-height: 10px;
 }	
+
+html, body, h1, h2, h3, h4, h5, h6, p, a {
+	font-family: 'Noto Sans', sans-serif;
+}
