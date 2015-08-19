@@ -18,9 +18,6 @@
 	</li>
 	<% if !current_user %>
 		<li>
-			<%= link_to "signup page" , new_user_registration_path %>
-		</li>
-		<li>
 			<%= link_to "signin page" , new_user_session_path %>
 		</li>
 	<% else %>
