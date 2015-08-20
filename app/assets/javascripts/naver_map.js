@@ -37,15 +37,25 @@ function loadNaverMap(lat, lng, level){
 // showLabels -> toggleLabels 20150810
 function toggleLabels() {
 	var oLabel = new nhn.api.map.MarkerLabel();
+	var oMarker_new;
+	var oMarker_old;
 	oMap.addOverlay(oLabel);
 	oMap.attach('click', function(oCustomEvent) {
 		if (oCustomEvent.target instanceof nhn.api.map.Marker) {
-			var oMarker = oCustomEvent.target;
-			if (oLabel.getVisible()){
-				oLabel.setVisible(false, oMarker);
+			oMarker_old = oMarker_new;
+			oMarker_new = oCustomEvent.target;
+
+			if (oMarker_new == oMarker_old) {
+				oLabel.setVisible(false, oMarker_new);
+				oMarker_new = undefined;
 			} else {
-				oLabel.setVisible(true, oMarker);
+				oLabel.setVisible(true, oMarker_new);
 			};
+		};
+
+		if (oCustomEvent.target instanceof nhn.api.map.Map) {
+			oLabel.setVisible(false, oMarker_new);
+			oMarker_new = undefined;
 		};
 	});
 };
