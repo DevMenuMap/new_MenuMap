@@ -21,7 +21,10 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+		<!-- Font Awesome for Bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 
 		<!-- Security issue -->
 		<%= csrf_meta_tags %>
@@ -36,7 +39,9 @@
 		<!-- Flash -->
 		<%= render "layouts/flash" %>
 
-		<%= yield %>
+		<div class="container">
+			<%= yield %>
+		</div>
 
 		<!-- Callback javascript codes for specific pages -->
 		<%= render "shared/callback_scripts" %>

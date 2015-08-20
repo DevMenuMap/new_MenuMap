@@ -16,3 +16,19 @@ ul.tagit li.tagit-choice a.tagit-close .text-icon {
 html, body, h1, h2, h3, h4, h5, h6, p, a {
 	font-family: 'Noto Sans', sans-serif;
 }
+
+.ubuntu {
+	font-family: 'Ubuntu';
+	font-weight: bold;
+}
+
+.btn-facebook {
+	background-color: #3B5998;
+	color: white;
+	font-weight: bold;
+	&:hover {
+		background-color: #2d4373;
+		border-color: rgba(0,0,0,0.2);
+		color: white;
+	}
+}
