@@ -46,4 +46,11 @@
 		<!-- Callback javascript codes for specific pages -->
 		<%= render "shared/callback_scripts" %>
 	</body>
+	<script>
+		$(document).ready( function() {
+			if ("<%=flash[:alert]%>" != '') {
+				$('#flash').delay(3000).hide(1000);
+			};
+		});
+	</script>
 </html>
