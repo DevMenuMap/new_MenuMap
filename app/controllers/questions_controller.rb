@@ -15,11 +15,10 @@ class QuestionsController < ApplicationController
 		@question.user_id = current_user.id if current_user
 		if @question.save
 			flash[:alert] = "succeed question#create"
-			redirect_to questions_url
 		else
 			flash[:alert] = "fail question#create"
-			redirect_to questions_url
 		end
+		redirect_to "/qna"
 	end
 
   def edit

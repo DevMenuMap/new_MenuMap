@@ -1,9 +1,12 @@
-<%= f.label :email, "email" %>
-<% if current_user %>
-	<%= f.text_field :email, value: current_user.email, readonly: true %>
-<% else %>
-	<%= f.text_field :email %>
-<% end %>
+<div class="form-group">
+	<% if current_user %>
+		<%= f.text_field :email, value: current_user.email, class: "form-control", readonly: true %>
+	<% else %>
+		<%= f.text_field :email, class: "form-control", placeholder: "이메일(선택)" %>
+	<% end %>
+</div>
 
-<%= f.label :contents, "contents" %>
-<%= f.text_field :contents %>
+<div class="form-group">
+	<%= f.label :contents, "질문" %>
+	<%= f.text_area :contents, { rows: 10, class: "form-control" } %>
+</div>
