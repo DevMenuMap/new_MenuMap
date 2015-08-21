@@ -1,5 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
-@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
+@import url(https://cdn.rawgit.com/yonggoonoh/fonttest/master/stylesheets/NotoSansKR.css);
 
 table, th, td {
 	border: 1px solid black;
@@ -14,7 +14,7 @@ ul.tagit li.tagit-choice a.tagit-close .text-icon {
 }	
 
 html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
-	font-family: 'Noto Sans', sans-serif;
+	font-family: 'Noto Sans Korean', sans-serif;
 }
 
 .ubuntu {
