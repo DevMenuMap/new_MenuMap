@@ -3,6 +3,13 @@ class QuestionsController < ApplicationController
 		@questions = Question.all
   end
 
+	def new
+		@question = Question.new
+		respond_to do |format|
+			format.js { render layout: false }
+		end
+	end
+
 	def create
 		@question = Question.new(question_params)
 		@question.user_id = current_user.id if current_user

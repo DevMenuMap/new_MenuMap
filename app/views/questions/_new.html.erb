@@ -1,5 +1,3 @@
-<h1>Questions#new</h1>
-
 <%= form_for(@question) do |f| %>
 	<%= render "questions/fields", f: f %>
 	<%= f.submit "gogogo" %>
@@ -15,10 +13,3 @@ $(document).ready( function() {
 	});
 });
 </script>
-<!--
-<script>
-	$("#new_question").submit( function(e) {
-		formValidation(e, "#new_question");
-	});
-</script>
---!>
