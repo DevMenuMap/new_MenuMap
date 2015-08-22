@@ -1,55 +1,33 @@
-<h1>Restaurants#index</h1>
+<div class="container">
+	<div id="naver_map" style="margin-bottom: 10px;"></div>
 
-<h2>Map</h2>
-<div id="naver_map" style="width: 80%; height: 60%"></div>
-
-<%= link_to "new restaurant", new_restaurant_path %>
-
-<table class="table">
-	<tr>
-		<% Restaurant.column_names.each do |column| %>
-			<th><%= column %></th>
-		<% end %>
-		<th>Best Menu 1</th>
-		<th>Best Menu 2</th> 
-		<th>메뉴 등록</th>
-		<th></th>
-		<th></th>
-		<th>mymap 보기||등록</th>
-	</tr>
+	<%= link_to "new restaurant", new_restaurant_path if admin_user? %>
 
 	<% @restaurants.each do |restaurant| %>
-		<tr data-url="<%= restaurant_path(restaurant) %>">
-			<% restaurant.attributes.each_value do |value| %>
-				<td><%= value %></td>
-			<% end %>
-			<% if restaurant.title_menus(2).blank? %>
-				<td>Empty</td>
-				<td>Empty</td> 
+		<div id="restaurant_<%= restaurant.id %>">
+			<% if picture = restaurant.pictures.first %>
+				<%= image_tag picture.img.url, alt: "#{restaurant.name} 사진", style: "width: 120px; height: 90px; display: inline-block;" %>
 			<% else %>
-				<% restaurant.title_menus(2).each do |menu| %>
-					<td><%= menu %></td>
-				<% end %>
+				<%= image_tag "restaurants/default_restaurant.png", alt: "현재 등록된 사진이 없습니다.", style: "width: 120px; height: 90px;" %>
 			<% end %>
-			<td><%= menu_on_helper(restaurant) %></td>
-			<td><%= link_to "show", restaurant_path(restaurant) %></td>
-			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
-			<td id="mymap_button_<%= restaurant.id %>"><%= mymap_button(@user, restaurant) %></td>
-		</tr>
-	<% end %>
-</table>
+			<div style="display: inline-block">
+				<%= restaurant.name %><br />
+				<%= restaurant.subcategory.name %><br />
+				<%= restaurant.delivery %><br />
+				<%= restaurant.addr %>
+			</div>
 
-<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
+			<%= link_to "show", restaurant_path(restaurant) %>
+			<%= link_to "destroy", restaurant_path(restaurant), method: :delete if admin_user? %>
+		</div>
+	<% end %>
+	
+	<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
+</div>
 
 <%= render 'shared/modal' %>
 
 <script>
-	//$(function () {
-	//	Specify table's row more directly just for restaurant table's row.
-  //	$('table.table tr').click(function () {
-  //  	window.location.href = $(this).data('url');
-  //	});
-	//})
 	$(document).ready( function() {
 		loadNaverMap(<%= @center_x %>, <%= @center_y %>, <%= @level %>);
 		showMarkers(<%= @coord_array %>, true, <%= raw @names %>);
