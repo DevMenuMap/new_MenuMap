@@ -17,6 +17,10 @@ function loadNaverMap(lat, lng, level){
 		level = 10;
 	};
 	var oCenter = new nhn.api.map.LatLng(lat, lng);
+
+	deviceWidth = responsiveMapWidth();
+	mapHeight = deviceWidth * 0.618
+
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
 																	point : oCenter,
 																	zoom : level,
@@ -27,7 +31,7 @@ function loadNaverMap(lat, lng, level){
 																	mapMode : 0,
 																	// activateTrafficMap : false,
 																	// activateBicycleMap : false,
-																	size : new nhn.api.map.Size(1000, 700),
+																	size : new nhn.api.map.Size(deviceWidth, mapHeight),
 																	minMaxLevel : [ 1, 14 ]
 														});
 
@@ -193,3 +197,20 @@ function showGroupMarkers(coordArray, groups, names) {
 		showPolygon.push(oLatLng);
 	};
 };
+
+// Return responsive width of naver map for devices.
+function responsiveMapWidth() {
+	var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+	if (width > 1200) {
+		width = 1140;
+	} else if (width > 992) {
+		width = 940;
+	} else if (width > 768) {
+		width = 720;
+	} else {
+		width -= 30;
+	}
+
+	return width;
+}
