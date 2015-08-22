@@ -7,4 +7,13 @@ namespace :addresses do
 			end
 		end
   end
+
+	desc "Check if any address has coordinates without addr_bounds"
+	task check_addr_bounds: :environment do
+		Address.where("id > ?", Addressable::ADDR_TAG).find_each do |a|
+			if a.coordinates.present? && !a.addr_bounds.present?
+				puts [ a.id, a.name ]
+			end
+		end
+	end
 end
