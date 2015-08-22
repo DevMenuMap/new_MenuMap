@@ -3,6 +3,7 @@
 <head>
   <title>We're sorry, but something went wrong (500)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
   <style>
   body {
     background-color: #EFEFEF;
@@ -51,6 +52,11 @@
     color: #666;
     box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
   }
+	.ubuntu {
+		font-family: 'Ubuntu';
+		color: #dd4814;
+		font-weight: bold;
+	}
   </style>
 </head>
 
@@ -58,9 +64,9 @@
   <!-- This file lives in public/500.html -->
   <div class="dialog">
     <div>
-      <h1>We're sorry, but something went wrong.</h1>
+      <h1>죄송합니다. 다시 한 번 시도해주세요.</h1>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+    <p><a href="http://menumap.co.kr"><span class="ubuntu">MenuMap</span> 홈페이지로 이동하기</a></p>
   </div>
 </body>
 </html>

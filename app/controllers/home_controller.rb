@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
 	def brandpage
+		@categories = Category.all
+		@subcategories = Subcategory.all
 	end
 
 	def about

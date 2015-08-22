@@ -1,24 +1,18 @@
-<h1>Questions#new</h1>
-
 <%= form_for(@question) do |f| %>
 	<%= render "questions/fields", f: f %>
-	<%= f.submit "gogogo" %>
+	<div style="text-align: right;">
+		<%= f.button "취소", class: "btn", data: { dismiss: "modal" } %>
+		<%= f.button "등록", class: "btn btn-primary" %>
+	</div>
 <% end %>
 
 <script>
 $(document).ready( function() {
 	$("#new_question").validate({
 		rules: {
-			'question[email]': { required: true, email: true },
+			//'question[email]': { required: true, email: true },
 			'question[contents]': { required: true }
 		}
 	});
 });
 </script>
-<!--
-<script>
-	$("#new_question").submit( function(e) {
-		formValidation(e, "#new_question");
-	});
-</script>
---!>

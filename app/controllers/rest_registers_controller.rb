@@ -10,6 +10,7 @@ class RestRegistersController < ApplicationController
   end
 
   def new
+		flash[:alert] = "더 정확하고 많은 정보를 제공해주시면 음식점 정보를 빠르게 등록할 수 있습니다."
 		@rest_register = RestRegister.new
 		@rest_register.pictures.build
 

@@ -33,6 +33,9 @@ class Address < ActiveRecord::Base
 			addr_bounds.each do |bound|
 				range = get_addr_range_hash(bound.addr_code).values.first
 				Restaurant.without_addr_tag(self.id).where("addr_code >= ? AND addr_code < ?", range[:min], range[:max]).each do |r|
+					# Skip iteration when restaurant's coordinate is nil
+					next if Coordinate.where("latlng_type = 'Restaurant' AND latlng_id = ?", r.id).blank?
+
 					if r.inside_polygon?(self)
 						r.addr_tags.create(address_id: self.id, active: true)
 					else

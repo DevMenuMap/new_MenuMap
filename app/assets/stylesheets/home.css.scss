@@ -20,6 +20,7 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 .ubuntu {
 	font-family: 'Ubuntu';
 	font-weight: bold;
+	color: #dd4814;
 }
 
 .btn-facebook {
@@ -31,4 +32,29 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 		border-color: rgba(0,0,0,0.2);
 		color: white;
 	}
+}
+
+#home_bg {
+	background-image: url('/images/menumap/home_bg.jpg');
+	margin-top: -20px;
+	height: 200px;
+	color: white;
+	text-align: center;
+	h1 {
+		margin: 0;
+		font-size: 4em;
+	}
+	p {
+		margin: 0;
+		padding-top: 50px;
+	}
+}
+
+#home_blockquote {
+	margin-top: 20px;
+}
+
+#home_info {
+	margin: 15px 0;
+	font-size: 1.2em;
 }
