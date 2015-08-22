@@ -1,53 +1,55 @@
 <% provide(:page_title, "MenuMap 검색") %>
 
-<div class="col-md-6 col-md-offset-3">
-	<%= form_tag restaurants_path, method: :get, name: nil do %>
-		<legend>MenuMap 검색</legend>
+<div class="container">
+	<div class="col-md-6 col-md-offset-3">
+		<%= form_tag restaurants_path, method: :get, name: nil do %>
+			<legend>MenuMap 검색</legend>
 
-		<!-- Autocomplete recommended address name with Addrcomplete model 
-				 by jquery-ui autocomplete function 											 -->
-		<div class="form-group">
-			<%= label_tag :address, "지역" %>
-			<%= text_field_tag :address, nil, 
-									{ id: "addrcomplete", class: "form-control", placeholder: "gogo placeholder" } %>
-		</div>
-
-		<div class="form-group">
-			<div><%= label_tag :category, "음식 분류" %></div>
-
-			<!-- options_for_select(options[text, value], selected) -->
-			<div class="col-xs-6">
-				<%= select_tag nil, 
-							options_for_select(@categories.map{ |c| [c.name, c.id] }, nil), 
-																								{ id: "category_select", class: "form-control" } %>
+			<!-- Autocomplete recommended address name with Addrcomplete model 
+					 by jquery-ui autocomplete function 											 -->
+			<div class="form-group">
+				<%= label_tag :address, "지역" %>
+				<%= text_field_tag :address, nil, 
+										{ id: "addrcomplete", class: "form-control", placeholder: "gogo placeholder" } %>
 			</div>
-			<div class="col-xs-6">
-				<%= select_tag :category, 
-							options_for_select(@subcategories.map{ |s| [s.name, s.id] }, nil),
-																								{ id: "subcategory_select", class: "form-control" } %>
+
+			<div class="form-group">
+				<div><%= label_tag :category, "음식 분류" %></div>
+
+				<!-- options_for_select(options[text, value], selected) -->
+				<div class="col-xs-6">
+					<%= select_tag nil, 
+								options_for_select(@categories.map{ |c| [c.name, c.id] }, nil), 
+																									{ id: "category_select", class: "form-control" } %>
+				</div>
+				<div class="col-xs-6">
+					<%= select_tag :category, 
+								options_for_select(@subcategories.map{ |s| [s.name, s.id] }, nil),
+																									{ id: "subcategory_select", class: "form-control" } %>
+				</div>
 			</div>
-		</div>
 
-		<div class="form-group" style="text-align: right">
-			<%= check_box_tag :delivery %>
-			<%= label_tag :delivery, "배달 음식점만 검색" %>
-		</div>
+			<div class="form-group" style="text-align: right">
+				<%= check_box_tag :delivery %>
+				<%= label_tag :delivery, "배달 음식점만 검색" %>
+			</div>
 
-		<!--%= label_tag :currentPosition, "CurrentPosition" %-->
-		<!--%= hidden_field_tag :currentPosition, nil, { id: "curr_lat", name: "lat" } %-->
-		<!--%= hidden_field_tag :currentPosition, nil, { id: "curr_lng", name: "lng" } %-->
-		<!--%= check_box_tag :curr_pos, 1, false, :onclick => "geoFindMe()" %-->
+			<!--%= label_tag :currentPosition, "CurrentPosition" %-->
+			<!--%= hidden_field_tag :currentPosition, nil, { id: "curr_lat", name: "lat" } %-->
+			<!--%= hidden_field_tag :currentPosition, nil, { id: "curr_lng", name: "lng" } %-->
+			<!--%= check_box_tag :curr_pos, 1, false, :onclick => "geoFindMe()" %-->
 
-		<div class="form-group">
-			<%= label_tag :name, "음식점 이름" %>
-			<%= text_field_tag :name, nil, { class: "form-control" } %>
-		</div>
+			<div class="form-group">
+				<%= label_tag :name, "음식점 이름" %>
+				<%= text_field_tag :name, nil, { class: "form-control" } %>
+			</div>
 
-		<div style="text-align: right">
-			<%= button_tag "취소", { type: :reset, class: "btn btn-primary", name: nil, onclick: "resetSubcat()" } %>
-			<%= button_tag "검색", { id: "submitbutton", class: "btn btn-primary", name: nil } %>
-		</div>
-	<% end %>
+			<div style="text-align: right">
+				<%= button_tag "취소", { type: :reset, class: "btn btn-primary", name: nil, onclick: "resetSubcat()" } %>
+				<%= button_tag "검색", { id: "submitbutton", class: "btn btn-primary", name: nil } %>
+			</div>
+		<% end %>
+	</div>
 </div>
 
 <script>

@@ -1,94 +1,96 @@
 <% provide(:page_title, "음식점 등록 신청") %>
 
-<div class="col-md-6 col-md-offset-3">
-	<%= form_for @rest_register, html: { multipart: true, class: "form-horizontal" } do |f| %>
-		<legend>음식점 추가 신청</legend>
+<div class="container">
+	<div class="col-md-6 col-md-offset-3">
+		<%= form_for @rest_register, html: { multipart: true, class: "form-horizontal" } do |f| %>
+			<legend>음식점 추가 신청</legend>
 
-		<div class="form-group">
-			<div class="col-md-3">
-				<%= f.label :email, "신청자 이메일" %>
+			<div class="form-group">
+				<div class="col-md-3">
+					<%= f.label :email, "신청자 이메일" %>
+				</div>
+				<div class="col-md-9">
+					<% if current_user %>
+						<%= f.text_field :email, { value: current_user.email, class: "form-control", readonly: true } %>
+					<% else %>
+						<%= f.text_field :email, class: "form-control" %>
+					<% end %>
+				</div>
 			</div>
-			<div class="col-md-9">
-				<% if current_user %>
-					<%= f.text_field :email, { value: current_user.email, class: "form-control", readonly: true } %>
-				<% else %>
-					<%= f.text_field :email, class: "form-control" %>
-				<% end %>
-			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="col-md-3">
-				<%= f.label :name, "음식점 이름" %>
+			<div class="form-group">
+				<div class="col-md-3">
+					<%= f.label :name, "음식점 이름" %>
+				</div>
+				<div class="col-md-9">
+					<%= f.text_field :name, class: "form-control" %>
+				</div>
 			</div>
-			<div class="col-md-9">
-				<%= f.text_field :name, class: "form-control" %>
-			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="col-xs-12 col-md-3">
-				<%= f.label :category_id, "음식 분류" %>
+			<div class="form-group">
+				<div class="col-xs-12 col-md-3">
+					<%= f.label :category_id, "음식 분류" %>
+				</div>
+				<div class="col-md-9">
+					<%= render "shared/category_select", f: f %>
+				</div>
 			</div>
-			<div class="col-md-9">
-				<%= render "shared/category_select", f: f %>
-			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="col-md-3">
-				<%= f.label :addr, "지역" %>
+			<div class="form-group">
+				<div class="col-md-3">
+					<%= f.label :addr, "지역" %>
+				</div>
+				<div class="col-md-9">
+					<%= f.text_field :addr, class: "form-control" %>
+				</div>
 			</div>
-			<div class="col-md-9">
-				<%= f.text_field :addr, class: "form-control" %>
-			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="col-md-3">
-				<%= f.label :phnum, "전화번호" %>
+			<div class="form-group">
+				<div class="col-md-3">
+					<%= f.label :phnum, "전화번호" %>
+				</div>
+				<div class="col-md-9">
+					<%= f.text_field :phnum, class: "form-control" %>
+				</div>
 			</div>
-			<div class="col-md-9">
-				<%= f.text_field :phnum, class: "form-control" %>
-			</div>
-		</div>
 
-		<div class="form-group"> 
-			<div class="col-xs-12" style="text-align: right;">
-				<%= f.check_box :delivery %>
-				<%= f.label :delivery, " 배달가능 음식점인 경우 체크" %>
+			<div class="form-group"> 
+				<div class="col-xs-12" style="text-align: right;">
+					<%= f.check_box :delivery %>
+					<%= f.label :delivery, " 배달가능 음식점인 경우 체크" %>
+				</div>
 			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="col-md-3">
-				<%= f.label :open_at, "영업 시간" %>
+			<div class="form-group">
+				<div class="col-md-3">
+					<%= f.label :open_at, "영업 시간" %>
+				</div>
+				<div class="col-md-9">
+					<%= f.text_field :open_at, class: "form-control" %>
+				</div>
 			</div>
-			<div class="col-md-9">
-				<%= f.text_field :open_at, class: "form-control" %>
-			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="col-xs-12">
-				<%= f.label :etc, "기타" %>
-				<%= f.text_area :etc, { class: "form-control", cols: 30, rows: 10 } %>
+			<div class="form-group">
+				<div class="col-xs-12">
+					<%= f.label :etc, "기타" %>
+					<%= f.text_area :etc, { class: "form-control", cols: 30, rows: 10 } %>
+				</div>
 			</div>
-		</div>
 
-		<div class="form-group">
-			<div class="col-md-3">
-				<%= f.label :pictures, "사진 추가" %>
+			<div class="form-group">
+				<div class="col-md-3">
+					<%= f.label :pictures, "사진 추가" %>
+				</div>
+				<div class="col-md-9">
+					<%= f.fields_for :pictures do |ff| %>
+						<%= ff.file_field :img, multiple: true, class: "uploadImage" %>
+					<% end %>
+				</div>
 			</div>
-			<div class="col-md-9">
-				<%= f.fields_for :pictures do |ff| %>
-					<%= ff.file_field :img, multiple: true, class: "uploadImage" %>
-				<% end %>
-			</div>
-		</div>
 
-		<%= f.button "등록 신청", class: "btn btn-primary btn-block" %>
-	<% end %>
+			<%= f.button "등록 신청", class: "btn btn-primary btn-block" %>
+		<% end %>
+	</div>
 </div>
 
 <script>
