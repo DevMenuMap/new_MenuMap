@@ -1,26 +1,29 @@
 <div class="container">
-	<div id="naver_map" style="margin-bottom: 10px;"></div>
+	<div class="col-md-8 col-md-offset-2" style="padding: 0;">
+		<div id="naver_map" style="margin-bottom: 10px;"></div>
 
-	<%= link_to "new restaurant", new_restaurant_path if admin_user? %>
+		<%= link_to "new restaurant", new_restaurant_path if admin_user? %>
 
-	<% @restaurants.each do |restaurant| %>
-		<div id="rst_<%= restaurant.id %>" class="rst_index_card">
-			<%= restaurant_picture(restaurant) %>
+		<% @restaurants.each do |restaurant| %>
+			<%= link_to restaurant_path(restaurant), class: "rst_card_link" do %>
+				<div id="rst_<%= restaurant.id %>" class="rst_index_card">
+					<%= restaurant_picture(restaurant) %>
 
-			<div class="content">
-				<%= restaurant_name_with_menu_on(restaurant) %><br />
-				<%= menus_or_category(restaurant) %><br />
-				<%= delivery_possible?(restaurant) %> <%= gu_and_dong(restaurant) %>
-			</div>
+					<div class="content">
+						<%= restaurant_name_with_menu_on(restaurant) %><br />
+						<%= menus_or_category(restaurant) %><br />
+						<%= delivery_possible?(restaurant) %> <%= gu_and_dong(restaurant) %>
+					</div>
 
-			<!--%= menu_on_helper(restaurant) %-->
-			<!--% restaurant.title_menus(2).each do |menu| %-->
-			<!--%= link_to "show", restaurant_path(restaurant) %-->
-			<%= link_to "destroy", restaurant_path(restaurant), method: :delete if admin_user? %>
-		</div>
-	<% end %>
-	
-	<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
+					<!--%= menu_on_helper(restaurant) %-->
+					<!--% restaurant.title_menus(2).each do |menu| %-->
+					<%= link_to "destroy", restaurant_path(restaurant), method: :delete if admin_user? %>
+				</div>
+			<% end %>
+		<% end %>
+		
+		<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
+	</div>
 </div>
 
 <%= render 'shared/modal' %>

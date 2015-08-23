@@ -203,7 +203,7 @@ function responsiveMapWidth() {
 	var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 
 	if (width > 1200) {
-		width = 1140;
+		width = 730;
 	} else if (width > 992) {
 		width = 940;
 	} else if (width > 768) {
