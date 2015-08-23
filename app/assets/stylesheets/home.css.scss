@@ -57,3 +57,26 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 	margin: 15px 0;
 	font-size: 1.2em;
 }
+
+.rst_index_card {
+	display: inline-block;
+	width: 100%;
+	padding-bottom: 0.5em;
+	margin-bottom: 0.5em;
+	border-bottom: 1px solid #f0f0f0;
+	.rst_img {
+		width: 120px; 
+		height: 90px; 
+		float: left;
+		margin: 0 0.5em 0 0;
+	}
+	.name {
+		padding-left: 0.5em;
+		max-width: 200px;
+		font-size: 1.2em;
+	}
+	.content {
+		display: inline-block; 
+		max-width: 200px;
+	}
+}

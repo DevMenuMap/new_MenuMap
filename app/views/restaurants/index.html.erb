@@ -4,20 +4,18 @@
 	<%= link_to "new restaurant", new_restaurant_path if admin_user? %>
 
 	<% @restaurants.each do |restaurant| %>
-		<div id="restaurant_<%= restaurant.id %>">
-			<% if picture = restaurant.pictures.first %>
-				<%= image_tag picture.img.url, alt: "#{restaurant.name} 사진", style: "width: 120px; height: 90px; display: inline-block;" %>
-			<% else %>
-				<%= image_tag "restaurants/default_restaurant.png", alt: "현재 등록된 사진이 없습니다.", style: "width: 120px; height: 90px;" %>
-			<% end %>
-			<div style="display: inline-block">
-				<%= restaurant.name %><br />
-				<%= restaurant.subcategory.name %><br />
-				<%= restaurant.delivery %><br />
-				<%= restaurant.addr %>
+		<div id="rst_<%= restaurant.id %>" class="rst_index_card">
+			<%= restaurant_picture(restaurant) %>
+
+			<div class="content">
+				<%= restaurant_name_with_menu_on(restaurant) %><br />
+				<%= menus_or_category(restaurant) %><br />
+				<%= delivery_possible?(restaurant) %> <%= gu_and_dong(restaurant) %>
 			</div>
 
-			<%= link_to "show", restaurant_path(restaurant) %>
+			<!--%= menu_on_helper(restaurant) %-->
+			<!--% restaurant.title_menus(2).each do |menu| %-->
+			<!--%= link_to "show", restaurant_path(restaurant) %-->
 			<%= link_to "destroy", restaurant_path(restaurant), method: :delete if admin_user? %>
 		</div>
 	<% end %>
