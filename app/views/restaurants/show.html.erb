@@ -1,91 +1,111 @@
-<!-- Restaurant -->
-<h1>Restaurants#show</h1>
-<table>
-	<% @restaurant.attributes.each do |key, value| %>
-		<tr>
-			<td><%= key %></td>
-			<% if key == 'phnum' %>
-				<td><article><a href="tel:<%= value %>"><%= value %></a></article></td>
-			<% elsif key == 'addr' %>
-				<td><article><%= value %></article></td>
-			<% else %>
-				<td><%= value %></td>
-			<% end %>
-		</tr>
-	<% end %>
-	<tr>
-		<td><%= link_to "edit", edit_restaurant_path(@restaurant) %></td>
-		<td><%= link_to "delete", restaurant_path(@restaurant), method: :delete %>
-	</tr>
-	<tr>
-		<td>mymap</td>
-		<td id="mymap_button_<%= @restaurant.id %>"><%= mymap_button(@user, @restaurant) %></td>
-	</tr>
-</table>
+<div class="container" style="margin-top: -20px; padding: 0;">
+	<div class="row" style="margin: 0;">
+		<div class="col-md-6 col-md-offset-3" style="padding: 0;">
+			<%= image_tag @pictures.first.img.url, style: "width: 100%;" %>
+
+			<div>
+				<div style="float: left; max-width: 270px;">
+					<h1 style="font-size: 2em;"><%= @restaurant.name %></h1>
+					<div>
+						<p><%= @restaurant.subcategory.name %> <%= delivery_possible_with_middot(@restaurant) %></p>
+					</div>
+				</div>
+
+				<div style="float: right;">
+					<!-- share, share-alt -->
+					<i class="fa fa-share-alt"></i> 공유
+					<span onclick="$('#tab_map').click();"><i class="fa fa-globe"></i> 지도</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container" style="padding: 0;">
+	<div class="row" style="margin: 0;">
+		<div class="col-md-6 col-md-offset-3" style="padding: 0;">
+			<div id="rst_show_tabs">
+				<ul>
+					<li><a href="#menu" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-list-ul"></i></a></li>
+					<li><a href="#comment" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-comment-o"></i></a></li>
+					<li><a href="#blog" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-newspaper-o"></i></a></li>
+					<li><a href="#picture" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-picture-o"></i></a></li>
+					<li><a href="#info" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-info"></i></a></li>
+					<li style="display: none;"><a id="tab_map" href="#map" role="tab" data-toggle="tab" style="color: initial;">지도</a></li>
+				</ul>
+			</div>
+
+			<div>
+				<div class="tab-content">
+
+					<!-- Map -->
+					<div role="tabpanel" class="tab-pane fade" id="map">
+						<div id="naver_map" style="width: 80%; height: 60%"></div>
+					</div>
+
+					<!-- Menu -->
+					<div role="tabpanel" class="tab-pane fade in active" id="menu">
+						<div id="menu_section">
+							<!-- Collection can pass each related menu_title with :as -->
+							<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
+						</div>
+
+						<div id="new_menu_section">
+							<%= render partial: "menus/new", locals: { menu: @menu } %>
+						</div>
+					</div>
+
+					<!-- Comment -->
+					<div role="tabpanel" class="tab-pane fade" id="comment">
+						<div id="comment_count">
+							<%= @comments.count %>
+						</div> 
+						<div id="comment_section">
+							<%= render "comments/page" %>
+						</div>
+
+						<div id="new_comment_section">
+							<%= render partial: "comments/new", locals: { comment: @comment } %>
+						</div>
+					</div>
+
+					<!-- Blog -->
+					<div role="tabpanel" class="tab-pane fade" id="blog">
+						<div id="blog_result"></div>
+					</div>
+
+					<!-- Picture -->
+					<div role="tabpanel" class="tab-pane fade" id="picture">
+						<%= form_for @picture, html: { multipart: true } do |f| %>
+							<%= f.hidden_field :imageable_id, value: @picture.imageable_id %>
+							<%= f.hidden_field :imageable_type, value: @picture.imageable_type %>
+
+							<%= render "pictures/field", f: f %>
+
+							<%= f.submit %>
+						<% end %>
+					</div>
+
+					<!-- Info -->
+					<div role="tabpanel" class="tab-pane fade" id="info">
+						<span id="mymap_button_<%= @restaurant.id %>"><%= mymap_button(@user, @restaurant) %></span>
+						<a href="tel:<%= @restaurant.phnum %>"><%= @restaurant.phnum %></a>
+
+						<!--%= render "rest_errs/new" %-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% if admin_user? %>
+	<%= link_to "edit", edit_restaurant_path(@restaurant) %>
+	<%= link_to "delete", restaurant_path(@restaurant), method: :delete %>
+<% end %>
 
 <%= render 'shared/modal' %>
 
-
-<!-- RestInfo and RestErr -->
-<!-- Need partial symbol to pass local variables -->
-<!-- :locals can pass symbol to partial -->
-<%= render partial: "rest_infos/show", locals: { rest_info: @restaurant.rest_info } %>
-<%= render "rest_errs/new" %>
-
-
-<!-- MenuTitle and Menu -->
-<h1 id="menu_section_top">Menu section</h1>
-<div>
-	<p>title_name | title_info</p>
-</div>
-
-<div id="menu_section">
-	<!-- Collection can pass each related menu_title with :as -->
-	<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
-</div>
-
-<div id="new_menu_section">
-	<%= render partial: "menus/new", locals: { menu: @menu } %>
-</div>
-
-
-<!-- Comment -->
-<h1>Comment section</h1>
-<div id="comment_count">
-	<%= @comments.count %>
-</div> 
-<div id="comment_section">
-	<%= render "comments/page" %>
-</div>
-
-<div id="new_comment_section">
-	<%= render partial: "comments/new", locals: { comment: @comment } %>
-</div>
-
-<!-- Picture -->
-<h1>restaurant.pictures</h1>
-<div id="picture_section">
-	<% @pictures.each do |picture| %>
-		<%= image_tag picture.img.url %>
-		<%= link_to "edit", edit_picture_path(picture) %>
-		<%= link_to "destroy", picture_path(picture), method: :delete %>
-	<% end %>
-</div>
-
-<%= form_for @picture, html: { multipart: true } do |f| %>
-	<%= f.hidden_field :imageable_id, value: @picture.imageable_id %>
-	<%= f.hidden_field :imageable_type, value: @picture.imageable_type %>
-
-	<%= render "pictures/field", f: f %>
-
-	<%= f.submit %>
-<% end %>
-
-<h1>Map</h1>
-<div id="naver_map" style="width: 80%; height: 60%"></div>
-
-<h1>Blog</h1>
-<div id="blog_result"></div>
 
 <!-- This script is for require_from_group method -->
 <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
@@ -95,7 +115,7 @@
 	});
 
 	$(document).ready( function() {
-		loadNaverMap(<%= @curr_lat %>, <%= @curr_lng %>, 12);
+		loadNaverMap(<%= @curr_lat %>, <%= @curr_lng %>, 9);
 		showMarkers([<%= @curr_lat %>, <%= @curr_lng %>], true, ["<%= @restaurant.name %>"]);  
 		toggleLabels();
 	

@@ -45,6 +45,12 @@ module RestaurantsHelper
 		end
 	end
 
+	def delivery_possible_with_middot(restaurant)
+		if restaurant.delivery
+			content_tag :span, "&middot; 배달 가능".html_safe
+		end
+	end
+
 	def gu_and_dong(restaurant)
 		restaurant.addr.split[1..2].join(" ")
 	end
