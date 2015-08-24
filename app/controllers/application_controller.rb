@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
     def admin?
       if !current_user || current_user.admin == false
-        redirect_to no_admin_url and return
+        redirect_to '/422.html' and return
       end 
     end
 
