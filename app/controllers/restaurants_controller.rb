@@ -17,6 +17,7 @@ class RestaurantsController < ApplicationController
 		@center_y = 0
 		@coord_array = []
 		@names = []
+		@level = 10
 		@restaurants.each do |r|
 			if( r.lat.to_f != 0 && r.lng.to_f != 0 )
 				@coord_array << r.lat.to_f << r.lng.to_f
@@ -26,9 +27,25 @@ class RestaurantsController < ApplicationController
 		x = @coord_array.values_at(* @coord_array.each_index.select { |i| i.even? })
 		y = @coord_array.values_at(* @coord_array.each_index.select { |i| i.odd? })
 		
-
 		# When at least one of lat(and lng) values is not zero
 		if( x != [] && y != [] )
+			# Determine map scale
+			x_range = x.max - x.min
+			y_range = y.max - y.min
+			
+			if (x_range > 0.28) || (y_range > 0.18)
+				@level = 7
+			elsif (x_range > 0.15) || (y_range > 0.09)
+				@level = 8
+			elsif (x_range > 0.75) || (y_range > 0.04)
+				@level = 9
+			elsif (x_range > 0.35) || (y_range > 0.02)
+				@level = 10
+			else
+				@level = 11
+			end
+
+			# Determin center point
 			@center_x = (x.inject{|sum, n| sum + n}) / x.length
 			@center_y = (y.inject{|sum, n| sum + n}) / y.length
 		end
