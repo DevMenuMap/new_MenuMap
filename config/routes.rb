@@ -97,6 +97,8 @@ Rails.application.routes.draw do
 
 	get "no_admin" => "admin/monitors#no_admin", as: :no_admin
 
+	get 'blogs/blog_ajax'
+
 
   # Example resource route with options:
   #   resources :products do
