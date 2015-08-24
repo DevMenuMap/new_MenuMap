@@ -88,16 +88,15 @@ class RestaurantsController < ApplicationController
 		# For nearby restaurants 
 		@curr_lat = @restaurant.lat.to_f 
 		@curr_lng = @restaurant.lng.to_f 
-		@nearbyRestaurants = []
-		# limit 5 & latlng_type = Restaurant
-		coords = Coordinate.find_by_sql("SELECT id, latlng_id, latlng_type, ( 6371 * acos( cos( radians( #{@curr_lat} ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( #{@curr_lng} ) ) + sin( radians( #{@curr_lat} ) ) * sin( radians( lat ) ) ) ) AS distance FROM coordinates HAVING distance < 100 AND latlng_type = 'Restaurant' ORDER BY distance LIMIT 0 , 5")
-		coords.each do |c|
-			@nearbyRestaurants << c.latlng
-		end
+		# @nearbyRestaurants = []
+		# # limit 5 & latlng_type = Restaurant
+		# coords = Coordinate.find_by_sql("SELECT id, latlng_id, latlng_type, ( 6371 * acos( cos( radians( #{@curr_lat} ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( #{@curr_lng} ) ) + sin( radians( #{@curr_lat} ) ) * sin( radians( lat ) ) ) ) AS distance FROM coordinates HAVING distance < 100 AND latlng_type = 'Restaurant' ORDER BY distance LIMIT 0 , 5")
+		# coords.each do |c|
+		# 	@nearbyRestaurants << c.latlng
+		# end
 
 		respond_to do |format|
 			format.html
-			# format.json { render json: @comments }
 			format.json
 			format.js
 		end
