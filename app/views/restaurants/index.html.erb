@@ -5,8 +5,6 @@
 
 <%= link_to "new restaurant", new_restaurant_path %>
 
-<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer' %>
-
 <table class="table">
 	<tr>
 		<% Restaurant.column_names.each do |column| %>
@@ -41,6 +39,8 @@
 	<% end %>
 </table>
 
+<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
+
 <%= render 'shared/modal' %>
 
 <script>
@@ -54,5 +54,18 @@
 		loadNaverMap(<%= @center_x %>, <%= @center_y %>, <%= @level %>);
 		showMarkers(<%= @coord_array %>, true, <%= raw @names %>);
 		toggleLabels();
+		<% if @restaurants.total_pages >= 6 %>
+			<% if @restaurants.current_page == 4 %>
+				$('a[rel="start"]').hide()
+			<% else %>
+				$('a[rel="start"]').show()
+			<% end %>
+
+			<% if @restaurants.current_page == @restaurants.total_pages - 3 %>
+				$('a:contains("<%= @restaurants.total_pages %>")').hide()
+			<% else %>
+				$('a:contains("<%= @restaurants.total_pages %>")').show()
+			<% end %>
+		<% end %>
 	});
 </script>

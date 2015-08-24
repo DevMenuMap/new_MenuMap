@@ -3,7 +3,7 @@ ko:
   will_paginate:
     previous_label: "<<"
     next_label: ">>"
-    page_gap: "&hellip;"
+    page_gap: ""
   date:
     abbr_day_names:
     - 일
