@@ -146,9 +146,9 @@
 
 <%= render 'shared/modal' %>
 
-
 <!-- This script is for require_from_group method -->
 <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+
 <script>
 	$(function(){
 		$('.pagination a').attr('data-remote', 'true')
@@ -159,11 +159,18 @@
 		showMarkers([<%= @curr_lat %>, <%= @curr_lng %>], true, ["<%= @restaurant.name %>"]);  
 		toggleLabels();
 
-		$("#carousel .item:first-of-type").addClass("active")
-	
 		<% if @restaurant.with_latlng? %>
 			parseFoursquareImg("<%= request.url %>");
 		<% end %>
+
+		imageUploadValidate();
+
+		$.ajax({
+			url: '/blogs/blog_ajax',
+			data: {
+				id: <%= @restaurant.id %>
+			}
+		});
 
 		$("#new_rest_err").validate({
 			rules: {
@@ -172,38 +179,6 @@
 				'rest_err[phnum_err]': { require_from_group: [1, ".rest_errs_group"] },
 				'rest_err[category_err]': { require_from_group: [1, ".rest_errs_group"] },
 				'rest_err[etc]': { require_from_group: [1, ".rest_errs_group"] }
-			}
-		});
-		$('#new_menu').validate({
-			rules: {
-				'menu[name]': { required: true }
-			}
-		});
-		$('#new_comment').validate({
-			rules: {
-				'comment[contents]': { required: true }
-			}
-		});
-		$("#new_rest_register").validate();
-		imageUploadValidate();
-
-		slangCheck("#new_comment", "#comment_contents");
-		
-		$('#comment_contents').bind("paste", function(e) {
-			alert("붙여넣기는 금지되어 있습니다.");
-			e.preventDefault(); 
-		});
-		$('#update_comment').click( function(event) {
-			if ( <%= current_user.nil? %> ) {
-				alert("로그인 후 댓글 작성 가능합니다.");
-				event.preventDefault();
-			};
-		});
-
-		$.ajax({
-			url: '/blogs/blog_ajax',
-			data: {
-				id: <%= @restaurant.id %>
 			}
 		});
 	});
