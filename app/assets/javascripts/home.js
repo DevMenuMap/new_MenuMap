@@ -36,6 +36,10 @@ $(document).ready( function() {
 	// Change angle on cascading dropdown.
 	$('.dropdown_angle').on('click', function() {
 		$(this).find('i').toggleClass('fa-angle-down');
+
+	// Click original file add button with customized button.
+	$(".file_select").click( function() {
+		$(this).closest("form").children("div").children("input").last().click();
 	});
 });
 

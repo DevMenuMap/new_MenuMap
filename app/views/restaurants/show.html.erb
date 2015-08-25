@@ -10,7 +10,7 @@
 				</div>
 			<% end %>
 
-			<div id="rst_show_title">
+			<div id="rst_show_title" class="col-xs-12">
 				<div class="name">
 					<h1 style="font-size: 2em;"><%= @restaurant.name %></h1>
 					<div>
@@ -19,8 +19,8 @@
 				</div>
 
 				<div class="right">
-					<div><i class="fa fa-share-alt"></i> 공유</div>
-					<div onclick="$('#tab_map').click();"><i class="fa fa-globe"></i> 지도</div>
+					<div><i class="fa fa-share-alt" style="margin-right: 5px;"></i>공유</div>
+					<div onclick="$('#tab_map').click();"><i class="fa fa-globe" style="margin-right: 5px;"></i>지도</div>
 				</div>
 			</div>
 		</div>
@@ -32,12 +32,12 @@
 		<div class="col-md-6 col-md-offset-3" style="padding: 0;">
 			<div id="rst_show_tabs">
 				<ul>
-					<li><a href="#menu" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-list-ul"></i></a></li>
-					<li><a href="#comment" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-comment-o"></i></a></li>
-					<li><a href="#blog" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-newspaper-o"></i></a></li>
-					<li><a href="#picture" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-picture-o"></i></a></li>
-					<li><a href="#info" role="tab" data-toggle="tab" style="color: initial;"><i class="fa fa-info"></i></a></li>
-					<li style="display: none;"><a id="tab_map" href="#map" role="tab" data-toggle="tab" style="color: initial;">지도</a></li>
+					<a href="#menu" role="tab" data-toggle="tab"><li><i class="fa fa-list-ul"></i></li></a>
+					<a href="#comment" role="tab" data-toggle="tab"><li><i class="fa fa-comment-o"></i></li></a>
+					<a href="#blog" role="tab" data-toggle="tab"><li><i class="fa fa-newspaper-o"></i></li></a>
+					<a href="#picture" role="tab" data-toggle="tab"><li><i class="fa fa-picture-o"></i></li></a>
+					<a href="#info" role="tab" data-toggle="tab"><li><i class="fa fa-info"></i></li></a>
+					<a id="tab_map" href="#map" role="tab" data-toggle="tab"><li style="display: none;">지도</li></a>
 				</ul>
 			</div>
 
@@ -83,33 +83,47 @@
 					<!-- Picture -->
 					<div role="tabpanel" class="tab-pane fade" id="picture">
 
-						<div id="carousel" class="carousel slide" data-ride="carousel">
-							<!-- Wrapper for slides -->
-							<div class="carousel-inner" role="listbox">
-								<% @pictures.each do |picture| %>
-									<div class="item">
-										<%= image_tag picture.img.url %>
-									</div>
-								<% end %>
+						<% if @pictures.present? %>
+							<div id="carousel" class="carousel slide" data-ride="carousel">
+								<!-- Wrapper for slides -->
+								<div class="carousel-inner" role="listbox">
+									<% @pictures.each do |picture| %>
+										<div class="item">
+											<%= image_tag picture.img.url %>
+										</div>
+									<% end %>
+								</div>
+
+								<!-- Controls -->
+								<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+									<span class="glyphicon glyphicon-chevron-left"></span>
+								</a>
+								<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+									<span class="glyphicon glyphicon-chevron-right"></span>
+								</a>
 							</div>
-
-							<!-- Controls -->
-							<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-								<span class="glyphicon glyphicon-chevron-left"></span>
-							</a>
-							<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-								<span class="glyphicon glyphicon-chevron-right"></span>
-							</a>
-						</div>
-
-						<%= form_for @picture, html: { multipart: true } do |f| %>
-							<%= f.hidden_field :imageable_id, value: @picture.imageable_id %>
-							<%= f.hidden_field :imageable_type, value: @picture.imageable_type %>
-
-							<%= render "pictures/field", f: f %>
-
-							<%= f.submit %>
+						<% else %>
+							<div class="row" style="margin: 0; padding: 0 15px;">
+								<div class="col-xs-10 col-xs-offset-1" style="text-align: center; margin-top: 10px;">
+									현재 등록된 사진이 없습니다.</br>
+									사진을 등록해주세요.
+								</div>
+							</div>
 						<% end %>
+
+						<div class="row" style="margin: 0; padding: 0 15px;">
+							<%= form_for @picture, html: { multipart: true, style: "margin-top: 10px;" } do |f| %>
+								<%= f.hidden_field :imageable_id, value: @picture.imageable_id %>
+								<%= f.hidden_field :imageable_type, value: @picture.imageable_type %>
+								<%= f.file_field :img, multiple: true, class: "uploadImage" %>
+								<div style="float: right;">
+									<%= button_tag type: "button", class: "file_select btn btn-primary" do %>
+										<i class="fa fa-plus"></i> 사진
+									<% end %>
+									<%= f.button "등록", class: "btn btn-primary" %>
+								</div>
+							<% end %>
+						</div>
 					</div>
 
 					<!-- Info -->
