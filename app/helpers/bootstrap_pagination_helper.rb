@@ -10,10 +10,10 @@ module BootstrapPaginationHelper
         end
       end
       
-      #def gap
-      #  text = @template.will_paginate_translate(:page_gap) { '&hellip;' }
-      #  %(<li class="disabled"><a>#{text}</a></li>)
-      #end
+      # def gap
+      #   text = @template.will_paginate_translate(:page_gap) { '&hellip;' }
+      #   %(<li class="disabled"><a>#{text}</a></li>)
+      # end
       
       def next_page
         num = @collection.current_page < @collection.total_pages && @collection.current_page + 1

@@ -1,8 +1,8 @@
 ---
 ko:
   will_paginate:
-    previous_label: "<<"
-    next_label: ">>"
+    previous_label: "<i class='fa fa-angle-left'></i>"
+    next_label: "<i class='fa fa-angle-right'></i>"
     page_gap: ""
   date:
     abbr_day_names:
