@@ -181,10 +181,10 @@ function showGroupMarkers(coordArray, groups, names) {
 	for (i = 0; i < l; i++) {
 		if (groups[i] != 0) {
 			oSize = new nhn.api.map.Size(28, 28);
-			oIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_" + groups[i] + ".png", oSize, oOffset);
+			oIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_" + groups[i] + ".svg", oSize, oOffset);
 		} else {
-			oSize = new nhn.api.map.Size(28, 37);
-			oIcon = new nhn.api.map.Icon("/images/mymaps/naver_map_icon.png", oSize, oOffset);
+			oSize = new nhn.api.map.Size(18, 18);
+			oIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_default.svg", oSize, oOffset);
 		};
 		// Change this to normal data passing codes to js
 		oLatLng = new nhn.api.map.LatLng(coordArray[2*i], coordArray[2*i+1]);

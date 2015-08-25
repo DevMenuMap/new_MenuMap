@@ -11,3 +11,13 @@
 		<%= f.button "이메일 전송", class: "btn btn-primary btn-block" %>
 	<% end %>
 </div>
+
+<script>
+	$(document).ready( function() {
+		$('#new_user').validate({
+			rules: {
+				'user[email]': { required: true, email: true },
+			}
+		});
+	});
+</script>

@@ -30,3 +30,23 @@
 
 	<%= button_to "계정 삭제", registration_path(@user), { class: "btn btn-block btn-danger", data: { confirm: "현재 계정이 영원히 삭제됩니다. 계속 하시겠습니까?" }, method: :delete } %>
 </div>
+
+<script>
+	$(document).ready( function() {
+		$('.edit_user').validate({
+			rules: {
+				'user[username]': { required: true },
+				'user[password]': { minlength: 8 },
+				'user[password_confirmation]': {
+					equalTo: '#user_password'}
+			}
+		});
+	});
+	$('button').click( function(e) {
+		var text = $('#user_username').val();
+		if ((textByteCheck(text) > 0) && (textByteCheck(text) < 6)) {
+			alert('유저명은 한글 2글자, 영어 6글자 이상이어야 합니다.');
+			e.preventDefault();
+		};
+	});
+</script>

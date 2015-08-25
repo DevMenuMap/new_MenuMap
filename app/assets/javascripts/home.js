@@ -32,4 +32,10 @@ $(document).ready( function() {
 											.appendTo(ul);
 		};
 	};
+
+	// Change angle on cascading dropdown.
+	$('.dropdown_angle').on('click', function() {
+		$(this).find('i').toggleClass('fa-angle-down');
+	});
 });
+

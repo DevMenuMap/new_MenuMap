@@ -31,3 +31,14 @@
 		<i class="fa fa-facebook"></i> 페이스북으로 로그인
 	<% end %>
 </div>
+
+<script>
+	$(document).ready( function() {
+		$('#new_user').validate({
+			rules: {
+				'user[email]': { required: true, email: true },
+				'user[password]': { required: true },
+			}
+		});
+	});
+</script>

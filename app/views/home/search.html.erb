@@ -44,13 +44,18 @@
 		</div>
 
 		<div style="text-align: right">
-			<%= button_tag "취소", { type: :reset, class: "btn btn-primary", name: nil } %>
+			<%= button_tag "취소", { type: :reset, class: "btn btn-primary", name: nil, onclick: "resetSubcat()" } %>
 			<%= button_tag "검색", { id: "submitbutton", class: "btn btn-primary", name: nil } %>
 		</div>
 	<% end %>
 </div>
 
 <script>
+	function resetSubcat() {
+		$("#subcategory_select").html("<%= 
+			j(options_for_select(@subcategories.map{ |s| [s.name, s.id]}, nil)) 
+		%>")
+	};
 	/**
 	$('#curr_pos').change( function() {
 		if ( $('#curr_pos').is(':checked') == true ) {
