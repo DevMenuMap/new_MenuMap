@@ -1,13 +1,19 @@
-<h2>Naver Blogs</h2>
-<% if !@naver_blogs.blank? %>
-	<%= render partial: "/blogs/blog", collection: @naver_blogs, as: :blog %>
-<% else %>
+<% if @naver_blogs.blank? && @daum_blogs.blank? %>
 	<%= render "/blogs/no_blogs" %>
-<% end %>
+<% else %>
+	<div style="width: 90%; margin: 0 auto;">
+		<div class="daum">
+			<%= render partial: "/blogs/blog", collection: @daum_blogs, as: :blog %>
+		</div>
+		<div class="powered_by">
+			<%= image_tag "api/powered_by_daum.png" unless @daum_blogs.blank? %>
+		</div>
 
-<h2>Daum Blogs</h2>
-<% if !@daum_blogs.blank? %>
-	<%= render partial: "/blogs/blog", collection: @daum_blogs, as: :blog %>
-<% else %>
-	<%= render "/blogs/no_blogs" %>
+		<div class="naver">
+			<%= render partial: "/blogs/blog", collection: @naver_blogs, as: :blog %>
+		</div>
+		<div class="powered_by">
+			<%= image_tag "api/powered_by_naver.png" unless @naver_blogs.blank? %>
+		</div>
+	</div>
 <% end %>

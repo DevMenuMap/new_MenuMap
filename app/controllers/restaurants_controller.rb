@@ -35,9 +35,9 @@ class RestaurantsController < ApplicationController
 				@level = 7
 			elsif (x_range > 0.15) || (y_range > 0.09)
 				@level = 8
-			elsif (x_range > 0.75) || (y_range > 0.04)
+			elsif (x_range > 0.075) || (y_range > 0.04)
 				@level = 9
-			elsif (x_range > 0.35) || (y_range > 0.02)
+			elsif (x_range > 0.035) || (y_range > 0.02)
 				@level = 10
 			else
 				@level = 11
