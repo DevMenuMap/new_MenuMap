@@ -54,6 +54,9 @@ Rails.application.routes.draw do
 	# Parsing foursquare images by Ajax loading.
 	get 'foursquares/parse' => 'foursquares#parse'
 
+	# Parsing blog results.
+	get 'blogs/blog_ajax'
+
 	# Polymorphic picture controller
 	resources :pictures
 
@@ -96,7 +99,6 @@ Rails.application.routes.draw do
 	end
 
 	get "no_admin" => "admin/monitors#no_admin", as: :no_admin
-
 
   # Example resource route with options:
   #   resources :products do

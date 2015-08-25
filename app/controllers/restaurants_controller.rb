@@ -77,10 +77,6 @@ class RestaurantsController < ApplicationController
 		# pictures on this restaurant
 		@picture  = Picture.new(imageable: @restaurant)
 		@pictures = @restaurant.pictures
-
-		# Blog search result of this restaurant
-		@naver_blogs = @restaurant.naver_blog_search
-		@daum_blogs = @restaurant.daum_blog_search
 		
 		# partial forms for new objects
 		@rest_err = RestErr.new

@@ -138,6 +138,11 @@
 			};
 		});
 
-		$("#blog_result").html("<%= j(render 'blogs/index') %>");
+		$.ajax({
+			url: '/blogs/blog_ajax',
+			data: {
+				id: <%= @restaurant.id %>
+			}
+		});
 	});
 </script>
