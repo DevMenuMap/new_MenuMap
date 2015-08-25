@@ -45,7 +45,7 @@
 	$('button').click( function(e) {
 		var text = $('#user_username').val();
 		if ((textByteCheck(text) > 0) && (textByteCheck(text) < 6)) {
-			alert('username must be bigger than 6bytes');
+			alert('유저명은 한글 2글자, 영어 6글자 이상이어야 합니다.');
 			e.preventDefault();
 		};
 	});

@@ -13,8 +13,6 @@ class RestaurantsController < ApplicationController
 		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
 		
 		# Find Center point
-		@center_x = 0
-		@center_y = 0
 		@coord_array = []
 		@names = []
 		@level = 10
