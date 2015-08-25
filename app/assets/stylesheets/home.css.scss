@@ -109,8 +109,10 @@ a.rst_card_link {
 	max-height: 100px;
 	text-align: center;
 	background: repeating-linear-gradient( 45deg, #ccc, #ccc 10px, #eee 10px, #eee 20px );
+	@extend .thick_bottom_border;
 	.svg {
 		width: 100px;
+		@extend .thick_bottom_border;
 	}
 }
 
@@ -120,7 +122,12 @@ a.rst_card_link {
 	}
 }
 
+.thick_bottom_border {
+	border-bottom: 8px solid #E9EAED;
+}
+
 #rst_show_title {
+	@extend .thick_bottom_border;
 	.name {
 		float: left; 
 		max-width: 270px;
@@ -138,9 +145,11 @@ a.rst_card_link {
 }
 
 #rst_show_tabs {
+	@extend .thick_bottom_border;
 	ul {
-		margin: 5px 0;
+		margin: 5px;
 		padding: 0;
+		font-size: 0.9em;
 		a {
 			color: initial;
 			li {
