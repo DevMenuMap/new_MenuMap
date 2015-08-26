@@ -85,7 +85,7 @@
 
 						<div id="carousel" class="carousel slide" data-ride="carousel" style="display: block;">
 							<!-- Wrapper for slides -->
-							<div class="carousel-inner" role="listbox">
+							<div class="carousel-inner" role="listbox" style="position: relative;">
 								<% @pictures.each do |picture| %>
 									<div class="item">
 										<%= image_tag picture.img.url %>

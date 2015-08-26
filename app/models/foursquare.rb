@@ -45,7 +45,7 @@ class Foursquare
 	end
 
 	# Get restaurant's photos with venue_id, size and # of images limit.
-	def self.get_venue_images(venue_id, size = "300x300", limit = 10)
+	def self.get_venue_images(venue_id, size = "500x500", limit = 10)
 		url = foursquare_parse_images_url(venue_id, limit)
 
 		images = []
