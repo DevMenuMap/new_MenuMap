@@ -1,4 +1,4 @@
-$(document).ready( function() {
+$(document).on('ready page:load', function() {
 	$("#category_select").change( function() {
 		$.ajax({
 			url: window.location.origin + '/home/update_subcategories',
@@ -34,7 +34,7 @@ $(document).ready( function() {
 	};
 
 	// Change angle on cascading dropdown.
-	$('.dropdown_angle').on('click', function() {
+	$('.dropdown_angle').click(function() {
 		$(this).find('i').toggleClass('fa-angle-down');
 	});
 
