@@ -51,9 +51,10 @@
 
 					<!-- Menu -->
 					<div role="tabpanel" class="tab-pane fade in active" id="menu">
-						<div id="menu_section">
-							<!-- Collection can pass each related menu_title with :as -->
-							<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
+						<div id="menu_section" style="margin-top: -20px;">
+							<ul class="col-xs-12" style="list-style: none;">
+								<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
+							</ul>
 						</div>
 
 						<div id="new_menu_section">
@@ -85,7 +86,7 @@
 
 						<div id="carousel" class="carousel slide" data-ride="carousel" style="display: block;">
 							<!-- Wrapper for slides -->
-							<div class="carousel-inner" role="listbox">
+							<div class="carousel-inner" role="listbox" style="position: relative;">
 								<% @pictures.each do |picture| %>
 									<div class="item">
 										<%= image_tag picture.img.url %>
@@ -154,6 +155,13 @@
 		$('.pagination a').attr('data-remote', 'true')
 	});
 
+	$('#update_comment').click( function(e) {
+		if ( <%= current_user.nil? %> ) {
+			alert("로그인 후 댓글 작성 가능합니다.");
+			e.preventDefault();
+		};
+	});
+
 	$(document).ready( function() {
 		loadNaverMap(<%= @curr_lat %>, <%= @curr_lng %>, 9);
 		showMarkers([<%= @curr_lat %>, <%= @curr_lng %>], true, ["<%= @restaurant.name %>"]);  
@@ -184,11 +192,6 @@
 			}
 		});
 
-		$('#update_comment').click( function(e) {
-			if ( <%= current_user.nil? %> ) {
-				alert("로그인 후 댓글 작성 가능합니다.");
-				e.preventDefault();
-			};
-		});
+		$("#menu_section ul li:first-child a > div").click();
 	});
 </script>

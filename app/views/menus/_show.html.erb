@@ -1,13 +1,13 @@
-<tr id="menu_<%= menu.id %>">
-	<td style="width: 100px;"><%= menu.name %></td>
-	<td style="width: 160px;"><%= menu.side_info %></td>
-	<td style="width: 80px;"><%= menu.price %></td>
-	<td style="width: 600px;"><%= menu.info %></td>
-	<td style="width: 20px;"><%= menu.sitga %></td>
-	<td style="width: 20px;"><%= menu.unidentified %></td>
-	<td><%= link_to "edit", edit_menu_path(menu), class: "edit_menu", remote: true %>
-	<td><%= link_to "delete", menu_path(menu), class: "delete_menu", method: :delete, remote: true, data: { confirm: "gogo?" } %>
-</tr>
+<li id="menu_<%= menu.id %>" class="menu">
+	<div class="name_info"><%= menu.name %><span><%= menu.side_info %></span></div>
+	<div class="price"><%= won_div(menu) %><%= sitga_div(menu) %></div>
+	<div class="info"><%= menu.info %></div>
+
+	<% if admin_user? %>
+		<%= link_to "edit", edit_menu_path(menu), class: "edit_menu", remote: true %>
+		<%= link_to "delete", menu_path(menu), class: "delete_menu", method: :delete, remote: true, data: { confirm: "gogo?" } %>
+	<% end %>
+</li>
 
 <script>
 	$("#menu_<%= menu.id %>").click(function(){
