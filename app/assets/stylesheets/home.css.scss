@@ -1,5 +1,31 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
+$naver_green: #23b300;
+
+.thick_bottom_border {
+	border-bottom: 8px solid #E9EAED;
+}
+
+.grey_thin_border {
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.grey_small_info {
+	font-size: 0.8em;
+	color: #999;
+}
+
+.left_border_label {
+	padding-left: 0.5em;
+	border-left-style: solid;
+	border-left-width: 4px;
+}
+
+.yellow_outline {
+	outline: 5px auto -webkit-focus-ring-color;
+	outline-offset: -2px;	
+}
+
 table, th, td {
 	border: 1px solid black;
 }
@@ -121,10 +147,6 @@ a.rst_card_link {
 	}
 }
 
-.thick_bottom_border {
-	border-bottom: 8px solid #E9EAED;
-}
-
 #rst_show_title {
 	@extend .thick_bottom_border;
 	.name {
@@ -204,12 +226,6 @@ span.MultiFile-label {
 	text-shadow: 0 1px 2px rgba(0,0,0,.6);
 }
 
-.left_border_label {
-	padding-left: 0.5em;
-	border-left-style: solid;
-	border-left-width: 4px;
-}
-
 .blog {
 		padding: 5px 0 10px;
 		border-bottom: 1px solid #e5e5e5;
@@ -217,11 +233,6 @@ span.MultiFile-label {
 		margin: 7px 0 10px;
 		@extend .left_border_label;
 	}
-}
-
-.yellow_outline {
-	outline: 5px auto -webkit-focus-ring-color;
-	outline-offset: -2px;	
 }
 
 #blog_result {
@@ -249,16 +260,45 @@ span.MultiFile-label {
 		}
 	}
 	.naver .title {
-		border-left-color: #23b300;
+		border-left-color: $naver_green;
 	}
 }
 
 .powered_by {
 	width: 100%;
-	border-bottom: 1px solid #e5e5e5;
 	text-align: center;
+	@extend .grey_thin_border;
 	img {
 		width: 150px;
 		margin: 10px auto;
 	}
+}
+
+#menu_section {
+	a {
+		&:active, &:focus, &:hover {
+			text-decoration: none;
+		}
+	}
+}
+		
+.menu_title {
+	padding: 10px 0 5px;
+	min-height: 40px;
+	color: initial;
+	.title_name {
+		font-weight: bold;
+		span {
+			@extend .left_border_label;
+			border-left-color: #e5e5e5;
+		}
+	}
+	.title_info {
+		text-align: right;
+		@extend .grey_small_info;
+	}
+}
+
+.fa.fa-chevron-right, .fa.fa-chevron-down {
+	width: 18px;
 }
