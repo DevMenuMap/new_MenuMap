@@ -43,8 +43,19 @@ $(document).on('ready page:load', function() {
 		$(this).closest("form").children("div").children("input").last().click();
 	});
 
+	var prev;
+
 	// Change font color on show tabs.
 	$('#rst_show_tabs a[data-toggle="tab"]').on('show.bs.tab', function(e) {
 		$(this).css({ "color": "#dd4814", "font-weight": "bold"});
+		$(prev).css({ "color": "black", "font-weight": "normal"});
+		prev = this;
+	});
+
+	$('#rst_show_map').click(function() {
+		$(this).css({ "color": "#dd4814", "font-weight": "bold"});
+		$(prev).css({ "color": "black", "font-weight": "normal"});
+		$('#tab_map').click();
+		prev = this;
 	});
 });
