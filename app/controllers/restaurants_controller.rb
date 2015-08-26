@@ -32,15 +32,19 @@ class RestaurantsController < ApplicationController
 			y_range = y.max - y.min
 			
 			if (x_range > 0.28) || (y_range > 0.18)
-				@level = 7
+				@level = 5
 			elsif (x_range > 0.15) || (y_range > 0.09)
-				@level = 8
+				@level = 6
 			elsif (x_range > 0.075) || (y_range > 0.04)
-				@level = 9
+				@level = 7
 			elsif (x_range > 0.035) || (y_range > 0.02)
+				@level = 8
+			elsif (x_range > 0.02) || (y_range > 0.013)
+				@level = 9
+			elsif (x_range > 0.01) || (y_range > 0.005)
 				@level = 10
 			else
-				@level = 11
+				@level = 11 
 			end
 
 			# Determin center point

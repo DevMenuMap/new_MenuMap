@@ -181,5 +181,12 @@
 				'rest_err[etc]': { require_from_group: [1, ".rest_errs_group"] }
 			}
 		});
+
+		$('#update_comment').click( function(e) {
+			if ( <%= current_user.nil? %> ) {
+				alert("로그인 후 댓글 작성 가능합니다.");
+				e.preventDefault();
+			};
+		});
 	});
 </script>
