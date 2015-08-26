@@ -1,4 +1,4 @@
-$(document).ready( function() {
+$(document).on('ready page:load', function() {
 	$('#new_comment').validate({
 		rules: {
 			'comment[contents]': { required: true }
