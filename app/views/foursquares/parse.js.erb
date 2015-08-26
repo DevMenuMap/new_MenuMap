@@ -1,3 +1,14 @@
-$(function() {
-	$("#picture_section").append("<%= j(render partial: "foursquares/show", collection: @images, as: :image) %>")
-});
+$("#carousel .carousel-inner").append("<%= j(render partial: "foursquares/show", collection: @images, as: :image) %>");
+$("#carousel .carousel-inner .item:first-child").addClass("active");
+
+// When there is no foursquare images.
+<% if @images.blank? %>
+	if ($("#carousel .carousel-inner .item").val() == undefined) {
+		$("#carousel").css("display", "none");
+	};
+// When there are foursquare images.
+<% else %>
+	if ($("#no_img").css("display") == "block") {
+		$("#no_img").css("display", "none");
+	};
+<% end %>

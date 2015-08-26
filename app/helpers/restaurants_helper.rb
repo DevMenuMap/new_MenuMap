@@ -62,4 +62,8 @@ module RestaurantsHelper
 			image_tag "restaurants/picture_add_icon.svg", alt: "현재 등록된 사진이 없습니다.", class: "thumbnail", style: "padding: 20px;"
 		end 
 	end
+
+	def no_img?(pictures)
+		pictures.blank? ? "block" : "none"
+	end
 end
