@@ -193,5 +193,14 @@
 		});
 
 		$("#menu_section ul li:first-child a > div").click();
+
+		$(".menu").click(function(){
+			$.ajax({
+				url: '/comments/show',
+				data: {
+					menu_id: $(this).data('menu-id')
+				}
+			});
+		});
 	});
 </script>
