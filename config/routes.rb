@@ -57,6 +57,9 @@ Rails.application.routes.draw do
 	# Parsing blog results.
 	get 'blogs/blog_ajax'
 
+	# Ajax call to get comments of menu
+	get 'comments/show'
+
 	# Polymorphic picture controller
 	resources :pictures
 

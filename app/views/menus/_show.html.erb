@@ -10,14 +10,14 @@
 </li>
 
 <script>
-	$("#menu_<%= menu.id %>").click(function(){
-		<% if !menu.comments.blank? %>
-			$(".modal-title").html("Comments");
-			$(".modal-body").html("<%= j(render partial: "comments/show", collection: menu.comments, as: :comment) %>");
-			$("#myModal").modal({
-		    keyboard: true,
-		    backdrop: "static"
-		  });
-		<% end %>
+	$(document).ready(function(){
+		$("#menu_<%= menu.id %>").click(function(){
+			$.ajax({
+				url: '/comments/show',
+				data: {
+					menu_id: <%= menu.id %>
+				}
+			});
+		});
 	});
 </script>
