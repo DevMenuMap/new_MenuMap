@@ -4,4 +4,13 @@ $(document).on('ready page:load', function() {
 			'menu[name]': { required: true }
 		}
 	});
+
+	$(".menu").click(function(){
+		$.ajax({
+			url: '/comments/show',
+			data: {
+				menu_id: $(this).data('menu-comments')
+			}
+		});
+	});
 });

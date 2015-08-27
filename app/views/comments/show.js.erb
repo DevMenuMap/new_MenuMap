@@ -1,6 +1,3 @@
 $(".modal-title").html("Comments");
 $(".modal-body").html("<%= j(render partial: "comments/show", collection: @comments, as: :comment) %>");
-$("#myModal").modal({
-  keyboard: true,
-  backdrop: "static"
-});
+$("#myModal").modal();

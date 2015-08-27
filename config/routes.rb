@@ -44,6 +44,9 @@ Rails.application.routes.draw do
 		get 'menu_complete', on: :member
 	end
 
+	# Ajax call to get comments of menu
+	get 'comments/show'	
+
 	# Index pages which is not bounded with :restaurants
 	resources :franchises
 	get 'rest_errs' 	=> 'rest_errs#index', 	as: :rest_errs
@@ -56,9 +59,6 @@ Rails.application.routes.draw do
 
 	# Parsing blog results.
 	get 'blogs/blog_ajax'
-
-	# Ajax call to get comments of menu
-	get 'comments/show'
 
 	# Polymorphic picture controller
 	resources :pictures
