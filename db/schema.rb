@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150822073358) do
+ActiveRecord::Schema.define(version: 20150828023654) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -281,6 +281,7 @@ ActiveRecord::Schema.define(version: 20150822073358) do
   add_index "restaurants", ["addr_code"], name: "index_restaurants_on_addr_code", using: :btree
   add_index "restaurants", ["category_id"], name: "index_restaurants_on_category_id", using: :btree
   add_index "restaurants", ["franchise_id"], name: "index_restaurants_on_franchise_id", using: :btree
+  add_index "restaurants", ["menu_on"], name: "index_restaurants_on_menu_on", using: :btree
   add_index "restaurants", ["subcategory_id"], name: "index_restaurants_on_subcategory_id", using: :btree
 
   create_table "slangs", force: :cascade do |t|

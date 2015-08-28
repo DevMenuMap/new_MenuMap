@@ -10,7 +10,7 @@ class RestaurantsController < ApplicationController
 		#@curr_lat = 0
 		#@curr_lng = 0
 		#restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
-		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
+		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).order(menu_on: :desc).paginate(page: params[:page], per_page: 10)
 		
 		# Find Center point
 		@coord_array = []
