@@ -133,6 +133,7 @@
 						<a href="tel:<%= @restaurant.phnum %>"><%= @restaurant.phnum %></a>
 
 						<!--%= render "rest_errs/new" %-->
+						<a href="#myModal" data-toggle="modal" data-target="#myModal" id="rest_err">Restaurant Error</a>
 					</div>
 				</div>
 			</div>
@@ -180,6 +181,11 @@
 			data: {
 				id: <%= @restaurant.id %>
 			}
+		});
+
+		$("#rest_err").click(function(){
+			$(".modal-title").html("Restaurant Error");
+			$(".modal-body").html("<%= j(render partial: 'rest_errs/new') %>");
 		});
 
 		$("#new_rest_err").validate({
