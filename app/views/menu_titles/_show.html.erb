@@ -6,7 +6,7 @@
 		</div>
 	<% end %>
 
-	<ul id="title_section_<%= menu_title.id %>" class="col-xs-12 panel-collapse collapse" style="list-style: none" role="tabpanel">
+	<ul id="title_section_<%= menu_title.id %>" class="menu_list col-xs-12 panel-collapse collapse" style="list-style: none" role="tabpanel">
 		<%= render partial: "menus/show", collection: menu_title.menus, as: :menu %>
 	</ul>
 

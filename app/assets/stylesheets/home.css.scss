@@ -2,6 +2,7 @@
 
 $MenuMap_orange: #dd4814;
 $naver_green: #23b300;
+$grey_info_font: #999;
 
 .thick_bottom_border {
 	border-bottom: 8px solid #E9EAED;
@@ -13,7 +14,7 @@ $naver_green: #23b300;
 
 .grey_small_info {
 	font-size: 0.8em;
-	color: #999;
+	color: $grey_info_font;
 }
 
 .left_border_label {
@@ -300,6 +301,9 @@ span.MultiFile-label {
 			text-decoration: none;
 		}
 	}
+	> ul {
+		@extend .thick_bottom_border;
+	}
 }
 		
 .menu_title {
@@ -322,6 +326,55 @@ span.MultiFile-label {
 
 .fa.fa-chevron-right, .fa.fa-chevron-down {
 	width: 18px;
+}
+
+ul.menu_list {
+	> li:last-child {
+		padding-bottom: 15px;
+	}
+}
+
+li.menu {
+	margin: 5px 0;
+	padding: 5px 0;
+	.name_info {
+		float: left;
+		max-width: 220px;
+		span {
+			@extend .grey_small_info;
+		}
+	}
+	.price {
+		float: right;
+	}
+	.info {
+		clear: left;
+		@extend .grey_small_info;
+	}
+}
+
+@media (max-width: 320px) {
+	li.menu {
+		.name_info {
+			max-width: 180px;
+		}
+	}
+}
+
+@media (min-width: 400px) {
+	li.menu {
+		.name_info {
+			max-width: 260px;
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	li.menu {
+		.name_info {
+			max-width: none;
+		}
+	}
 }
 
 /* restaurants#show info */
