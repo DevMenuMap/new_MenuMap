@@ -5,6 +5,17 @@ class CommentsController < ApplicationController
   	@comments = Comment.all
   end
 
+  def show
+  	@comments = Menu.find(params[:menu_id]).comments
+  	if @comments.blank?
+  		render :nothing => true
+  	else
+	  	respond_to do |format|
+	  		format.js
+	  	end
+	  end
+  end
+
   def create
   	double_rating_score
 

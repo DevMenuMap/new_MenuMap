@@ -10,7 +10,7 @@ class RestaurantsController < ApplicationController
 		#@curr_lat = 0
 		#@curr_lng = 0
 		#restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
-		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
+		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).order(menu_on: :desc).paginate(page: params[:page], per_page: 10)
 		
 		# Find Center point
 		@coord_array = []
@@ -24,6 +24,9 @@ class RestaurantsController < ApplicationController
 		end
 		x = @coord_array.values_at(* @coord_array.each_index.select { |i| i.even? })
 		y = @coord_array.values_at(* @coord_array.each_index.select { |i| i.odd? })
+
+		@center_x = 37.48121
+		@center_y = 126.952712
 		
 		# When at least one of lat(and lng) values is not zero
 		if( x != [] && y != [] )
