@@ -1,5 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
+$MenuMap_orange: #dd4814;
 $naver_green: #23b300;
 
 .thick_bottom_border {
@@ -183,6 +184,7 @@ a.rst_card_link {
 	}
 }
 
+/* restaurants#show picture tab */
 #carousel {
 	.item {
 		height: 240px;
@@ -226,6 +228,17 @@ span.MultiFile-label {
 	text-shadow: 0 1px 2px rgba(0,0,0,.6);
 }
 
+#no_img {
+	> .row {
+		@extend .grey_thin_border;
+		> div {
+			@extend .left_border_label;
+			border-color: $MenuMap_orange;
+		}
+	}
+}
+
+/* restaurants#show blog tab */
 .blog {
 		padding: 5px 0 10px;
 		border-bottom: 1px solid #e5e5e5;
