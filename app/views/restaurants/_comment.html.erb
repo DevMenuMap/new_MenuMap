@@ -1,0 +1,10 @@
+<div id="comment_count">
+	<%= @comments.count %>
+</div> 
+<div id="comment_section">
+	<%= render "comments/page" %>
+</div>
+
+<div id="new_comment_section">
+	<%= render partial: "comments/new", locals: { comment: @comment } %>
+</div>

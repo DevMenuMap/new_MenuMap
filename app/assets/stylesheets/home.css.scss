@@ -377,6 +377,20 @@ li.menu {
 	}
 }
 
+#new_menu_section > a {
+	&:active, &:hover, &:focus {
+		text-decoration: none;
+	}
+	> div {
+		margin: 0 10px 5px;
+		padding: 0 0 10px;
+		@extend .grey_thin_border;
+		text-align: center; 
+		font-weight: bold; 
+		color: black;
+	}
+}
+
 /* restaurants#show info */
 #info {
 	> ul > li {

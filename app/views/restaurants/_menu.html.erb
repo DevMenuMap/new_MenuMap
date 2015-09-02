@@ -1,0 +1,14 @@
+<div id="menu_section">
+	<ul class="col-xs-12" style="list-style: none;">
+		<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
+	</ul>
+</div>
+
+<div id="new_menu_section">
+	<%= link_to "#menu_form", { role: "button", data: { toggle: "collapse" } } do %>
+		<div>메뉴 추가 <i class="fa fa-chevron-down"></i></div>
+	<% end %>
+	<div id="menu_form" class="panel-collapse collapse">
+		<%= render partial: "menus/new", locals: { menu: @menu } %>
+	</div>
+</div>

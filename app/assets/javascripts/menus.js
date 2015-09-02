@@ -15,4 +15,9 @@ $(document).on('ready page:load', function() {
 	});
 
 	$("#menu_section ul li:first-child a > div").click();
+
+	// toggle chevron
+	$('#new_menu_section > a > div').click(function() {
+		$(this).find("i").toggleClass("fa-chevron-up");
+	});
 });
