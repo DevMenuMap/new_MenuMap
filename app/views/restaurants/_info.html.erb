@@ -1,4 +1,13 @@
-<span id="mymap_button_<%= @restaurant.id %>"><%= mymap_button(@user, @restaurant) %></span>
-<a href="tel:<%= @restaurant.phnum %>"><%= @restaurant.phnum %></a>
-
-<a href="#myModal" data-toggle="modal" data-target="#myModal" id="rest_err">Restaurant Error</a>
+<ul style="padding: 0 10px; list-style-type: none;">
+	<!-- <a id="mymap_button_<#%= @restaurant.id %>"><#%= mymap_button(@user, @restaurant) %></a> -->
+	<li>
+		<i class="fa fa-map-signs"></i><%= @restaurant.addr %>
+	</li>
+	<li>
+		<i class="fa fa-phone" style="margin: 0 1px 0 2px"></i>
+		<%= link_to @restaurant.phnum, "tel:#{@restaurant.phnum}" %>
+	</li>
+	<li style="text-align: center; text-decoration: none;">
+		<a href="#myModal" data-toggle="modal" data-target="#myModal" id="rest_err" style="text-decoration: none;">음식점 정보가 틀렸나요?</a>
+	</li>
+</ul>

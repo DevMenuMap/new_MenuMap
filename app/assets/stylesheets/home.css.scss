@@ -302,3 +302,18 @@ span.MultiFile-label {
 .fa.fa-chevron-right, .fa.fa-chevron-down {
 	width: 18px;
 }
+
+/* restaurants#show info */
+#info {
+	> ul > li {
+		padding: 5px 0 10px;
+		margin: 5px;
+		&:last-child, &:nth-last-child(2) {
+			@extend .grey_thin_border;
+		}
+		i {
+			width: 15px;
+			margin-right: 5px;
+		}
+	}
+}
