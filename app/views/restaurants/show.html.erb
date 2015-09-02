@@ -33,7 +33,7 @@
 			<div id="rst_show_tabs">
 				<ul>
 					<a href="#menu" role="tab" data-toggle="tab"><li><i class="fa fa-list-ul"></i><br/>메뉴</li></a>
-					<a href="#comment" role="tab" data-toggle="tab"><li><i class="fa fa-commenting"></i><br/>댓글</li></a>
+					<a href="#comment" role="tab" data-toggle="tab"><li><i class="fa fa-comments-o"></i><br/>댓글</li></a>
 					<a href="#blog" role="tab" data-toggle="tab"><li><i class="fa fa-newspaper-o"></i><br/>블로그</li></a>
 					<a href="#picture" role="tab" data-toggle="tab"><li><i class="fa fa-picture-o"></i><br/>사진</li></a>
 					<a href="#info" role="tab" data-toggle="tab"><li><i class="fa fa-info"></i><br/>정보</li></a>
@@ -139,7 +139,9 @@
 		});
 
 		$("#rest_err").click(function(){
-			$(".modal-title").html("Restaurant Error");
+			$(".modal-title").html("음식점 정보가 틀렸나요?");
+			$(".modal-title").addClass("left_border_label");
+			$(".modal-title").css("border-color", "red");
 			$(".modal-body").html("<%= j(render partial: 'rest_errs/new') %>");
 		});
 
