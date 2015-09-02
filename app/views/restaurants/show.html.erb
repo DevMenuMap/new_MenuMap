@@ -33,7 +33,7 @@
 			<div id="rst_show_tabs">
 				<ul>
 					<a href="#menu" role="tab" data-toggle="tab"><li><i class="fa fa-list-ul"></i><br/>메뉴</li></a>
-					<a href="#comment" role="tab" data-toggle="tab"><li><i class="fa fa-commenting"></i><br/>댓글</li></a>
+					<a href="#comment" role="tab" data-toggle="tab"><li><i class="fa fa-comments-o"></i><br/>댓글</li></a>
 					<a href="#blog" role="tab" data-toggle="tab"><li><i class="fa fa-newspaper-o"></i><br/>블로그</li></a>
 					<a href="#picture" role="tab" data-toggle="tab"><li><i class="fa fa-picture-o"></i><br/>사진</li></a>
 					<a href="#info" role="tab" data-toggle="tab"><li><i class="fa fa-info"></i><br/>정보</li></a>
@@ -83,57 +83,12 @@
 
 					<!-- Picture -->
 					<div role="tabpanel" class="tab-pane fade" id="picture">
-
-						<div id="carousel" class="carousel slide" data-ride="carousel" style="display: block;">
-							<!-- Wrapper for slides -->
-							<div class="carousel-inner" role="listbox" style="position: relative;">
-								<% @pictures.each do |picture| %>
-									<div class="item">
-										<%= image_tag picture.img.url %>
-									</div>
-								<% end %>
-							</div>
-
-							<!-- Controls -->
-							<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-								<span class="glyphicon glyphicon-chevron-left"></span>
-							</a>
-							<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-								<span class="glyphicon glyphicon-chevron-right"></span>
-							</a>
-						</div>
-
-						<div id="no_img" style="display: <%= no_img?(@pictures) %>;">
-							<div class="row" style="margin: 0; padding: 0 15px;">
-								<div class="col-xs-10 col-xs-offset-1" style="text-align: center; margin-top: 10px;">
-									현재 등록된 사진이 없습니다.</br>
-									사진을 등록해주세요.
-								</div>
-							</div>
-						</div>
-
-						<div class="row" style="margin: 0; padding: 0 15px;">
-							<%= form_for @picture, html: { multipart: true, style: "margin-top: 10px;" } do |f| %>
-								<%= f.hidden_field :imageable_id, value: @picture.imageable_id %>
-								<%= f.hidden_field :imageable_type, value: @picture.imageable_type %>
-								<%= f.file_field :img, multiple: true, class: "uploadImage" %>
-								<div style="float: right;">
-									<%= button_tag type: "button", class: "file_select btn btn-primary" do %>
-										<i class="fa fa-plus"></i> 사진
-									<% end %>
-									<%= f.button "등록", class: "btn btn-primary" %>
-								</div>
-							<% end %>
-						</div>
+						<%= render "picture" %>
 					</div>
 
 					<!-- Info -->
 					<div role="tabpanel" class="tab-pane fade" id="info">
-						<span id="mymap_button_<%= @restaurant.id %>"><%= mymap_button(@user, @restaurant) %></span>
-						<a href="tel:<%= @restaurant.phnum %>"><%= @restaurant.phnum %></a>
-
-						<!--%= render "rest_errs/new" %-->
-						<a href="#myModal" data-toggle="modal" data-target="#myModal" id="rest_err">Restaurant Error</a>
+						<%= render "info" %>
 					</div>
 				</div>
 			</div>
@@ -184,7 +139,9 @@
 		});
 
 		$("#rest_err").click(function(){
-			$(".modal-title").html("Restaurant Error");
+			$(".modal-title").html("음식점 정보가 틀렸나요?");
+			$(".modal-title").addClass("left_border_label");
+			$(".modal-title").css("border-color", "red");
 			$(".modal-body").html("<%= j(render partial: 'rest_errs/new') %>");
 		});
 
@@ -197,7 +154,5 @@
 				'rest_err[etc]': { require_from_group: [1, ".rest_errs_group"] }
 			}
 		});
-
-		$("#menu_section ul li:first-child a > div").click();
 	});
 </script>

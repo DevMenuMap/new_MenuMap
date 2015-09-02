@@ -1,0 +1,25 @@
+<ul style="padding: 0 10px; list-style-type: none;">
+	<!-- <a id="mymap_button_<#%= @restaurant.id %>"><#%= mymap_button(@user, @restaurant) %></a> -->
+	<li>
+		<i class="fa fa-map-signs"></i> <%= @restaurant.addr %>
+	</li>
+	<li>
+		<i class="fa fa-phone"></i>
+		<%= link_to "tel:#{@restaurant.phnum}" do %>
+			<%= @restaurant.phnum %> <%= delivery_possible_with_middot(@restaurant) %>
+		<% end %>
+	</li>
+	<li>
+		<i class="fa fa-cutlery"></i> <%= @restaurant.category.name %> <i class="fa fa-angle-right"></i> <%= @restaurant.subcategory.name %>	
+	</li>
+
+	<% if @restaurant.open_at %>
+		<li>
+			<i class="fa fa-clock-o"></i> <%= @restaurant.open_at %>
+		</li>
+	<% end %>
+
+	<li style="text-align: center;">
+		<a href="#myModal" data-toggle="modal" data-target="#myModal" id="rest_err" style="text-decoration: none;">음식점 정보가 틀렸나요?</a>
+	</li>
+</ul>
