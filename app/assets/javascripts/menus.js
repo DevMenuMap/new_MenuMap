@@ -13,4 +13,6 @@ $(document).on('ready page:load', function() {
 			}
 		});
 	});
+
+	$("#menu_section ul li:first-child a > div").click();
 });
