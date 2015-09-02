@@ -306,10 +306,23 @@ span.MultiFile-label {
 /* restaurants#show info */
 #info {
 	> ul > li {
-		padding: 5px 0 10px;
+		padding: 5px 0;
 		margin: 5px;
-		&:last-child, &:nth-last-child(2) {
+		&:first-child {
+			padding-top: 10px;
+		}
+		&:nth-last-child(2) {
 			@extend .grey_thin_border;
+			padding-bottom: 10px;
+		}
+		&:last-child {
+			@extend .grey_thin_border;
+			padding-bottom: 10px;
+			a {
+				@extend .left_border_label;
+				border-color: red;
+				color: black;
+			}
 		}
 		i {
 			width: 15px;
