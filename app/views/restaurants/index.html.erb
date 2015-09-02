@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="col-md-8 col-md-offset-2" style="padding: 0;">
-		<div id="naver_map" style="margin-bottom: 10px;"></div>
+		<div id="naver_map" style="margin: -20px -15px 10px;"></div>
 
 		<%= link_to "new restaurant", new_restaurant_path if admin_user? %>
 
@@ -14,8 +14,8 @@
 					<div class="content">
 						<%= restaurant_name_with_menu_on(restaurant) %><br />
 						<span style="font-size: 0.8em;">
-							<%= menus_or_category(restaurant) %><br />
-							<%= delivery_possible?(restaurant) %> <%= gu_and_dong(restaurant) %>
+							<%= gu_and_dong(restaurant) %> <%= delivery_possible_with_middot(restaurant) %><br />
+							<%= menus_or_category(restaurant) %>
 						</span>
 					</div>
 
@@ -24,7 +24,9 @@
 			<% end %>
 		<% end %>
 		
-		<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
+		<div style="text-align: center;">
+			<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
+		</div>
 	</div>
 </div>
 

@@ -94,6 +94,7 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 	}
 }
 
+/* restaurants#index */
 a.rst_card_link {
 	color: initial;
 	&:active, &:hover {
@@ -131,6 +132,11 @@ a.rst_card_link {
 	}
 }
 
+nav.pagination {
+	margin: 0;
+}
+
+/* restaurants#show */
 #rst_show_top_img {
 	width: 100%;
 	max-height: 100px;
