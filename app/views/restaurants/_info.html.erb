@@ -1,18 +1,21 @@
 <ul style="padding: 0 10px; list-style-type: none;">
 	<!-- <a id="mymap_button_<#%= @restaurant.id %>"><#%= mymap_button(@user, @restaurant) %></a> -->
 	<li>
-		<i class="fa fa-map-signs"></i><%= @restaurant.addr %>
+		<i class="fa fa-map-signs"></i> <%= @restaurant.addr %>
 	</li>
 	<li>
-		<i class="fa fa-phone" style="margin: 0 1px 0 2px"></i>
+		<i class="fa fa-phone"></i>
 		<%= link_to "tel:#{@restaurant.phnum}" do %>
 			<%= @restaurant.phnum %> <%= delivery_possible_with_middot(@restaurant) %>
 		<% end %>
 	</li>
+	<li>
+		<i class="fa fa-cutlery"></i> <%= @restaurant.category.name %> <i class="fa fa-angle-right"></i> <%= @restaurant.subcategory.name %>	
+	</li>
 
 	<% if @restaurant.open_at %>
 		<li>
-			<%= image_tag "restaurants/open_at_icon.svg" %> <%= @restaurant.open_at %>
+			<i class="fa fa-clock-o"></i> <%= @restaurant.open_at %>
 		</li>
 	<% end %>
 
