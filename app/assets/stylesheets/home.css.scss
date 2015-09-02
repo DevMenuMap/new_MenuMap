@@ -293,6 +293,7 @@ span.MultiFile-label {
 	}
 }
 
+/* restaurants#show menu tab */
 #menu_section {
 	a {
 		&:active, &:focus, &:hover {
@@ -313,7 +314,8 @@ span.MultiFile-label {
 		}
 	}
 	.title_info {
-		text-align: right;
+		text-align: left;
+		margin-left: 11px;
 		@extend .grey_small_info;
 	}
 }
