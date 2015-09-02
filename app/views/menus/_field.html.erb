@@ -1,17 +1,27 @@
-<%= f.label :name %>
-<%= f.text_field :name %>
+<div class="form-group">
+	<%= f.label :name, "메뉴 이름" %>
+	<%= f.text_field :name, class: "form-control" %>
+</div>
 
-<%= f.label :side_info %>
-<%= f.text_field :side_info %>
+<div class="form-group">
+	<%= f.label :side_info, "간단 정보" %>
+	<%= f.text_field :side_info, class: "form-control", placeholder: "예) (中), 순한맛 등" %>
+</div>
 
-<%= f.label :price %>
-<%= f.text_field :price %>
+<div class="form-group">
+	<%= f.label :price, "가격" %>
+	<%= f.text_field :price, class: "form-control", placeholder: "숫자만 입력" %>
+</div>
 
-<%= f.label :info %>
-<%= f.text_field :info %>
+<div class="form-group" style="text-align: right;">
+	<%= f.check_box :sitga %>
+	<%= f.label :sitga, "싯가" %>
 
-<%= f.label :sitga %>
-<%= f.check_box :sitga %>
+	<%= f.check_box :unidentified %>
+	<%= f.label :unidentified, "미확인" %>
+</div>
 
-<%= f.label :unidentified %>
-<%= f.check_box :unidentified %>
+<div class="form-group">
+	<%= f.label :info, "상세 정보" %>
+	<%= f.text_field :info, class: "form-control" %>
+</div>

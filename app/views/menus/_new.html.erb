@@ -1,10 +1,9 @@
-<h1>Menu#new</h1>
+<div class="col-md-6 col-md-offset-3">
+	<%= form_for([@restaurant, menu], remote: true) do |f| %>
+		<%= render "menu_titles/new", f: f %>
 
-<%= form_for([@restaurant, menu], remote: true) do |f| %>
-	<%= render "menu_titles/new", f: f %>
-	<br />
-
-	<!-- Specify field because of controller subordination -->
-	<%= render "menus/field", f: f %>
-	<%= f.submit "create menu" %>
-<% end %>
+		<!-- Specify field because of controller subordination -->
+		<%= render "menus/field", f: f %>
+		<%= f.button "추가", class: "btn btn-primary", style: "float: right;" %>
+	<% end %>
+</div>

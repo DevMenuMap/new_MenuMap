@@ -1,10 +1,18 @@
 <!-- Select one of the menu_titles of this restaurant or make a new menu_title -->
-<%= f.select :menu_title_id, 
-			options_for_select(@menu_titles.map{ |m| [m.title_name, m.id] }.unshift(["new menu_title", "new"]).unshift(["select a menu_title", "none"]), nil) %>
+<div class="form-group">
+	<%= f.select :menu_title_id, 
+				options_for_select(@menu_titles.map{ |m| [m.title_name, m.id] }.unshift(["메뉴 목록 추가하기", "new"]).unshift(["메뉴 목록을 선택해주세요.", "none"]), nil), {}, { class: "form-control" } %>
+</div>
 
 <!-- Only when user wants to make a new menu_title for new menu -->
-<%= label :menu_title, :title_name %>
-<%= text_field :menu_title, :title_name %>
+<div id="menu_title_form" style="display: none;">
+	<div class="form-group">
+		<%= label :menu_title, :title_name, "메뉴 목록" %>
+		<%= text_field :menu_title, :title_name, { class: "form-control", placeholder: "예) '주요메뉴', '음료 및 주류' 등" } %>
+	</div>
 
-<%= label :menu_title, :title_info %>
-<%= text_field :menu_title, :title_info %>
+	<div class="form-group" style="margin: 0; padding-bottom: 15px;">
+		<%= label :menu_title, :title_info, "메뉴 목록 정보" %>
+		<%= text_field :menu_title, :title_info, { class: "form-control", placeholder: "예) 점심메뉴 시간 12시까지" } %>
+	</div>
+</div>

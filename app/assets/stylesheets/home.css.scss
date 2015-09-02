@@ -391,6 +391,12 @@ li.menu {
 	}
 }
 
+#menu_title_form {
+	> div:last-child {
+		@extend .grey_thin_border;
+	}
+}
+		
 /* restaurants#show info */
 #info {
 	> ul > li {
