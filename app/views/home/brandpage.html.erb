@@ -1,13 +1,10 @@
-</div>
-<!-- Close container for background image -->
-	<div>
-		<div id="home_bg">
-			<p>이 세상 모든 메뉴가 검색되는 그날까지</p>
-			<h1><span class="ubuntu" style="color: white;">MenuMap</span></h1>
-		</div>
+<div>
+	<div id="home_bg">
+		<p>이 세상 모든 메뉴가 검색되는 그날까지</p>
+		<h1><span class="ubuntu" style="color: white;">MenuMap</span></h1>
 	</div>
+</div>
 
-<!-- Start container again -->
 <div class="container">
 	<div id="home_blockquote">
 		<div class="row">
@@ -41,8 +38,9 @@
 		</div>
 
 		<div class="col-xs-10 col-xs-offset-1" style="padding: 0px;">
-			<%= button_to search_path, { class: "btn btn-block", style: "background-color: #dd4814; color: white;" } do %>
+			<%= button_to search_path, { class: "btn btn-block", style: "background-color: #dd4814; color: white;", method: :get } do %>
 				<span class="ubuntu" style="color: white;">MenuMap</span> 검색
 			<% end %>
 		</div>
 	</div>
+</div>

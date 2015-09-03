@@ -13,7 +13,7 @@ class MymapSnapshotsController < ApplicationController
 		lat = params[:lat]
 		lng = params[:lng]
 		level = params[:level]
-		Phantomjs.run("../new_MenuMap/app/assets/javascripts/snapshot.js", lat, lng, level, user.username, user.id.to_s)
+		Phantomjs.run("../new_MenuMap/lib/assets/javascripts/snapshot.js", lat, lng, level, user.username, user.id.to_s)
 		file_path = '/home/ec2-user/new_MenuMap/public/images/' + user.username + '_mymap_snapshot.png'
 		if user.mymap_snapshot.blank?
 			MymapSnapshot.create(:user => user, :snapshot => File.open(file_path))

@@ -1,55 +1,38 @@
-<h1>Restaurants#index</h1>
+<div class="container">
+	<div class="col-md-8 col-md-offset-2" style="padding: 0;">
+		<div id="naver_map" style="margin: -20px -15px 10px;"></div>
 
-<h2>Map</h2>
-<div id="naver_map" style="width: 80%; height: 60%"></div>
+		<%= link_to "new restaurant", new_restaurant_path if admin_user? %>
 
-<%= link_to "new restaurant", new_restaurant_path %>
+		<% @restaurants.each do |restaurant| %>
+			<%= link_to restaurant_path(restaurant), class: "rst_card_link" do %>
+				<div id="rst_<%= restaurant.id %>" class="rst_index_card">
+					<div class="rst_img">
+						<%= restaurant_picture(restaurant) %>
+					</div>
 
-<table class="table">
-	<tr>
-		<% Restaurant.column_names.each do |column| %>
-			<th><%= column %></th>
+					<div class="content">
+						<%= restaurant_name_with_menu_on(restaurant) %><br />
+						<span style="font-size: 0.8em;">
+							<%= gu_and_dong(restaurant) %> <%= delivery_possible_with_middot(restaurant) %><br />
+							<%= menus_or_category(restaurant) %>
+						</span>
+					</div>
+
+					<%= link_to "destroy", restaurant_path(restaurant), method: :delete if admin_user? %>
+				</div>
+			<% end %>
 		<% end %>
-		<th>Best Menu 1</th>
-		<th>Best Menu 2</th> 
-		<th>메뉴 등록</th>
-		<th></th>
-		<th></th>
-		<th>mymap 보기||등록</th>
-	</tr>
-
-	<% @restaurants.each do |restaurant| %>
-		<tr data-url="<%= restaurant_path(restaurant) %>">
-			<% restaurant.attributes.each_value do |value| %>
-				<td><%= value %></td>
-			<% end %>
-			<% if restaurant.title_menus(2).blank? %>
-				<td>Empty</td>
-				<td>Empty</td> 
-			<% else %>
-				<% restaurant.title_menus(2).each do |menu| %>
-					<td><%= menu %></td>
-				<% end %>
-			<% end %>
-			<td><%= menu_on_helper(restaurant) %></td>
-			<td><%= link_to "show", restaurant_path(restaurant) %></td>
-			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
-			<td id="mymap_button_<%= restaurant.id %>"><%= mymap_button(@user, restaurant) %></td>
-		</tr>
-	<% end %>
-</table>
-
-<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
+		
+		<div style="text-align: center;">
+			<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
+		</div>
+	</div>
+</div>
 
 <%= render 'shared/modal' %>
 
 <script>
-	//$(function () {
-	//	Specify table's row more directly just for restaurant table's row.
-  //	$('table.table tr').click(function () {
-  //  	window.location.href = $(this).data('url');
-  //	});
-	//})
 	$(document).ready( function() {
 		loadNaverMap(<%= @center_x %>, <%= @center_y %>, <%= @level %>);
 		showMarkers(<%= @coord_array %>, true, <%= raw @names %>);

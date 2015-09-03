@@ -80,7 +80,6 @@ class AddressesController < ApplicationController
 
 		# Return an array of addr_bound number codes.
 		def addr_bound_params
-		byebug
 			params[:address][:addr_bounds_attributes]["0"][:addr_code].reject!{ |a| a.empty? }.sort
 		end
 

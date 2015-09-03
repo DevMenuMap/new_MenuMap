@@ -1,34 +1,36 @@
-<div class="col-md-6 col-md-offset-3">
-	<div style="border-bottom: solid 1px gray; margin-bottom: 2em; padding: 1em 0;">
-		<%= form_for(@user, url: registration_path(@user), html: { method: :put }) do |f| %>
-			<legend>계정 변경</legend>
+<div class="container">
+	<div class="col-md-6 col-md-offset-3">
+		<div style="border-bottom: solid 1px gray; margin-bottom: 2em; padding: 1em 0;">
+			<%= form_for(@user, url: registration_path(@user), html: { method: :put }) do |f| %>
+				<legend>계정 변경</legend>
 
-			<div class="form-group">
-				<%= f.email_field :email, { class: "form-control", disabled: true } %>
-			</div>
+				<div class="form-group">
+					<%= f.email_field :email, { class: "form-control", disabled: true } %>
+				</div>
 
-			<div class="form-group">
-				<%= f.text_field :username, { class: "form-control", placeholder: "유저명*" } %>
-			</div>
+				<div class="form-group">
+					<%= f.text_field :username, { class: "form-control", placeholder: "유저명*" } %>
+				</div>
 
-			<div class="form-group">
-				<%= f.label :currnet_password, "비밀번호 변경" %> <i>(비밀번호를 변경하지 않는 경우 비워주세요.)</i>
-				<%= f.password_field :current_password, { class: "form-control", autocomplete: "off", placeholder: "현재 비밀번호" } %>
-			</div>
+				<div class="form-group">
+					<%= f.label :currnet_password, "비밀번호 변경" %> <i>(비밀번호를 변경하지 않는 경우 비워주세요.)</i>
+					<%= f.password_field :current_password, { class: "form-control", autocomplete: "off", placeholder: "현재 비밀번호" } %>
+				</div>
 
-			<div class="form-group">
-				<%= f.password_field :password, { class: "form-control", autocomplete: "off", placeholder: "새 비밀번호*" } %>
-			</div>
+				<div class="form-group">
+					<%= f.password_field :password, { class: "form-control", autocomplete: "off", placeholder: "새 비밀번호*" } %>
+				</div>
 
-			<div class="form-group">
-				<%= f.password_field :password_confirmation, { class: "form-control", autocomplete: "off", placeholder: "새 비밀번호 확인*" } %>
-			</div>
+				<div class="form-group">
+					<%= f.password_field :password_confirmation, { class: "form-control", autocomplete: "off", placeholder: "새 비밀번호 확인*" } %>
+				</div>
 
-			<%= f.button "변경사항 저장", class: "btn btn-primary btn-block" %>
-		<% end %>
+				<%= f.button "변경사항 저장", class: "btn btn-primary btn-block" %>
+			<% end %>
+		</div>
+
+		<%= button_to "계정 삭제", registration_path(@user), { class: "btn btn-block btn-danger", data: { confirm: "현재 계정이 영원히 삭제됩니다. 계속 하시겠습니까?" }, method: :delete } %>
 	</div>
-
-	<%= button_to "계정 삭제", registration_path(@user), { class: "btn btn-block btn-danger", data: { confirm: "현재 계정이 영원히 삭제됩니다. 계속 하시겠습니까?" }, method: :delete } %>
 </div>
 
 <script>

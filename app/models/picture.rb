@@ -9,10 +9,16 @@ class Picture < ActiveRecord::Base
 		attachment.instance.imageable_type.underscore + 's'
 	end
 
+  Paperclip.interpolates :imageable_id do |attachment, style|
+    ("%09d" % attachment.instance.imageable_id).scan(/\d{3}/).join("/")
+  end
+
 	# Image attachment
 	has_attached_file :img, 
-										:styles	=> { :medium => "300x300>" },
-										:path => '/:class/:imageable_type/:attachment/:id_partition/:style/:basename.:extension'
+										:styles	=> { small: "200x200>" },
+										# :styles	=> { thumb: "120x120", medium: "400x400>" },
+										# :convert_options => { thumb: "-quality 50 -strip" },
+										:path => '/:class/:imageable_type/:attachment/:imageable_id/:style/:basename.:extension'
 
 
 	### Validations

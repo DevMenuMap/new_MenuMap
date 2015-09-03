@@ -1,15 +1,17 @@
-<div class="col-md-6 col-md-offset-3">
-	<!--%= devise_error_messages! %-->
-	<legend>비밀번호 찾기</legend>
+<div class="container">
+	<div class="col-md-6 col-md-offset-3">
+		<!--%= devise_error_messages! %-->
+		<legend>비밀번호 찾기</legend>
 
-	<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+		<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
 
-		<div class="form-group">
-			<%= f.email_field :email, { class: "form-control", autofocus: true, placeholder: "이메일*" } %>
-		</div>
+			<div class="form-group">
+				<%= f.email_field :email, { class: "form-control", autofocus: true, placeholder: "이메일*" } %>
+			</div>
 
-		<%= f.button "이메일 전송", class: "btn btn-primary btn-block" %>
-	<% end %>
+			<%= f.button "이메일 전송", class: "btn btn-primary btn-block" %>
+		<% end %>
+	</div>
 </div>
 
 <script>

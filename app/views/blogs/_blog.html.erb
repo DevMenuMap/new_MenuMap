@@ -1,5 +1,10 @@
-<%= link_to "#{blog[:link]}", target: "_blank" do %>
-	<%= blog[:title].html_safe %>
-	<%= blog[:description].html_safe %>
-	<%= blog[:blogger_name] %>
+<%= link_to "#{blog[:link]}", target: "_blank", style: "color: initial;" do %>
+	<div class="blog">
+		<div class="title">
+			<%= blog[:title].html_safe %>
+		</div>
+		<div class="description">
+			<%= blog[:description].html_safe %>
+		</div>
+	</div>
 <% end %>

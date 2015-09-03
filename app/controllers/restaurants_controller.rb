@@ -10,7 +10,7 @@ class RestaurantsController < ApplicationController
 		#@curr_lat = 0
 		#@curr_lng = 0
 		#restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
-		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
+		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).order(menu_on: :desc).paginate(page: params[:page], per_page: 10)
 		
 		# Find Center point
 		@coord_array = []
@@ -24,6 +24,9 @@ class RestaurantsController < ApplicationController
 		end
 		x = @coord_array.values_at(* @coord_array.each_index.select { |i| i.even? })
 		y = @coord_array.values_at(* @coord_array.each_index.select { |i| i.odd? })
+
+		@center_x = 37.48121
+		@center_y = 126.952712
 		
 		# When at least one of lat(and lng) values is not zero
 		if( x != [] && y != [] )
@@ -32,15 +35,19 @@ class RestaurantsController < ApplicationController
 			y_range = y.max - y.min
 			
 			if (x_range > 0.28) || (y_range > 0.18)
-				@level = 7
+				@level = 5
 			elsif (x_range > 0.15) || (y_range > 0.09)
+				@level = 6
+			elsif (x_range > 0.075) || (y_range > 0.04)
+				@level = 7
+			elsif (x_range > 0.035) || (y_range > 0.02)
 				@level = 8
-			elsif (x_range > 0.75) || (y_range > 0.04)
+			elsif (x_range > 0.02) || (y_range > 0.013)
 				@level = 9
-			elsif (x_range > 0.35) || (y_range > 0.02)
+			elsif (x_range > 0.01) || (y_range > 0.005)
 				@level = 10
 			else
-				@level = 11
+				@level = 11 
 			end
 
 			# Determin center point
@@ -88,16 +95,15 @@ class RestaurantsController < ApplicationController
 		# For nearby restaurants 
 		@curr_lat = @restaurant.lat.to_f 
 		@curr_lng = @restaurant.lng.to_f 
-		@nearbyRestaurants = []
-		# limit 5 & latlng_type = Restaurant
-		coords = Coordinate.find_by_sql("SELECT id, latlng_id, latlng_type, ( 6371 * acos( cos( radians( #{@curr_lat} ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( #{@curr_lng} ) ) + sin( radians( #{@curr_lat} ) ) * sin( radians( lat ) ) ) ) AS distance FROM coordinates HAVING distance < 100 AND latlng_type = 'Restaurant' ORDER BY distance LIMIT 0 , 5")
-		coords.each do |c|
-			@nearbyRestaurants << c.latlng
-		end
+		# @nearbyRestaurants = []
+		# # limit 5 & latlng_type = Restaurant
+		# coords = Coordinate.find_by_sql("SELECT id, latlng_id, latlng_type, ( 6371 * acos( cos( radians( #{@curr_lat} ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( #{@curr_lng} ) ) + sin( radians( #{@curr_lat} ) ) * sin( radians( lat ) ) ) ) AS distance FROM coordinates HAVING distance < 100 AND latlng_type = 'Restaurant' ORDER BY distance LIMIT 0 , 5")
+		# coords.each do |c|
+		# 	@nearbyRestaurants << c.latlng
+		# end
 
 		respond_to do |format|
 			format.html
-			# format.json { render json: @comments }
 			format.json
 			format.js
 		end
