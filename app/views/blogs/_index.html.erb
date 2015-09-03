@@ -1,5 +1,11 @@
 <% if @naver_blogs.blank? && @daum_blogs.blank? %>
-	<%= render "/blogs/no_blogs" %>
+	<div id="no_blog">
+		<div class="row" style="margin: 0; padding: 0 15px 15px;">
+			<div class="col-xs-10 col-xs-offset-1" style="text-align: center; margin-top: 10px;">
+				블로그 검색 결과가 없습니다.
+			</div>
+		</div>
+	</div>
 <% else %>
 	<div style="width: 90%; margin: 0 auto;">
 		<div class="daum">

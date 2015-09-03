@@ -5,8 +5,12 @@
 	</li>
 	<li>
 		<i class="fa fa-phone"></i>
-		<%= link_to "tel:#{@restaurant.phnum}" do %>
-			<%= @restaurant.phnum %> <%= delivery_possible_with_middot(@restaurant) %>
+		<% if @restaurant.phnum %>
+			<%= link_to "tel:#{@restaurant.phnum}" do %>
+				<%= @restaurant.phnum %> <%= delivery_possible_with_middot(@restaurant) %>
+			<% end %>
+		<% else %>
+			<span style="color: #337ab7">전화번호 정보가 없습니다.</span>
 		<% end %>
 	</li>
 	<li>

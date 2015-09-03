@@ -51,29 +51,12 @@
 
 					<!-- Menu -->
 					<div role="tabpanel" class="tab-pane fade in active" id="menu">
-						<div id="menu_section" style="margin-top: -20px;">
-							<ul class="col-xs-12" style="list-style: none;">
-								<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
-							</ul>
-						</div>
-
-						<div id="new_menu_section">
-							<%= render partial: "menus/new", locals: { menu: @menu } %>
-						</div>
+						<%= render 'menu' %>
 					</div>
 
 					<!-- Comment -->
 					<div role="tabpanel" class="tab-pane fade" id="comment">
-						<div id="comment_count">
-							<%= @comments.count %>
-						</div> 
-						<div id="comment_section">
-							<%= render "comments/page" %>
-						</div>
-
-						<div id="new_comment_section">
-							<%= render partial: "comments/new", locals: { comment: @comment } %>
-						</div>
+						<%= render "comment" %>
 					</div>
 
 					<!-- Blog -->

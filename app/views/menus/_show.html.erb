@@ -1,6 +1,9 @@
 <li id="menu_<%= menu.id %>" class="menu" data-menu-comments="<%= menu.id %>">
 	<div class="name_info"><%= menu.name %><span><%= menu.side_info %></span></div>
-	<div class="price"><%= won_div(menu) %><%= sitga_div(menu) %></div>
+
+	<!-- Return <div class="price">...</div> -->
+	<%= menu_price_div(menu) %>
+
 	<div class="info"><%= menu.info %></div>
 
 	<% if admin_user? %>
