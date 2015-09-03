@@ -96,6 +96,15 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 	}
 }
 
+/* home#search */
+#mm_search {
+	legend {
+		@extend .left_border_label;
+		border-left-color: $MenuMap_orange;
+		border-bottom: none;
+	}
+}
+
 /* restaurants#index */
 a.rst_card_link {
 	color: initial;
@@ -241,7 +250,7 @@ span.MultiFile-label {
 		@extend .thick_bottom_border;
 		> div {
 			@extend .left_border_label;
-			border-color: $MenuMap_orange;
+			border-color: red;
 		}
 	}
 }

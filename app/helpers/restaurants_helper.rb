@@ -25,7 +25,7 @@ module RestaurantsHelper
 		when 0
 			"gray"
 		else
-			"green"
+			"#23b300"
 		end
 	end
 

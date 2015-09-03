@@ -33,13 +33,13 @@ $(document).on('ready page:load', function() {
 	});
 
 	// Change menu list left border on click.
-	$('#menu_section a[aria-expanded="true"] span').css('border-left-color', 'green');
+	$('#menu_section a[aria-expanded="true"] span').css('border-left-color', '#23b300');
 
 	$('#menu_section li').on('show.bs.collapse', function(){
-		$(this).find('span').css('border-left-color', 'green');
+		$(this).find('span').css('border-left-color', '#23b300');
 	});
 
 	$('#menu_section li').on('hide.bs.collapse', function(){
-		$(this).find('span').css('border-left-color', '#dd4814');
+		$(this).find('span').css('border-left-color', 'orange');
 	});
 });
