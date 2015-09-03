@@ -3,6 +3,7 @@
 $MenuMap_orange: #dd4814;
 $naver_green: #23b300;
 $grey_info_font: #999;
+$origin_link_blue: #337ab7;
 
 .thick_bottom_border {
 	border-bottom: 8px solid #E9EAED;
@@ -337,15 +338,20 @@ ul.menu_list {
 li.menu {
 	margin: 5px 0;
 	padding: 5px 0;
+	clear: both;
+	font-size: 95%;
 	.name_info {
 		float: left;
-		max-width: 220px;
+		max-width: 225px;
 		span {
 			@extend .grey_small_info;
 		}
 	}
 	.price {
 		float: right;
+		.sitga {
+			float: right;
+		}
 	}
 	.info {
 		clear: left;
@@ -356,7 +362,7 @@ li.menu {
 @media (max-width: 320px) {
 	li.menu {
 		.name_info {
-			max-width: 180px;
+			max-width: 185px;
 		}
 	}
 }
@@ -364,7 +370,7 @@ li.menu {
 @media (min-width: 400px) {
 	li.menu {
 		.name_info {
-			max-width: 260px;
+			max-width: 265px;
 		}
 	}
 }
