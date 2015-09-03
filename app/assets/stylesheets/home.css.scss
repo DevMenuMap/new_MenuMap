@@ -342,7 +342,6 @@ li.menu {
 	font-size: 95%;
 	.name_info {
 		float: left;
-		max-width: 225px;
 		span {
 			@extend .grey_small_info;
 		}
@@ -356,30 +355,6 @@ li.menu {
 	.info {
 		clear: left;
 		@extend .grey_small_info;
-	}
-}
-
-@media (max-width: 320px) {
-	li.menu {
-		.name_info {
-			max-width: 185px;
-		}
-	}
-}
-
-@media (min-width: 400px) {
-	li.menu {
-		.name_info {
-			max-width: 265px;
-		}
-	}
-}
-
-@media (min-width: 992px) {
-	li.menu {
-		.name_info {
-			max-width: none;
-		}
 	}
 }
 
