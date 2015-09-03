@@ -203,6 +203,7 @@ nav.pagination {
 
 /* restaurants#show picture tab */
 #carousel {
+	@extend .thick_bottom_border;
 	.item {
 		height: 240px;
 		img {
@@ -313,6 +314,12 @@ span.MultiFile-label {
 	}
 	> ul {
 		@extend .thick_bottom_border;
+		> li:first-child {
+			margin-top: 10px;
+		}
+		> li:last-child {
+			margin-bottom: 20px;
+		}
 	}
 }
 		

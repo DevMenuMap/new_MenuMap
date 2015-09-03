@@ -5,6 +5,7 @@ class Restaurant < ActiveRecord::Base
 	include Naver
 	include Daum
 	include Addressable
+	include HomeHelper
 
 
 	### Associations
@@ -340,7 +341,7 @@ class Restaurant < ActiveRecord::Base
 
 	# Restaurant name except ().
 	def short_name
-		name.split("(")[0]
+		remove_the_last_parenthesis_pair(name)
 	end
 
 	# Return legal_dong for this restaurant.
