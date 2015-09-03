@@ -16,7 +16,7 @@ $(document).on('ready page:load', function() {
 
 	$("#menu_section ul li:first-child a > div").click();
 
-	// toggle chevron
+	// Change chevron on cascading dropdown.
 	$('#new_menu_section > a > div').click(function() {
 		$(this).find("i").toggleClass("fa-chevron-up");
 	});
@@ -30,5 +30,16 @@ $(document).on('ready page:load', function() {
 			$('#menu_title_form').css('display', 'none');
 			$(this).closest('form').find('label[for=menu_name]').css('margin-top', '0px');
 		};
+	});
+
+	// Change menu list left border on click.
+	$('#menu_section a[aria-expanded="true"] span').css('border-left-color', 'green');
+
+	$('#menu_section li').on('show.bs.collapse', function(){
+		$(this).find('span').css('border-left-color', 'green');
+	});
+
+	$('#menu_section li').on('hide.bs.collapse', function(){
+		$(this).find('span').css('border-left-color', '#dd4814');
 	});
 });
