@@ -233,9 +233,10 @@ nav.pagination {
 			color: initial;
 			li {
 				display: inline-block;
-				width: 19%;
+				width: 24%;
+				/* width: 19%; */
 				text-align: center;
-				padding: 10px 0;
+				padding: 5px 0;
 			}
 		}
 	}
@@ -286,7 +287,7 @@ span.MultiFile-label {
 	text-shadow: 0 1px 2px rgba(0,0,0,.6);
 }
 
-#no_img, #no_blog, #no_menu {
+#no_img, #no_blog, #no_menu, #no_comment {
 	> .row {
 		@extend .thick_bottom_border;
 		> div {
