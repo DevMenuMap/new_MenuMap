@@ -45,6 +45,14 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 	font-family: 'Noto Sans Korean', sans-serif;
 }
 
+legend {
+	font-size: 18px;
+}
+
+label {
+	font-weight: 500;
+}
+
 .ubuntu {
 	font-family: 'Ubuntu';
 	font-weight: bold;
@@ -62,6 +70,29 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 	}
 }
 
+.btn_submit {
+	border: 1px solid $MenuMap_orange;
+	border-radius: 3px;
+	background-color: initial;
+	color: $MenuMap_orange;
+	font-weight: 500;
+	&:hover, &:focus {
+		color: white;
+		background-color: $MenuMap_orange;
+	}
+}
+
+.btn_cancel {
+	background-color: initial;
+	color: grey;
+	font-weight: 500;
+	&:hover, &:focus {
+		color: white;
+		background-color: #d1d1d1;
+	}
+}
+
+/* home#brandpage */
 #home_bg {
 	background-image: url('/images/menumap/home_bg.jpg');
 	margin-top: -20px;
