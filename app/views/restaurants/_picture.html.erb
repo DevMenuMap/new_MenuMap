@@ -32,10 +32,10 @@
 		<%= f.hidden_field :imageable_type, value: @picture.imageable_type %>
 		<%= f.file_field :img, multiple: true, class: "uploadImage" %>
 		<div style="float: right;">
-			<%= button_tag type: "button", class: "file_select btn btn-primary" do %>
-				<i class="fa fa-plus"></i> 사진
+			<%= button_tag type: "button", class: "file_select btn btn_submit" do %>
+				<span class="glyphicon glyphicon-plus"></span>
 			<% end %>
-			<%= f.button "등록", class: "btn btn-primary" %>
+			<%= f.button "등록", class: "btn btn_submit_blue", style: "border: none;" %>
 		</div>
 	<% end %>
 </div>

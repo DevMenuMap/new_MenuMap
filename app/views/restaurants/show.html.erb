@@ -10,10 +10,10 @@
 				</div>
 			<% end %>
 
-			<div id="rst_show_title" class="col-xs-12">
+			<div id="rst_show_title" class="col-xs-12" style="padding: 5px 15px;">
 				<div class="name">
-					<h1 style="font-size: 2em;"><%= @restaurant.name %></h1>
-					<div>
+					<h1 style="font-size: 1.5em;"><%= @restaurant.name %></h1>
+					<div style="font-size: 0.8em; color: #999;">
 						<p><%= @restaurant.subcategory.name %> <%= delivery_possible_with_middot(@restaurant) %></p>
 					</div>
 				</div>
