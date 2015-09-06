@@ -106,6 +106,42 @@ label {
 	}
 }
 
+/* body */
+html,
+body {
+	height: 100%;
+}
+
+#wrap {
+	min-height: 100%;
+	height: auto;
+	margin: 0 auto -41px;
+	padding: 0 0 41px;
+}
+	
+/* header */
+nav .navbar-header {
+	.navbar-brand {
+		font-size: 18px;
+	}
+	button.navbar-toggle {
+		@extend .blue_outline;	
+	}
+}
+
+/* footer */
+footer {
+	height: 41px;
+	color: #999;
+	.left {
+		float: left;
+	}
+	.right {
+		float: right;
+		margin-top: 3px;
+	}
+}
+
 /* home#brandpage */
 #home_bg {
 	background-image: url('/images/menumap/home_bg.jpg');
@@ -137,16 +173,6 @@ label {
 		border: none;
 		background-color: initial;
 		box-shadow: 0 0 1px 1px #66afe9;
-	}
-}
-
-/* header */
-nav .navbar-header {
-	.navbar-brand {
-		font-size: 18px;
-	}
-	button.navbar-toggle {
-		@extend .blue_outline;	
 	}
 }
 
