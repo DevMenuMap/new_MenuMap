@@ -19,7 +19,7 @@ module MenusHelper
 	end
 
 	def menu_unidentified_div(menu)
-		content_tag :div, "미확인", class: 'price', style: 'color: #337ab7;'
+		content_tag :div, "미확인", class: 'price', style: 'color: #5890ff;'
 	end
 
 	def menu_won_div(menu)
@@ -29,7 +29,7 @@ module MenusHelper
 	end
 	
 	def menu_sitga_div_with_price(menu)
-		content_tag :div, "(시가)", class: "sitga", style: 'color: #337ab7;'
+		content_tag :div, "(시가)", class: "sitga", style: 'color: #5890ff;'
 	end
 
 	# when menu has only sitga true, div's class would be 'price'.

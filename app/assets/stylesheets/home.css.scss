@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
-$MenuMap_orange: #dd4814;
+$MenuMap_orange: #ea4c15;
 $naver_green: #23b300;
 $grey_info_font: #999;
 $origin_link_blue: #337ab7;
@@ -57,7 +57,7 @@ label {
 .ubuntu {
 	font-family: 'Ubuntu';
 	font-weight: bold;
-	color: #dd4814;
+	color: $MenuMap_orange;
 }
 
 .btn-facebook {
