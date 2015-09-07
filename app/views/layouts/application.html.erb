@@ -34,15 +34,20 @@
 	</head>
 	<body>
 
-		<!-- Navigation -->
-		<%= render "layouts/header" %>
+		<div id="wrap">
+			<!-- Navigation -->
+			<%= render "layouts/header" %>
 
-		<!-- Flash -->
-		<%= render "layouts/flash" %>
+			<!-- Flash -->
+			<%= render "layouts/flash" %>
 
-		<%= yield %>
+			<%= yield %>
 
-		<!-- Callback javascript codes for specific pages -->
-		<%= render "shared/callback_scripts" %>
+			<!-- Callback javascript codes for specific pages -->
+			<%= render "shared/callback_scripts" %>
+		</div>
+
+		<!-- Footer -->
+		<%= render "layouts/footer" %>
 	</body>
 </html>

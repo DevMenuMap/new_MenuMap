@@ -1,12 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu);
 
-$MenuMap_orange: #dd4814;
+$MenuMap_orange: #ea4c15;
 $naver_green: #23b300;
 $grey_info_font: #999;
 $origin_link_blue: #337ab7;
+$facebook_link_blue: #5890ff;
 
 .thick_bottom_border {
-	border-bottom: 8px solid #E9EAED;
+	border-bottom: 4px solid #f1f1f1;
 }
 
 .grey_thin_border {
@@ -45,10 +46,18 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 	font-family: 'Noto Sans Korean', sans-serif;
 }
 
+legend {
+	font-size: 18px;
+}
+
+label {
+	font-weight: 500;
+}
+
 .ubuntu {
 	font-family: 'Ubuntu';
 	font-weight: bold;
-	color: #dd4814;
+	color: $MenuMap_orange;
 }
 
 .btn-facebook {
@@ -62,8 +71,81 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 	}
 }
 
+.btn_submit {
+	border: 1px solid $MenuMap_orange;
+	border-radius: 3px;
+	background-color: initial;
+	color: $MenuMap_orange;
+	font-weight: 500;
+	font-size: 85%;
+	&:hover, &:focus {
+		color: white;
+		background-color: $MenuMap_orange;
+	}
+}
+
+.btn_submit_blue {
+	background-color: initial;
+	color: $facebook_link_blue;
+	font-weight: 500;
+	font-size: 85%;
+	&:hover, &:focus {
+		color: white;
+		background-color: $facebook_link_blue;
+	}
+}
+	
+.btn_cancel {
+	background-color: initial;
+	color: grey;
+	font-weight: 500;
+	font-size: 85%;
+	&:hover, &:focus {
+		color: white;
+		background-color: #d1d1d1;
+	}
+}
+
+/* body */
+html,
+body {
+	height: 100%;
+}
+
+#wrap {
+	min-height: 100%;
+	height: auto;
+	margin: 0 auto -41px;
+	padding: 0 0 41px;
+}
+	
+/* header */
+nav .navbar-header {
+	.navbar-brand {
+		font-size: 18px;
+	}
+	button.navbar-toggle {
+		@extend .blue_outline;	
+	}
+}
+
+/* footer */
+footer {
+	height: 41px;
+	color: #999;
+	.left {
+		float: left;
+	}
+	.right {
+		float: right;
+		margin-top: 3px;
+	}
+}
+
+/* home#brandpage */
 #home_bg {
-	background-image: url('/images/menumap/home_bg.jpg');
+	background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/images/menumap/i3_s1.jpg');
+	background-position: center top;
 	margin-top: -20px;
 	height: 200px;
 	color: white;
@@ -78,6 +160,12 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 	}
 }
 
+@media (min-width: 992px) {
+	#home_bg {
+		background-image: url('/images/menumap/home_bg.jpg');
+	}
+}
+
 #home_blockquote {
 	margin-top: 20px;
 }
@@ -89,10 +177,18 @@ html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
 
 .blue_outline {
 	&:active, &:hover {
-		border-color: #66afe9;
-		outline: 0;
-		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-		box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+		border: none;
+		background-color: initial;
+		box-shadow: 0 0 1px 1px #66afe9;
+	}
+}
+
+/* home#search */
+#mm_search {
+	legend {
+		@extend .left_border_label;
+		border-left-color: $MenuMap_orange;
+		border-bottom: none;
 	}
 }
 
@@ -107,7 +203,7 @@ a.rst_card_link {
 .rst_index_card {
 	display: inline-block;
 	width: 100%;
-	padding: 0.5em 0;
+	padding: 10px 0;
 	border-bottom: 1px solid #f0f0f0;
 	&:active {
 		background-color: #efefef;
@@ -116,7 +212,6 @@ a.rst_card_link {
 		width: 120px; 
 		height: 90px; 
 		float: left;
-		margin: 0 0.5em 0 0;
 		img {
 			width: 100%;
 			height: 100%;
@@ -130,6 +225,7 @@ a.rst_card_link {
 	.content {
 		display: inline-block; 
 		max-width: 200px;
+		margin: 5px 0 0 10px;
 		color: #999;
 	}
 }
@@ -160,7 +256,7 @@ nav.pagination {
 	@extend .thick_bottom_border;
 	.name {
 		float: left; 
-		max-width: 270px;
+		max-width: 260px;
 		h1 {
 			margin: 10px 0;
 		}
@@ -184,9 +280,10 @@ nav.pagination {
 			color: initial;
 			li {
 				display: inline-block;
-				width: 19%;
+				width: 24%;
+				/* width: 19%; */
 				text-align: center;
-				padding: 10px 0;
+				padding: 5px 0;
 			}
 		}
 	}
@@ -194,6 +291,7 @@ nav.pagination {
 
 /* restaurants#show picture tab */
 #carousel {
+	@extend .thick_bottom_border;
 	.item {
 		height: 240px;
 		img {
@@ -236,12 +334,12 @@ span.MultiFile-label {
 	text-shadow: 0 1px 2px rgba(0,0,0,.6);
 }
 
-#no_img, #no_blog, #no_menu {
+#no_img, #no_blog, #no_menu, #no_comment {
 	> .row {
 		@extend .thick_bottom_border;
 		> div {
 			@extend .left_border_label;
-			border-color: $MenuMap_orange;
+			border-color: red;
 		}
 	}
 }
@@ -304,6 +402,12 @@ span.MultiFile-label {
 	}
 	> ul {
 		@extend .thick_bottom_border;
+		> li:first-child {
+			margin-top: 10px;
+		}
+		> li:last-child {
+			margin-bottom: 20px;
+		}
 	}
 }
 		
@@ -388,7 +492,7 @@ li.menu {
 		}
 		&:nth-last-child(2) {
 			@extend .grey_thin_border;
-			padding-bottom: 10px;
+			padding-bottom: 20px;
 		}
 		&:last-child {
 			@extend .grey_thin_border;

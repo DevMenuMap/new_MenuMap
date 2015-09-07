@@ -8,6 +8,7 @@ class Foursquare
   include ActiveModel::Validations
   # include ActiveModel::Conversion
   # extend ActiveModel::Naming
+	extend HomeHelper
 
   attr_accessor :username
   attr_accessor :url
@@ -25,6 +26,7 @@ class Foursquare
 	### Class methods
 	# Get restaurant's venue_id in foursquare.
 	def self.get_venue_id(name, lat, lng)
+		name = remove_the_last_parenthesis_pair(name)
 		url = foursquare_search_venue_url(name, lat, lng)
 		json = JSON.load(open(url))
 

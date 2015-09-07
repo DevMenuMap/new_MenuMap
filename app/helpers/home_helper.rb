@@ -10,4 +10,8 @@ module HomeHelper
 	def total_menus
 		number_with_delimiter(Menu.count)
 	end
+
+	def remove_the_last_parenthesis_pair(text)
+		text.gsub(/\([^\(]*\)$/, '')
+	end
 end

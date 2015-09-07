@@ -2,7 +2,7 @@
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
 
 	<%= render "rest_errs/field", f: f %>
-	<div class="modal-footer" style="padding: 5px;">
-		<%= f.button "완료", class: "btn btn-primary" %>
+	<div class="modal-footer" style="padding: 10px 0 0;">
+		<%= f.button "완료", class: "btn btn_submit" %>
 	</div>
 <% end %>
