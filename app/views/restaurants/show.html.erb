@@ -19,7 +19,9 @@
 				</div>
 
 				<div class="right">
-					<div><i class="fa fa-share-alt" style="margin-right: 5px;"></i>공유</div>
+					<%= link_to share_rest_path(@restaurant), remote: true, data: { toggle: "modal", target: "#myModal" } do %>
+						<div><i class="fa fa-share-alt" style="margin-right: 5px;"></i>공유</div>
+					<% end %>
 					<div id="rst_show_map"><i class="fa fa-globe" style="margin-right: 5px;"></i>지도</div>
 				</div>
 			</div>

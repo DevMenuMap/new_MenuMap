@@ -60,6 +60,9 @@ Rails.application.routes.draw do
 	# Parsing blog results.
 	get 'blogs/blog_ajax'
 
+	# Share restaurant on SNS.
+	get 'socials/share_rest/:restaurant_id' => 'socials#share_rest', as: :share_rest
+
 	# Polymorphic picture controller
 	resources :pictures
 
@@ -102,24 +105,4 @@ Rails.application.routes.draw do
 	end
 
 	get "no_admin" => "admin/monitors#no_admin", as: :no_admin
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
 end

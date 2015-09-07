@@ -264,7 +264,13 @@ nav.pagination {
 	.right {
 		float: right;
 		margin: 5px 10px 0;
-		> div {
+		a {
+			color: #333;
+			&:focus, &:hover {
+				text-decoration: none;
+			}
+		}
+		div {
 			margin: 5px 0;
 		}
 	}
