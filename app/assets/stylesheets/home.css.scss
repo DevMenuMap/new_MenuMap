@@ -106,6 +106,14 @@ label {
 	}
 }
 
+.blue_outline {
+	&:active, &:hover {
+		border: none;
+		background-color: initial;
+		box-shadow: 0 0 1px 1px #66afe9;
+	}
+}
+
 /* body */
 html,
 body {
@@ -129,6 +137,14 @@ nav .navbar-header {
 	}
 }
 
+@media (min-width: 992px) {
+	nav .navbar-header {
+		.navbar-brand {
+			font-size: 25px;
+		}
+	}
+}
+
 /* footer */
 footer {
 	height: 41px;
@@ -144,7 +160,7 @@ footer {
 
 /* home#brandpage */
 #home_bg {
-	background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/images/menumap/i3_s1.jpg');
+	background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/images/menumap/home_bg_sm.jpg');
 	background-position: center top;
 	margin-top: -20px;
 	height: 200px;
@@ -162,12 +178,22 @@ footer {
 
 @media (min-width: 992px) {
 	#home_bg {
-		background-image: url('/images/menumap/home_bg.jpg');
+		background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/images/menumap/home_bg.jpg');
+		background-position: center top;
+		height: 500px;
+		padding: 0 15px;
+		font-size: 30px;
+		p {
+			padding-top: 130px;
+		}
 	}
 }
 
 #home_blockquote {
 	margin-top: 20px;
+	blockquote span {
+		font-weight: 500;
+	}
 }
 
 #home_info {
@@ -175,11 +201,33 @@ footer {
 	font-size: 1.2em;
 }
 
-.blue_outline {
-	&:active, &:hover {
-		border: none;
-		background-color: initial;
-		box-shadow: 0 0 1px 1px #66afe9;
+@media (min-width: 992px) {
+	#home_blockquote {
+		margin: 40px 0;
+		.row {
+			.col-md-5 p {
+				text-align: center;
+				font-size: 50px;
+				line-height: 2.5;
+			}
+			blockquote {
+				font-size: 28px;
+				span {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+	iframe {
+		width: 600px;
+		height: 300px;
+	}
+	#home_info {
+		font-size: 28px;
+		margin: 45px 0;
+	}
+	#home_btn {	
+		font-size: 15px;
 	}
 }
 
