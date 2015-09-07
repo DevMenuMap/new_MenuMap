@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
 	# SEO
-  get "sitemap.xml" => "sitemap#index", :defaults => { format: 'xml' }
-  get "sitemap.atom" => "sitemap#naver_seo", :defaults => { format: 'atom' }, as: :naver_seo_atom
+  get "sitemap.xml"  => "sitemap#index",  	 defaults: { format: 'xml' }
+  get "sitemap.atom" => "sitemap#naver_seo", defaults: { format: 'atom' }, as: :naver_seo_atom
 
 	root "home#brandpage"
 
@@ -31,7 +31,9 @@ Rails.application.routes.draw do
 	# Restaurant and nested controllers
 	resources :restaurants, shallow: true do 
 		resources :rest_infos,	 except: [:index, :show]
-		resources :rest_errs, 	 except: [:index, :new]
+		resources :rest_errs, 	 except: [:index, :new] do
+			get 'modal', on: :member
+		end
 		resources :menu_titles,  except: [:index, :show, :new]
 		resources :menus, 		 	 except: [:index] do
 			# Cancel the menu editing operation.
@@ -59,6 +61,9 @@ Rails.application.routes.draw do
 
 	# Parsing blog results.
 	get 'blogs/blog_ajax'
+
+	# Share restaurant on SNS.
+	get 'socials/share_rest/:restaurant_id' => 'socials#share_rest', as: :share_rest
 
 	# Polymorphic picture controller
 	resources :pictures
@@ -102,24 +107,4 @@ Rails.application.routes.draw do
 	end
 
 	get "no_admin" => "admin/monitors#no_admin", as: :no_admin
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
 end

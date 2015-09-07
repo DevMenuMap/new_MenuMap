@@ -5,6 +5,7 @@ module Daum
 	### Constants
 	# API keys
 	SEARCH_KEY  = "61a98e1ad6ddb530bcb93294019b80b8"
+	KAKAO_JS_KEY = 'b70f6a7f613990d891d44aed583752a4'
 
 
 	### Instance methods

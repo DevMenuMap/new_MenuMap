@@ -43,7 +43,7 @@ class MymapSnapshotsController < ApplicationController
 
 	private
 		def request_to_fb(user)
-			fb_id = "http://52.69.51.63/users/" + user.username + "/MyMap"
+			fb_id = "http://menumap.co.kr/users/" + user.username + "/MyMap"
 			uri = URI.parse("https://graph.facebook.com")
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true

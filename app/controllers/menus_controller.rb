@@ -20,13 +20,13 @@ class MenusController < ApplicationController
 		end
 
 		if @menu.save
-			flash[:alert] = "Succeed menu#create"
+			flash[:alert] = "새로운 메뉴를 추가했습니다."
 		# If a new menu is invalid, destroy newly created menu_title also.
 		elsif new_title == true
 			@menu.menu_title.update(active: false)
-			flash[:alert] = "fail menu#create and rollback menu_title#create"
+			flash[:alert] = "메뉴 정보가 잘못되었습니다."
 		else
-			flash[:alert] = "Fail menu#create"
+			flash[:alert] = "메뉴 정보가 잘못되었습니다."
 		end
 
 		@menu_titles = @restaurant.menu_titles.reload
@@ -89,7 +89,7 @@ class MenusController < ApplicationController
 			# If fail in creating a new menu_title, return to restaurants#show
 			# and stop menus#create.
 			unless @menu_title.save
-				flash[:alert] = "fail menu_titles#create"
+				flash[:alert] = "메뉴 목록이 잘못되었습니다."
 				redirect_to restaurant_url(@restaurant) and return
 			end
 
