@@ -240,6 +240,22 @@ footer {
 	}
 }
 
+@media (min-width: 992px) {
+	#search {
+		> div.col-md-6 {
+			padding: 0 30px;
+		}
+	}
+	#mm_search {
+		legend {
+			font-size: 24px;
+		}
+		label {
+			font-weight: 400;
+		}
+	}
+}
+
 /* restaurants#index */
 a.rst_card_link {
 	color: initial;
