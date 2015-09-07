@@ -1,7 +1,7 @@
 <!-- Select one of the menu_titles of this restaurant or make a new menu_title -->
 <div class="form-group">
 	<%= f.select :menu_title_id, 
-				options_for_select(@menu_titles.map{ |m| [m.title_name, m.id] }.unshift(["메뉴 목록 추가하기", "new"]).unshift(["메뉴 목록을 선택해주세요.", "none"]), nil), {}, { class: "form-control" } %>
+				options_for_select(@menu_titles.map{ |m| [m.title_name, m.id] }.unshift(["메뉴 목록 추가하기", "new"]).unshift(["메뉴 목록을 선택해주세요.", "none"]), nil), {}, { class: "form-control", onchange: "expandTitleForm($(this))"} %>
 </div>
 
 <!-- Only when user wants to make a new menu_title for new menu -->
