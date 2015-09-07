@@ -260,6 +260,10 @@ footer {
 }
 
 /* restaurants#index */
+#rest_index {
+	padding: 0;
+}
+
 a.rst_card_link {
 	color: initial;
 	&:active, &:hover {
@@ -294,6 +298,18 @@ a.rst_card_link {
 		max-width: 200px;
 		margin: 5px 0 0 10px;
 		color: #999;
+	}
+}
+
+@media (min-width: 992px) {
+	.rst_index_card {
+		.name {
+			font-size: 1.2em;
+			max-width: none;
+		}
+		.content {
+			max-width: none;
+		}
 	}
 }
 
@@ -352,6 +368,7 @@ nav.pagination {
 	#rst_show_title {	
 		padding: 15px;
 		.name {
+			max-width: 470px;
 			h1 {
 				font-size: 24px;
 			}
@@ -551,6 +568,15 @@ li.menu {
 	.info {
 		clear: left;
 		@extend .grey_small_info;
+	}
+}
+
+@media (min-width: 992px) {
+	li.menu {
+		font-size: 100%;
+		.info {
+			font-size: 0.9em;
+		}
 	}
 }
 
