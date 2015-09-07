@@ -54,6 +54,12 @@ label {
 	font-weight: 500;
 }
 
+@media (min-width: 992px) {
+	h1, h4, label {
+		font-weight: 400;
+	}
+}
+
 .ubuntu {
 	font-family: 'Ubuntu';
 	font-weight: bold;
@@ -250,9 +256,6 @@ footer {
 		legend {
 			font-size: 24px;
 		}
-		label {
-			font-weight: 400;
-		}
 	}
 }
 
@@ -317,12 +320,17 @@ nav.pagination {
 }
 
 #rst_show_title {
+	padding: 5px 15px;
 	@extend .thick_bottom_border;
 	.name {
 		float: left; 
 		max-width: 260px;
 		h1 {
 			margin: 10px 0;
+			font-size: 1.5em;
+		}
+		> div {
+			font-size: 0.8em;
 		}
 	}
 	.right {
@@ -336,6 +344,20 @@ nav.pagination {
 		}
 		div {
 			margin: 5px 0;
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	#rst_show_title {	
+		padding: 15px;
+		.name {
+			h1 {
+				font-size: 24px;
+			}
+			> div {
+				font-size: 14px;
+			}
 		}
 	}
 }
@@ -580,12 +602,5 @@ li.menu {
 			width: initial;
 			margin: 0 3px;
 		}
-	}
-}
-
-/* rest_errs#new modal */
-#new_rest_err {
-	label {
-		font-weight: 500;
 	}
 }
