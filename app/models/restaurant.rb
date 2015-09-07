@@ -235,7 +235,7 @@ class Restaurant < ActiveRecord::Base
 		end
 	end
 
-	def self.ping
+	def self.ping(offset)
 		header = {
 			"User-agent" => "request",
 			"Host" => "apis.naver.com",
@@ -250,7 +250,9 @@ class Restaurant < ActiveRecord::Base
 		http = Net::HTTP.new(uri.host, uri.port)
 		http.use_ssl = true
 
-		args = { ping_url: 'http://menumap.co.kr/sitemap.atom' }
+		atom_url = 'http://menumap.co.kr/sitemap.atom?offset=' + offset.to_s
+
+		args = { ping_url: atom_url }
 		uri.query = URI.encode_www_form(args)
 
 		request = Net::HTTP::Post.new(uri.request_uri, header)
