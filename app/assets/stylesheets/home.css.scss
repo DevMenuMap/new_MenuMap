@@ -144,7 +144,8 @@ footer {
 
 /* home#brandpage */
 #home_bg {
-	background-image: url('/images/menumap/home_bg.jpg');
+	background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/images/menumap/i3_s1.jpg');
+	background-position: center top;
 	margin-top: -20px;
 	height: 200px;
 	color: white;
@@ -156,6 +157,12 @@ footer {
 	p {
 		margin: 0;
 		padding-top: 50px;
+	}
+}
+
+@media (min-width: 992px) {
+	#home_bg {
+		background-image: url('/images/menumap/home_bg.jpg');
 	}
 }
 
