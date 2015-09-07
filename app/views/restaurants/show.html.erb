@@ -123,13 +123,6 @@
 			}
 		});
 
-		$("#rest_err").click(function(){
-			$(".modal-title").html("음식점 정보가 틀렸나요?");
-			$(".modal-title").addClass("left_border_label");
-			$(".modal-title").css("border-color", "red");
-			$(".modal-body").html("<%= j(render partial: 'rest_errs/new') %>");
-		});
-
 		$("#new_rest_err").validate({
 			rules: {
 				'rest_err[presence_err]': { require_from_group: [1, ".rest_errs_group"] },

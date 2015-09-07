@@ -1,5 +1,5 @@
 class RestErrsController < ApplicationController
-	before_action :admin?, :except => [:create]
+	before_action :admin?, :except => [:create, :modal]
 	
   def index
 		@rest_errs = RestErr.all
@@ -15,9 +15,9 @@ class RestErrsController < ApplicationController
 		@rest_err.user_id = current_user.id if current_user
 
 		if @rest_err.save
-			flash[:alert] = "succeed rest_errs#create"
+			flash[:alert] = "음식점 정보 수정 요청이 저장되었습니다."
 		else
-			flash[:alert] = "fail rest_errs#create"
+			flash[:alert] = "음식점 정보 수정 요청을 저장하지 못했습니다."
 		end
 
 		# Single image upload
@@ -49,19 +49,6 @@ class RestErrsController < ApplicationController
 		end
 
 		redirect_to rest_errs_url
-
-		# Single image update
-		# img = params[:rest_err][:pictures_attributes]["0"][:img]
-		# @rest_err.pictures.create(img: img)
-
-		# Multiple images update
-		# should catch each picture's id and match it
-		# if params[:rest_err][:pictures_attributes]["0"][:img]
-		# 	0.upto(params.length - 1) do |k|
-		# 		img = params[:rest_err][:pictures_attributes]["#{k}"][:img]
-		# 		@rest_err.pictures.create(img: img)
-		# 	end
-		# end
 	end
 
 	def destroy
@@ -71,6 +58,15 @@ class RestErrsController < ApplicationController
 			flash[:alert] = "fail rest_err#destroy"
 		end
 		redirect_to rest_errs_url
+	end
+
+	# GET /rest_errs/:id/modal
+	def modal
+		@restaurant = Restaurant.find(params[:id])
+		@rest_err = RestErr.new
+		respond_to do |format|
+			format.js { render layout: false }
+		end
 	end
 
 	private

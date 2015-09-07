@@ -24,6 +24,8 @@
 	<% end %>
 
 	<li style="text-align: center;">
-		<a href="#myModal" data-toggle="modal" data-target="#myModal" id="rest_err" style="text-decoration: none;">음식점 정보가 틀렸나요?</a>
+		<%= link_to modal_rest_err_path(@restaurant), id: "rest_err", style: "text-decoration: none;", remote: true, data: { toggle: "modal", target: "#myModal" } do %>
+			음식점 정보가 틀렸나요?
+		<% end %>
 	</li>
 </ul>

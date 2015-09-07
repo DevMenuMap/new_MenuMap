@@ -31,7 +31,9 @@ Rails.application.routes.draw do
 	# Restaurant and nested controllers
 	resources :restaurants, shallow: true do 
 		resources :rest_infos,	 except: [:index, :show]
-		resources :rest_errs, 	 except: [:index, :new]
+		resources :rest_errs, 	 except: [:index, :new] do
+			get 'modal', on: :member
+		end
 		resources :menu_titles,  except: [:index, :show, :new]
 		resources :menus, 		 	 except: [:index] do
 			# Cancel the menu editing operation.
