@@ -12,8 +12,7 @@ Kakao.Link.createTalkLinkButton({
 	label: '<%= kakaotalk_link_label(@restaurant) %>',
   webButton: {
     text: 'MenuMap 위치보기',
-    // url: 'http://menumap.co.kr/restaurants/<%= @restaurant.id %>'
-    url: 'http://52.69.51.63:3000/restaurants/<%= @restaurant.id %>'
+    url: "<%= ENV['CURRENT_IP'] %>" + '/restaurants/' + '<%= @restaurant.id %>'
   }
 });
 </script>

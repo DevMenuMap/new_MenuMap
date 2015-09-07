@@ -1,4 +1,4 @@
-naver_atom_feed({xmlns: "http://webmastertool.naver.com", id: 'http://52.69.51.63:3000'}) do |feed|
+naver_atom_feed({xmlns: "http://webmastertool.naver.com", id: 'http://menumap.co.kr'}) do |feed|
 	feed.title("MenuMap")
 	feed.author do |a|
 		a.name("MenuMap")

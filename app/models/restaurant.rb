@@ -250,7 +250,7 @@ class Restaurant < ActiveRecord::Base
 		http = Net::HTTP.new(uri.host, uri.port)
 		http.use_ssl = true
 
-		args = { ping_url: 'http://52.69.51.63:3000/sitemap.atom' }
+		args = { ping_url: 'http://menumap.co.kr/sitemap.atom' }
 		uri.query = URI.encode_www_form(args)
 
 		request = Net::HTTP::Post.new(uri.request_uri, header)
