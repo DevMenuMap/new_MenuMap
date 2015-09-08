@@ -36,13 +36,21 @@ $(document).on('ready page:load', function() {
 	});
 
 	// Change menu list left border on click.
-	$('#menu_section a[aria-expanded="true"] span').css('border-left-color', '#23b300');
+	var firstTitle = $('#menu_section a[aria-expanded="true"]')
+	var green = '#23b300'
 
-	$('#menu_section li').on('show.bs.collapse', function(){
-		$(this).find('span').css('border-left-color', '#23b300');
-	});
+	// When the page is loaded for the first time.
+	firstTitle.data('border-color', green);
+	firstTitle.find('span').css('border-color', green);
 
-	$('#menu_section li').on('hide.bs.collapse', function(){
-		$(this).find('span').css('border-left-color', 'orange');
+	// After the first change.
+	$('a[data-border-color]').on('click', function() {
+		if ( $(this).data('border-color') == green ) {
+			$(this).data('border-color', 'orange');
+			$(this).find('span').css('border-color', 'orange');
+		} else {
+			$(this).data('border-color', green);
+			$(this).find('span').css('border-color', green);
+		}
 	});
 });
