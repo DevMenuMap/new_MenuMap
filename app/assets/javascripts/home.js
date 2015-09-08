@@ -1,3 +1,11 @@
+function redOutline(target) {
+	target.css({
+		'border-color' : 'red',
+		'outline'			 : '0',
+		'box-shadow'	 : 'inset 0 1px 1px rgba(0,0,0,.075),0 0 4px red'
+	});
+}
+
 $(document).on('ready page:load', function() {
 	$("#category_select").change( function() {
 		$.ajax({
