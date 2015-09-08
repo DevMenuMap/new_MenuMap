@@ -164,6 +164,12 @@ footer {
 	}
 }
 
+@media (min-width: 992px) {
+	footer {
+		background-color: #494949;
+	}
+}
+
 /* home#brandpage */
 #home_bg {
 	background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/images/menumap/home_bg_sm.jpg');
@@ -277,7 +283,7 @@ a.rst_card_link {
 	padding: 10px 0;
 	border-bottom: 1px solid #f0f0f0;
 	&:active {
-		background-color: #efefef;
+		background-color: #bed4ff;
 	}
 	.rst_img {
 		width: 120px; 
@@ -395,6 +401,12 @@ nav.pagination {
 				padding: 5px 0;
 			}
 		}
+	}
+}
+
+#rst_show_map {
+	&:hover {
+		cursor: pointer;
 	}
 }
 
