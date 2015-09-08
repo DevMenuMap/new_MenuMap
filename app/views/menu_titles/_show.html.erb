@@ -1,5 +1,5 @@
 <li id="menu_title_<%= menu_title.id %>">
-	<%= link_to "#title_section_#{menu_title.id}", role: "button", data: { toggle: "collapse", border_color: "#e5e5e5" } do %>
+	<%= link_to "#title_section_#{menu_title.id}", role: "button", onclick: "toggleLabelColor($(this))", data: { toggle: "collapse", border_color: "#e5e5e5" } do %>
 		<div class="menu_title" style="width: 100%">
 			<div class="title_name"><span><%= menu_title.title_name %></span></div>
 			<div class="title_info"><%= menu_title.title_info %></div>

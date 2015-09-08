@@ -12,6 +12,19 @@ function expandTitleForm(selectedTitle) {
 	};
 };
 
+// Toggle left_border_label's color on click.
+function toggleLabelColor(title) {
+	var green = '#23b300';
+
+	if ( title.data('border-color') == green ) {
+		title.data('border-color', 'orange');
+		title.find('span').css('border-color', 'orange');
+	} else {
+		title.data('border-color', green);
+		title.find('span').css('border-color', green);
+	};
+};
+
 $(document).on('ready page:load', function() {
 	$('#new_menu').validate({
 		rules: {
@@ -35,22 +48,6 @@ $(document).on('ready page:load', function() {
 		$(this).find("i").toggleClass("fa-chevron-up");
 	});
 
-	// Change menu list left border on click.
-	var firstTitle = $('#menu_section a[aria-expanded="true"]')
-	var green = '#23b300'
-
 	// When the page is loaded for the first time.
-	firstTitle.data('border-color', green);
-	firstTitle.find('span').css('border-color', green);
-
-	// After the first change.
-	$('a[data-border-color]').on('click', function() {
-		if ( $(this).data('border-color') == green ) {
-			$(this).data('border-color', 'orange');
-			$(this).find('span').css('border-color', 'orange');
-		} else {
-			$(this).data('border-color', green);
-			$(this).find('span').css('border-color', green);
-		}
-	});
+	$('#menu_section a[aria-expanded="true"] span').css('border-color', '#23b300');
 });
