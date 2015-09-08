@@ -41,13 +41,13 @@ $(document).on('ready page:load', function() {
 		});
 	});
 
-	$("#menu_section ul li:first-child a > div").click();
-
 	// Change chevron on cascading dropdown.
 	$('#new_menu_section > a > div').click(function() {
 		$(this).find("i").toggleClass("fa-chevron-up");
 	});
 
+	// Prepare for toggleLabelColor().
+	$('#menu_section ul li a').data('border-color', '#e5e5e5')
 	// When the page is loaded for the first time.
-	$('#menu_section a[aria-expanded="true"] span').css('border-color', '#23b300');
+	$("#menu_section ul li:first-child a > div").click();
 });
