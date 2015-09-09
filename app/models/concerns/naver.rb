@@ -58,7 +58,7 @@ module Naver
 
 	# Return array of search result
 	def naver_blog_search
-		query = short_addrs + " " + short_name
+		query = short_name + " " + short_addrs
 		FILTER_RULES.each do |rule|
 			query += " -" + rule
 		end

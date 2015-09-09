@@ -15,9 +15,9 @@ class RestErrsController < ApplicationController
 		@rest_err.user_id = current_user.id if current_user
 
 		if @rest_err.save
-			flash[:alert] = "음식점 정보 수정 요청이 저장되었습니다."
+			flash.now[:success] = "음식점 정보 수정 요청이 저장되었습니다."
 		else
-			flash[:alert] = "음식점 정보 수정 요청을 저장하지 못했습니다."
+			flash.now[:danger] = "음식점 정보 수정 요청을 저장하지 못했습니다."
 		end
 
 		# Single image upload
@@ -31,7 +31,9 @@ class RestErrsController < ApplicationController
 			end
 		end
 
-		redirect_to restaurant_path(@rest_err.restaurant)
+		respond_to do |format|
+			format.js { render layout: false }
+		end
 	end
 
   def edit

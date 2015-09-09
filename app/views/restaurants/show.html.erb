@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: -20px; padding: 0;">
+<div class="container" style="padding: 0;">
 	<div class="row" style="margin: 0;">
 		<div class="col-md-6 col-md-offset-3" style="padding: 0;">
 
@@ -10,10 +10,10 @@
 				</div>
 			<% end %>
 
-			<div id="rst_show_title" class="col-xs-12" style="padding: 5px 15px;">
+			<div id="rst_show_title" class="col-xs-12">
 				<div class="name">
-					<h1 style="font-size: 1.5em;"><%= @restaurant.name %></h1>
-					<div style="font-size: 0.8em; color: #999;">
+					<h1><%= @restaurant.name %></h1>
+					<div style="color: #999;">
 						<p><%= @restaurant.subcategory.name %> <%= delivery_possible_with_middot(@restaurant) %></p>
 					</div>
 				</div>

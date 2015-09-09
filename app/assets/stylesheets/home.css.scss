@@ -54,6 +54,12 @@ label {
 	font-weight: 500;
 }
 
+@media (min-width: 992px) {
+	h1, h4, label {
+		font-weight: 400;
+	}
+}
+
 .ubuntu {
 	font-family: 'Ubuntu';
 	font-weight: bold;
@@ -92,6 +98,7 @@ label {
 	&:hover, &:focus {
 		color: white;
 		background-color: $facebook_link_blue;
+		border: 1px solid $facebook_link_blue;
 	}
 }
 	
@@ -103,6 +110,14 @@ label {
 	&:hover, &:focus {
 		color: white;
 		background-color: #d1d1d1;
+	}
+}
+
+.blue_outline {
+	&:active, &:hover {
+		border: none;
+		background-color: initial;
+		box-shadow: 0 0 1px 1px #66afe9;
 	}
 }
 
@@ -129,6 +144,14 @@ nav .navbar-header {
 	}
 }
 
+@media (min-width: 992px) {
+	nav .navbar-header {
+		.navbar-brand {
+			font-size: 25px;
+		}
+	}
+}
+
 /* footer */
 footer {
 	height: 41px;
@@ -142,11 +165,16 @@ footer {
 	}
 }
 
+@media (min-width: 992px) {
+	footer {
+		background-color: #494949;
+	}
+}
+
 /* home#brandpage */
 #home_bg {
-	background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/images/menumap/i3_s1.jpg');
+	background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/images/menumap/home_bg_sm.jpg');
 	background-position: center top;
-	margin-top: -20px;
 	height: 200px;
 	color: white;
 	text-align: center;
@@ -162,12 +190,22 @@ footer {
 
 @media (min-width: 992px) {
 	#home_bg {
-		background-image: url('/images/menumap/home_bg.jpg');
+		background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/images/menumap/home_bg.jpg');
+		background-position: center top;
+		height: 500px;
+		padding: 0 15px;
+		font-size: 30px;
+		p {
+			padding-top: 130px;
+		}
 	}
 }
 
 #home_blockquote {
 	margin-top: 20px;
+	blockquote span {
+		font-weight: 500;
+	}
 }
 
 #home_info {
@@ -175,11 +213,33 @@ footer {
 	font-size: 1.2em;
 }
 
-.blue_outline {
-	&:active, &:hover {
-		border: none;
-		background-color: initial;
-		box-shadow: 0 0 1px 1px #66afe9;
+@media (min-width: 992px) {
+	#home_blockquote {
+		margin: 40px 0;
+		.row {
+			.col-md-5 p {
+				text-align: center;
+				font-size: 50px;
+				line-height: 2.5;
+			}
+			blockquote {
+				font-size: 28px;
+				span {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+	iframe {
+		width: 600px;
+		height: 300px;
+	}
+	#home_info {
+		font-size: 28px;
+		margin: 45px 0;
+	}
+	#home_btn {	
+		font-size: 15px;
 	}
 }
 
@@ -192,7 +252,24 @@ footer {
 	}
 }
 
+@media (min-width: 992px) {
+	#search {
+		> div.col-md-6 {
+			padding: 0 30px;
+		}
+	}
+	#mm_search {
+		legend {
+			font-size: 24px;
+		}
+	}
+}
+
 /* restaurants#index */
+#rest_index {
+	padding: 0;
+}
+
 a.rst_card_link {
 	color: initial;
 	&:active, &:hover {
@@ -206,7 +283,7 @@ a.rst_card_link {
 	padding: 10px 0;
 	border-bottom: 1px solid #f0f0f0;
 	&:active {
-		background-color: #efefef;
+		background-color: #bed4ff;
 	}
 	.rst_img {
 		width: 120px; 
@@ -227,6 +304,18 @@ a.rst_card_link {
 		max-width: 200px;
 		margin: 5px 0 0 10px;
 		color: #999;
+	}
+}
+
+@media (min-width: 992px) {
+	.rst_index_card {
+		.name {
+			font-size: 1.2em;
+			max-width: none;
+		}
+		.content {
+			max-width: none;
+		}
 	}
 }
 
@@ -253,12 +342,17 @@ nav.pagination {
 }
 
 #rst_show_title {
+	padding: 5px 15px;
 	@extend .thick_bottom_border;
 	.name {
 		float: left; 
 		max-width: 260px;
 		h1 {
 			margin: 10px 0;
+			font-size: 1.5em;
+		}
+		> div {
+			font-size: 0.8em;
 		}
 	}
 	.right {
@@ -272,6 +366,21 @@ nav.pagination {
 		}
 		div {
 			margin: 5px 0;
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	#rst_show_title {	
+		padding: 15px;
+		.name {
+			max-width: 470px;
+			h1 {
+				font-size: 24px;
+			}
+			> div {
+				font-size: 14px;
+			}
 		}
 	}
 }
@@ -292,6 +401,12 @@ nav.pagination {
 				padding: 5px 0;
 			}
 		}
+	}
+}
+
+#rst_show_map {
+	&:hover {
+		cursor: pointer;
 	}
 }
 
@@ -468,6 +583,15 @@ li.menu {
 	}
 }
 
+@media (min-width: 992px) {
+	li.menu {
+		font-size: 100%;
+		.info {
+			font-size: 0.9em;
+		}
+	}
+}
+
 #new_menu_section > a {
 	&:active, &:hover, &:focus {
 		text-decoration: none;
@@ -516,12 +640,5 @@ li.menu {
 			width: initial;
 			margin: 0 3px;
 		}
-	}
-}
-
-/* rest_errs#new modal */
-#new_rest_err {
-	label {
-		font-weight: 500;
 	}
 }

@@ -39,7 +39,9 @@
 			<%= render "layouts/header" %>
 
 			<!-- Flash -->
-			<%= render "layouts/flash" %>
+			<div id="flash" style="width: 100%; position: fixed; top: 0;">
+				<%= render "layouts/flash" %>
+			</div>
 
 			<%= yield %>
 

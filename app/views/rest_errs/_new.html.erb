@@ -1,4 +1,4 @@
-<%= form_for [@restaurant, @rest_err], html: { mutipart: true } do |f| %>
+<%= form_for [@restaurant, @rest_err], remote: true, html: { mutipart: true } do |f| %>
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
 
 	<%= render "rest_errs/field", f: f %>

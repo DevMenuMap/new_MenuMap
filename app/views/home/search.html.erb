@@ -1,6 +1,6 @@
 <% provide(:page_title, "MenuMap 검색") %>
 
-<div class="container">
+<div id="search" class="container" style="margin-top: 20px;">
 	<div class="col-md-6 col-md-offset-3">
 		<%= form_tag restaurants_path, method: :get, id: "mm_search", name: nil do %>
 			<legend>음식점 검색</legend>
@@ -55,11 +55,13 @@
 </div>
 
 <script>
+	// Initialize search query.
 	function resetSubcat() {
 		$("#subcategory_select").html("<%= 
 			j(options_for_select(@subcategories.map{ |s| [s.name, s.id]}, nil)) 
 		%>")
 	};
+
 	/**
 	$('#curr_pos').change( function() {
 		if ( $('#curr_pos').is(':checked') == true ) {
