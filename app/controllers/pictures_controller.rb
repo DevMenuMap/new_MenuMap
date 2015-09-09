@@ -16,7 +16,11 @@ class PicturesController < ApplicationController
 		params[:picture][:img].each do |img|
 			@picture = Picture.new(img: img)
 			@picture.attributes = picture_params
-			@picture.save
+			if @picture.save
+				flash[:success] = '사진을 저장했습니다.'
+			else
+				flash[:danger] = '사진 저장에 실패했습니다.'
+			end
 		end
 
 		redirect_to :back
