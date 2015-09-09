@@ -1,16 +1,20 @@
 <% if flash.any? %>
 	<% flash.each do |msg_type, msg| %>
-		<div class="alert alert-info" role="alert" style="position: fixed; display: none; top: 0;">
-			<%= msg %> <strong style="cursor: pointer;" onclick="closeAlert()">x</strong>
+		<div class="container" style="padding: 0;">
+			<div class="col-md-6 col-md-offset-3" style="padding: 0;">
+				<div class="alert alert-<%= msg_type %>" role="alert">
+					<%= msg %> <strong style="cursor: pointer; float: right;" onclick="closeAlert()">x</strong>
+				</div>
+			</div>
 		</div>
 	<% end %>
 <% end %>
 
 <script>
 	$(document).ready( function() {
-		if ("<%=flash[:alert]%>" != '') {
-			$('.alert').delay(1000).fadeIn("slow");
-			$('.alert').delay(3000).fadeOut("slow");
+		if ("<%= flash %>" != '') {
+			$('.alert').delay(100).fadeIn("slow");
+			$('.alert').delay(800).fadeOut("slow");
 		};
 	});
 
