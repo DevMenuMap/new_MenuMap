@@ -22,11 +22,8 @@ class MenusController < ApplicationController
 		if @menu.save
 			flash.now[:success] = "새로운 메뉴를 추가했습니다."
 
-			# Update menu_on when the new menu is the first one.
-			@restaurant.update(menu_on: 1) unless @restaurant.menu_on > 0 
-
-			# Update rest_infos.menu_updated_at.
-			RestInfo.find(params[:restaurant_id]).update(menu_updated_at: Time.now)
+			# Update menu_on, menu_updated_at and @first_menu_created.
+			update_associates
 
 		# If a new menu is invalid, destroy newly created menu_title also.
 		elsif new_title == true
@@ -122,5 +119,16 @@ class MenusController < ApplicationController
 				format.html { redirect_to restaurant_url(@restaurant) }
 				format.js		{ render layout: false }
 			end
+		end
+
+		def update_associates
+			# Update menu_on when the new menu is the first one.
+			unless @restaurant.menu_on > 0 
+				@restaurant.update(menu_on: 1) 
+				@first_menu_created = true
+			end
+
+			# Update rest_infos.menu_updated_at.
+			RestInfo.find(params[:restaurant_id]).update(menu_updated_at: Time.now)
 		end
 end
