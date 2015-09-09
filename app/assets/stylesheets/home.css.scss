@@ -98,6 +98,7 @@ label {
 	&:hover, &:focus {
 		color: white;
 		background-color: $facebook_link_blue;
+		border: 1px solid $facebook_link_blue;
 	}
 }
 	
