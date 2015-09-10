@@ -26,7 +26,7 @@ module MetaTagsHelper
 		description	 = "음식점 #{restaurant.name}("
 		description	+= "#{restaurant.category.name}) "
 		description += "주요상권 및 위치: "
-		description += "[#{restaurant.title_addr_tags(2)}] " if restaurant.title_addr_tags(1).present?
+		description += "[#{restaurant.title_addr_tags(10)}] " if restaurant.title_addr_tags(1).present?
 		description += "(#{restaurant.admin_dong}) #{restaurant.addr}"
 
 		# 4~5 menus would appear on meta description.
