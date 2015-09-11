@@ -30,6 +30,16 @@ $facebook_link_blue: #5890ff;
 	outline-offset: -2px;	
 }
 
+.page_title {
+	font-size: 18px;
+}
+
+@media (min-width: 992px) {
+	.page_title {
+		font-size: 24px;
+	}
+}
+
 table, th, td {
 	border: 1px solid black;
 }
@@ -276,7 +286,6 @@ footer {
 #qna {
 	> div {
 		> h1 {
-			font-size: 18px;
 			@extend .grey_thin_border;
 		}
 		> ul {
@@ -294,14 +303,6 @@ footer {
 		@extend .left_border_label;
 		border-left-color: #e5e5e5;
 		font-weight: 500;
-	}
-}
-
-@media (min-width: 992px) {
-	#qna {
-		h1 {
-			font-size: 24px;
-		}
 	}
 }
 
