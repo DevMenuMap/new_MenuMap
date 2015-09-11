@@ -28,8 +28,25 @@ namespace :restaurants do
 		end
 	end
 
-	desc 'Ping naver for seo'
-	task :ping => :environment do
-		puts Restaurant.ping
+	desc 'Ping naver for syndication'
+	task :ping, [:start] => :environment do |t, args|
+		args.with_default(start: nil)
+
+		# When there is an argument.
+		if args.start
+			args.start.split.each do |n|
+				offset = n.to_i*100
+				puts Restaurant.ping(offset)
+			end
+		# When there was no arguments, ping every restaurants.
+		else
+			total = Restaurant.count
+			total % 100 == 0 ? max = total - 1 : max = total
+
+			0.upto(max).each do |n|
+				offset = n*100
+				puts Restaurant.ping(offset)
+			end
+		end
 	end
 end

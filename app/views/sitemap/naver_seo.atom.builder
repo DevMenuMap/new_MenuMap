@@ -4,8 +4,8 @@ naver_atom_feed({xmlns: "http://webmastertool.naver.com", id: 'http://menumap.co
 		a.name("MenuMap")
 	end
 	feed.updated(@restaurants[0].created_at) if @restaurants.length > 0
-	feed.link(:rel => 'site', :href => (request.protocol + request.host_with_port),
-						:title => 'MenuMap')
+	feed.link(rel: 'site', href: (request.protocol + request.host_with_port),
+						title: 'MenuMap')
 
 	@restaurants.each do |restaurant|
 		feed.naver_entry(restaurant, {id: restaurant_url(restaurant)}) do |entry|
@@ -15,7 +15,8 @@ naver_atom_feed({xmlns: "http://webmastertool.naver.com", id: 'http://menumap.co
 			end
 			entry.updated(restaurant.updated_at.xmlschema)
 			entry.published(restaurant.created_at.xmlschema)
-			entry.link(:rel => 'via', :href => (request.protocol + request.host_with_port))
-			entry.content(restaurant_meta_description(restaurant), :type => 'html')
+			entry.link(rel: 'via', href: (request.protocol + request.host_with_port))
+			entry.content(restaurant_meta_description(restaurant), type: 'html')
 		end
+	end
 end
