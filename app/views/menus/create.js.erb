@@ -1,3 +1,16 @@
+// When the created menu was the first menu of that restaurant,
+// replace #no_menu with menu
+<% if @first_menu_created %>
+	$('#no_menu').replaceWith("<div id='menu_section'><ul class='col-xs-12' style='list-style: none;'></ul></div>");
+<% end %>
+
 $("#flash").html("<%= j render "layouts/flash" %>");
 $("#menu_section > ul").html("<%= j render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>");
 $("#menu_form").html("<%= j render partial: "menus/new", locals: { menu: Menu.new } %>");
+
+// Click newly added menu's title.
+// When menu is successfully saved.
+<% if @menu.id %>
+	$('#menu_title_<%= @menu.menu_title.id %> div.menu_title').click();
+	// $('#menu_<#%= @menu.id %> .name_info').css('color', '#5890ff')
+<% end %>

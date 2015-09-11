@@ -4,6 +4,7 @@ function redOutline(target) {
 		'outline'			 : '0',
 		'box-shadow'	 : 'inset 0 1px 1px rgba(0,0,0,.075),0 0 4px red'
 	});
+	target.focus();
 }
 
 $(document).on('ready page:load', function() {

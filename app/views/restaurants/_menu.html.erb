@@ -24,7 +24,7 @@
 
 <div id="new_menu_section">
 	<%= link_to "#menu_form", { role: "button", data: { toggle: "collapse" } } do %>
-		<div>메뉴 추가 <i class="fa fa-chevron-down"></i></div>
+		<div>메뉴 추가 <i class="fa fa-chevron-down" style="width: initial;"></i></div>
 	<% end %>
 	<div id="menu_form" class="panel-collapse collapse">
 		<%= render partial: "menus/new", locals: { menu: @menu } %>

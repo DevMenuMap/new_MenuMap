@@ -55,6 +55,11 @@
 </div>
 
 <script>
+	$(document).on('ready page:load', function() {
+		// Focus addr input.
+		$('#addrcomplete').focus();
+	});
+
 	// Initialize search query.
 	function resetSubcat() {
 		$("#subcategory_select").html("<%= 

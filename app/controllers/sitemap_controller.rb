@@ -11,7 +11,7 @@ class SitemapController < ApplicationController
   end
 
   def naver_seo
-  	@restaurant = Restaurant.limit(100).offset(params[:offset].to_i)
+  	@restaurants = Restaurant.limit(100).offset(params[:offset].to_i)
 
   	respond_to do |format|
   		format.atom

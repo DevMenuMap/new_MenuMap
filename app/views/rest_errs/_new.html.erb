@@ -6,3 +6,9 @@
 		<%= f.button "완료", class: "btn btn_submit" %>
 	</div>
 <% end %>
+
+<script>
+	$('#new_rest_err').on('submit', function(e) {
+		if ( !restErrValidation() ) { return false };
+	});
+</script>

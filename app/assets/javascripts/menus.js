@@ -94,8 +94,9 @@ $(document).on('ready page:load', function() {
 	});
 
 	// Change chevron on cascading dropdown.
-	$('#new_menu_section > a > div').click(function() {
-		$(this).find("i").toggleClass("fa-chevron-up");
+	$('#new_menu_section > a > div').on('click', function() {
+		$(this).find('i').toggleClass('fa-chevron-up');
+		$(this).find('i').toggleClass('fa-chevron-down');
 	});
 
 	// Prepare for toggleLabelColor().

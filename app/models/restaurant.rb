@@ -361,7 +361,7 @@ class Restaurant < ActiveRecord::Base
 	# Return representative addr_tags for this restaurant.
 	def title_addr_tags(n) 
 		title = []
-		addresses.take(n).map{ |a| title << a.name.gsub(/^.*\s\-\s/, '') }
+		addresses.take(n).map{ |a| title << a.name.split(/\s-\s/)[0] }
 		title.join(', ')
 	end
 
