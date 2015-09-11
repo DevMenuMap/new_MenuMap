@@ -135,12 +135,19 @@ body {
 }
 	
 /* header */
-nav .navbar-header {
-	.navbar-brand {
-		font-size: 18px;
+nav.navbar-default {
+	.navbar-nav > li > a {
+		&:focus, &:hover {
+			background-color: #eee;
+		}
 	}
-	button.navbar-toggle {
-		@extend .blue_outline;	
+	.navbar-header {
+		.navbar-brand {
+			font-size: 18px;
+		}
+		button.navbar-toggle {
+			@extend .blue_outline;	
+		}
 	}
 }
 
