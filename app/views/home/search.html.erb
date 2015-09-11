@@ -1,21 +1,81 @@
-<h1>Search page</h1>
+<% provide(:page_title, "MenuMap 검색") %>
 
-<%= form_tag search_path, method: :get, name: nil do %>
-	<!-- Autocomplete recommended address name with Addrcomplete model 
-			 by jquery-ui autocomplete function 											 -->
-	<%= label_tag :address, "set addr" %>
-	<%= text_field_tag :address, nil, 
-							{ id: "addrcomplete", placeholder: "gogo placeholder" } %>
+<div id="search" class="container" style="margin-top: 20px;">
+	<div class="col-md-6 col-md-offset-3">
+		<%= form_tag restaurants_path, method: :get, id: "mm_search", name: nil do %>
+			<legend>음식점 검색</legend>
 
-	<%= label_tag :category, "category" %>
+			<!-- Autocomplete recommended address name with Addrcomplete model 
+					 by jquery-ui autocomplete function 											 -->
+			<div class="form-group" style="margin-bottom: 0">
+				<%= label_tag :address, "지역" %>
+				<%= text_field_tag :address, nil, 
+										{ id: "addrcomplete", class: "form-control", placeholder: "예) 서울대입구역, 신촌, 낙성대" } %>
 
-	<!-- options_for_select(options[text, value], selected) -->
-	<%= select_tag nil, 
-				options_for_select(@categories.map{ |c| [c.name, c.id] }, nil), 
-																					{ id: "category_select" } %>
-	<%= select_tag :category, 
-				options_for_select(@subcategories.map{ |s| [s.name, s.id] }, nil),
-																					{ id: "subcategory_select" } %>
+				<div style="text-align: right">
+					<%= check_box_tag :delivery %>
+					<%= label_tag :delivery, "배달 음식점" %>
+				</div>
+			</div>
 
-	<%= submit_tag "gogogo", name: nil %>
-<% end %>
+			<div class="form-group">
+				<div><%= label_tag :category, "음식 분류" %></div>
+
+				<div style="margin-bottom: 50px;">
+					<!-- options_for_select(options[text, value], selected) -->
+					<div class="col-xs-6" style="padding: 0 5px 0 0;">
+						<%= select_tag nil, 
+									options_for_select(@categories.map{ |c| [c.name, c.id] }, nil), 
+																										{ id: "category_select", class: "form-control" } %>
+					</div>
+					<div class="col-xs-6" style="padding: 0 0 0 5px;">
+						<%= select_tag :category, 
+									options_for_select(@subcategories.map{ |s| [s.name, s.id] }, nil),
+																										{ id: "subcategory_select", class: "form-control" } %>
+					</div>
+				</div>
+			</div>
+
+			<!--%= label_tag :currentPosition, "CurrentPosition" %-->
+			<!--%= hidden_field_tag :currentPosition, nil, { id: "curr_lat", name: "lat" } %-->
+			<!--%= hidden_field_tag :currentPosition, nil, { id: "curr_lng", name: "lng" } %-->
+			<!--%= check_box_tag :curr_pos, 1, false, :onclick => "geoFindMe()" %-->
+
+			<div class="form-group">
+				<%= label_tag :name, "음식점 이름" %>
+				<%= text_field_tag :name, nil, { class: "form-control" } %>
+			</div>
+
+			<div style="text-align: right">
+				<%= button_tag "취소", { type: :reset, class: "btn btn_cancel", name: nil, onclick: "resetSubcat()" } %>
+				<%= button_tag "검색", { id: "submitbutton", class: "btn btn_submit", name: nil } %>
+			</div>
+		<% end %>
+	</div>
+</div>
+
+<script>
+	$(document).on('ready page:load', function() {
+		// Focus addr input.
+		$('#addrcomplete').focus();
+	});
+
+	// Initialize search query.
+	function resetSubcat() {
+		$("#subcategory_select").html("<%= 
+			j(options_for_select(@subcategories.map{ |s| [s.name, s.id]}, nil)) 
+		%>")
+	};
+
+	/**
+	$('#curr_pos').change( function() {
+		if ( $('#curr_pos').is(':checked') == true ) {
+			$('#addrcomplete').prop('disabled', true);
+			$('#addrcomplete').hide();
+		} else {
+			$('#addrcomplete').prop('disabled', false);
+			$('#addrcomplete').show();
+		};
+	});
+	**/
+</script>

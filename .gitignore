@@ -15,6 +15,14 @@
 
 # Images
 /app/assets/images
+/public/images
 
-# Seed data
+# Seed data and csv parsing file.
 /db/seed_data
+/lib/tasks/csv.rake
+
+# Different OS has different local path to mysql
+/config/database.yml
+
+# Macbook
+*.DS_Store

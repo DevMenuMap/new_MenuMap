@@ -1,0 +1,27 @@
+<div id="star_rating_form" data-score=<%= @mymap.rating %>></div>
+
+<%= f.label :group %>
+<% 1.upto(9) do |n| %>
+	<label for="mymap_group_<%= n %>"> 
+		<%= image_tag "/images/mymaps/mymap_group_icon_#{n}.svg", id: "mymap_group_icon_#{n}", style: "height: 20px; width: 20px;" %> 
+		<%= f.radio_button :group, n %>
+	</label>
+<% end %>
+
+<%= f.label :contents %>
+<%= f.text_field :contents %>
+
+<script>
+	$(document).ready( function() {
+		slangCheck("#new_mymap", "#mymap_contents");
+	});
+	$("#star_rating_form").raty({
+		path: "/images/star_rating/",
+		half: true,
+		scoreName: "mymap[rating]",
+		// In mymaps#edit, star rating should show for references.
+		score: function() {
+			return parseInt($(this).attr("data-score")) / 2;
+		}
+	});
+</script>

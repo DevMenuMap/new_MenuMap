@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  address_id: 
+  restaurant_id: 
+  active: false
+
+two:
+  address_id: 
+  restaurant_id: 
+  active: false

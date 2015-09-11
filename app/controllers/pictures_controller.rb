@@ -1,4 +1,6 @@
 class PicturesController < ApplicationController
+	before_action :admin?, except: :create
+	
   def index
 		@pictures = Picture.all
   end
@@ -11,14 +13,17 @@ class PicturesController < ApplicationController
   end
 
 	def create
-		@picture = Picture.new(picture_params)
-		if @picture.save
-			flash[:alert] = "succeed pictures#create"
-			redirect_to pictures_url
-		else
-			flash[:alert] = "fail pictures#create"
-			redirect_to new_picture_url
+		params[:picture][:img].each do |img|
+			@picture = Picture.new(img: img)
+			@picture.attributes = picture_params
+			if @picture.save
+				flash[:success] = '사진을 저장했습니다.'
+			else
+				flash[:danger] = '사진 저장에 실패했습니다.'
+			end
 		end
+
+		redirect_to :back
 	end
 
   def edit
@@ -46,6 +51,7 @@ class PicturesController < ApplicationController
 
 	private
 		def picture_params
-			params.require(:picture).permit(:img)
+			params.require(:picture).permit(:imageable_type, :imageable_id, 
+																			:user_id)
 		end
 end

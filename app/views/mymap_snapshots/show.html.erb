@@ -1,0 +1,6 @@
+<div id="naver_map"></div>
+
+<script>
+	$(document).on("page:load", loadNaverMap(<%= @lat %>, <%= @lng %>, <%= @level %>));
+	$(document).ready(function(){ showMarkers(<%= @coord_array %>)});
+</script>

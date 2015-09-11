@@ -1,0 +1,32 @@
+<% if @menu_titles.blank? %>
+	<div id="no_menu">
+		<div class="row" style="margin: 0; padding: 0 15px 15px;">
+			<div class="col-xs-10 col-xs-offset-1" style="text-align: center; margin-top: 10px;">
+				현재 등록된 메뉴가 없습니다.</br>
+				메뉴를 직접 등록해주세요.
+			</div>
+		</div>
+	</div>
+
+<script>
+	$(document).on("ready page:load", function() {
+		$("#new_menu_section").css("margin-top", "10px");
+	});
+</script>
+
+<% else %>
+	<div id="menu_section">
+		<ul class="col-xs-12" style="list-style: none;">
+			<%= render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>
+		</ul>
+	</div>
+<% end %>
+
+<div id="new_menu_section">
+	<%= link_to "#menu_form", { role: "button", data: { toggle: "collapse" } } do %>
+		<div>메뉴 추가 <i class="fa fa-chevron-down" style="width: initial;"></i></div>
+	<% end %>
+	<div id="menu_form" class="panel-collapse collapse">
+		<%= render partial: "menus/new", locals: { menu: @menu } %>
+	</div>
+</div>

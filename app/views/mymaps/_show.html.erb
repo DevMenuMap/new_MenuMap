@@ -1,0 +1,43 @@
+<table>
+	<tr>
+		<th>mymap_id</th>
+		<th>restaurant_id</th>
+		<th>rating</th>
+		<th>group</th>
+		<th>contents</th>
+	</tr>
+
+	<tr>
+		<td><%= @mymap.id %></td>
+		<td><%= @mymap.restaurant_id %></td>
+		
+		<% if !@mymap.rating.blank? && @mymap.rating != 0 %>
+			<td class="star_rating" data-score=<%= @mymap.rating%>></td>
+		<% else %>
+			<td></td>
+		<% end %>
+
+		<% if @mymap.group != 0 %>
+			<td><%= image_tag "/images/mymaps/mymap_group_icon_" + @mymap.group.to_s + ".svg", id: "mymap_group_icon_" + @mymap.group.to_s, style: "height: 20px; width: 20px;" %></td>
+		<% else %>
+			<td></td>
+		<% end %>
+
+		<td><%= @mymap.contents %></td>
+	</tr>
+
+	<tr>
+		<td><%= link_to "edit_mymap", edit_mymap_path(@mymap), { id: "edit_mymap_button", remote: true } %></td>
+		<td><%= link_to "destroy_mymap", mymap_path(@mymap), { id: "destroy_mymap_button", method: :delete, remote: true, data: {dismiss: "modal"} } %></td>
+	</tr>
+</table>
+
+<script>
+	$(".star_rating").raty({
+		path: "/images/star_rating/",
+		readOnly: true,
+		score: function() {
+			return parseInt($(this).attr("data-score")) / 2;
+		}
+	});
+</script>

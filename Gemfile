@@ -13,8 +13,6 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-# Prevent jquery from not working with page:load.
-gem 'jquery-turbolinks'
 # Turbolinks makes following links in your web application faster. 
 # Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -27,10 +25,20 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # User & Admin
 gem 'devise'
+# Facebook
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 # Image uploader & processor
 gem 'paperclip', '~> 4.2'
 gem 'aws-sdk', 	 '~> 1.6'
+
+# Pagination
+gem 'will_paginate'
+
+# Snapshot
+gem 'phantomjs'
+gem 'phantomjs.rb'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -60,3 +68,6 @@ group :test do
 	# Remove unwanted error's backtrace
 	gem 'mini_backtrace', '~> 0.1.3'
 end
+
+gem 'tzinfo'
+gem 'tzinfo-data'

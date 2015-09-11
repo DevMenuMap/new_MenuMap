@@ -1,4 +1,6 @@
 class RestRegistersController < ApplicationController
+	before_action :admin?, :except => [:new, :create]
+
   def index
 		@rest_registers = RestRegister.all
   end
@@ -8,6 +10,7 @@ class RestRegistersController < ApplicationController
   end
 
   def new
+		flash[:alert] = "더 정확하고 많은 정보를 제공해주시면 음식점 정보를 빠르게 등록할 수 있습니다."
 		@rest_register = RestRegister.new
 		@rest_register.pictures.build
 
@@ -28,10 +31,10 @@ class RestRegistersController < ApplicationController
 				end
 			end
 
-			redirect_to rest_registers_path
+			redirect_to rest_registers_url
 		else
 			flash[:alert] = "fail in rest_registers#create"
-			redirect_to new_rest_register_path
+			redirect_to new_rest_register_url
 		end
 	end
 

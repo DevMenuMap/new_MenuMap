@@ -1,0 +1,12 @@
+<!-- Edit inside the menu table -->
+<tr>
+	<td colspan="7">
+		<%= form_for(@menu, remote: true) do |f| %>
+			<%= render "field", f: f %>
+			<%= f.submit "update menu" %>
+		<% end %>
+
+		<!-- Cancel the editing operation. -->
+		<%= link_to "cancel", cancel_menu_path(@menu), id: "cancel_menu_#{@menu.id}", remote: true %>
+	</td>
+</tr>

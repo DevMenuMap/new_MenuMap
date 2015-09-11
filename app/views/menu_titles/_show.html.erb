@@ -1,0 +1,17 @@
+<li id="menu_title_<%= menu_title.id %>">
+	<%= link_to "#title_section_#{menu_title.id}", role: "button", onclick: "toggleLabelColor($(this))", data: { toggle: "collapse" } do %>
+		<div class="menu_title" style="width: 100%">
+			<div class="title_name"><span><%= menu_title.title_name %></span></div>
+			<div class="title_info"><%= menu_title.title_info %></div>
+		</div>
+	<% end %>
+
+	<ul id="title_section_<%= menu_title.id %>" class="menu_list col-xs-12 panel-collapse collapse" style="list-style: none" role="tabpanel">
+		<%= render partial: "menus/show", collection: menu_title.menus, as: :menu %>
+	</ul>
+
+	<% if admin_user? %>
+		<%= link_to "edit", edit_menu_title_path(menu_title) %> |
+		<%= link_to "delete", menu_title_path(menu_title), method: :delete %>
+	<% end %>
+</li>

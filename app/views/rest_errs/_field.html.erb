@@ -1,22 +1,29 @@
-<%= f.label :presence_err %>
-<%= f.check_box :presence_err %>
+<div class="form-group">
+	<%= f.check_box :presence_err, class: "rest_errs_group" %>
+	<%= f.label :presence_err, "음식점이 존재하지 않습니다." %>
+</div>
 
-<%= f.label :menu_err %>
-<%= f.check_box :menu_err %>
+<div class="form-group">
+	<%= f.check_box :menu_err, class: "rest_errs_group" %>
+	<%= f.label :menu_err, "메뉴, 가격이 잘못됐습니다." %>
+</div>
 
-<%= f.label :phnum_err %>
-<%= f.check_box :phnum_err %>
+<div class="form-group">
+	<%= f.check_box :phnum_err, class: "rest_errs_group" %>
+	<%= f.label :phnum_err, "전화번호가 다릅니다." %>
+</div>
 
-<%= f.label :category_err %>
-<%= f.check_box :category_err %>
+<div class="form-group">
+	<%= f.check_box :category_err, class: "rest_errs_group" %>
+	<%= f.label :category_err, "음식점 분류가 잘못됐습니다." %>
+</div>
 
-<%= f.label :etc %>
-<%= f.text_area :etc %>
+<div class="form-group">
+	<%= f.label :etc, "그 외 오류사항" %>
+	<%= f.text_area :etc, class: "rest_errs_group form-control", rows: 5 %>
+</div>
 
-<%= f.label :pictures %>
-<%= f.fields_for :pictures do |ff| %>
-	<%= ff.label :img %>
-	<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
-	<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
-	<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif", data: { validate: "image" } %>
-<% end %>
+<%#= f.label :pictures, "사진" %>
+<%#= f.fields_for :pictures do |ff| %>
+	<%#= ff.file_field :img, multiple: true, class: "uploadImage" %>
+<%# end %>

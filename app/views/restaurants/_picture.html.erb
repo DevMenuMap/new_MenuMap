@@ -1,0 +1,41 @@
+<div id="carousel" class="carousel slide" data-ride="carousel" style="display: block;">
+	<!-- Wrapper for slides -->
+	<div class="carousel-inner" role="listbox" style="position: relative;">
+		<% @pictures.each do |picture| %>
+			<div class="item">
+				<%= image_tag picture.img.url %>
+			</div>
+		<% end %>
+	</div>
+
+	<!-- Controls -->
+	<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left"></span>
+	</a>
+	<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right"></span>
+	</a>
+</div>
+
+<div id="no_img" style="display: <%= no_img?(@pictures) %>;">
+	<div class="row" style="margin: 0; padding: 0 15px 15px;">
+		<div class="col-xs-10 col-xs-offset-1" style="text-align: center; margin-top: 10px;">
+			현재 등록된 사진이 없습니다.</br>
+			사진을 등록해주세요.
+		</div>
+	</div>
+</div>
+
+<div class="row" style="margin: 0; padding: 0 15px;">
+	<%= form_for @picture, html: { multipart: true, style: "margin-top: 10px;" } do |f| %>
+		<%= f.hidden_field :imageable_id, value: @picture.imageable_id %>
+		<%= f.hidden_field :imageable_type, value: @picture.imageable_type %>
+		<%= f.file_field :img, multiple: true, class: "uploadImage" %>
+		<div style="float: right; margin-bottom: 10px;">
+			<%= button_tag type: "button", class: "file_select btn btn_submit" do %>
+				<span class="glyphicon glyphicon-plus"></span>
+			<% end %>
+			<%= f.button "등록", class: "btn btn_submit_blue" %>
+		</div>
+	<% end %>
+</div>

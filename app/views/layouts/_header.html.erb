@@ -1,52 +1,42 @@
-<%= link_to "MenuMap", root_path %>
+<nav class="navbar navbar-default" style="margin: 0;">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" style="border: none; margin-bottom: 0; display: none;"> 
+				<span class="glyphicon glyphicon-option-vertical"></span>
+      </button>
+      <button type="button" class="navbar-toggle collapsed" style="border: none; margin-bottom: 0;">
+				<%= link_to search_path, style: "color: initial;" do %>
+					<span class="glyphicon glyphicon-search"></span>
+				<% end %>
+			</button>
+			<%= link_to root_path, class: "navbar-brand", style: "padding-bottom: 0;" do %>
+				<span class="ubuntu">MenuMap</span>
+			<% end %>
+    </div>
 
-<ul>
-	<li>
-		<%= link_to "about page", about_path %>
-	</li>
-	<li>
-		<%= link_to "manual page", manual_path %>
-	</li>
-	<li>
-		<%= link_to "qna page", qna_path %>
-	</li>
-	<li>
-		<%= link_to "search page" , search_path %>
-	</li>
-	<li>
-		<%= link_to "restaurant register" , new_rest_register_path %>
-	</li>
-	<li>
-		<%= link_to "restaurants index" , restaurants_path %>
-	</li>
-	<li>
-		<%= link_to "restaurants errors" , rest_errs_path %>
-	</li>
-	<li>
-		<%= link_to "menu titles" , menu_titles_path %>
-	</li>
-	<li>
-		<%= link_to "pictures" , pictures_path %>
-	</li>
-	<li>
-		<%= link_to "addresses" , addresses_path %>
-	</li>
-	<li>
-		<%= link_to "addr_rules" , addr_rules_path %>
-	</li>
-	<li>
-		<%= link_to "addr_conversions" , addr_conversions_path %>
-	</li>
-	<% if !current_user %>
-		<li>
-			<%= link_to "signup page" , new_user_registration_path %>
-		</li>
-		<li>
-			<%= link_to "signin page" , new_user_session_path %>
-		</li>
-	<% else %>
-		<li>
-			<%= link_to "signout page" , destroy_user_session_path, method: :delete %>
-		</li>
-	<% end %>
-</ul>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+				<li style="display: none;"><%= link_to "자주묻는 질문", qna_path %></li>
+				<li><%= link_to "음식점 검색" , search_path %></li>
+				<% if !current_user %>
+					<li style="display: none;"><%= link_to "로그인" , new_user_session_path %></li>
+				<% else %>
+					<% if current_user.admin? %>
+						<li><%= link_to "admin" , monitors_path %></li>
+					<% end %>
+					<li>
+						<%= current_user.username %>
+						<% if current_user.fb_img.present? %>
+							<%= image_tag current_user.fb_img %>
+						<% else %>
+							<%= image_tag "users/default_profile.png", style: "height: 20px; width: 20px;" %>
+						<% end %>
+					</li>
+					<li><%= link_to "내 페이지" , user_profile_path(current_user.username) %></li>
+					<li><%= link_to "로그아웃" , destroy_user_session_path, method: :delete %></li>
+				<% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

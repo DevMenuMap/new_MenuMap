@@ -6,13 +6,24 @@ var polygons;
 var k = 0
 
 /* 다각형 꼭지점 저장을 위한 변수 */
-var polygonCoords = new Array();
+var polygonCoords = [];
 
-function loadNaverMap(){
-	var oSeoulNatlSubway = new nhn.api.map.LatLng(37.48121, 126.952712);
+function loadNaverMap(lat, lng, level){
+	if ( lat == 0 || lng == 0 || isNaN(lat) || isNaN(lng)){
+		lat = 37.48121;
+		lng = 126.952712;
+	};
+	if ( level == 0 || isNaN(level) ) {
+		level = 10;
+	};
+	var oCenter = new nhn.api.map.LatLng(lat, lng);
+
+	deviceWidth = responsiveMapWidth();
+	mapHeight = deviceWidth * 0.618
+
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
-																	point : oSeoulNatlSubway,
-																	zoom : 10,
+																	point : oCenter,
+																	zoom : level,
 																	// move on map with mouse dragging
 																	enableDragPan : true,  
 																	enableWheelZoom : true,
@@ -20,23 +31,50 @@ function loadNaverMap(){
 																	mapMode : 0,
 																	// activateTrafficMap : false,
 																	// activateBicycleMap : false,
-																	size : new nhn.api.map.Size(1000, 700),
+																	size : new nhn.api.map.Size(deviceWidth, mapHeight),
 																	minMaxLevel : [ 1, 14 ]
 														});
 
 	oMap.attach("contextmenu", drawPolygon);
 };
 
-// Show marker on mouse click
+// showLabels -> toggleLabels 20150810
+function toggleLabels() {
+	var oLabel = new nhn.api.map.MarkerLabel();
+	var oMarker_new;
+	var oMarker_old;
+	oMap.addOverlay(oLabel);
+	oMap.attach('click', function(oCustomEvent) {
+		if (oCustomEvent.target instanceof nhn.api.map.Marker) {
+			oMarker_old = oMarker_new;
+			oMarker_new = oCustomEvent.target;
+
+			if (oMarker_new == oMarker_old) {
+				oLabel.setVisible(false, oMarker_new);
+				oMarker_new = undefined;
+			} else {
+				oLabel.setVisible(true, oMarker_new);
+			};
+		};
+
+		if (oCustomEvent.target instanceof nhn.api.map.Map) {
+			oLabel.setVisible(false, oMarker_new);
+			oMarker_new = undefined;
+		};
+	});
+};
+
+// Set marker on mouse click ( new_addr_rule )
 function setMarker(event) {
 	var oSize = new nhn.api.map.Size(28, 37);
 	var oOffset = new nhn.api.map.Size(14, 37);
-	var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
+	var oIcon = new nhn.api.map.Icon("/images/mymaps/naver_map_icon.png", oSize, oOffset);
 	
 	var oLatLng = event.point
-	marker = new nhn.api.map.Marker(oIcon, {title : "marker"});
+	marker = new nhn.api.map.Marker(oIcon, {title : "title"});
 	marker.setPoint(oLatLng);
 	oMap.addOverlay(marker);
+	addRow();
 
 	// Put latitude and longitude on input
 	var latString = "coord_lat_";
@@ -63,32 +101,114 @@ function drawPolygon(event){
 };
 
 // Show markers when there are created points e.g. addresses#show
-function showMarkers(coordArray){
+function showMarkers(coordArray, noPolygon, names){
 	var oSize = new nhn.api.map.Size(28, 37);
 	var oOffset = new nhn.api.map.Size(14, 37);
-	var oIcon = new nhn.api.map.Icon("https://s3-ap-southeast-1.amazonaws.com/menumap-s3-development/static_assets/images/naver_map_icon.png", oSize, oOffset);
-	
+	var oIcon = new nhn.api.map.Icon("/images/mymaps/naver_map_icon.png", oSize, oOffset);
 	var oLatLng;
-	var showPolygon = new Array();
+	var showPolygon = []; 
+	var i;
+	var l = coordArray.length / 2;
+
+	if ( typeof names == "undefined" ){
+		names = [];
+	};
 
 	// Change this to normal data passing codes to js
-	for(var i=0; i < coordArray.length; i = i + 2){
-		oLatLng = new nhn.api.map.LatLng(coordArray[i], coordArray[i+1]);
-
-		marker = new nhn.api.map.Marker(oIcon, {title : "marker"});
-		marker.setPoint(oLatLng);
+	for(i = 0; i < l; i++){
+		oLatLng = new nhn.api.map.LatLng(coordArray[2*i], coordArray[2*i+1]);
+		marker = new nhn.api.map.Marker(oIcon, {point: oLatLng, title: names[i]});
 		oMap.addOverlay(marker);
-
 		showPolygon.push(oLatLng);
 	};
 
-	polygons = new nhn.api.map.Polygon(showPolygon, {
-		strokeColor: "blue",
-		strokeOpacity: 1,
-		strokeWidth: 2,
-		fillColor: "lightblue",
-		fillOpacity: 0.5
-	});
-
-	oMap.addOverlay(polygons);
+	if ( noPolygon != true ) {
+		polygons = new nhn.api.map.Polygon(showPolygon, {
+			strokeColor: "blue",
+			strokeOpacity: 1,
+			strokeWidth: 2,
+			fillColor: "lightblue",
+			fillOpacity: 0.5
+		});
+		oMap.addOverlay(polygons);
+	};
 };
+
+// For new addr_rule page
+function addRow() {
+	var row = $("#latlng_table tr:eq(2)").clone();
+	var td_lat = row.find("td:eq(0)").children();
+	var td_lng = row.find("td:eq(1)").children();
+	
+	td_lat.attr("id", "coord_lat_".concat(k+1));
+	td_lng.attr("id", "coord_lng_".concat(k+1));
+	td_lat.val("");
+	td_lng.val("");
+
+	$("#latlng_table").append(row);
+};
+
+function delRows() {
+	var table = document.getElementById("latlng_table");
+	var l = table.rows.length;
+	var i;	
+	
+	for(i = l - 1; i > 2; i--) {
+		table.deleteRow(i);
+	};
+};
+
+// For mymap page 
+function showGroupImage(groups, coords) {
+	var i;
+	var l = groups.length;
+	for (i = 0; i < l; i++) {
+		var infoWindow = new nhn.api.map.InfoWindow();
+		var	oPoint = new nhn.api.map.LatLng(coords[2 * i], coords[2 * i + 1]);
+		infoWindow.setPoint(oPoint);
+		infoWindow.setPosition({right : 15, top : 30});
+		infoWindow.autoPosition();
+		infoWindow.setVisible(true);
+		infoWindow.setContent('<img style="height: 20px" src="/images/mymaps/mymap_group_icon_' + 	groups[i] + '.png">');
+		oMap.addOverlay(infoWindow);
+	};
+};
+
+function showGroupMarkers(coordArray, groups, names) {
+	var oOffset = new nhn.api.map.Size(28, 28);
+	var oSize;
+	var oLatLng;
+	var oIcon;
+	var showPolygon = [];
+	var i;
+	var l = groups.length;
+	for (i = 0; i < l; i++) {
+		if (groups[i] != 0) {
+			oSize = new nhn.api.map.Size(28, 28);
+			oIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_" + groups[i] + ".svg", oSize, oOffset);
+		} else {
+			oSize = new nhn.api.map.Size(18, 18);
+			oIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_default.svg", oSize, oOffset);
+		};
+		// Change this to normal data passing codes to js
+		oLatLng = new nhn.api.map.LatLng(coordArray[2*i], coordArray[2*i+1]);
+		marker = new nhn.api.map.Marker(oIcon, {point: oLatLng, title: names[i] });
+		oMap.addOverlay(marker);
+		showPolygon.push(oLatLng);
+	};
+};
+
+// Return responsive width of naver map for devices.
+function responsiveMapWidth() {
+	var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+	if (width > 1200) {
+		width = 585;
+	} else if (width > 992) {
+		width = 970;
+	} else if (width > 768) {
+		width = 750;
+	}
+
+	return width;
+}

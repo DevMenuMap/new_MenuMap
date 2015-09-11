@@ -1,6 +1,14 @@
 class AddrRulesController < ApplicationController
+	before_action :admin?, :except => [:show, :new, :create]
+	
   def index
-		@addr_rules = AddrRule.all
+		# 10 items per page
+		@addr_rules = AddrRule.paginate(:page => params[:page], :per_page => 10)
+		respond_to do |format|
+			format.html
+			format.json { render json: @addr_rules}
+			format.js
+		end
   end
 
   def show
@@ -10,6 +18,23 @@ class AddrRulesController < ApplicationController
 		@coord_array = []
 		@addr_rule.coordinates.each do |c|
 			@coord_array << c.lat.to_f << c.lng.to_f
+		end
+		
+		# Find Center point
+		x = []
+		y = []
+		@center_x = 0
+		@center_y = 0
+		
+		if( @coord_array != [] )
+			l = @coord_array.length / 2
+			for i in 0..(l-1)
+				x << @coord_array[2*i]
+				y << @coord_array[2*i+1]
+			end
+
+			@center_x = (x.inject{|sum, n| sum + n}) / x.length
+			@center_y = (y.inject{|sum, n| sum + n}) / y.length
 		end
   end
 

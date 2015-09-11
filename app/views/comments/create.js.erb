@@ -1,0 +1,5 @@
+$("#comment_count").html("<%= @restaurant.comments.count %>");
+$("#comment_body tbody").prepend("<%= j render partial: "comments/show", locals: { comment: @comment } %>");
+//$("#comment_section").html("<#%= j(render 'comments/page') %>");
+$('.pagination a').attr('data-remote', 'true');
+$("#new_comment_section").html("<%= j render partial: "comments/new", locals: { comment: Comment.new } %>");

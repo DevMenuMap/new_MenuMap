@@ -1,0 +1,4 @@
+<% if current_user %>
+	<%= link_to "my page", user_profile_path(current_user.username) %>
+	<%= link_to "MyMap", mymap_index_path(current_user.username) %> 
+<% end %>

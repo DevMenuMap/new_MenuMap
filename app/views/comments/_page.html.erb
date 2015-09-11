@@ -1,0 +1,13 @@
+<p>contents | created at</p>
+
+<table id="comment_body">
+	<% @comments.each do |comment| %>
+		<%= render partial: "comments/show", locals: { comment: comment } %>
+	<% end %>
+</table>
+
+<% unless @comments.next_page.nil? %>
+  <%= link_to 'show_more', restaurant_path(@restaurant, :page => @comments.next_page), :remote => true, :id => 'show_more_link' %>
+<% end %>
+
+<%# will_paginate @comments, params: { controller: "restaurants", action: "show" } %>

@@ -9,3 +9,13 @@
 		
 	<%= f.submit %>
 <% end %>
+
+<script>
+	$(document).ready( function() {
+		$('.edit_addr_conversion').validate({
+			rules: {
+				'addr_conversion[convert_from]': { required: true }
+			}
+		});
+	});
+</script>

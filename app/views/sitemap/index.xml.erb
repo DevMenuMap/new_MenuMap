@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+	<!-- Static pages with weekly changes expected -->
+  <url>
+		<loc><%= @static %></loc>
+		<changefreq>weekly</changefreq>
+	</url>
+  <url>
+		<loc><%= @static + "about" %></loc>
+		<changefreq>weekly</changefreq>
+	</url>
+  <url>
+		<loc><%= @static + "manual" %></loc>
+		<changefreq>weekly</changefreq>
+	</url>
+  <url>
+		<loc><%= @static + "qna" %></loc>
+		<changefreq>weekly</changefreq>
+	</url>
+  <url>
+		<loc><%= @static + "search" %></loc>
+		<changefreq>weekly</changefreq>
+	</url>
+  <url>
+		<loc><%= @static + "users/sign_in" %></loc>
+		<changefreq>weekly</changefreq>
+	</url>
+  <url>
+		<loc><%= @static + "users/sign_up" %></loc>
+		<changefreq>weekly</changefreq>
+	</url>
+  <url>
+		<loc><%= @static + "rest_registers/new" %></loc>
+		<changefreq>weekly</changefreq>
+	</url>
+
+	<!-- Restaurant pages -->
+	<% @restaurants.each do |restaurant| %>
+		<url>
+			<loc><%= restaurant_url(restaurant) %></loc>
+			<lastmod><%= restaurant.updated_at.strftime('%Y-%m-%d') %></lastmod>
+		</url>
+	<% end %>
+</urlset> 

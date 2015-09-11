@@ -1,0 +1,21 @@
+<% if @comments.blank? %>
+	<div id="no_comment">
+		<div class="row" style="margin: 0; padding: 0 15px 15px;">
+			<div class="col-xs-10 col-xs-offset-1" style="text-align: center; margin-top: 10px;">
+				음식점, 메뉴 댓글이 없습니다.<br/>
+				댓글을 작성해주세요.
+			</div>
+		</div>
+	</div>
+<% else %>
+	<div id="comment_count">
+		<%= @comments.count %>
+	</div> 
+	<div id="comment_section">
+		<%= render "comments/page" %>
+	</div>
+
+	<div id="new_comment_section">
+		<%= render partial: "comments/new", locals: { comment: @comment } %>
+	</div>
+<% end %>

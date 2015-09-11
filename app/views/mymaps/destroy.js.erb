@@ -1,0 +1,3 @@
+$("#destroy_mymap_button").bind("ajax:success", function() {
+	$("#mymap_button_<%= @mymap.restaurant.id %>").html("<%= j(mymap_button(@user, @mymap.restaurant)) %>");
+});

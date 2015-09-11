@@ -3,9 +3,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+		redirect_to '/404.html' and return
+  end
 
   # POST /resource
   # def create
@@ -23,9 +23,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+		new_email = current_user.id.to_s + "@menumap.co.kr"
+		new_username = "user_" + current_user.id.to_s
+  	User.find(current_user.id).update(email: new_email, username: new_username, active: false)
+		flash[:alert] = "Succeed in destroy"
+		redirect_to root_url
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign

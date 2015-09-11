@@ -1,4 +1,6 @@
 class MenuTitlesController < ApplicationController
+	before_action :admin?, :except => [:create]
+	
   def index
 		@menu_titles = MenuTitle.all
   end
@@ -31,6 +33,12 @@ class MenuTitlesController < ApplicationController
 	def destroy
 		@menu_title = MenuTitle.find(params[:id])
 		@menu_title.update(active: false)
+
+		# Update all associated menus' active to false 
+		@menu_title.menus.each do |m|
+			m.update(active: false)
+		end
+
 		flash[:alert] = "succeed menu_titles#destroy"
 		redirect_to restaurant_path(@menu_title.restaurant)
 	end

@@ -6,10 +6,20 @@
 	<%= f.label :pictures %>
 	<%= f.fields_for :pictures do |ff| %>
 		<%= ff.label :img %>
-		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif" %>
-		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif" %>
-		<%= ff.file_field :img, multiple: true, accept: "image/jpeg, image/png, image/gif" %>
+		<%= ff.file_field :img, multiple: true, class: "uploadImage" %> 
 	<% end %>
 
 	<%= f.submit "go submit" %>
 <% end %>
+
+<script>
+	$(document).ready( function() {
+		$('#new_restaurant').validate({
+			rules: {
+				'restaurant[name]': { required: true },
+				'restaurant[addr]': { required: true }
+			}
+		});
+		imageUploadValidate();
+	});
+</script>

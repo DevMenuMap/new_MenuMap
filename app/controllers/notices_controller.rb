@@ -1,6 +1,8 @@
 class NoticesController < ApplicationController
+	before_action :admin?, :except => [:index]
 
   def index
+		redirect_to '/404.html' and return
 		@notices = Notice.all
 		@question = Question.new
   end

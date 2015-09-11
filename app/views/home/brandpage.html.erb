@@ -1,1 +1,46 @@
-<h1>This is the homepage for MenuMap</h1>
+<div class="container" style="padding: 0;">
+	<div id="home_bg">
+		<p>이 세상 모든 메뉴가 검색되는 그날까지</p>
+		<h1><span class="ubuntu" style="color: white;">MenuMap</span></h1>
+	</div>
+</div>
+
+<div class="container" style="margin-bottom: 30px;">
+	<div id="home_blockquote">
+		<div class="row">
+			<div class="col-md-5 hidden-xs">
+				<p><span class="ubuntu">MenuMap</span>은</p>
+			</div>
+			<div class="col-md-7">
+				<blockquote>
+					<p><span style="color: #ea4c15;">메뉴</span> 정보 서비스입니다.</p>
+					<p>직접 메뉴를 <span style="color: #ea4c15;">추가</span>할 수 있습니다.</p>
+					<p>자신만의 <span style="color: #ea4c15;">맛집 지도</span>를 만들 수 있습니다.</p>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+
+	<div style="text-align: center;">
+		<div id="youtube">
+			<iframe src="https://www.youtube.com/embed/lTr6ypdlF_k?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+		</div>
+
+		<div id="home_info">
+			<span class="ubuntu">MenuMap</span>에는 현재
+			<br class="visible-xs-inline" />
+			서울시 <span class="ubuntu"><%= total_restaurants %></span>
+			개 음식점 정보와<br />
+			대학가 <span class="ubuntu"><%= total_restaurants_with_menu %></span>
+			개 음식점의 <br class="visible-xs-inline" />
+			메뉴 <span class="ubuntu"><%= total_menus %></span>
+			개가 저장되어있습니다.
+		</div>
+
+		<div id="home_btn" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2" style="padding: 0px;">
+			<%= button_to search_path, { class: "btn btn-block", style: "background-color: #ea4c15; color: white;", method: :get } do %>
+				<span class="ubuntu" style="color: white;">MenuMap</span> 검색
+			<% end %>
+		</div>
+	</div>
+</div>

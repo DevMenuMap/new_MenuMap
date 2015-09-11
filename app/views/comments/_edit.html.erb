@@ -1,0 +1,22 @@
+<!-- Edit inside the comment table -->
+<tr>
+	<td colspan="3">
+		<%= form_for(@comment, remote: true) do |f| %>
+			<div id="star_rating_form" data-score=<%= @comment.rating %>></div>
+			<%= render "field", f: f %>
+			<%= f.submit "update comment" %>
+		<% end %>
+	</td>
+</tr>
+
+<script>
+	$("#star_rating_form").raty({
+		path: "/images/star_rating/",
+		half: true,
+		scoreName: "comment[rating]",
+		// In mymaps#edit, star rating should show for references.
+		score: function() {
+			return parseInt($(this).attr("data-score")) / 2;
+		}
+	});
+</script>

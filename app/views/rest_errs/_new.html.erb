@@ -1,9 +1,14 @@
-<h1>RestErrs#new</h1>
-
-<%= form_for [@restaurant, @rest_err], html: { mutipart: true } do |f| %>
+<%= form_for [@restaurant, @rest_err], remote: true, html: { mutipart: true } do |f| %>
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
 
-	<!-- Specify field because of controller subordination -->
 	<%= render "rest_errs/field", f: f %>
-	<%= f.submit "gogo rest_errs#create" %>
+	<div class="modal-footer" style="padding: 10px 0 0;">
+		<%= f.button "완료", class: "btn btn_submit" %>
+	</div>
 <% end %>
+
+<script>
+	$('#new_rest_err').on('submit', function(e) {
+		if ( !restErrValidation() ) { return false };
+	});
+</script>

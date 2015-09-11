@@ -1,37 +1,136 @@
-<h1>Restaurants#show</h1>
+<div class="container" style="padding: 0;">
+	<div class="row" style="margin: 0;">
+		<div class="col-md-6 col-md-offset-3" style="padding: 0;">
 
-<table>
-	<% @restaurant.attributes.each do |key, value| %>
-		<tr>
-			<td><%= key %></td>
-			<td><%= value %></td>
-		</tr>
-	<% end %>
-	<tr>
-		<td><%= link_to "edit", edit_restaurant_path(@restaurant) %></td>
-		<td><%= link_to "delete", restaurant_path(@restaurant), method: :delete %>
-	</tr>
-</table>
+			<% if @pictures.first.present? %>
+				<%= image_tag @pictures.first.img.url, id: "rst_show_top_img" %>
+			<% else %>
+				<div id="rst_show_top_img">
+					<%= image_tag "/images/restaurants/picture_add_icon.svg", class: "svg" %>
+				</div>
+			<% end %>
 
-<%= render "rest_infos/show" %>
-<%= render "rest_errs/new" %>
+			<div id="rst_show_title" class="col-xs-12">
+				<div class="name">
+					<h1><%= @restaurant.name %></h1>
+					<div style="color: #999;">
+						<p><%= @restaurant.subcategory.name %> <%= delivery_possible_with_middot(@restaurant) %></p>
+					</div>
+				</div>
 
-<h1>Menu section</h1>
-<table>
-	<tr>
-		<th>title_name</th>
-		<th>title_info</th>
-		<th></th>
-		<th></th>
-	</tr>
-	<%= render @menu_titles %>
-</table>
+				<div class="right">
+					<%= link_to share_rest_path(@restaurant), remote: true, data: { toggle: "modal", target: "#myModal" } do %>
+						<div><i class="fa fa-share-alt" style="margin-right: 5px;"></i>공유</div>
+					<% end %>
+					<div id="rst_show_map"><i class="fa fa-globe" style="margin-right: 5px;"></i>지도</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-<%= render "menu_titles/new" %>
+<div class="container" style="padding: 0;">
+	<div class="row" style="margin: 0;">
+		<div class="col-md-6 col-md-offset-3" style="padding: 0;">
+			<div id="rst_show_tabs">
+				<ul>
+					<a href="#menu" role="tab" data-toggle="tab"><li><i class="fa fa-list-ul"></i><br/>메뉴</li></a>
+					<!-- <a href="#comment" role="tab" data-toggle="tab"><li><i class="fa fa-comments-o"></i><br/>댓글</li></a> -->
+					<a href="#blog" role="tab" data-toggle="tab"><li><i class="fa fa-newspaper-o"></i><br/>블로그</li></a>
+					<a href="#picture" role="tab" data-toggle="tab"><li><i class="fa fa-picture-o"></i><br/>사진</li></a>
+					<a href="#info" role="tab" data-toggle="tab"><li><i class="fa fa-info"></i><br/>정보</li></a>
+					<a id="tab_map" href="#map" role="tab" data-toggle="tab"><li style="display: none;">지도</li></a>
+				</ul>
+			</div>
 
-<h1>restaurant.pictures</h1>
-<% @pictures.each do |picture| %>
-	<%= image_tag picture.img.url %>
-	<%= link_to "edit", edit_picture_path(picture) %>
-	<%= link_to "destroy", picture_path(picture), method: :delete %>
+			<div>
+				<div class="tab-content">
+
+					<!-- Map -->
+					<div role="tabpanel" class="tab-pane fade" id="map">
+						<div id="naver_map" style="width: 80%; height: 60%"></div>
+					</div>
+
+					<!-- Menu -->
+					<div role="tabpanel" class="tab-pane fade in active" id="menu">
+						<%= render 'menu' %>
+					</div>
+
+					<!-- Comment -->
+					<div role="tabpanel" class="tab-pane fade" id="comment">
+						<%= render "comment" %>
+					</div>
+
+					<!-- Blog -->
+					<div role="tabpanel" class="tab-pane fade" id="blog" style="margin-bottom: 10px;">
+						<div id="blog_result"></div>
+					</div>
+
+					<!-- Picture -->
+					<div role="tabpanel" class="tab-pane fade" id="picture">
+						<%= render "picture" %>
+					</div>
+
+					<!-- Info -->
+					<div role="tabpanel" class="tab-pane fade" id="info">
+						<%= render "info" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% if admin_user? %>
+	<%= link_to "edit", edit_restaurant_path(@restaurant) %>
+	<%= link_to "delete", restaurant_path(@restaurant), method: :delete %>
 <% end %>
+
+<%= render 'shared/modal' %>
+
+<!-- This script is for require_from_group method -->
+<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+
+<script>
+	$(function(){
+		$('.pagination a').attr('data-remote', 'true')
+	});
+
+	$('#update_comment').click( function(e) {
+		if ( <%= current_user.nil? %> ) {
+			alert("로그인 후 댓글 작성 가능합니다.");
+			e.preventDefault();
+		};
+	});
+
+	$(document).ready( function() {
+		loadNaverMap(<%= @curr_lat %>, <%= @curr_lng %>, 9);
+		showMarkers([<%= @curr_lat %>, <%= @curr_lng %>], true, ["<%= @restaurant.name %>"]);  
+		toggleLabels();
+
+		<% if @restaurant.with_latlng? %>
+			parseFoursquareImg("<%= request.url %>");
+		<% elsif @pictures.blank? %>
+			$("#carousel").css("display", "none");
+		<% end %>
+
+		imageUploadValidate();
+
+		$.ajax({
+			url: '/blogs/blog_ajax',
+			data: {
+				id: <%= @restaurant.id %>
+			}
+		});
+
+		$("#new_rest_err").validate({
+			rules: {
+				'rest_err[presence_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[menu_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[phnum_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[category_err]': { require_from_group: [1, ".rest_errs_group"] },
+				'rest_err[etc]': { require_from_group: [1, ".rest_errs_group"] }
+			}
+		});
+	});
+</script>

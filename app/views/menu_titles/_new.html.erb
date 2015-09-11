@@ -1,10 +1,18 @@
-<h1>MenuTitles#new</h1>
+<!-- Select one of the menu_titles of this restaurant or make a new menu_title -->
+<div class="form-group">
+	<%= f.select :menu_title_id, 
+				options_for_select(@menu_titles.map{ |m| [m.title_name, m.id] }.unshift(["메뉴 목록 추가하기", "new"]).unshift(["메뉴 목록을 선택해주세요.", "none"]), nil), {}, { class: "form-control", onchange: "expandTitleForm($(this))"} %>
+</div>
 
-<!-- Should be called by Ajax like menu_titles#edit -->
-<%= form_for [@restaurant, @menu_title] do |f| %>
-	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
+<!-- Only when user wants to make a new menu_title for new menu -->
+<div id="menu_title_form" style="display: none;">
+	<div class="form-group">
+		<%= label :menu_title, :title_name, "메뉴 목록" %>
+		<%= text_field :menu_title, :title_name, { class: "form-control", placeholder: "예) '주요메뉴', '음료 및 주류' 등" } %>
+	</div>
 
-	<!-- Specify field because of controller subordination -->
-	<%= render "menu_titles/field", f: f %>
-	<%= f.submit "update menu_title" %>
-<% end %>
+	<div class="form-group" style="margin: 0; padding-bottom: 15px;">
+		<%= label :menu_title, :title_info, "메뉴 목록 정보" %>
+		<%= text_field :menu_title, :title_info, { class: "form-control", placeholder: "예) 점심메뉴 시간 12시까지" } %>
+	</div>
+</div>

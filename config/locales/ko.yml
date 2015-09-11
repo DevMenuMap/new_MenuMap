@@ -1,0 +1,251 @@
+---
+ko:
+  will_paginate:
+    previous_label: "<i class='fa fa-angle-left'></i>"
+    next_label: "<i class='fa fa-angle-right'></i>"
+    page_gap: ""
+  date:
+    abbr_day_names:
+    - 일
+    - 월
+    - 화
+    - 수
+    - 목
+    - 금
+    - 토
+    abbr_month_names:
+    - 
+    - 1월
+    - 2월
+    - 3월
+    - 4월
+    - 5월
+    - 6월
+    - 7월
+    - 8월
+    - 9월
+    - 10월
+    - 11월
+    - 12월
+    day_names:
+    - 일요일
+    - 월요일
+    - 화요일
+    - 수요일
+    - 목요일
+    - 금요일
+    - 토요일
+    formats:
+      default: "%Y/%m/%d"
+      long: "%Y년 %m월 %d일 (%a)"
+      short: "%m/%d"
+    month_names:
+    - 
+    - 1월
+    - 2월
+    - 3월
+    - 4월
+    - 5월
+    - 6월
+    - 7월
+    - 8월
+    - 9월
+    - 10월
+    - 11월
+    - 12월
+    order:
+    - :year
+    - :month
+    - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 약 한 시간
+        other: 약 %{count}시간
+      about_x_months:
+        one: 약 한 달
+        other: 약 %{count}달
+      about_x_years:
+        one: 약 일 년
+        other: 약 %{count}년
+      almost_x_years:
+        one: 일 년 이하
+        other: "%{count}년 이하"
+      half_a_minute: 30초
+      less_than_x_minutes:
+        one: 일 분 이하
+        other: "%{count}분 이하"
+      less_than_x_seconds:
+        one: 일 초 이하
+        other: "%{count}초 이하"
+      over_x_years:
+        one: 일 년 이상
+        other: "%{count}년 이상"
+      x_days:
+        one: 하루
+        other: "%{count}일"
+      x_minutes:
+        one: 일 분
+        other: "%{count}분"
+      x_months:
+        one: 한 달
+        other: "%{count}달"
+      x_seconds:
+        one: 일 초
+        other: "%{count}초"
+    prompts:
+      day: 일
+      hour: 시
+      minute: 분
+      month: 월
+      second: 초
+      year: 년
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      accepted: 을(를) 반드시 확인해야 합니다
+      blank: 에 내용을 입력해 주세요
+      confirmation: 은(는) 서로 일치해야 합니다
+      empty: 에 내용을 입력해 주세요
+      equal_to: 은(는) %{count}과 같아야 합니다
+      even: 에 짝수를 입력해 주세요
+      exclusion: 은(는) 이미 예약되어 있는 값입니다
+      greater_than: 은(는) %{count}보다 커야 합니다
+      greater_than_or_equal_to: 은(는) %{count}보다 크거야 같아야 합니다
+      inclusion: 은(는) 목록에 포함되어 있는 값이 아닙니다
+      invalid: 은(는) 올바르지 않은 값입니다
+      less_than: 은(는) %{count}보다 작아야 합니다
+      less_than_or_equal_to: 은(는) %{count}과 작거나 같아야 합니다
+      not_a_number: 에 숫자를 입력해 주세요
+      not_an_integer: 에 정수를 입력해 주세요
+      odd: 에 홀수를 입력해 주세요
+      record_invalid: 데이터 검증에 실패하였습니다. %{errors}
+      taken: 은(는) 이미 존재합니다.
+      too_long: 은(는) %{count}자를 넘을 수 없습니다
+      too_short: 은(는) 적어도 %{count}자를 넘어야 합니다
+      wrong_length: 은(는) %{count}자여야 합니다
+    template:
+      body: '다음 항목에 문제가 발견되었습니다:'
+      header:
+        one: 한 개의 오류가 발생해 %{model}를 저장 할 수 없습니다
+        other: "%{count}개의 오류가 발생해 %{model}를 저장 할 수 없습니다"
+  helpers:
+    select:
+      prompt: 선택해주세요
+    submit:
+      create: 등록
+      submit: 제출
+      update: 갱신
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%n%u"
+        precision: 0
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: 원
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n%u"
+        units:
+          billion: 십억
+          million: 백만
+          quadrillion: 경
+          thousand: 천
+          trillion: 조
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n%u"
+        units:
+          byte: 바이트
+          gb: 기가바이트
+          kb: 킬로바이트
+          mb: 메가바이트
+          tb: 테라바이트
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ", "
+      two_words_connector: '와(과) '
+      words_connector: ", "
+  time:
+    am: 오전
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      long: "%Y년 %m월 %d일, %H시 %M분 %S초 %Z"
+      short: "%y/%m/%d %H:%M"
+    pm: 오후
+    ko:
+  devise:
+    confirmations:
+      confirmed: 이메일 주소가 성공적으로 인증되었습니다.
+      send_instructions: 이메일로 이메일 주소 인증 지침이 전송되었습니다.
+      send_paranoid_instructions: 이메일 주소가 이미 등록되어 있으며, 이메일 주소 인증 지침 메일을 잠시 후 받을 수 있습니다.
+    failure:
+      already_authenticated: 이미 로그인되어 있습니다.
+      inactive: 계정이 아직 활성화되지 않았습니다.
+      invalid: 이메일 혹은 비밀번호가 틀립니다.
+      last_attempt: 이번 로그인 시도를 실패하면 계정이 잠깁니다.
+      locked: 계정이 잠겨있습니다.
+      not_found_in_database: 이메일 주소나 비밀번호가 틀립니다.
+      timeout: 세션이 만료되었습니다. 계속하려면 다시 로그인해야 합니다.
+      unauthenticated: 계속하려면 로그인하거나 가입해야 합니다.
+      unconfirmed: 계속하기 전에 이메일 주소를 인증해야 합니다.
+    mailer:
+      confirmation_instructions:
+        subject: 이메일 인증 지침
+      reset_password_instructions:
+        subject: 비밀번호 재설정 지침
+      unlock_instructions:
+        subject: 잠금 해제 지침
+    omniauth_callbacks:
+      failure: '%{reason}(으)로 인하여 %{kind}(으)로부터 인증받지 못했습니다.'
+      success: '%{kind} 계정으로부터 인증되었습니다.'
+    passwords:
+      no_token: 비밀번호 재설정 이메일을 거치지 않고 이 페이지에 접근할 수 없습니다. 비밀번호 재설정 이메일에서 오셨다면, 주소가 제대로 되었는지 확인해 주세요.
+      send_instructions: 잠시후에 비밀번호 재설정 지침 메일을 받을 수 있습니다.
+      send_paranoid_instructions: 이메일이 데이터베이스에 존재할 경우, 몇 분 안에 비밀번호 재설정 주소를 이메일로 받으실 수 있습니다.
+      updated: 성공적으로 비밀번호를 변경했습니다. 로그인 되었습니다.
+      updated_not_active: 비밀번호가 성공적으로 변경되었습니다.
+    registrations:
+      destroyed: 안녕! 계정이 성공적으로 탈퇴되었습니다. 다시 볼 수 있기 바랍니다.
+      signed_up: 환영합니다! 성공적으로 로그인되었습니다.
+      signed_up_but_inactive: 성공적으로 가입되었지만, 아직 계정이 활성화되어 있지 않아 로그인 할 수 없습니다..
+      signed_up_but_locked: 성공적으로 가입되었지만, 계정이 잠겨있어 로그인 할 수 없습니다.
+      signed_up_but_unconfirmed: 인증 주소가 포함된 메시지를 이메일 주소로 보냈습니다. 계정을 활성화하기 위해 메일을 확인하세요.
+      update_needs_confirmation: 계정이 성공적으로 수정되었지만, 새로운 이메일 주소를 확인해야 합니다. 이메일로 전송된 이메일 인증 주소를 클릭하여 새로운 이메일 주소를 인증해 주세요.
+      updated: 계정이 성공적으로 수정되었습니다.
+    sessions:
+      already_signed_out: 성공적으로 로그아웃했습니다.
+      signed_in: 성공적으로 로그인했습니다.
+      signed_out: 성공적으로 로그아웃했습니다.
+    unlocks:
+      send_instructions: 잠시 후 이메일로 계정 잠금 해제 지침을 받아보실 수 있습니다.
+      send_paranoid_instructions: 계정이 존재하면, 잠시 후 이메일로 계정 잠금 해제 지침을 받아보실 수 있습니다.
+      unlocked: 계정이 성공적으로 잠금 해제되었습니다. 로그인하여 계속해 주세요.
+  errors:
+    messages:
+      already_confirmed: (은)는 이미 인증되었습니다. 다시 로그인해 보세요
+      confirmation_period_expired: '%{period} 이내에 이메일 인증을 해야 합니다. 새로 요청해 주세요'
+      expired: (이)가 만료되었습니다 새로 요청해 주세요.
+      not_found: 찾을 수 없습니다.
+      not_locked: (은)는 잠기지 않았습니다.
+      not_saved: '%{count}개의 오류로 인해 %{resource} 저장이 금지 되었습니다.'
