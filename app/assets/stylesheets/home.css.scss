@@ -265,6 +265,38 @@ footer {
 	}
 }
 
+/* notices#index */
+#qna {
+	> div {
+		> h1 {
+			font-size: 18px;
+			@extend .grey_thin_border;
+		}
+		> ul {
+			@extend .grey_thin_border;
+		}
+		> div {
+			@extend .grey_thin_border;
+			a div span {
+				@extend .left_border_label;
+				border-color: red;
+			}
+		}
+	}
+	.notice a div span {
+		@extend .left_border_label;
+		border-left-color: #e5e5e5;
+	}
+}
+
+@media (min-width: 992px) {
+	#qna {
+		h1 {
+			font-size: 24px;
+		}
+	}
+}
+
 /* restaurants#index */
 #rest_index {
 	padding: 0;

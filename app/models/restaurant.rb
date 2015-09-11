@@ -250,7 +250,7 @@ class Restaurant < ActiveRecord::Base
 		http = Net::HTTP.new(uri.host, uri.port)
 		http.use_ssl = true
 
-		atom_url = 'http://menumap.co.kr/sitemap.atom?offset=' + offset.to_s
+		atom_url = ENV['CURRENT_IP'] + '/sitemap.atom?offset=' + offset.to_s
 
 		args = { ping_url: atom_url }
 		uri.query = URI.encode_www_form(args)
