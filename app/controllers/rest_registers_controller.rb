@@ -10,9 +10,7 @@ class RestRegistersController < ApplicationController
   end
 
   def new
-		flash[:alert] = "더 정확하고 많은 정보를 제공해주시면 음식점 정보를 빠르게 등록할 수 있습니다."
 		@rest_register = RestRegister.new
-		@rest_register.pictures.build
 
 		@categories = Category.all
 		@subcategories = Subcategory.all
@@ -22,20 +20,11 @@ class RestRegistersController < ApplicationController
 		@rest_register = RestRegister.new(register_params)	
 		@rest_register.user_id = current_user.id if current_user
 		if @rest_register.save
-			flash[:alert] = "succeed in rest_registers#create"
-
-			# Multiple images upload
-			if params[:rest_register][:pictures_attributes]
-				params[:rest_register][:pictures_attributes]["0"][:img].each do |img|
-					@rest_register.pictures.create(img: img)
-				end
-			end
-
-			redirect_to rest_registers_url
+			flash[:success] = "음식점 추가 신청이 완료되었습니다."
 		else
-			flash[:alert] = "fail in rest_registers#create"
-			redirect_to new_rest_register_url
+			flash[:danger] = "음식점 추가 신청에 실패했습니다."
 		end
+		redirect_to new_rest_register_url
 	end
 
 	def destroy

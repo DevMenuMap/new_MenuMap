@@ -86,11 +86,6 @@
 	<%= link_to "delete", restaurant_path(@restaurant), method: :delete %>
 <% end %>
 
-<%= render 'shared/modal' %>
-
-<!-- This script is for require_from_group method -->
-<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
-
 <script>
 	$(function(){
 		$('.pagination a').attr('data-remote', 'true')
@@ -120,16 +115,6 @@
 			url: '/blogs/blog_ajax',
 			data: {
 				id: <%= @restaurant.id %>
-			}
-		});
-
-		$("#new_rest_err").validate({
-			rules: {
-				'rest_err[presence_err]': { require_from_group: [1, ".rest_errs_group"] },
-				'rest_err[menu_err]': { require_from_group: [1, ".rest_errs_group"] },
-				'rest_err[phnum_err]': { require_from_group: [1, ".rest_errs_group"] },
-				'rest_err[category_err]': { require_from_group: [1, ".rest_errs_group"] },
-				'rest_err[etc]': { require_from_group: [1, ".rest_errs_group"] }
 			}
 		});
 	});

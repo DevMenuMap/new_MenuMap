@@ -1,18 +1,16 @@
-<%= form_for(@question) do |f| %>
+<%= form_for @question do |f| %>
 	<%= render "questions/fields", f: f %>
-	<div style="text-align: right;">
-		<%= f.button "취소", class: "btn", data: { dismiss: "modal" } %>
-		<%= f.button "등록", class: "btn btn-primary" %>
+	<div class="modal-footer" style="padding: 10px 0 0;">
+		<%= f.button "취소", class: "btn btn_cancel", data: { dismiss: "modal" } %>
+		<%= f.button "등록", class: "btn btn_submit" %>
 	</div>
 <% end %>
 
 <script>
-$(document).ready( function() {
-	$("#new_question").validate({
-		rules: {
-			//'question[email]': { required: true, email: true },
-			'question[contents]': { required: true }
-		}
+	$('#new_question').on('submit', function() {
+		if ( $('#question_contents').val().length == 0 ) {
+			alert('질문 내용을 입력해주세요.');
+			return false;
+		};
 	});
-});
 </script>

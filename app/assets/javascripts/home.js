@@ -44,6 +44,6 @@ $(document).on('ready page:load', function() {
 
 	// Click original file add button with customized button.
 	$(".file_select").click( function() {
-		$(this).closest("form").children("div").children("input").last().click();
+		$(this).closest("form").find(".MultiFile-wrap").children("input").click();
 	});
 });

@@ -30,6 +30,16 @@ $facebook_link_blue: #5890ff;
 	outline-offset: -2px;	
 }
 
+.page_title {
+	font-size: 18px;
+}
+
+@media (min-width: 992px) {
+	.page_title {
+		font-size: 24px;
+	}
+}
+
 table, th, td {
 	border: 1px solid black;
 }
@@ -135,12 +145,19 @@ body {
 }
 	
 /* header */
-nav .navbar-header {
-	.navbar-brand {
-		font-size: 18px;
+nav.navbar-default {
+	.navbar-nav > li > a {
+		&:focus, &:hover {
+			background-color: #eee;
+		}
 	}
-	button.navbar-toggle {
-		@extend .blue_outline;	
+	.navbar-header {
+		.navbar-brand {
+			font-size: 18px;
+		}
+		button.navbar-toggle {
+			@extend .blue_outline;	
+		}
 	}
 }
 
@@ -258,10 +275,57 @@ footer {
 			padding: 0 30px;
 		}
 	}
-	#mm_search {
+	#mm_search, #new_rest_register {
 		legend {
 			font-size: 24px;
 		}
+	}
+}
+
+/* notices#index */
+#qna {
+	> div {
+		> h1 {
+			@extend .grey_thin_border;
+		}
+		> ul {
+			@extend .grey_thin_border;
+		}
+		> div {
+			@extend .grey_thin_border;
+			a div span {
+				@extend .left_border_label;
+				border-color: red;
+			}
+		}
+	}
+	.notice a div span {
+		@extend .left_border_label;
+		border-left-color: #e5e5e5;
+		font-weight: 500;
+	}
+}
+
+li.notice > div {
+	padding: 5px 5px 0;
+}
+
+@media (min-width: 992px) {
+	#qna .notice a div span {
+		font-weight: initial;
+		font-size: 18px;
+	}
+	li.notice > div {
+		padding: 15px 15px 10px;
+	}
+}
+
+/* rest_registers#new */
+#new_rest_register {
+	legend {
+		border-bottom: none;
+		border-color: $MenuMap_orange;
+		@extend .left_border_label;
 	}
 }
 
@@ -439,11 +503,12 @@ span.MultiFile-label {
 	float: left;
 }
 
+a.MultiFile-remove {
+	margin-left: 5px;
+}
+
 #picture_img_list {
 	margin-bottom: 10px;
-	a.MultiFile-remove {
-		margin-left: 5px;
-	}
 }
 
 .img_owner {

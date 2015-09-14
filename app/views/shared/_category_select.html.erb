@@ -1,10 +1,10 @@
 <!-- options_for_select(options[text, value], selected) -->
-<div class="col-xs-6">
+<div class="col-xs-6" style="padding: 0 5px 0 0;">
 	<%= f.select :category_id, 
 				options_for_select(@categories.map{ |c| [c.name, c.id] }, nil), 
 																			{}, { id: "category_select", class: "form-control" } %>
 </div>
-<div class="col-xs-6">
+<div class="col-xs-6" style="padding: 0 0 0 5px;">
 	<%= f.select :subcategory_id, 
 				options_for_select(@subcategories.map{ |s| [s.name, s.id] }, nil),
 																			{}, { id: "subcategory_select", class: "form-control" } %>
