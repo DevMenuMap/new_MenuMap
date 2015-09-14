@@ -77,9 +77,10 @@ label {
 }
 
 .btn-facebook {
-	background-color: #3B5998;
-	color: white;
-	font-weight: bold;
+	border: 1px solid #3B5998;
+	color: #3B5998;
+	font-weight: 500;
+	font-size: 85%;
 	&:hover {
 		background-color: #2d4373;
 		border-color: rgba(0,0,0,0.2);
@@ -270,7 +271,7 @@ footer {
 }
 
 @media (min-width: 992px) {
-	#search {
+	#search, #login, #signup {
 		> div.col-md-6 {
 			padding: 0 30px;
 		}
@@ -320,11 +321,23 @@ li.notice > div {
 	}
 }
 
-/* sessions#new */
+/* sessions#new, login */
 .login_center {
 	margin-bottom: 2em; 
 	padding: 1em 0;
 	@extend .grey_thin_border;
+	a {
+		color: $facebook_link_blue;
+	}
+}
+
+/* registrations#new, signup */
+#signup {
+	> div > div {
+		margin-bottom: 20px; 
+		padding-bottom: 20px;
+		@extend .grey_thin_border;
+	}
 }
 
 /* restaurants#index */

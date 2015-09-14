@@ -1,10 +1,10 @@
 <% provide(:page_title, "회원가입") %>
 
-<div class="container">
+<div id="signup" class="container" style="margin-top: 20px;">
 	<div class="col-md-6 col-md-offset-3">
 		<%= devise_error_messages! %>
 
-		<div style="border-bottom: solid 1px gray; margin-bottom: 2em; padding: 1em 0;">
+		<div>
 			<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 				<legend>회원가입</legend>
 
@@ -24,9 +24,7 @@
 					<%= f.password_field :password_confirmation, { class: "form-control", autocomplete: "off", placeholder: "비밀번호 확인*" } %>
 				</div>
 
-				<div class="actions">
-					<%= f.button "가입", class: "btn btn-primary btn-block" %>
-				</div>
+				<%= f.button "가입", class: "btn btn_submit btn-block", style: "margin-top: 20px;" %>
 			<% end %>
 		</div>
 
