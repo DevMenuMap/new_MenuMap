@@ -30,3 +30,22 @@ function checkValidation(e) {
 		e.preventDefault();
 	}
 };
+
+// Validation for input that should have at leash one character.
+function mustFillInput(targetForm) {
+	var validate = true;
+	targetForm.find('[data-must-fill]').each( function(i) {
+		if ( $(this).val().length == 0 ) {
+			alert( $(this).data('must-fill') + '을 입력해주세요.' );
+			validate = false;
+			return false;
+		}
+	});
+	return validate;
+};
+
+$(document).ready( function() {
+	$('form').on('submit', function() {
+		if ( !mustFillInput($(this))	) { return false };
+	});
+});
