@@ -41,11 +41,13 @@ namespace :restaurants do
 		# When there was no arguments, ping every restaurants.
 		else
 			total = Restaurant.count
-			total % 100 == 0 ? max = total - 1 : max = total
+			total % 100 == 0 ? max = (total/100) - 1 : max = (total/100)
 
 			0.upto(max).each do |n|
 				offset = n*100
 				puts Restaurant.ping(offset)
+				# Pause for 3 seconds.
+				sleep 3
 			end
 		end
 	end
