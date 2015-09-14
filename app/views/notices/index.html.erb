@@ -12,7 +12,7 @@
 					<%= link_to "#notice_#{notice.id}", style: "text-decoration: none; color: initial;", onclick: "toggleLabelColor($(this))", data: { toggle: "collapse" } do %>
 						<div style="width: 100%;"><span> <%= notice.question %></span></div>
 					<% end %>
-					<div id="notice_<%= notice.id %>" class="panel-collapse collapse" style="padding: 5px;">
+					<div id="notice_<%= notice.id %>" class="panel-collapse collapse">
 						<%= notice.answer.html_safe %>
 						<% if admin_user? %>
 							<%= link_to "edit", edit_notice_path(notice) %>

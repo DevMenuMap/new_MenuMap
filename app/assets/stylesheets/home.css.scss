@@ -275,7 +275,7 @@ footer {
 			padding: 0 30px;
 		}
 	}
-	#mm_search {
+	#mm_search, #new_rest_register {
 		legend {
 			font-size: 24px;
 		}
@@ -303,6 +303,20 @@ footer {
 		@extend .left_border_label;
 		border-left-color: #e5e5e5;
 		font-weight: 500;
+	}
+}
+
+li.notice > div {
+	padding: 5px 5px 0;
+}
+
+@media (min-width: 992px) {
+	#qna .notice a div span {
+		font-weight: initial;
+		font-size: 18px;
+	}
+	li.notice > div {
+		padding: 15px 15px 10px;
 	}
 }
 
