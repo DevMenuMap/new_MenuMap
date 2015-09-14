@@ -35,8 +35,6 @@
 
 <%= link_to "share MyMap", new_user_mymap_snapshot_path(@user), id: "share_mymap_button", remote: true, data: {toggle: "modal", target: "#myModal"} %>
 
-<%= render 'shared/modal' %>
-
 <script>
 	$(document).ready(function(){ 
 		loadNaverMap(<%= @center_x %>, <%= @center_y %>, 8);

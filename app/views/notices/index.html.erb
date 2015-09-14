@@ -30,9 +30,8 @@
 				</div>
 			<% end %>
 		</div>
+
+		<%= link_to "new_notice", new_notice_path if admin_user? %>
 	</div>
 </div>
 
-<%= link_to "new_notice", new_notice_path if admin_user? %>
-
-<%= render 'shared/modal' %>
