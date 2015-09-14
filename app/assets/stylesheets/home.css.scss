@@ -306,6 +306,15 @@ footer {
 	}
 }
 
+/* rest_registers#new */
+#new_rest_register {
+	legend {
+		border-bottom: none;
+		border-color: $MenuMap_orange;
+		@extend .left_border_label;
+	}
+}
+
 /* restaurants#index */
 #rest_index {
 	padding: 0;
@@ -480,11 +489,12 @@ span.MultiFile-label {
 	float: left;
 }
 
+a.MultiFile-remove {
+	margin-left: 5px;
+}
+
 #picture_img_list {
 	margin-bottom: 10px;
-	a.MultiFile-remove {
-		margin-left: 5px;
-	}
 }
 
 .img_owner {
