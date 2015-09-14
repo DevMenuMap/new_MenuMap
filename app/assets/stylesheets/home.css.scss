@@ -261,7 +261,7 @@ footer {
 }
 
 /* home#search */
-#mm_search {
+#mm_search, #new_rest_register, #new_user {
 	legend {
 		@extend .left_border_label;
 		border-left-color: $MenuMap_orange;
@@ -275,7 +275,7 @@ footer {
 			padding: 0 30px;
 		}
 	}
-	#mm_search, #new_rest_register {
+	#mm_search, #new_rest_register, #new_user {
 		legend {
 			font-size: 24px;
 		}
@@ -320,13 +320,11 @@ li.notice > div {
 	}
 }
 
-/* rest_registers#new */
-#new_rest_register {
-	legend {
-		border-bottom: none;
-		border-color: $MenuMap_orange;
-		@extend .left_border_label;
-	}
+/* sessions#new */
+.login_center {
+	margin-bottom: 2em; 
+	padding: 1em 0;
+	@extend .grey_thin_border;
 }
 
 /* restaurants#index */

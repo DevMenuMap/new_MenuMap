@@ -3,7 +3,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   def new
-		redirect_to '/404.html' and return
+		super
   end
 
   # POST /resource/sign_in

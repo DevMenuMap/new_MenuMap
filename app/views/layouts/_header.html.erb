@@ -20,7 +20,7 @@
 				<li><%= link_to "음식점 검색" , search_path %></li>
 				<li><%= link_to "자주묻는 질문", qna_path %></li>
 				<% if !current_user %>
-					<li style="display: none;"><%= link_to "로그인" , new_user_session_path %></li>
+					<li><%= link_to "로그인" , new_user_session_path %></li>
 				<% else %>
 					<% if current_user.admin? %>
 						<li><%= link_to "admin" , monitors_path %></li>
