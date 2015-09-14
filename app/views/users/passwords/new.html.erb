@@ -6,20 +6,10 @@
 			<legend>비밀번호 찾기</legend>
 
 			<div class="form-group">
-				<%= f.email_field :email, { class: "form-control", autofocus: true, placeholder: "이메일*" } %>
+				<%= f.email_field :email, { class: "form-control", autofocus: true, placeholder: "이메일*", data: { must_fill: "이메일" } } %>
 			</div>
 
 			<%= f.button "이메일 전송", class: "btn btn_submit btn-block" %>
 		<% end %>
 	</div>
 </div>
-
-<script>
-	$(document).ready( function() {
-		$('#new_user').validate({
-			rules: {
-				'user[email]': { required: true, email: true },
-			}
-		});
-	});
-</script>

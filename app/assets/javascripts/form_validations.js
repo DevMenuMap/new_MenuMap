@@ -65,6 +65,7 @@ function mustFillInput(targetForm) {
 	targetForm.find('[data-must-fill]').each( function(i) {
 		if ( $(this).val().length == 0 ) {
 			alert( josaChecker($(this).data('must-fill'), '을') + ' 입력해주세요.' );
+			redOutline($(this));
 			validate = false;
 			return false;
 		}
@@ -72,7 +73,7 @@ function mustFillInput(targetForm) {
 	return validate;
 };
 
-$(document).ready( function() {
+$(document).on('ready page:load', function() {
 	$('form').on('submit', function() {
 		if ( !mustFillInput($(this))	) { return false };
 	});
