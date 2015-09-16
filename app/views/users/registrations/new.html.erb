@@ -9,19 +9,19 @@
 				<legend>회원가입</legend>
 
 				<div class="form-group">
-					<%= f.email_field :email, { class: "form-control", autofocus: true, placeholder: "이메일*", data: { must_fill: "이메일" } } %>
+					<%= f.email_field :email, { class: "form-control", autofocus: true, placeholder: "이메일*" } %>
 				</div>
 
 				<div class="form-group">
-					<%= f.text_field :username, { class: "form-control", placeholder: "유저명*", data: { must_fill: "유저명" } } %>
+					<%= f.text_field :username, { class: "form-control", placeholder: "유저명*" } %>
 				</div>
 
 				<div class="form-group">
-					<%= f.password_field :password, { class: "form-control", autocomplete: "off", placeholder: "비밀번호*", data: { must_fill: "비밀번호" } } %>
+					<%= f.password_field :password, { class: "form-control", autocomplete: "off", placeholder: "비밀번호*" } %>
 				</div>
 
 				<div class="form-group">
-					<%= f.password_field :password_confirmation, { class: "form-control", autocomplete: "off", placeholder: "비밀번호 확인*", data: { must_fill: "비밀번호 확인" } } %>
+					<%= f.password_field :password_confirmation, { class: "form-control", autocomplete: "off", placeholder: "비밀번호 확인*" } %>
 				</div>
 
 				<%= f.button "가입", class: "btn btn_submit btn-block", style: "margin-top: 20px;" %>

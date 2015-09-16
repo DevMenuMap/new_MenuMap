@@ -34,25 +34,16 @@ $(document).on('ready page:load', function() {
 			'user[email]' : {
 				required: '이메일을 입력해주세요.',
 				email: '이메일 형식이 잘못되었습니다.'
-			}
+			},
 			'user[username]' : {
 				required: '유저명을 적어주세요.',
 				usernameStart: '유저명은 한글 혹은 영어로 시작해야합니다.',
-				usernameMinLength: '유저명은 한글 2글자, 영어 혹은 숫자 6글자 이상입니다.',
+				usernameMinLength: '유저명은 한글일 경우 2글자, 영어 혹은 숫자일 경우 6글자 이상입니다.',
 				usernameFormat: '유저명은 한글, 영어, 숫자, - _ 으로만 가능합니다.'
 			},
 			'user[current_password]': '변경사항을 저장하기 위해 현재 비밀번호를 적어주세요.',
 			'user[password]': '비밀번호는 8자 이상이어야 합니다.',
 			'user[password_confirmation]': '비밀번호가 일치하지 않습니다.'
-		}
-	});
-
-	$('#new_user').validate({
-		rules: {
-			'user[password]' : { required: true }
-		},
-		messages: {
-			'user[password]' : '비밀번호를 적어주세요.'
 		}
 	});
 });
