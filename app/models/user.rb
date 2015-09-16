@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
 
 	### Constants
-	USERNAME_FORMAT = /\A[a-zA-Z_\p{Hangul}][a-zA-Z0-9_\p{Hangul}]+\z/
+	USERNAME_FORMAT = /\A[a-zA-Z\p{Hangul}][a-zA-Z0-9_\-\p{Hangul}]+\z/
 	EMAIL_FORMAT = /\A(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Z‌​a-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}\z/i
 
 	### Associations
@@ -26,9 +26,9 @@ class User < ActiveRecord::Base
 
 	### Validations
 	validates :username, presence: true, uniqueness: { case_sensitive: false },
-											 format: { with: USERNAME_FORMAT, message: "invalid username" }, 
+											 format: { with: USERNAME_FORMAT, message: '유저명은 한글, 영어, 숫자, -, _ 으로만 가능합니다.' }, 
 											 length: { maximum: 20 }
-	validates :email, format: { with: EMAIL_FORMAT, message: "invalid email" }
+	validates :email, format: { with: EMAIL_FORMAT, message: "이메일 형식이 잘못되었습니다." }
 
 	# Custom validators
 	validate :no_slang

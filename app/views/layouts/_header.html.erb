@@ -25,7 +25,7 @@
 					<% if current_user.admin? %>
 						<li><%= link_to "admin" , monitors_path %></li>
 					<% end %>
-					<li><%= link_to "내 페이지" , user_profile_path(current_user.username) %></li>
+					<li><%= link_to "내 페이지" , edit_user_registration_path %></li>
 					<li><%= link_to "로그아웃" , destroy_user_session_path, method: :delete %></li>
 				<% end %>
       </ul>
