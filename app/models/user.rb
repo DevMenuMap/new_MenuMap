@@ -48,7 +48,6 @@ class User < ActiveRecord::Base
 	### Class methods
 	# Facebook login
 	def self.from_omniauth(auth)
-	byebug
 		where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
 			user.password = Devise.friendly_token[0,20]
 			user.username = "fb_" + auth.uid

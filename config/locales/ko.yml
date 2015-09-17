@@ -1,5 +1,22 @@
 ---
 ko:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: 이메일을 입력해주세요.
+              taken: 이미 등록된 이메일입니다. 다른 이메일을 사용해주세요.
+            username:
+              blank: 유저명을 입력해주세요.
+            password:
+              blank: 비밀번호를 입력해주세요.
+            current_password: 
+              blank: 현재 비밀번호를 입력해주세요.
+              invalid: 비밀번호가 틀렸습니다.
+            reset_password_token:
+              invalid: 이미 사용된 링크입니다. 비밀번호 변경을 위한 이메일을 다시 받아야 합니다.
   will_paginate:
     previous_label: "<i class='fa fa-angle-left'></i>"
     next_label: "<i class='fa fa-angle-right'></i>"
@@ -211,24 +228,24 @@ ko:
       unconfirmed: 계속하기 전에 이메일 주소를 인증해야 합니다.
     mailer:
       confirmation_instructions:
-        subject: 이메일 인증 지침
+        subject: MenuMap에 가입하신 것을 축하합니다.
       reset_password_instructions:
-        subject: 비밀번호 재설정 지침
+        subject: MenuMap 비밀번호 변경
       unlock_instructions:
         subject: 잠금 해제 지침
     omniauth_callbacks:
       failure: '%{reason}(으)로 인하여 %{kind}(으)로부터 인증받지 못했습니다.'
-      success: '%{kind} 계정으로부터 인증되었습니다.'
+      success: '%{kind} 계정으로 로그인되었습니다.'
     passwords:
       no_token: 비밀번호 재설정 이메일을 거치지 않고 이 페이지에 접근할 수 없습니다. 비밀번호 재설정 이메일에서 오셨다면, 주소가 제대로 되었는지 확인해 주세요.
-      send_instructions: 잠시후에 비밀번호 재설정 지침 메일을 받을 수 있습니다.
+      send_instructions: 비밀번호 변경을 위한 메일이 발송되었습니다.
       send_paranoid_instructions: 이메일이 데이터베이스에 존재할 경우, 몇 분 안에 비밀번호 재설정 주소를 이메일로 받으실 수 있습니다.
-      updated: 성공적으로 비밀번호를 변경했습니다. 로그인 되었습니다.
+      updated: 비밀번호가 변경되었습니다.
       updated_not_active: 비밀번호가 성공적으로 변경되었습니다.
     registrations:
       destroyed: 안녕! 계정이 성공적으로 탈퇴되었습니다. 다시 볼 수 있기 바랍니다.
       signed_up: 환영합니다! 성공적으로 로그인되었습니다.
-      signed_up_but_inactive: 성공적으로 가입되었지만, 아직 계정이 활성화되어 있지 않아 로그인 할 수 없습니다..
+      signed_up_but_inactive: 성공적으로 가입되었지만, 아직 계정이 활성화되어 있지 않아 로그인 할 수 없습니다.
       signed_up_but_locked: 성공적으로 가입되었지만, 계정이 잠겨있어 로그인 할 수 없습니다.
       signed_up_but_unconfirmed: 인증 주소가 포함된 메시지를 이메일 주소로 보냈습니다. 계정을 활성화하기 위해 메일을 확인하세요.
       update_needs_confirmation: 계정이 성공적으로 수정되었지만, 새로운 이메일 주소를 확인해야 합니다. 이메일로 전송된 이메일 인증 주소를 클릭하여 새로운 이메일 주소를 인증해 주세요.
@@ -246,6 +263,6 @@ ko:
       already_confirmed: (은)는 이미 인증되었습니다. 다시 로그인해 보세요
       confirmation_period_expired: '%{period} 이내에 이메일 인증을 해야 합니다. 새로 요청해 주세요'
       expired: (이)가 만료되었습니다 새로 요청해 주세요.
-      not_found: 찾을 수 없습니다.
+      not_found: 해당 이메일을 찾을 수 없습니다. 다시 한 번 확인해주세요.
       not_locked: (은)는 잠기지 않았습니다.
-      not_saved: '%{count}개의 오류로 인해 %{resource} 저장이 금지 되었습니다.'
+      not_saved: '저장되지 않았습니다.'
