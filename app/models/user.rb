@@ -10,7 +10,13 @@ class User < ActiveRecord::Base
 
 	### Constants
 	USERNAME_FORMAT = /\A[a-zA-Z\p{Hangul}][a-zA-Z0-9_\-\p{Hangul}]+\z/
+  USERNAME_CONSTRAINTS = ['메뉴맵', '매뉴맵', '메뉴멥', '메뉴맵', 
+													'MenuMap', '운영자', 'admin', 'root']
 	EMAIL_FORMAT = /\A(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Z‌​a-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}\z/i
+
+
+	### Attributes
+	attr_accessor :skip_username_constraints
 
 	### Associations
 	has_one :mymap_snapshot
@@ -32,7 +38,7 @@ class User < ActiveRecord::Base
 
 	# Custom validators
 	validate :no_slang
-	validate :no_particular_word
+	validate :no_particular_word, unless: :skip_username_constraints
 	validate :size_in_byte
 
 	
@@ -69,25 +75,19 @@ class User < ActiveRecord::Base
 	### Instance method
 	def no_slang
     if Slang.where("? LIKE CONCAT('%', name, '%')", username).present?
-      errors.add(:username, "Slang")
+      errors.add(:username, "유저명에 비속어를 포함할 수 없습니다.")
     end
   end
 
   def no_particular_word
-  	impossibles = ["메뉴맵", "menumap", "운영자", "profile", "store",
-  								 "restaurant", "login", "logout", "signup", "signin",
-  									"signout", "session", "user", "username", "test",
-  									"help", "index", "home", "about", "contact", "root",
-  									"manual", "delete", "destroy", "create", "make",
-  									"show", "new", "post", "comment", "page", "invalid",
-  									"valid"]
   	username_downcase = username.downcase
-  	if username_downcase.end_with? "s"
-  		username_downcase = username_downcase[0...-1]
-  	end
-  	if impossibles.include? username_downcase
-  		errors.add(:username, "Impossible")
-  	end
+
+		USERNAME_CONSTRAINTS.each do |constraint|
+			if username_downcase.include? constraint.downcase
+				errors.add(:username, "#{constraint}는 유저명에 들어갈 수 없는 단어입니다.")
+				return
+			end
+		end
   end
 
   def size_in_byte
