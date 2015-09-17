@@ -42,8 +42,8 @@ class User < ActiveRecord::Base
 	### Class methods
 	# Facebook login
 	def self.from_omniauth(auth)
+	byebug
 		where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-			user.email = auth.info.email
 			user.password = Devise.friendly_token[0,20]
 			user.username = "fb_" + auth.uid
 			if auth.info.email.nil?
@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 			else
 				user.email = auth.info.email
 			end
-			user.fb_img 	= auth.info.image 
+			user.fb_img = auth.info.image 
 			user.confirmed_at = Time.now
 			# user.skip_confirmation_notification!
 		end

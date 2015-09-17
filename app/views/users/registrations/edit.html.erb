@@ -7,25 +7,28 @@
 				<legend><%= resource.username %> 계정 변경</legend>
 
 				<div class="form-group">
-					<%= f.email_field :email, { class: "form-control", disabled: true } %>
+					<%= f.email_field :email, { class: "form-control", style: "display: #{enable_email_edit_omniauth_user(resource)}", disabled: true } %>
 				</div>
 
 				<div class="form-group">
 					<%= f.text_field :username, { class: "form-control", placeholder: "유저명*" } %>
 				</div>
 
-				<div class="form-group">
-					<%= f.password_field :current_password, { class: "form-control", autocomplete: "off", placeholder: "현재 비밀번호" } %>
-				</div>
+				<!-- When user signed up with omniauth -->
+				<% unless resource.provider %>
+					<div class="form-group">
+						<%= f.password_field :current_password, { class: "form-control", autocomplete: "off", placeholder: "현재 비밀번호" } %>
+					</div>
 
-				<div class="form-group">
-					<%= f.label :password, "비밀번호 변경" %> <i>(비밀번호를 변경할 때 채워주세요.)</i>
-					<%= f.password_field :password, { class: "form-control", autocomplete: "off", placeholder: "새 비밀번호*" } %>
-				</div>
+					<div class="form-group">
+						<%= f.label :password, "비밀번호 변경" %> <i>(비밀번호를 변경할 때 채워주세요.)</i>
+						<%= f.password_field :password, { class: "form-control", autocomplete: "off", placeholder: "새 비밀번호*" } %>
+					</div>
 
-				<div class="form-group">
-					<%= f.password_field :password_confirmation, { class: "form-control", autocomplete: "off", placeholder: "새 비밀번호 확인*" } %>
-				</div>
+					<div class="form-group">
+						<%= f.password_field :password_confirmation, { class: "form-control", autocomplete: "off", placeholder: "새 비밀번호 확인*" } %>
+					</div>
+				<% end %>
 
 				<%= f.button "변경사항 저장", class: "btn btn-facebook btn-block" %>
 			<% end %>

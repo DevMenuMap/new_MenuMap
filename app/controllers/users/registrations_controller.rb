@@ -40,7 +40,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
+		# When user signed up with omniauth.
+		def update_resource(resource, params)
+			if current_user.provider == 'facebook'
+				params.delete('current_passwrod')
+				resource.update_without_password(params)
+			else
+				resource.update_with_password(params)
+			end
+		end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
