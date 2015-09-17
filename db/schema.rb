@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917114817) do
+ActiveRecord::Schema.define(version: 20150917115336) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -228,6 +228,7 @@ ActiveRecord::Schema.define(version: 20150917114817) do
     t.boolean  "active",        limit: 1,     default: true
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
+    t.boolean  "skip",          limit: 1,     default: false
   end
 
   add_index "rest_errs", ["restaurant_id"], name: "index_rest_errs_on_restaurant_id", using: :btree
