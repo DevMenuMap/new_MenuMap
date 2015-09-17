@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-		redirect_to '/404.html' and return
+		super
   end
 
   # POST /resource
@@ -25,9 +25,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # DELETE /resource
   def destroy
 		new_email = current_user.id.to_s + "@menumap.co.kr"
-		new_username = "user_" + current_user.id.to_s
-  	User.find(current_user.id).update(email: new_email, username: new_username, active: false)
-		flash[:alert] = "Succeed in destroy"
+		new_username = "MenuMap_user_" + current_user.id.to_s
+		user = User.find(current_user.id)
+		user.skip_username_constraints = true
+
+  	if user.update(email: new_email, username: new_username, active: false)
+			flash[:success] = "계정을 삭제했습니다."
+		else
+			flash[:error] = "계정 삭제에 실패했습니다. 다시 한 번 시도해주세요."
+		end
 		redirect_to root_url
   end
 
@@ -40,7 +46,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
+		# When user signed up with omniauth.
+		def update_resource(resource, params)
+			if current_user.provider == 'facebook'
+				params.delete('current_passwrod')
+				resource.update_without_password(params)
+			else
+				resource.update_with_password(params)
+			end
+		end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params

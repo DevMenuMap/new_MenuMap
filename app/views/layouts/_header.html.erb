@@ -20,20 +20,12 @@
 				<li><%= link_to "음식점 검색" , search_path %></li>
 				<li><%= link_to "자주묻는 질문", qna_path %></li>
 				<% if !current_user %>
-					<li style="display: none;"><%= link_to "로그인" , new_user_session_path %></li>
+					<li><%= link_to "로그인" , new_user_session_path %></li>
 				<% else %>
 					<% if current_user.admin? %>
 						<li><%= link_to "admin" , monitors_path %></li>
 					<% end %>
-					<li>
-						<%= current_user.username %>
-						<% if current_user.fb_img.present? %>
-							<%= image_tag current_user.fb_img %>
-						<% else %>
-							<%= image_tag "users/default_profile.png", style: "height: 20px; width: 20px;" %>
-						<% end %>
-					</li>
-					<li><%= link_to "내 페이지" , user_profile_path(current_user.username) %></li>
+					<li><%= link_to "내 페이지" , edit_user_registration_path %></li>
 					<li><%= link_to "로그아웃" , destroy_user_session_path, method: :delete %></li>
 				<% end %>
       </ul>

@@ -1,5 +1,5 @@
-<p>안녕 <%= @email %>!</p>
+<p><%= @email %>님, 안녕하세요!</p>
+<p><span style="font-family: Ubuntu; color: #ea4c15; font-weight: bold;">MenuMap</span>에 오셔서 자신만의 메뉴 댓글과 맛집 지도를 만들어보세요.</p><br/>
 
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p>아래 링크를 누르시면 아이디를 사용하실 수 있습니다.</p>
+<p><%= link_to '이메일 인증하기', confirmation_url(@resource, confirmation_token: @token) %></p>

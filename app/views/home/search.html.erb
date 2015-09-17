@@ -5,12 +5,10 @@
 		<%= form_tag restaurants_path, method: :get, id: "mm_search", name: nil do %>
 			<legend>음식점 검색</legend>
 
-			<!-- Autocomplete recommended address name with Addrcomplete model 
-					 by jquery-ui autocomplete function 											 -->
 			<div class="form-group" style="margin-bottom: 0">
 				<%= label_tag :address, "지역" %>
 				<%= text_field_tag :address, nil, 
-										{ id: "addrcomplete", class: "form-control", placeholder: "예) 서울대입구역, 신촌, 낙성대" } %>
+										{ id: "addrcomplete", class: "form-control", autofocus: true, placeholder: "예) 서울대입구역, 신촌, 낙성대" } %>
 
 				<div style="text-align: right">
 					<%= check_box_tag :delivery %>
@@ -55,11 +53,6 @@
 </div>
 
 <script>
-	$(document).on('ready page:load', function() {
-		// Focus addr input.
-		$('#addrcomplete').focus();
-	});
-
 	// Initialize search query.
 	function resetSubcat() {
 		$("#subcategory_select").html("<%= 
