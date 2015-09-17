@@ -1,25 +1,19 @@
-<h2>Change your password</h2>
+<div id="password_reset" class="container" style="margin-top: 20px;">
+	<div class="col-md-6 col-md-offset-3">
+		<%= devise_error_messages! %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+		<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+			<legend>비밀번호 변경</legend>
+			<%= f.hidden_field :reset_password_token %>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
-  </div>
+			<div class="form-group">
+				<%= f.password_field :password, { class: "form-control", autofocus: true, autocomplete: "off", placeholder: "새 비밀번호*" } %>
+			</div>
+			<div class="form-group">
+				<%= f.password_field :password_confirmation, { class: "form-control", autocomplete: "off", placeholder: "비밀번호 확인*" } %>
+			</div>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+			<%= f.button "변경하기", class: "btn btn_submit btn-block" %>
+		<% end %>
+	</div>
+</div>
