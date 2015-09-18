@@ -2,7 +2,7 @@
 	<%= render partial: "comments/new", locals: { comment: @comment } %>
 </div>
 
-<div id="no_comment" style="display: <%= display_none_when_comment_exists(@comments) %>">
+<div id="no_comment" style="display: <%= display_none_if_comment_exists(@comments) %>">
 	<div class="row" style="margin: 0; padding: 0 15px 15px;">
 		<div class="col-xs-10 col-xs-offset-1" style="text-align: center; margin-top: 10px;">
 			음식점, 메뉴 댓글이 없습니다.<br/>
@@ -11,6 +11,12 @@
 	</div>
 </div>
 
-<div id="comment_section" style="display: <%= display_none_when_comment_exists(@comments, false) %>">
-	<%= render "comments/page" %>
+<div id="comment_section" style="display: <%= display_none_if_comment_exists(@comments, false) %>">
+	<ul id="comment_body" style="list-style: none;">
+		<%= render partial: "comments/show", collection: @comments, as: :comment %>
+	</ul>
+
+	<% unless @comments.next_page.nil? %>
+		<%= link_to '댓글 더보기', restaurant_path(@restaurant, page: @comments.next_page), remote: true, id: 'show_more_link' %>
+	<% end %>
 </div>

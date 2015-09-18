@@ -87,10 +87,6 @@
 <% end %>
 
 <script>
-	$(function(){
-		$('.pagination a').attr('data-remote', 'true')
-	});
-
 	$('#update_comment').click( function(e) {
 		if ( <%= current_user.nil? %> ) {
 			alert("로그인 후 댓글 작성 가능합니다.");
