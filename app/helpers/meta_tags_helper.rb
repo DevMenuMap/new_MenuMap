@@ -24,7 +24,7 @@ module MetaTagsHelper
 	# Each restaurants#show page specific meta description
 	def restaurant_meta_description(restaurant)
 		description	 = "음식점 #{restaurant.name}("
-		description	+= "#{restaurant.category.name}) "
+		description	+= "#{restaurant.category.name} > #{restaurant.subcategory.name}) "
 		description += "주요상권 및 위치: "
 		description += "[#{restaurant.title_addr_tags(10)}] " if restaurant.title_addr_tags(1).present?
 		description += "(#{restaurant.admin_dong}) #{restaurant.addr}"
@@ -42,5 +42,7 @@ module MetaTagsHelper
 				description	+= ", 전화번호: #{restaurant.phnum}" 
 			end
 		end
+
+		description
 	end
 end

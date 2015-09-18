@@ -10,9 +10,13 @@ class Foursquare
   # extend ActiveModel::Naming
 	extend HomeHelper
 
+
+	### Attributes
   attr_accessor :username
   attr_accessor :url
 
+
+	### Validations
   validates :username, :presence => true
   validates :url,  :presence => true
 

@@ -110,9 +110,4 @@ $(document).on('ready page:load', function() {
 			return false;
 		};
 	});
-
-	// When unidentified is checked, disable price input.
-	$('#menu_unidentified').on('change', function() {
-		disablePrice();
-	});
 });

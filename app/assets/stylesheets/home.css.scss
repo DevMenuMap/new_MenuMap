@@ -30,6 +30,16 @@ $facebook_link_blue: #5890ff;
 	outline-offset: -2px;	
 }
 
+.page_title {
+	font-size: 18px;
+}
+
+@media (min-width: 992px) {
+	.page_title {
+		font-size: 24px;
+	}
+}
+
 table, th, td {
 	border: 1px solid black;
 }
@@ -67,10 +77,11 @@ label {
 }
 
 .btn-facebook {
-	background-color: #3B5998;
-	color: white;
-	font-weight: bold;
-	&:hover {
+	border: 1px solid #3B5998;
+	color: #3B5998;
+	font-weight: 500;
+	font-size: 85%;
+	&:hover, &:active, &:focus {
 		background-color: #2d4373;
 		border-color: rgba(0,0,0,0.2);
 		color: white;
@@ -113,12 +124,28 @@ label {
 	}
 }
 
+.btn_red {
+	border: 1px solid red;
+	color: red;
+	font-weight: 500;
+	font-size: 85%;
+	&:hover, &:active, &:focus {
+		background-color: red;
+		border-color: rgba(0,0,0,0.2);
+		color: white;
+	}
+}
+
 .blue_outline {
 	&:active, &:hover {
 		border: none;
 		background-color: initial;
 		box-shadow: 0 0 1px 1px #66afe9;
 	}
+}
+
+.form-group label.error {
+	color: $facebook_link_blue;
 }
 
 /* body */
@@ -135,12 +162,19 @@ body {
 }
 	
 /* header */
-nav .navbar-header {
-	.navbar-brand {
-		font-size: 18px;
+nav.navbar-default {
+	.navbar-nav > li > a {
+		&:focus, &:hover {
+			background-color: #eee;
+		}
 	}
-	button.navbar-toggle {
-		@extend .blue_outline;	
+	.navbar-header {
+		.navbar-brand {
+			font-size: 18px;
+		}
+		button.navbar-toggle {
+			@extend .blue_outline;	
+		}
 	}
 }
 
@@ -151,6 +185,26 @@ nav .navbar-header {
 		}
 	}
 }
+
+/* flash */
+.alert-notice {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+}
+
+.alert-alert {
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+}
+
+.alert-error {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+	
 
 /* footer */
 footer {
@@ -244,7 +298,7 @@ footer {
 }
 
 /* home#search */
-#mm_search {
+#mm_search, #new_rest_register, #new_user, #profiles .edit_user {
 	legend {
 		@extend .left_border_label;
 		border-left-color: $MenuMap_orange;
@@ -253,14 +307,87 @@ footer {
 }
 
 @media (min-width: 992px) {
-	#search {
+	#search, #login, #signup, #password_reset, #profiles {
 		> div.col-md-6 {
 			padding: 0 30px;
 		}
 	}
-	#mm_search {
+	#mm_search, #new_rest_register, #new_user, #profiles .edit_user {
 		legend {
 			font-size: 24px;
+		}
+	}
+}
+
+/* notices#index */
+#qna {
+	> div {
+		> h1 {
+			@extend .grey_thin_border;
+		}
+		> ul {
+			@extend .grey_thin_border;
+		}
+		> div {
+			@extend .grey_thin_border;
+			a div span {
+				@extend .left_border_label;
+				border-color: red;
+			}
+		}
+	}
+	.notice a div span {
+		@extend .left_border_label;
+		border-left-color: #e5e5e5;
+		font-weight: 500;
+	}
+}
+
+li.notice > div {
+	padding: 5px 5px 0;
+}
+
+@media (min-width: 992px) {
+	#qna .notice a div span {
+		font-weight: initial;
+		font-size: 18px;
+	}
+	li.notice > div {
+		padding: 15px 15px 10px;
+	}
+}
+
+/* sessions#new, login */
+.login_center {
+	margin-bottom: 2em; 
+	padding: 1em 0;
+	@extend .grey_thin_border;
+	a {
+		color: $facebook_link_blue;
+	}
+}
+
+/* registrations#new, signup */
+#signup, #profiles {
+	> div > div {
+		margin-bottom: 20px; 
+		padding-bottom: 20px;
+		@extend .grey_thin_border;
+	}
+}
+
+/* profiles#edit */
+#profiles {
+	.btn-facebook {
+		background-color: white;
+		&:hover, &:active, &:focus {
+			background-color: #2d4373;
+		}
+	}
+	.btn_red {
+		background-color: white;
+		&:hover, &:active, &:focus {
+			background-color: red;
 		}
 	}
 }
@@ -439,11 +566,12 @@ span.MultiFile-label {
 	float: left;
 }
 
+a.MultiFile-remove {
+	margin-left: 5px;
+}
+
 #picture_img_list {
 	margin-bottom: 10px;
-	a.MultiFile-remove {
-		margin-left: 5px;
-	}
 }
 
 .img_owner {

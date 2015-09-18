@@ -14,11 +14,11 @@ class QuestionsController < ApplicationController
 		@question = Question.new(question_params)
 		@question.user_id = current_user.id if current_user
 		if @question.save
-			flash[:alert] = "succeed question#create"
+			flash[:success] = "질문을 등록했습니다."
 		else
-			flash[:alert] = "fail question#create"
+			flash[:danger] = "질문 등록에 실패했습니다."
 		end
-		redirect_to "/qna"
+		redirect_to qna_url
 	end
 
   def edit

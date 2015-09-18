@@ -13,12 +13,12 @@
 <script>
 	$(document).ready( function() {
 		if ("<%= flash %>" != '') {
-			$('.alert').delay(100).fadeIn("slow");
-			$('.alert').delay(800).fadeOut("slow");
+			$('#flash .alert').delay(100).fadeIn("slow");
+			$('#flash .alert').delay(1500).fadeOut("slow");
 		};
 	});
 
 	function closeAlert() {
-		$('.alert').hide();
+		$('#flash .alert').hide();
 	};
 </script>
