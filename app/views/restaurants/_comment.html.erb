@@ -17,6 +17,6 @@
 	</ul>
 
 	<% unless @comments.next_page.nil? %>
-		<%= link_to '댓글 더보기', restaurant_path(@restaurant, page: @comments.next_page), remote: true, id: 'show_more_link' %>
+		<%= link_to '댓글 더보기', more_restaurant_comments_path(@restaurant, page: @comments.next_page), id: 'show_more_link', remote: true %>
 	<% end %>
 </div>

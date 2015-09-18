@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 	}
 	get "users/profiles/:username" => "users/profiles#edit", as: :user_profile
 
-	# Restaurant and nested controllers
+	# Restaurant and nested controllers.
 	resources :restaurants, shallow: true do 
 		resources :rest_infos,	 except: [:index, :show]
 		resources :rest_errs, 	 except: [:index, :new] do
@@ -39,14 +39,17 @@ Rails.application.routes.draw do
 			# Cancel the menu editing operation.
 			get 'cancel', on: :member
 		end
-		resources :comments, 		 except: [:index, :add_menu, :update_menu]
+		resources :comments, 		 except: [:index] do
+			# Show more comments in restaurants#show.
+			get 'more', on: :collection
+		end
 		resources	:mymaps, 			 only: 	 [:new, :create]
 
-		# Menu tagging autocomplete listg
+		# Menu tagging autocomplete list.
 		get 'menu_complete', on: :member
 	end
 
-	# Ajax call to get comments of menu
+	# Ajax call to get comments of menu.
 	get 'comments/show'	
 
 	# Index pages which is not bounded with :restaurants
