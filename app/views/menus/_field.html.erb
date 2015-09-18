@@ -17,7 +17,7 @@
 	<%= f.check_box :sitga %>
 	<%= f.label :sitga, "시가" %>
 
-	<%= f.check_box :unidentified %>
+	<%= f.check_box :unidentified, onchange: "disablePrice()" %>
 	<%= f.label :unidentified, "미확인" %>
 </div>
 
