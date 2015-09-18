@@ -5,7 +5,7 @@
 
 <div class="form-group">
 	<%= f.label :side_info, "간단 정보" %>
-	<%= f.text_field :side_info, class: "form-control", placeholder: "예) (中), 순한맛 등" %>
+	<%= f.text_field :side_info, class: "form-control", placeholder: "예) (中), 순한맛, 한근, 500g 등" %>
 </div>
 
 <div class="form-group">
@@ -17,7 +17,7 @@
 	<%= f.check_box :sitga %>
 	<%= f.label :sitga, "시가" %>
 
-	<%= f.check_box :unidentified %>
+	<%= f.check_box :unidentified, onchange: "disablePrice()" %>
 	<%= f.label :unidentified, "미확인" %>
 </div>
 
