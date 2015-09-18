@@ -17,9 +17,9 @@
 /app/assets/images
 /public/images
 
-# Seed data and csv parsing file.
+# Seed data and temporary csv parsing file.
 /db/seed_data
-/lib/tasks/csv.rake
+/lib/tasks/temp.rake
 
 # Different OS has different local path to mysql
 /config/database.yml
