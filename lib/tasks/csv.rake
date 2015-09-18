@@ -2,8 +2,8 @@ require 'csv'
 
 namespace :restaurants do
   desc "Update restaurants info"
-  task :update => :environment do
-		CSV.foreach('db/seed_data/restaurants_update.csv', headers: true) do |row|
+  task :update, [:filename] => :environment do |t, args|
+		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
 			Restaurant.unscoped.find(row[0].to_i).update(
 				category_id: row[1],
 				subcategory_id: row[2],
@@ -21,8 +21,8 @@ end
 
 namespace :menus do
   desc "Create menus"
-  task :create => :environment do
-		CSV.foreach('db/seed_data/menus_update.csv', headers: true) do |row|
+  task :create, [:filename] => :environment do |t, args|
+		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
 			if row[0].to_i < 1000000000
 				Restaurant.unscoped.find(row[0].to_i).menu_titles[row[1].to_i].menus.create(
 					name: row[2],
