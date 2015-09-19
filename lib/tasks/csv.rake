@@ -19,9 +19,9 @@ namespace :restaurants do
 	end
 end
 
-namespace :menus do
+namespace :temp do
   desc "Create menus"
-  task :create, [:filename] => :environment do |t, args|
+  task :temp, [:filename] => :environment do |t, args|
 		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
 			if row[0].to_i < 1000000000
 				Restaurant.unscoped.find(row[0].to_i).menu_titles[row[1].to_i].menus.create(
@@ -48,6 +48,41 @@ namespace :menus do
 					)
 				end
 			end
+		end
+	end
+end
+
+namespace :menus do
+  desc "Create menus for ordinary restaurants"
+  task :create, [:filename] => :environment do |t, args|
+	
+		restaurant_id = 0
+		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
+			if(!row[0].nil?)
+				restaurant_id = row[0].to_i
+				Restaurant.unscoped.find(restaurant_id).menu_titles.create(
+					title_name: row[1],
+					title_info: row[2]
+				)
+			else
+				if(!row[1].nil?)
+					Restaurant.unscoped.find(restaurant_id).menu_titles.create(
+						title_name: row[1],
+						title_info: row[2]
+					)
+				end
+			end
+
+			i = Restaurant.unscoped.find(restaurant_id).menu_titles.count - 1
+			Restaurant.unscoped.find(restaurant_id).menu_titles[i].menus.create(
+				name: row[3],
+				side_info: row[4],
+				price: row[5],
+				info: row[6],
+				sitga: row[7],
+				unidentified: row[8],
+				best: 0
+			)
 		end
 	end
 end
