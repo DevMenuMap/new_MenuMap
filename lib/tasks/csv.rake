@@ -19,70 +19,64 @@ namespace :restaurants do
 	end
 end
 
-namespace :temp do
-  desc "Create menus"
-  task :temp, [:filename] => :environment do |t, args|
-		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
-			if row[0].to_i < 1000000000
-				Restaurant.unscoped.find(row[0].to_i).menu_titles[row[1].to_i].menus.create(
-					name: row[2],
-					side_info: row[3],
-					price: row[4],
-					info: row[5],
-					sitga: row[6],
-					unidentified: row[7],
-					best: 0,
-					user_id: 10**7
-				)
-			else
-				Franchise.find(row[0].to_i).restaurants.each do |r|
-					r.menu_titles[row[1].to_i].menus.create(
-						name: row[2],
-						side_info: row[3],
-						price: row[4],
-						info: row[5],
-						sitga: row[6],
-						unidentified: row[7],
-						best: 0,
-						user_id: 10**7
-					)
-				end
-			end
-		end
-	end
-end
-
 namespace :menus do
-  desc "Create menus for ordinary restaurants"
+  desc "Create menus"
   task :create, [:filename] => :environment do |t, args|
+
+		restaurant_id = [0, false]
+		franchise_id = 0
 	
-		restaurant_id = 0
 		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
 			if(!row[0].nil?)
-				restaurant_id = row[0].to_i
-				Restaurant.unscoped.find(restaurant_id).menu_titles.create(
-					title_name: row[1],
-					title_info: row[2]
-				)
-			else
-				if(!row[1].nil?)
-					Restaurant.unscoped.find(restaurant_id).menu_titles.create(
+				if(row[0].to_i < 10**9)
+					restaurant_id = [row[0].to_i, true]
+				else
+					restaurant_id[1] = false
+					franchise_id = row[0].to_i
+				end
+			end
+
+			if(!row[1].nil?)
+				if(restaurant_id[1])
+					Restaurant.unscoped.find(restaurant_id[0]).menu_titles.create(
 						title_name: row[1],
 						title_info: row[2]
 					)
+				else
+					Restaurant.unscoped.where(franchise_id: franchise_id).each do |r|
+						r.menu_titles.create(
+							title_name: row[1],
+							title_info: row[2]
+						)
+					end
 				end
 			end
 
-			i = Restaurant.unscoped.find(restaurant_id).menu_titles.count - 1
-			Restaurant.unscoped.find(restaurant_id).menu_titles[i].menus.create(
-				name: row[3],
-				side_info: row[4],
-				price: row[5],
-				info: row[6],
-				sitga: row[7],
-				unidentified: row[8],
-				best: 0
-			)
+			if(restaurant_id[1])
+				i = Restaurant.unscoped.find(restaurant_id[0]).menu_titles.count - 1
+				Restaurant.unscoped.find(restaurant_id[0]).menu_titles[i].menus.create(
+					name: row[3],
+					side_info: row[4],
+					price: row[5],
+					info: row[6],
+					sitga: row[7],
+					unidentified: row[8],
+					best: 0
+				)
+			else
+				i = Restaurant.unscoped.where(franchise_id: franchise_id).first.menu_titles.count - 1
+				Restaurant.unscoped.where(franchise_id: franchise_id).each do |r|
+					r.menu_titles[i].menus.create(
+						name: row[3],
+						side_info: row[4],
+						price: row[5],
+						info: row[6],
+						sitga: row[7],
+						unidentified: row[8],
+						best: 0
+					)
+				end
+			end
 		end
 	end
 end
