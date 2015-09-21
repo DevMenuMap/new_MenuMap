@@ -1,4 +1,4 @@
-<%= form_for([@restaurant, comment], remote: true) do |f| %>
+<%= form_for [@restaurant, comment], html: { class: "panel-collapse collapse", remote: true } do |f| %>
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
 	
 	<%= image_tag '/images/users/default_profile.png', alt: '유저 프로필 이미지', style: 'float: left;' %>

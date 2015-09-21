@@ -14,6 +14,10 @@ $facebook_link_blue: #5890ff;
 	border-bottom: 1px solid #e5e5e5;
 }
 
+.grey_thin_border_top {
+	border-top: 1px solid #e5e5e5;
+}
+
 .grey_small_info {
 	font-size: 0.8em;
 	color: $grey_info_font;
@@ -638,6 +642,28 @@ li.menu {
 #new_comment_section {
 	@extend .thick_bottom_border;
 	padding: 10px 15px;
+}
+
+#new_comment {
+	margin: 5px 0 0;
+	padding: 5px 0 0;
+	@extend .grey_thin_border_top;
+}
+
+#comment_section {
+	> a > div {
+		margin: 0 auto 10px;
+		padding: 5px;
+		width: 80%;
+		text-align: center;
+		color: #333;
+		@extend .grey_thin_border;
+		@extend .grey_thin_border_top;
+		span {
+			@extend .left_border_label;
+			border-color: $MenuMap_orange;
+		}
+	}
 }
 
 /* restaurants#show picture tab */
