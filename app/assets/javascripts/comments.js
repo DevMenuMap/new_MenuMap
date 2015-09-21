@@ -37,5 +37,5 @@ function autocompleteMenus(targetName) {
 $(document).on('ready page:load', function() {
 	disableCommentPaste('#comment_contents');
 	commentContentsValidation('#new_comment');
-	autocompleteMenus('.menu_comments_tag');
+	autocompleteMenus('#new_comment .menu_comments_tag');
 });
