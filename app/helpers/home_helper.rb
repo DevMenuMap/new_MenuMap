@@ -17,7 +17,9 @@ module HomeHelper
 
 	def time_ago_in_ko(time)
 		diff = (Time.now - time).to_i
-		if diff < 60
+		if diff < 10
+			'방금'
+		elsif diff < 60
 			"#{diff}초 전"
 		elsif diff < 60**2
 			"#{diff/60}분 전"
