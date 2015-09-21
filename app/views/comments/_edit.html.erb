@@ -5,6 +5,9 @@
 			<%= f.text_area :contents, { class: "form-control", placeholder: "과도한 비난 및 광고성 댓글은 삭제될 수 있습니다.", rows: 3 } %>
 		</div>
 
-		<%= f.submit "저장", class: "btn btn_submit", style: "float: right;" %>
+		<div style="text-align: right">
+			<%= link_to "취소", cancel_comment_path(@comment), class: "btn btn_cancel", remote: true %>
+			<%= f.submit "저장", class: "btn btn_submit" %>
+		</div>
 	<% end %>
 </li>

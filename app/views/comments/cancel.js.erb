@@ -1,0 +1,2 @@
+$('#edit_comment_<%= @comment.id %>').closest('li').replaceWith("<%= j(render partial: "show", locals: { comment: @comment }) %>");
+showStarRating();

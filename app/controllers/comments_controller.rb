@@ -65,6 +65,13 @@ class CommentsController < ApplicationController
 		end
 	end
 
+	def cancel
+		@comment = Comment.find(params[:id])
+		respond_to do |format|
+			format.js { render layout: false }
+		end
+	end
+
   def destroy
 		@comment = Comment.find(params[:id])
 		@comment.active = false
