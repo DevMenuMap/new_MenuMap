@@ -46,27 +46,23 @@ class CommentsController < ApplicationController
   def edit
   	@comment = Comment.find(params[:id])
 		respond_to do |format|
-			format.js		{ render layout: false }
+			format.js	{ render layout: false }
 		end
   end
 
   def update
   	double_rating_score
-
 		@comment = Comment.find(params[:id])
 
-		if correct_user?(@comment.user)
-			if @comment.update(comment_params)
-				flash[:alert] = "Succeed comment#update"
-			else
-				flash[:alert] = "Fail comment#update"
-			end
-
-			redirect_to_restaurant_page
+		if @comment.update(comment_params)
+			flash.now[:success] = '댓글을 수정했습니다.'
 		else
-  		flash[:alert] = "Wrong user"
-  		redirect_to restaurant_url(@comment.restaurant)
-  	end
+			flash.now[:error] = '댓글을 수정하지 못했습니다.'
+		end
+
+		respond_to do |format|
+			format.js { render layout: false }
+		end
 	end
 
   def destroy
