@@ -666,6 +666,20 @@ li.menu {
 	}
 }
 
+li.comment {
+	.top {
+		.img {
+			float: left;
+		}
+	}
+	.tags {
+		clear: both;
+	}
+	.contents {
+		clear: both;
+	}
+}
+
 /* restaurants#show picture tab */
 #carousel {
 	@extend .thick_bottom_border;
