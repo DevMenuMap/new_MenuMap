@@ -45,11 +45,9 @@ class CommentsController < ApplicationController
 
   def edit
   	@comment = Comment.find(params[:id])
-  	if correct_user?(@comment.user)
-  		redirect_to_restaurant_page else
-  		flash[:alert] = "Wrong user"
-  		redirect_to restaurant_url(@comment.restaurant)
-  	end
+		respond_to do |format|
+			format.js		{ render layout: false }
+		end
   end
 
   def update

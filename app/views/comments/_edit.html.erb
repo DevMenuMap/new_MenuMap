@@ -1,22 +1,10 @@
-<!-- Edit inside the comment table -->
-<tr>
-	<td colspan="3">
-		<%= form_for(@comment, remote: true) do |f| %>
-			<div id="star_rating_form" data-score=<%= @comment.rating %>></div>
-			<%= render "field", f: f %>
-			<%= f.submit "update comment" %>
-		<% end %>
-	</td>
-</tr>
+<li>
+	<%= form_for(@comment, remote: true) do |f| %>
+		<div class="star_rating_form" data-score=<%= @comment.rating %>></div>
+		<div class="form-group">
+			<%= f.text_area :contents, { class: "form-control", placeholder: "과도한 비난 및 광고성 댓글은 삭제될 수 있습니다.", rows: 3 } %>
+		</div>
 
-<script>
-	$("#star_rating_form").raty({
-		path: "/images/star_rating/",
-		half: true,
-		scoreName: "comment[rating]",
-		// In mymaps#edit, star rating should show for references.
-		score: function() {
-			return parseInt($(this).attr("data-score")) / 2;
-		}
-	});
-</script>
+		<%= f.submit "저장", class: "btn btn_submit", style: "float: right;" %>
+	<% end %>
+</li>
