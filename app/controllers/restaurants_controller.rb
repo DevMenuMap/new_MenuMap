@@ -79,7 +79,7 @@ class RestaurantsController < ApplicationController
 		@user = current_user
 		@restaurant = Restaurant.find(params[:id])
 		@menu_titles = @restaurant.menu_titles
-		@comments = @restaurant.comments.order(created_at: :desc).paginate(:page => params[:page], :per_page => 10)
+		@comments = @restaurant.comments.paginate(page: params[:page], per_page: 10)
 
 		# pictures on this restaurant
 		@picture  = Picture.new(imageable: @restaurant)
@@ -103,7 +103,6 @@ class RestaurantsController < ApplicationController
 		respond_to do |format|
 			format.html
 			format.json
-			format.js
 		end
 	end
 

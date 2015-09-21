@@ -1,14 +1,18 @@
-<h1>Comment#new</h1>
-
-<%= form_for([@restaurant, comment], remote: true) do |f| %>
+<%= form_for [@restaurant, comment], html: { class: "panel-collapse collapse", remote: true } do |f| %>
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
-	<%= text_field_tag :menu_comments, nil, { id: "menu_comments_tag" } %>
-
+	
+	<%= image_tag '/images/users/default_profile.png', alt: '유저 프로필 이미지', style: 'float: left;' %>
 	<div id="star_rating_form" data-score=<%= comment.rating %>></div>
 
-	<!-- Specify field because of controller subordination -->
-	<%= render "comments/field", f: f %>
-	<%= f.submit "update comment", { id: "update_comment" }  %>
+	<div class="form-group" style="clear: both;">
+		<%= text_field_tag :menu_comments, nil, { id: "menu_comments_tag", class: "form-control" } %>
+	</div>
+
+	<div class="form-group">
+		<%= render "comments/field", f: f %>
+	</div>
+
+	<%= f.submit "등록", { id: "update_comment", class: "btn btn_submit", style: "float: right;" }  %>
 <% end %>
 
 <script>
@@ -17,7 +21,7 @@
 		autocomplete: {
 			source: window.location.origin + '/restaurants/<%= @restaurant.id %>/menu_complete'
 		},
-		placeholderText: "#메뉴"
+		placeholderText: "#메뉴_태그"
 		// removeConfirmation: true,
 	});
 	

@@ -1,2 +1,4 @@
-<%= f.label :contents %>
-<%= f.text_field :contents %>
+<div class="form-group">
+	<%= f.label :contents, "댓글*" %>
+	<%= f.text_area :contents, { class: "form-control", placeholder: "과도한 비난 및 광고성 댓글은 삭제될 수 있습니다.", rows: 3 } %>
+</div>

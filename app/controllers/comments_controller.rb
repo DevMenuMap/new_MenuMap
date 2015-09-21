@@ -5,6 +5,16 @@ class CommentsController < ApplicationController
   	@comments = Comment.all
   end
 
+	# GET /restaurants/:restaurant_id/comments/more
+	# Show more comments in restaurants#show.
+	def more
+		@restaurant = Restaurant.find(params[:restaurant_id])
+		@comments = @restaurant.comments.paginate(page: params[:page], per_page: 10)
+		respond_to do |format|
+			format.js
+		end
+	end
+
   def show
   	@comments = Menu.find(params[:menu_id]).comments
   	if @comments.blank?

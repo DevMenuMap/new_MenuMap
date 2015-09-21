@@ -35,7 +35,7 @@
 			<div id="rst_show_tabs">
 				<ul>
 					<a href="#menu" role="tab" data-toggle="tab"><li><i class="fa fa-list-ul"></i><br/>메뉴</li></a>
-					<!-- <a href="#comment" role="tab" data-toggle="tab"><li><i class="fa fa-comments-o"></i><br/>댓글</li></a> -->
+					<a href="#comment" role="tab" data-toggle="tab"><li><i class="fa fa-comments-o"></i><br/>댓글</li></a>
 					<a href="#blog" role="tab" data-toggle="tab"><li><i class="fa fa-newspaper-o"></i><br/>블로그</li></a>
 					<a href="#picture" role="tab" data-toggle="tab"><li><i class="fa fa-picture-o"></i><br/>사진</li></a>
 					<a href="#info" role="tab" data-toggle="tab"><li><i class="fa fa-info"></i><br/>정보</li></a>
@@ -52,12 +52,12 @@
 					</div>
 
 					<!-- Menu -->
-					<div role="tabpanel" class="tab-pane fade in active" id="menu">
+					<div role="tabpanel" class="tab-pane fade" id="menu">
 						<%= render 'menu' %>
 					</div>
 
 					<!-- Comment -->
-					<div role="tabpanel" class="tab-pane fade" id="comment">
+					<div role="tabpanel" class="tab-pane fade in active" id="comment">
 						<%= render "comment" %>
 					</div>
 
@@ -87,10 +87,6 @@
 <% end %>
 
 <script>
-	$(function(){
-		$('.pagination a').attr('data-remote', 'true')
-	});
-
 	$('#update_comment').click( function(e) {
 		if ( <%= current_user.nil? %> ) {
 			alert("로그인 후 댓글 작성 가능합니다.");
@@ -103,19 +99,19 @@
 		showMarkers([<%= @curr_lat %>, <%= @curr_lng %>], true, ["<%= @restaurant.name %>"]);  
 		toggleLabels();
 
+		imageUploadValidate();
+
+		// Parse Foursquare images.
 		<% if @restaurant.with_latlng? %>
 			parseFoursquareImg("<%= request.url %>");
 		<% elsif @pictures.blank? %>
 			$("#carousel").css("display", "none");
 		<% end %>
 
-		imageUploadValidate();
-
+		// Parse Naver and Daum blog results.
 		$.ajax({
 			url: '/blogs/blog_ajax',
-			data: {
-				id: <%= @restaurant.id %>
-			}
+			data: { id: <%= @restaurant.id %> }
 		});
 	});
 </script>
