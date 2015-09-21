@@ -30,30 +30,22 @@ class CommentsController < ApplicationController
   	double_rating_score
 
 		@comment = Comment.new(comment_params)
-		@comment.user_id = current_user.id if current_user
+		@comment.user_id = current_user.id
 
 		if @comment.save
-			flash[:alert] = "Succeed comment#create"
+			flash.now[:success] = '댓글을 저장했습니다.' 
 		else
-			flash[:alert] = "Fail comment#create"
+			flash.now[:error] = '댓글을 저장하지 못했습니다.' 
 		end
 
-		# Save MenuComment tags
-		if !params[:menu_comments].blank?
-			@menus = Restaurant.find(params[:comment][:restaurant_id]).menus
-			params[:menu_comments][1..-1].split(',#').each do |tag|
-				@menus.find_by_name(tag).menu_comments.create(comment_id: @comment.id)
-			end
-		end
-
+		save_menu_comment_tags
 		redirect_to_restaurant_page
 	end
 
   def edit
   	@comment = Comment.find(params[:id])
   	if correct_user?(@comment.user)
-  		redirect_to_restaurant_page
-  	else
+  		redirect_to_restaurant_page else
   		flash[:alert] = "Wrong user"
   		redirect_to restaurant_url(@comment.restaurant)
   	end
@@ -98,6 +90,16 @@ class CommentsController < ApplicationController
 		# Double the number to match integer format(1..10)
 		def double_rating_score
 			params[:comment][:rating] = (params[:comment][:rating].to_f * 2).to_i
+		end
+
+		# Save MenuComment tags
+		def save_menu_comment_tags 
+			if !params[:menu_comments].blank?
+				@menus = Restaurant.find(params[:comment][:restaurant_id]).menus
+				params[:menu_comments][1..-1].split(',#').each do |tag|
+					@menus.find_by_name(tag).menu_comments.create(comment_id: @comment.id)
+				end
+			end
 		end
 
 		def redirect_to_restaurant_page

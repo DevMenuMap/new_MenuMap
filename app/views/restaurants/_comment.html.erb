@@ -1,7 +1,4 @@
 <div id="new_comment_section" class="col-xs-12">
-	<%= link_to "#new_comment", { role: "button", data: { toggle: "collapse" }, style: "text-decoration: none;"} do %>
-		<div style="color: #333; text-align: center;">댓글 작성하기 <i class="fa fa-chevron-down" style="width: initial;"></i></div>
-	<% end %>
 	<%= render partial: "comments/new", locals: { comment: @comment } %>
 </div>
 

@@ -1,3 +1,7 @@
+<%= link_to "#new_comment", { role: "button", data: { toggle: "collapse" }, style: "text-decoration: none;"} do %>
+	<div style="color: #333; text-align: center;">댓글 작성하기 <i class="fa fa-chevron-down" style="width: initial;"></i></div>
+<% end %>
+
 <%= form_for [@restaurant, comment], html: { class: "panel-collapse collapse", remote: true } do |f| %>
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
 	
