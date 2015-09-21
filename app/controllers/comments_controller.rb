@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-	before_action :admin?, :only => [:index]
+	before_action :admin?, only: [:index]
+	before_action :correct_user, only: [:edit, :update, :destroy]
 	
   def index
   	@comments = Comment.all
@@ -72,14 +73,17 @@ class CommentsController < ApplicationController
 
   def destroy
 		@comment = Comment.find(params[:id])
-		if correct_user?(@comment.user)
-			@comment.update(active: false)
-			flash[:alert] = "Succeed comment#destroy"
-			redirect_to_restaurant_page
+		@comment.active = false
+		if @comment.save
+			flash.now[:success] = "댓글을 삭제했습니다."
+			@comment.menu_comments.destroy_all
 		else
-  		flash[:alert] = "Wrong user"
-  		redirect_to restaurant_url(@comment.restaurant), status: 303
+  		flash.now[:alert] = "댓글을 삭제하지 못했습니다."
   	end
+
+		respond_to do |format|
+			format.js { render layout: false }
+		end
 	end
 
 	private
@@ -111,4 +115,14 @@ class CommentsController < ApplicationController
 				format.js		{ render layout: false }
 			end
 		end
+
+  	def correct_user
+  		if Comment.find(params[:id]).user != current_user
+  			flash.now[:error] = '해당 권한이 없습니다.'
+				@no_correct_user = true
+				respond_to do |format|
+					format.js { render layout: false }
+				end
+  		end
+  	end
 end
