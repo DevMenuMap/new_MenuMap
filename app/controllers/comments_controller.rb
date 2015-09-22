@@ -108,11 +108,7 @@ class CommentsController < ApplicationController
 				params[:menu_comments][1..-1].split(',#').each do |tag|
 					# Only when the tag's menu name is correct.
 					if menu = menus.find_by_name(tag)
-						if MenuComment.where(menu: menu, comment: @comment).pluck(:id).blank?
-							MenuComment.create(menu: menu, comment: @comment)
-						else
-							menu_comments -= MenuComment.where(menu: menu, comment: @comment).pluck(:id)
-						end
+						menu_comments -= [ MenuComment.find_or_create_by(menu: menu, comment: @comment).id ]
 					end
 				end
 			end
