@@ -35,11 +35,11 @@ class CommentsController < ApplicationController
 
 		if @comment.save
 			flash.now[:success] = '댓글을 저장했습니다.' 
+			create_menu_comment_tags
 		else
 			flash.now[:error] = '댓글을 저장하지 못했습니다.' 
 		end
 
-		save_menu_comment_tags
 		redirect_to_restaurant_page
 	end
 
@@ -56,6 +56,7 @@ class CommentsController < ApplicationController
 
 		if @comment.update(comment_params)
 			flash.now[:success] = '댓글을 수정했습니다.'
+			update_menu_comment_tags
 		else
 			flash.now[:error] = '댓글을 수정하지 못했습니다.'
 		end
@@ -98,13 +99,35 @@ class CommentsController < ApplicationController
 		end
 
 		# Save MenuComment tags
-		def save_menu_comment_tags 
+		def create_menu_comment_tags 
 			if !params[:menu_comments].blank?
 				@menus = Restaurant.find(params[:comment][:restaurant_id]).menus
 				params[:menu_comments][1..-1].split(',#').each do |tag|
 					@menus.find_by_name(tag).menu_comments.create(comment_id: @comment.id)
 				end
 			end
+		end
+
+		def update_menu_comment_tags
+			menu_comments = @comment.menu_comments.pluck(:id)
+
+			unless params[:menu_comments].blank?
+				menus = @comment.restaurant.menus
+				params[:menu_comments][1..-1].split(',#').each do |tag|
+					# Only when the tag's menu name is correct.
+					if menu = menus.find_by_name(tag)
+						if MenuComment.where(menu: menu, comment: @comment).pluck(:id).blank?
+							MenuComment.create(menu: menu, comment: @comment)
+						else
+							menu_comments -= MenuComment.where(menu: menu, comment: @comment).pluck(:id)
+						end
+					end
+				end
+			end
+
+			# Destroy remaining menu_comment_tags.
+			# These tags were removed when editing.
+			MenuComment.where("id in (?)", menu_comments).destroy_all
 		end
 
 		def redirect_to_restaurant_page
