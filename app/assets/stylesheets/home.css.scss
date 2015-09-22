@@ -671,9 +671,15 @@ li.comment {
 		.img {
 			float: left;
 		}
+		.info {
+			a {
+				color: $facebook_link_blue;
+			}
+		}
 	}
 	.tags {
 		clear: both;
+		color: $facebook_link_blue;
 	}
 	.contents {
 		clear: both;

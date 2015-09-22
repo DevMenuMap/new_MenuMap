@@ -12,4 +12,9 @@ module UsersHelper
 			image_tag 'users/default_profile.png'
 		end
 	end
+
+	# Check if correct user is doing the action.
+	def correct_user?(user)
+		user == current_user
+	end
 end

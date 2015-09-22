@@ -5,7 +5,11 @@
 		</div>
 		<div class="info">
 			<div>
-				<%= comment.user.username %> &middot; <%= time_ago_in_words(comment.updated_at) %>
+				<%= comment.user.username %> &middot; <%= time_ago_in_ko(comment.updated_at) %>
+				<% if correct_user?(comment.user) %>
+					 &middot; <%= link_to "수정", edit_comment_path(comment), class: "edit_comment", remote: true %>
+					 &middot; <%= link_to "삭제", comment_path(comment), class: "delete_comment", method: :delete, remote: true, data: { confirm: "해당 댓글을 삭제하시겠습니까?" } %>
+				<% end %>
 			</div>
 			<% if star_rating_exists?(comment) %>
 				<div class="star_rating" data-score=<%= comment.rating%>></div>
@@ -13,11 +17,9 @@
 		</div>
 	</div>
 	<div class="tags">
+		<%= blue_menu_comment_tags(comment) %>
 	</div>
 	<div class="contents">
-		<%= comment.contents %>
+		<%= simple_format comment.contents %>
 	</div>
 </li>
-
-<%#= link_to "edit", edit_comment_path(comment), class: "edit_comment", remote: true %>
-<%#= link_to "delete", comment_path(comment), class: "delete_comment", method: :delete, remote: true, data: { confirm: "gogo?" } %>

@@ -1,2 +1,4 @@
-$("#comment_count").html("<%= @restaurant.comments.count %>");
-$(this).closest("tr").fadeOut();
+<% if @no_correct_user.nil? %>
+	$('#comment_<%= @comment.id %>').fadeOut();
+<% end %>
+$("#flash").html("<%= j render "layouts/flash" %>");

@@ -13,14 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  	def correct_user
-  		@user = User.find_by(username: params[:username])
-  		if @user != current_user
-  			flash[:alert] = "Wrong user"
-  			redirect_to(root_url) 
-  		end
-  	end
-
     def admin?
       if !current_user || current_user.admin == false
         redirect_to '/422.html' and return

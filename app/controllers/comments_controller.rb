@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-	before_action :admin?, :only => [:index]
+	before_action :admin?, only: [:index]
+	before_action :correct_user, only: [:edit, :update, :destroy]
 	
   def index
   	@comments = Comment.all
@@ -30,64 +31,60 @@ class CommentsController < ApplicationController
   	double_rating_score
 
 		@comment = Comment.new(comment_params)
-		@comment.user_id = current_user.id if current_user
+		@comment.user_id = current_user.id
 
 		if @comment.save
-			flash[:alert] = "Succeed comment#create"
+			flash.now[:success] = '댓글을 저장했습니다.' 
 		else
-			flash[:alert] = "Fail comment#create"
+			flash.now[:error] = '댓글을 저장하지 못했습니다.' 
 		end
 
-		# Save MenuComment tags
-		if !params[:menu_comments].blank?
-			@menus = Restaurant.find(params[:comment][:restaurant_id]).menus
-			params[:menu_comments][1..-1].split(',#').each do |tag|
-				@menus.find_by_name(tag).menu_comments.create(comment_id: @comment.id)
-			end
-		end
-
+		save_menu_comment_tags
 		redirect_to_restaurant_page
 	end
 
   def edit
   	@comment = Comment.find(params[:id])
-  	if correct_user?(@comment.user)
-  		redirect_to_restaurant_page
-  	else
-  		flash[:alert] = "Wrong user"
-  		redirect_to restaurant_url(@comment.restaurant)
-  	end
+		respond_to do |format|
+			format.js	{ render layout: false }
+		end
   end
 
   def update
   	double_rating_score
-
 		@comment = Comment.find(params[:id])
 
-		if correct_user?(@comment.user)
-			if @comment.update(comment_params)
-				flash[:alert] = "Succeed comment#update"
-			else
-				flash[:alert] = "Fail comment#update"
-			end
-
-			redirect_to_restaurant_page
+		if @comment.update(comment_params)
+			flash.now[:success] = '댓글을 수정했습니다.'
 		else
-  		flash[:alert] = "Wrong user"
-  		redirect_to restaurant_url(@comment.restaurant)
-  	end
+			flash.now[:error] = '댓글을 수정하지 못했습니다.'
+		end
+
+		respond_to do |format|
+			format.js { render layout: false }
+		end
+	end
+
+	def cancel
+		@comment = Comment.find(params[:id])
+		respond_to do |format|
+			format.js { render layout: false }
+		end
 	end
 
   def destroy
 		@comment = Comment.find(params[:id])
-		if correct_user?(@comment.user)
-			@comment.update(active: false)
-			flash[:alert] = "Succeed comment#destroy"
-			redirect_to_restaurant_page
+		@comment.active = false
+		if @comment.save
+			flash.now[:success] = "댓글을 삭제했습니다."
+			@comment.menu_comments.destroy_all
 		else
-  		flash[:alert] = "Wrong user"
-  		redirect_to restaurant_url(@comment.restaurant), status: 303
+  		flash.now[:alert] = "댓글을 삭제하지 못했습니다."
   	end
+
+		respond_to do |format|
+			format.js { render layout: false }
+		end
 	end
 
 	private
@@ -100,6 +97,16 @@ class CommentsController < ApplicationController
 			params[:comment][:rating] = (params[:comment][:rating].to_f * 2).to_i
 		end
 
+		# Save MenuComment tags
+		def save_menu_comment_tags 
+			if !params[:menu_comments].blank?
+				@menus = Restaurant.find(params[:comment][:restaurant_id]).menus
+				params[:menu_comments][1..-1].split(',#').each do |tag|
+					@menus.find_by_name(tag).menu_comments.create(comment_id: @comment.id)
+				end
+			end
+		end
+
 		def redirect_to_restaurant_page
 			@restaurant = @comment.restaurant
 			@comments = @restaurant.comments.paginate(page: params[:page], per_page: 10)
@@ -109,4 +116,14 @@ class CommentsController < ApplicationController
 				format.js		{ render layout: false }
 			end
 		end
+
+  	def correct_user
+  		if Comment.find(params[:id]).user != current_user
+  			flash.now[:error] = '해당 권한이 없습니다.'
+				@no_correct_user = true
+				respond_to do |format|
+					format.js { render layout: false }
+				end
+  		end
+  	end
 end

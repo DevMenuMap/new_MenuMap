@@ -1,22 +1,18 @@
-<!-- Edit inside the comment table -->
-<tr>
-	<td colspan="3">
-		<%= form_for(@comment, remote: true) do |f| %>
-			<div id="star_rating_form" data-score=<%= @comment.rating %>></div>
-			<%= render "field", f: f %>
-			<%= f.submit "update comment" %>
-		<% end %>
-	</td>
-</tr>
+<li id="comment_<%= @comment.id %>">
+	<%= form_for(@comment, remote: true) do |f| %>
+		<div class="star_rating_form" data-score=<%= @comment.rating %>></div>
 
-<script>
-	$("#star_rating_form").raty({
-		path: "/images/star_rating/",
-		half: true,
-		scoreName: "comment[rating]",
-		// In mymaps#edit, star rating should show for references.
-		score: function() {
-			return parseInt($(this).attr("data-score")) / 2;
-		}
-	});
-</script>
+		<div class="form-group" style="clear: both;">
+			<%= text_field_tag :menu_comments, nil, { class: "menu_comments_tag", data: { restaurant: @comment.restaurant.id } } %>
+		</div>
+
+		<div class="form-group">
+			<%= f.text_area :contents, { class: "form-control", placeholder: "과도한 비난 및 광고성 댓글은 삭제될 수 있습니다.", rows: 3 } %>
+		</div>
+
+		<div style="text-align: right">
+			<%= link_to "취소", cancel_comment_path(@comment), class: "btn btn_cancel", remote: true %>
+			<%= f.submit "저장", class: "btn btn_submit" %>
+		</div>
+	<% end %>
+</li>

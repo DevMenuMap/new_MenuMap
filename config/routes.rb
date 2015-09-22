@@ -42,6 +42,8 @@ Rails.application.routes.draw do
 		resources :comments, 		 except: [:index] do
 			# Show more comments in restaurants#show.
 			get 'more', on: :collection
+			# Cancel comments#edit.
+			get 'cancel', on: :member
 		end
 		resources	:mymaps, 			 only: 	 [:new, :create]
 
