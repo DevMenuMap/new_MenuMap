@@ -82,21 +82,9 @@ function disablePrice() {
 		$('#menu_price').prop('disabled', false);
 	};
 };
-		
+
+
 $(document).on('ready page:load', function() {
-	$("li.menu").click(function(){
-		if ( $(this).data('menu-comments') == true ) {
-			alert( $(this).data('menu'));
-		};
-		/*
-		$.ajax({
-			url: '/comments/show',
-			data: {
-				menu_id: $(this).data('menu-comments')
-			}
-		});
-		*/
-	});
 
 	// Change chevron on cascading dropdown.
 	$('#new_menu_section > a > div, #new_comment_section > a > div').on('click', function() {

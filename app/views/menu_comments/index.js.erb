@@ -1,0 +1,7 @@
+$('.modal-title').html('<%= @menu.name %>');
+$('.modal-title').addClass('left_border_label');
+$('.modal-title').css('border-color', '#ea4c15');
+$('.modal-body').html("<ul id='comment_body' style='list-style: none;'></ul>");
+$('.modal-body ul#comment_body').html("<%= j render partial: 'comments/show', collection: @comments, as: :comment %>") 
+
+$('#myModal').modal();
