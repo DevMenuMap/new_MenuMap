@@ -1,10 +1,14 @@
 <li id="menu_<%= menu.id %>" class="menu" data-menu="<%= menu.id %>" data-menu-comments="<%= menu.has_comments? %>">
-	<div class="name_info"><%= menu.name %><span><%= menu.side_info %></span></div>
+	<div class="side_info">
+		<%= menu.name %>
+		<span><%= menu.side_info %></span>
+	</div>
 
 	<!-- Return <div class="price">...</div> -->
 	<%= menu_price_div(menu) %>
 
 	<div class="info"><%= menu.info %></div>
+	<%= show_menu_comments_link(menu) %>
 </li>
 
 <%#= link_to "edit", edit_menu_path(menu), class: "edit_menu", remote: true %>

@@ -1,4 +1,12 @@
 module MenusHelper
+	def show_menu_comments_link(menu)
+		if menu.menu_comments.exists?
+			content_tag :div, class: 'menu_comments_link' do
+				menu.menu_comments.count.to_s + '개 댓글 보기'
+			end
+		end
+	end
+
 	def menu_price_div(menu)
 		content_tag :div, class: "price" do
 			# when menu's price is unidentified
@@ -29,7 +37,7 @@ module MenusHelper
 	end
 	
 	def menu_sitga_div_with_price(menu)
-		content_tag :div, "(시가)", class: "sitga", style: 'color: #5890ff;'
+		content_tag :div, "(시가)", class: "sitga", style: 'color: #5890ff; font-size: 80%;'
 	end
 
 	# when menu has only sitga true, div's class would be 'price'.
