@@ -23,16 +23,15 @@ function commentContentsValidation(target) {
 };
 
 // Menu tags for comment
-function autocompleteMenus(targetName) {
-	var target = $(targetName);
-	target.tagit({
+function autocompleteMenus(target) {
+	$(target).tagit({
 		autocomplete: {
-			source: window.location.origin + '/restaurants/' + target.data('restaurant').toString() + '/menu_complete'
+			source: window.location.origin + '/restaurants/' + $(target).data('restaurant').toString() + '/menu_complete.json' + '?term=' + $(target).val()
 		},
-		placeholderText: "#메뉴_태그"
-		// removeConfirmation: true,
+		placeholderText: "#메뉴_이름_태그"
 	});
 };
+
 
 $(document).on('ready page:load', function() {
 	disableCommentPaste('#comment_contents');

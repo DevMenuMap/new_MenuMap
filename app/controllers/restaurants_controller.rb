@@ -107,7 +107,8 @@ class RestaurantsController < ApplicationController
 	end
 
 	def menu_complete
-		@menus = Restaurant.find(params[:id]).menus.pluck(:name).uniq.map{|name| "#" + name }
+		# Return restaurant's menu names only.
+		@menus = Restaurant.menu_names(params[:id], params[:term])
 		respond_to do |format|
 			format.json { render :json => @menus.to_json }
 		end

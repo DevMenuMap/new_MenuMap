@@ -1,6 +1,7 @@
 $("#flash").html("<%= j render "layouts/flash" %>");
+
+// Comments#index
 $("#comment_section ul#comment_body").prepend("<%= j render partial: "comments/show", locals: { comment: @comment } %>");
-$("#new_comment_section").html("<%= j render partial: "comments/new", locals: { comment: Comment.new } %>");
 
 // When the first comment is created.
 if ($('#no_comment').css('display') == 'block' && $('#comment_section').css('display') == 'none') {
@@ -9,9 +10,18 @@ if ($('#no_comment').css('display') == 'block' && $('#comment_section').css('dis
 };
 
 showStarRating();
+
+
+// Comments#new
+$("#new_comment_section").html("<%= j render partial: "comments/new", locals: { comment: Comment.new } %>");
+
+starRatingForm();
 disableCommentPaste('#comment_contents');
+commentContentsValidation('#new_comment');
+autocompleteMenus('#new_comment .menu_comments_tag');
 
 
+// Menus#index
 // Change menus with newly created menus with menu_comments.
 <% @comment.menus.each do |menu| %>
 	$("li#menu_<%= menu.id %>").replaceWith("<%= j render partial: "menus/show", locals: { menu: menu } %>");
