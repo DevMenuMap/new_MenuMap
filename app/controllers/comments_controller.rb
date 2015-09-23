@@ -65,6 +65,7 @@ class CommentsController < ApplicationController
 
   def destroy
 		@comment = Comment.find(params[:id])
+		# @menus = @comment.menus
 		@comment.active = false
 		if @comment.save
 			flash.now[:success] = "댓글을 삭제했습니다."
@@ -90,21 +91,22 @@ class CommentsController < ApplicationController
 
 		# Save MenuComment tags
 		def save_menu_comment_tags
-			menu_comments = @comment.menu_comments.pluck(:id)
+			menu_ids = @comment.menus.pluck(:id)
 
 			unless params[:menu_comments].blank?
 				menus = @comment.restaurant.menus
 				params[:menu_comments][1..-1].split(',#').each do |tag|
 					# Only when the tag's menu name is correct.
 					if menu = menus.find_by_name(tag)
-						menu_comments -= [ MenuComment.find_or_create_by(menu: menu, comment: @comment).id ]
+						menu_ids -= [ MenuComment.find_or_create_by(menu: menu, comment: @comment).menu.id ]
 					end
 				end
 			end
 
 			# Destroy remaining menu_comment_tags.
 			# These tags were removed when editing.
-			MenuComment.where("id in (?)", menu_comments).destroy_all
+			MenuComment.where("menu_id IN (?) AND comment_id = ?", menu_ids, @comment.id).destroy_all
+			@removed_menu_tags = Menu.where("id IN (?)", menu_ids)
 		end
 
   	def correct_user
