@@ -17,17 +17,6 @@ class CommentsController < ApplicationController
 		end
 	end
 
-  def show
-  	@comments = Menu.find(params[:menu_id]).comments
-  	if @comments.blank?
-  		render :nothing => true
-  	else
-	  	respond_to do |format|
-	  		format.js
-	  	end
-	  end
-  end
-
   def create
 		@comment = Comment.new(comment_params)
 		@comment.user_id = current_user.id

@@ -84,13 +84,18 @@ function disablePrice() {
 };
 		
 $(document).on('ready page:load', function() {
-	$(".menu").click(function(){
+	$("li.menu").click(function(){
+		if ( $(this).data('menu-comments') == true ) {
+			alert( $(this).data('menu'));
+		};
+		/*
 		$.ajax({
 			url: '/comments/show',
 			data: {
 				menu_id: $(this).data('menu-comments')
 			}
 		});
+		*/
 	});
 
 	// Change chevron on cascading dropdown.
