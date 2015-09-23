@@ -662,19 +662,17 @@ li.menu {
 	@extend .grey_thin_border_top;
 }
 
-#comment_section {
-	> a > div {
-		margin: 0 auto 10px;
-		padding: 5px;
-		width: 80%;
-		text-align: center;
-		color: #333;
-		@extend .grey_thin_border;
-		@extend .grey_thin_border_top;
-		span {
-			@extend .left_border_label;
-			border-color: $MenuMap_orange;
-		}
+a.show_more_link > div {
+	margin: 0 auto 10px;
+	padding: 5px;
+	width: 80%;
+	text-align: center;
+	color: #333;
+	@extend .grey_thin_border;
+	@extend .grey_thin_border_top;
+	span {
+		@extend .left_border_label;
+		border-color: $MenuMap_orange;
 	}
 }
 

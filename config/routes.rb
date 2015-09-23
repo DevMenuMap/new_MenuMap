@@ -41,7 +41,9 @@ Rails.application.routes.draw do
 			get 'cancel', on: :member
 
 			# Ajax call to get comments of menu.
-			resources :menu_comments, only: [:index]
+			resources :menu_comments, only: [:index] do
+				get 'more', on: :collection
+			end
 		end
 
 		resources :comments, 		 except: [:index] do
