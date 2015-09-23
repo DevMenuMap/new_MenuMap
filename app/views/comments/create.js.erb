@@ -10,3 +10,11 @@ if ($('#no_comment').css('display') == 'block' && $('#comment_section').css('dis
 
 showStarRating();
 disableCommentPaste('#comment_contents');
+
+
+// Change menus with newly created menus with menu_comments.
+<% @comment.menus.each do |menu| %>
+	$("li#menu_<%= menu.id %>").replaceWith("<%= j render partial: "menus/show", locals: { menu: menu } %>");
+<% end %>
+
+showCommentsModal();
