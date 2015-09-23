@@ -259,6 +259,11 @@ class Restaurant < ActiveRecord::Base
 		http.request(request)
 	end
 
+	def self.menu_names(id, term)
+		temp = term.gsub(/^#/, '')
+		@menus = Restaurant.find(id).menus.where("name LIKE ?", "%#{temp}%").limit(10).pluck(:name).uniq.map{|name| "#" + name }
+	end
+
 
 	### Instance methods
 	# restaurant's coordinate from Naver
