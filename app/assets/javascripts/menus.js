@@ -57,10 +57,10 @@ function menuValidation() {
 	// When unidentified and sitga are all false.
 	} else if ( !unidentified.is(':checked') && !sitga.is(':checked') ) {
 		if ( price.val().length == 0 ) {	
-			alert("가격을 적어주세요.\n가격을 모르실 경우 '미확인'을 체크해주세요.");
+			alert("가격을 적어주세요.\n가격을 모르실 경우 '가격 미확인'을 체크해주세요.");
 			redOutline(price);
 		} else if ( price.val() % 10 != 0 ) {
-			alert("가격은 숫자만 적어주세요.\n가격을 모르실 경우 '미확인'을 체크해주세요.");
+			alert("가격은 숫자만 적어주세요.\n가격을 모르실 경우 '가격 미확인'을 체크해주세요.");
 			redOutline(price);
 		} else {
 			return true;
@@ -68,7 +68,7 @@ function menuValidation() {
 
 	// When both unidentified and sitga are true.
 	} else if ( unidentified.is(':checked') && sitga.is(':checked') ) {
-		alert("메뉴 가격이 시가인 경우 '미확인' 체크를 해제해주세요");
+		alert("메뉴 가격이 시가인 경우 '가격 미확인' 체크를 해제해주세요");
 	} else {
 		return true;
 	}
@@ -82,16 +82,9 @@ function disablePrice() {
 		$('#menu_price').prop('disabled', false);
 	};
 };
-		
+
+
 $(document).on('ready page:load', function() {
-	$(".menu").click(function(){
-		$.ajax({
-			url: '/comments/show',
-			data: {
-				menu_id: $(this).data('menu-comments')
-			}
-		});
-	});
 
 	// Change chevron on cascading dropdown.
 	$('#new_menu_section > a > div, #new_comment_section > a > div').on('click', function() {

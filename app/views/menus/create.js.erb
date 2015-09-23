@@ -12,5 +12,5 @@ $("#menu_form").html("<%= j render partial: "menus/new", locals: { menu: Menu.ne
 // When menu is successfully saved.
 <% if @menu.id %>
 	$('#menu_title_<%= @menu.menu_title.id %> div.menu_title').click();
-	// $('#menu_<#%= @menu.id %> .name_info').css('color', '#5890ff')
+	// $('#menu_<#%= @menu.id %> .side_info').css('color', '#5890ff')
 <% end %>

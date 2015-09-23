@@ -34,25 +34,30 @@ Rails.application.routes.draw do
 		resources :rest_errs, 	 except: [:index, :new] do
 			get 'modal', on: :member
 		end
+
 		resources :menu_titles,  except: [:index, :show, :new]
 		resources :menus, 		 	 except: [:index] do
 			# Cancel the menu editing operation.
 			get 'cancel', on: :member
+
+			# Ajax call to get comments of menu.
+			resources :menu_comments, only: [:index] do
+				get 'more', on: :collection
+			end
 		end
+
 		resources :comments, 		 except: [:index] do
 			# Show more comments in restaurants#show.
 			get 'more', on: :collection
 			# Cancel comments#edit.
 			get 'cancel', on: :member
 		end
+
 		resources	:mymaps, 			 only: 	 [:new, :create]
 
 		# Menu tagging autocomplete list.
 		get 'menu_complete', on: :member
 	end
-
-	# Ajax call to get comments of menu.
-	get 'comments/show'	
 
 	# Index pages which is not bounded with :restaurants
 	resources :franchises

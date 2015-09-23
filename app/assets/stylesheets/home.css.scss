@@ -19,7 +19,7 @@ $facebook_link_blue: #5890ff;
 }
 
 .grey_small_info {
-	font-size: 0.8em;
+	font-size: 80%;
 	color: $grey_info_font;
 }
 
@@ -591,7 +591,12 @@ li.menu {
 	padding: 5px 0;
 	clear: both;
 	font-size: 95%;
-	.name_info {
+	&[data-menu-comments=true] {
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	.side_info {
 		float: left;
 		span {
 			@extend .grey_small_info;
@@ -607,13 +612,20 @@ li.menu {
 		clear: left;
 		@extend .grey_small_info;
 	}
+	.menu_comments_link {
+		float: right; 
+		clear: both;
+		margin-bottom: 5px;
+		font-size: 80%; 
+		color: $facebook_link_blue;
+	}
 }
 
 @media (min-width: 992px) {
 	li.menu {
 		font-size: 100%;
-		.info {
-			font-size: 0.9em;
+		.side_info, .info {
+			font-size: 90%;
 		}
 	}
 }
@@ -650,19 +662,17 @@ li.menu {
 	@extend .grey_thin_border_top;
 }
 
-#comment_section {
-	> a > div {
-		margin: 0 auto 10px;
-		padding: 5px;
-		width: 80%;
-		text-align: center;
-		color: #333;
-		@extend .grey_thin_border;
-		@extend .grey_thin_border_top;
-		span {
-			@extend .left_border_label;
-			border-color: $MenuMap_orange;
-		}
+a.show_more_link > div {
+	margin: 0 auto 10px;
+	padding: 5px;
+	width: 80%;
+	text-align: center;
+	color: #333;
+	@extend .grey_thin_border;
+	@extend .grey_thin_border_top;
+	span {
+		@extend .left_border_label;
+		border-color: $MenuMap_orange;
 	}
 }
 

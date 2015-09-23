@@ -51,4 +51,9 @@ class Menu < ActiveRecord::Base
 	def price_in_won
 		number_with_delimiter(self.price).to_s + "원"
 	end
+
+	# Check if there is menu_comments
+	def has_comments?
+		menu_comments.exists?
+	end
 end

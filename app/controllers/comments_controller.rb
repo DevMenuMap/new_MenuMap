@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
 	before_action :admin?, only: [:index]
 	before_action :correct_user, only: [:edit, :update, :destroy]
+	before_action :double_rating_score, only: [:create, :update]
 	
   def index
   	@comments = Comment.all
@@ -16,31 +17,21 @@ class CommentsController < ApplicationController
 		end
 	end
 
-  def show
-  	@comments = Menu.find(params[:menu_id]).comments
-  	if @comments.blank?
-  		render :nothing => true
-  	else
-	  	respond_to do |format|
-	  		format.js
-	  	end
-	  end
-  end
-
   def create
-  	double_rating_score
-
 		@comment = Comment.new(comment_params)
 		@comment.user_id = current_user.id
+		@restaurant = @comment.restaurant
 
 		if @comment.save
 			flash.now[:success] = '댓글을 저장했습니다.' 
+			save_menu_comment_tags
 		else
 			flash.now[:error] = '댓글을 저장하지 못했습니다.' 
 		end
 
-		save_menu_comment_tags
-		redirect_to_restaurant_page
+		respond_to do |format|
+			format.js { render layout: false }
+		end
 	end
 
   def edit
@@ -51,11 +42,11 @@ class CommentsController < ApplicationController
   end
 
   def update
-  	double_rating_score
 		@comment = Comment.find(params[:id])
 
 		if @comment.update(comment_params)
 			flash.now[:success] = '댓글을 수정했습니다.'
+			save_menu_comment_tags
 		else
 			flash.now[:error] = '댓글을 수정하지 못했습니다.'
 		end
@@ -98,23 +89,22 @@ class CommentsController < ApplicationController
 		end
 
 		# Save MenuComment tags
-		def save_menu_comment_tags 
-			if !params[:menu_comments].blank?
-				@menus = Restaurant.find(params[:comment][:restaurant_id]).menus
+		def save_menu_comment_tags
+			menu_comments = @comment.menu_comments.pluck(:id)
+
+			unless params[:menu_comments].blank?
+				menus = @comment.restaurant.menus
 				params[:menu_comments][1..-1].split(',#').each do |tag|
-					@menus.find_by_name(tag).menu_comments.create(comment_id: @comment.id)
+					# Only when the tag's menu name is correct.
+					if menu = menus.find_by_name(tag)
+						menu_comments -= [ MenuComment.find_or_create_by(menu: menu, comment: @comment).id ]
+					end
 				end
 			end
-		end
 
-		def redirect_to_restaurant_page
-			@restaurant = @comment.restaurant
-			@comments = @restaurant.comments.paginate(page: params[:page], per_page: 10)
-
-			respond_to do |format|
-				format.html	{ redirect_to restaurant_url(@restaurant) }
-				format.js		{ render layout: false }
-			end
+			# Destroy remaining menu_comment_tags.
+			# These tags were removed when editing.
+			MenuComment.where("id in (?)", menu_comments).destroy_all
 		end
 
   	def correct_user
