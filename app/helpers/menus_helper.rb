@@ -27,12 +27,12 @@ module MenusHelper
 	end
 
 	def menu_unidentified_div(menu)
-		content_tag :div, "미확인", class: 'price', style: 'color: #5890ff;'
+		content_tag :div, "가격 미확인", class: 'price', style: 'color: #5890ff;'
 	end
 
 	def menu_won_div(menu)
 		content_tag :div, class: "won" do
-			menu.unidentified ? "미확인" : menu.price_in_won
+			menu.unidentified ? "가격 미확인" : menu.price_in_won
 		end
 	end
 	
