@@ -1,3 +1,24 @@
+// Show star rating for comments.
+function showStarRating() {
+	$(".star_rating").raty({
+		path: "/images/star_rating/",
+		readOnly: true,
+		score: function() { return parseInt($(this).attr("data-score")) / 2 }
+	});
+};
+
+// Star rating input.
+function starRatingForm() {
+	$(".star_rating_form").raty({
+		path: "/images/star_rating/",
+		half: true,
+		scoreName: "comment[rating]",
+		score: function() {
+			return parseInt($(this).attr("data-score")) / 2;
+		}
+	});
+};
+
 function disableCommentPaste(target) {
 	$(target).bind("paste", function(e) {
 		alert("붙여넣기는 금지되어 있습니다.");
@@ -32,9 +53,31 @@ function autocompleteMenus(target) {
 	});
 };
 
+// Prevent Slangs.
+function slangCheck(formRoute, textRoute) {
+	$( formRoute ).on('submit', function(event) {
+		var url = window.location.origin + '/home/slang';
+		$.ajax({
+			url: url,
+			data: { contents: $( textRoute ).val() },
+			success: function( data ) {
+				if (data.status) {
+					alert("'" + josaChecker(data.slang, '은') + " 금지된 단어입니다.");
+				};
+			}
+		});
+	});
+};
+
 
 $(document).on('ready page:load', function() {
+	// Comments#index
+	showStarRating();
+
+	// Comments#new
+	starRatingForm();
 	disableCommentPaste('#comment_contents');
 	commentContentsValidation('#new_comment');
 	autocompleteMenus('#new_comment .menu_comments_tag');
+	slangCheck("#new_comment", "#comment_contents")
 });
