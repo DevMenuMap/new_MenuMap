@@ -1,4 +1,4 @@
-$("#comment_section #comment_body").append("<%= j(render partial: 'comments/show', collection: @comments, as: :comment) %>");
+$("#comment_section .comment_body").append("<%= j(render partial: 'comments/show', collection: @comments, as: :comment) %>");
 
 // Hide link if it is last page otherwise update link.
 <% if @comments.next_page.nil? %>
