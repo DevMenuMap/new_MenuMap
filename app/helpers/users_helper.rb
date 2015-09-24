@@ -17,4 +17,8 @@ module UsersHelper
 	def correct_user?(user)
 		user == current_user
 	end
+
+	def user_id_if_exists(user)
+		user.id unless user.nil?
+	end
 end

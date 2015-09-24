@@ -69,6 +69,16 @@ function slangCheck(formRoute, textRoute) {
 	});
 };
 
+// Only logged in users can make comments.
+function loggedInUserComment() {
+	$('#new_comment_section').on('click', function(e) {
+		if ( !($(this).find('#new_comment').data('user') > 0) ) {
+			alert('로그인을 해주세요.');
+			return false;
+		};
+	});
+};
+
 
 $(document).on('ready page:load', function() {
 	// Comments#index
@@ -80,4 +90,5 @@ $(document).on('ready page:load', function() {
 	commentContentsValidation('#new_comment');
 	autocompleteMenus('#new_comment .menu_comments_tag');
 	slangCheck("#new_comment", "#comment_contents")
+	loggedInUserComment();
 });

@@ -2,7 +2,7 @@
 	<div style="color: #333; text-align: center;">댓글 작성하기 <i class="fa fa-chevron-down" style="width: initial;"></i></div>
 <% end %>
 
-<%= form_for [@restaurant, comment], html: { class: "panel-collapse collapse", remote: true } do |f| %>
+<%= form_for [@restaurant, comment], html: { class: "panel-collapse collapse", remote: true, data: { user: user_id_if_exists(current_user) } } do |f| %>
 	<%= f.hidden_field :restaurant_id, value: @restaurant.id %>
 	
 	<%= image_tag '/images/users/default_profile.png', alt: '유저 프로필 이미지', style: 'float: left;' %>
@@ -16,5 +16,5 @@
 		<%= render "comments/field", f: f %>
 	</div>
 
-	<%= f.submit "등록", { id: "update_comment", class: "btn btn_submit", style: "float: right;" }  %>
+	<%= f.submit "등록", { class: "btn btn_submit", style: "float: right;" }  %>
 <% end %>
