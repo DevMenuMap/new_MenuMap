@@ -655,6 +655,7 @@ li.menu {
 #new_comment_section {
 	@extend .thick_bottom_border;
 	padding: 10px 15px;
+	margin-bottom: 15px;
 }
 
 #new_comment {
@@ -729,12 +730,21 @@ a.show_more_link > div {
 	}
 }
 
+.comment_body {
+	list-style: none;
+	padding: 0 15px;
+	font-size: 85%;
+}
+
 li.comment {
+	padding: 5px 0;
 	.top {
 		.img {
 			float: left;
 		}
 		.info {
+			float: left;
+			margin-left: 5px;
 			a {
 				color: $facebook_link_blue;
 			}

@@ -13,8 +13,8 @@ module CommentsHelper
 	def blue_menu_comment_tags(comment)
 		text = ''
 		comment.menu_comments.each do |mc|
-			text += '#' + mc.menu.name + ', '
+			text += '#' + mc.menu.name + ' '
 		end
-		text.gsub(/,\s$/, '')
+		text.gsub(/\s$/, '')
 	end
 end

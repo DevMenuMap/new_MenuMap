@@ -7,9 +7,9 @@ module UsersHelper
 	# Show profile image or facebook img.
 	def profile_img(user)
 		if user.fb_img
-			image_tag user.fb_img, alt: "#{user.username}님의 프로필 사진"
+			image_tag user.fb_img, alt: "#{user.username}님의 프로필 사진", class: 'profile_img'
 		else
-			image_tag 'users/default_profile.png'
+			image_tag 'users/default_profile.png', class: 'profile_img'
 		end
 	end
 
