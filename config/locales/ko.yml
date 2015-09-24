@@ -12,9 +12,12 @@ ko:
               blank: 유저명을 입력해주세요.
             password:
               blank: 비밀번호를 입력해주세요.
+              too_short: 비밀번호는 8자 이상이어야 합니다.
             current_password: 
               blank: 현재 비밀번호를 입력해주세요.
               invalid: 비밀번호가 틀렸습니다.
+            password_confirmation:
+              confirmation: 새 비밀번호와 새 비밀번호 확인이 동일하지 않습니다.
             reset_password_token:
               invalid: 이미 사용된 링크입니다. 비밀번호 변경을 위한 이메일을 다시 받아야 합니다.
   will_paginate:
