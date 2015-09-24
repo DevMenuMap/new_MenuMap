@@ -665,13 +665,15 @@ li.menu {
 	.profile_img {
 		float: left;
 	}
+}
+
+#new_comment, .edit_comment {
 	.star_rating_form {
 		float: left;
 		line-height: 2.5;
 		margin-left: 10px;
 	}
 }
-
 .profile_img {
 	width: 40px;
 	border-radius: 50%;
@@ -730,10 +732,27 @@ a.show_more_link > div {
 	}
 }
 
-.comment_body {
+ul.comment_body {
 	list-style: none;
 	padding: 0 15px;
-	font-size: 85%;
+	li {
+		.top, .tags, .contents {
+			font-size: 85%;
+		}
+		form {
+			margin-bottom: 10px;
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	ul.comment_body {
+		li {
+			.top, .tags, .contents {
+				font-size: 90%;
+			}
+		}
+	}
 }
 
 li.comment {
