@@ -3,6 +3,7 @@
 $MenuMap_orange: #ea4c15;
 $naver_green: #23b300;
 $grey_info_font: #999;
+$grey_border-color: #e5e5e5;
 $origin_link_blue: #337ab7;
 $facebook_link_blue: #5890ff;
 
@@ -11,11 +12,11 @@ $facebook_link_blue: #5890ff;
 }
 
 .grey_thin_border {
-	border-bottom: 1px solid #e5e5e5;
+	border-bottom: 1px solid $grey_border-color;
 }
 
 .grey_thin_border_top {
-	border-top: 1px solid #e5e5e5;
+	border-top: 1px solid $grey_border-color;
 }
 
 .grey_small_info {
@@ -342,7 +343,7 @@ footer {
 	}
 	.notice a div span {
 		@extend .left_border_label;
-		border-left-color: #e5e5e5;
+		border-left-color: $grey_border_color;
 		font-weight: 500;
 	}
 }
@@ -566,7 +567,7 @@ nav.pagination {
 		font-weight: bold;
 		span {
 			@extend .left_border_label;
-			border-left-color: #e5e5e5;
+			border-left-color: $grey_border_color;
 		}
 	}
 	.title_info {
@@ -660,6 +661,58 @@ li.menu {
 	margin: 5px 0 0;
 	padding: 5px 0 0;
 	@extend .grey_thin_border_top;
+	.profile_img {
+		float: left;
+	}
+	.star_rating_form {
+		float: left;
+		line-height: 2.5;
+		margin-left: 10px;
+	}
+}
+
+.profile_img {
+	width: 40px;
+	border-radius: 50%;
+}
+
+.star_rating_form img {
+	width: 20px;
+}
+
+.star_rating img {
+	width: 14px;
+}
+
+ul.tagit {
+	border: none;
+	border-bottom: 1px solid $grey_border_color;
+	border-radius: 0;
+	font-size: 13px;
+	li.tagit-choice {
+		border: none;
+		background-color: white;
+		color: $facebook_link_blue;
+		margin: 2px 0;
+		padding: 0 2px;
+		span.tagit-label {
+			vertical-align: -webkit-baseline-middle;
+		}
+		.tagit-close {
+			display: none;
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	ul.tagit {
+		li.tagit-choice {
+			margin: 4px 5px 0 0;
+			span.tagit-label {
+				vertical-align: initial;
+			}
+		}
+	}
 }
 
 a.show_more_link > div {
@@ -755,7 +808,7 @@ a.MultiFile-remove {
 /* restaurants#show blog tab */
 .blog {
 		padding: 5px 0 10px;
-		border-bottom: 1px solid #e5e5e5;
+		border-bottom: 1px solid $grey_border_color;
 	.title {
 		margin: 7px 0 10px;
 		@extend .left_border_label;
