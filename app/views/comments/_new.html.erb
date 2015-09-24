@@ -16,5 +16,8 @@
 		<%= render "comments/field", f: f %>
 	</div>
 
-	<%= f.submit "등록", { class: "btn btn_submit", style: "float: right;" }  %>
+	<div style="text-align: right">
+		<%= button_tag "취소", { type: :reset, class: "btn btn_cancel", name: nil, onclick: "resetCommentsNew()" } %>
+		<%= f.submit "등록", { class: "btn btn_submit" }  %>
+	</div>
 <% end %>

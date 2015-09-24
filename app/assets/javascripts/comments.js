@@ -81,6 +81,12 @@ function loggedInUserComment() {
 	});
 };
 
+// Reset star rating and menu tags.
+function resetCommentsNew() {
+	starRatingForm();
+	$('#new_comment .menu_comments_tag').tagit("removeAll");
+};
+
 
 $(document).on('ready page:load', function() {
 	// Comments#index
