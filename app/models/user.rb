@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
 
   def size_in_byte
   	if username.bytesize < 6
-  		errors.add(:username, "Too short")
+  		errors.add(:username, '유저명은 한글일 경우 2글자, 영어 혹은 숫자일 경우 6글자 이상입니다.' )
   	end
   end
 
