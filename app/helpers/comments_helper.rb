@@ -17,4 +17,13 @@ module CommentsHelper
 		end
 		text.gsub(/\s$/, '')
 	end
+
+	# Show edit and delete link modal.
+	def link_to_edit_delete_comment_modal(comment)
+		if correct_user?(comment.user)
+			link_to modal_comment_path(comment), data: { remote: true, toggle: 'modal', target: '#myModal' } do
+				content_tag :i, '', class: 'fa fa-angle-down'
+			end
+		end
+	end
 end

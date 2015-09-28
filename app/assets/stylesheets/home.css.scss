@@ -762,10 +762,13 @@ li.comment {
 			float: left;
 		}
 		.info {
-			float: left;
-			margin-left: 5px;
+			padding-left: 50px;
 			a {
+				float: right;
 				color: $facebook_link_blue;
+				i {
+					font-size: initial;
+				}
 			}
 		}
 	}
@@ -775,6 +778,16 @@ li.comment {
 	}
 	.contents {
 		clear: both;
+	}
+}
+
+@media (min-width: 992px) {
+	li.comment {
+		.top {
+			.info {
+				padding-left: 50px;
+			}
+		}
 	}
 }
 

@@ -49,6 +49,8 @@ Rails.application.routes.draw do
 		resources :comments, 		 except: [:index] do
 			# Show more comments in restaurants#show.
 			get 'more', on: :collection
+			# Show edit or delete link modal.
+			get 'modal', on: :member
 			# Cancel comments#edit.
 			get 'cancel', on: :member
 		end

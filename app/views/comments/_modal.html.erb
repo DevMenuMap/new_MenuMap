@@ -1,0 +1,12 @@
+<div style="font-size: 15px;">
+	<%= link_to edit_comment_path(@comment), style: "color: #5890ff;", class: "edit_comment", remote: true do %>
+		<div class="grey_thin_border" style="padding-bottom: 10px;">
+			<i class="fa fa-pencil-square-o" style="width: 15px;"></i> 댓글 수정하기
+		</div>
+	<% end %>	
+	<%= link_to comment_path(@comment), style: "color: #5890ff;", class: "delete_comment", method: :delete, remote: true, data: { confirm: "댓글을 삭제하시겠습니까?" } do %>
+		<div style="padding-top: 10px;">
+			<i class="fa fa-trash-o" style="width: 15px;"></i> 삭제	
+		</div>
+	<% end %>
+</div>

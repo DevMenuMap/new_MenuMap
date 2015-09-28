@@ -6,10 +6,7 @@
 		<div class="info">
 			<div>
 				<%= comment.user.username %> &middot; <%= time_ago_in_ko(comment.updated_at) %>
-				<% if correct_user?(comment.user) %>
-					 &middot; <%= link_to "수정", edit_comment_path(comment), class: "edit_comment", remote: true %>
-					 &middot; <%= link_to "삭제", comment_path(comment), class: "delete_comment", method: :delete, remote: true, data: { confirm: "해당 댓글을 삭제하시겠습니까?" } %>
-				<% end %>
+				<%= link_to_edit_delete_comment_modal(comment) %>
 			</div>
 			<% if star_rating_exists?(comment) %>
 				<div class="star_rating" data-score=<%= comment.rating%>></div>
