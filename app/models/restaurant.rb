@@ -264,6 +264,18 @@ class Restaurant < ActiveRecord::Base
 		@menus = Restaurant.find(id).menus.where("name LIKE ?", "%#{temp}%").limit(10).pluck(:name).uniq.map{|name| "#" + name }
 	end
 
+	def self.google_sitemap_restaurants
+		query = <<-SQL
+						restaurants.updated_at > NOW() - INTERVAL 7 DAY
+			OR		rest_infos.updated_at > NOW() - INTERVAL 7 DAY
+			OR		rest_infos.menu_updated_at > NOW() - INTERVAL 7 DAY
+			OR		rest_infos.comment_updated_at > NOW() - INTERVAL 7 DAY
+			OR		rest_infos.img_updated_at > NOW() - INTERVAL 7 DAY
+		SQL
+
+		self.joins(:rest_info).where(query)
+	end
+
 
 	### Instance methods
 	# restaurant's coordinate from Naver
@@ -295,7 +307,7 @@ class Restaurant < ActiveRecord::Base
 		m = rest_info.menu_updated_at || Time.now - 1.years 
 		c = rest_info.comment_updated_at || Time.now - 1.years
 		i = rest_info.img_updated_at || Time.now - 1.years
-		[m, c, i, updated_at].max
+		[updated_at, rest_info.updated_at, m, c, i].max
 	end
 
 	# Find the most recent menus updated_at

@@ -3,7 +3,7 @@ class SitemapController < ApplicationController
 
   def index
 		@static = "http://menumap.co.kr/"
-		@restaurants = Restaurant.where("menu_on > 0 OR created_at > ?", Time.now - 7.days).order(created_at: :desc)
+		@restaurants = Restaurant.google_sitemap_restaurants
 
 		respond_to do |format|
 			format.xml 
