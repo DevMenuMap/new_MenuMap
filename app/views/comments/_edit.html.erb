@@ -1,5 +1,5 @@
 <li id="comment_<%= @comment.id %>">
-	<%= form_for(@comment, remote: true) do |f| %>
+	<%= form_for @comment, html: { style: 'padding: 5px 0;', remote: true } do |f| %>
 		<div style="margin-top: 5px;">
 			<%= image_tag '/images/users/default_profile.png', class: 'profile_img', alt: '유저 프로필 이미지', style: 'float: left;' %>
 			<div class="star_rating_form" data-score=<%= @comment.rating %>></div>

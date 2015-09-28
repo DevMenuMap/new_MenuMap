@@ -7,6 +7,10 @@ $grey_border-color: #e5e5e5;
 $origin_link_blue: #337ab7;
 $facebook_link_blue: #5890ff;
 
+.thick_top_border {
+	border-top: 4px solid #f1f1f1;
+}
+
 .thick_bottom_border {
 	border-bottom: 4px solid #f1f1f1;
 }
@@ -674,6 +678,13 @@ li.menu {
 		margin-left: 10px;
 	}
 }
+
+form.edit_comment {
+	@extend .thick_top_border;
+	@extend .thick_bottom_border;
+	padding: 5px 0;
+}
+
 .profile_img {
 	width: 40px;
 	border-radius: 50%;
@@ -766,7 +777,7 @@ li.comment {
 			a {
 				float: right;
 				color: $facebook_link_blue;
-				i {
+				i.fa-angle-down {
 					font-size: initial;
 				}
 			}
@@ -778,6 +789,14 @@ li.comment {
 	}
 	.contents {
 		clear: both;
+	}
+}
+
+#myModal {
+	li.comment {
+		a i.fa-angle-down {
+			display: none;
+		}
 	}
 }
 
