@@ -26,53 +26,94 @@ function expandTitleForm(selectedTitle) {
 	};
 };
 
-// Menu form validations
-// For menu_titles
-function menuTitleValidation() {
-	var title = $('#menu_menu_title_id');
-	var titleName = $('#menu_title_title_name');
+// Menu's overall validation.
+function menuPriceValidation() {
+	// MenuTitle should be selected.
+	$.validator.addMethod('selectMenuTitle', function(value, element) {
+		return value != 'none'
+	});
 
-	if ( title.val() == 'none' ) {
-		alert('메뉴 목록을 선택해주세요.');
-		redOutline(title);
-	} else if ( title.val() == 'new' && titleName.val().length == 0 ) {
-		alert('메뉴 목록을 입력해주세요. 예) 주요메뉴, 음료 및 주류 등');
-		redOutline(titleName);
-	} else {
-		return true;
-	};
-};
-
-// For menus
-function menuValidation() {
-	var name = $('#menu_name');
-	var price = $('#menu_price');
-	var sitga = $('#menu_sitga');
-	var unidentified = $('#menu_unidentified');
-
-	if ( name.val().length == 0 ) {
-		alert('메뉴 이름을 적어주세요.');
-		redOutline(name);
-
-	// When unidentified and sitga are all false.
-	} else if ( !unidentified.is(':checked') && !sitga.is(':checked') ) {
-		if ( price.val().length == 0 ) {	
-			alert("가격을 적어주세요.\n가격을 모르실 경우 '가격 미확인'을 체크해주세요.");
-			redOutline(price);
-		} else if ( price.val() % 10 != 0 ) {
-			alert("가격은 숫자만 적어주세요.\n가격을 모르실 경우 '가격 미확인'을 체크해주세요.");
-			redOutline(price);
+	// MenuTitle's title_name is required.
+	$.validator.addMethod('requireTitleName', function(value, element) {
+		if ( $('#menu_menu_title_id').val() == 'new' ) {
+			return value.length > 0
 		} else {
-			return true;
+			return true
 		};
+	});
+	
+	// Price should be divided by 10.
+	$.validator.addMethod('priceDivBy10', function(value, element) {
+		if ( value.length > 0 && !$('#menu_unidentified').is(':checked') ) {
+			return value % 10 == 0
+		} else {
+			return true
+		};
+	});
 
-	// When both unidentified and sitga are true.
-	} else if ( unidentified.is(':checked') && sitga.is(':checked') ) {
-		alert("메뉴 가격이 시가인 경우 '가격 미확인' 체크를 해제해주세요");
-	} else {
-		return true;
-	}
+	// Price should have numbers only.
+	$.validator.addMethod('priceNumFormat', function(value, element) {
+		if ( value.length > 0 && !$('#menu_unidentified').is(':checked') ) {
+			return value >= 0 
+		} else {
+			return true
+		};
+	});
+
+	// Price should have at least one input true.
+	$.validator.addMethod('priceBlank', function(value, element) {
+		return value.length > 0 || $('#menu_unidentified').is(':checked') || $('#menu_sitga').is(':checked')
+	});
 }
+
+// Menu Validations
+function menuValidation() {
+	menuPriceValidation();
+	$('#new_menu').validate({
+		rules: {
+			'menu[menu_title_id]' : {
+				selectMenuTitle: true
+			},
+			'menu_title[title_name]' : {
+				requireTitleName: true
+			},
+			'menu[name]' : {
+				required: true
+			},
+			'menu[price]' : {
+				priceNumFormat: true,
+				priceDivBy10: true,
+				priceBlank: true
+			}
+		},
+		messages: {
+			'menu[menu_title_id]' : {
+				selectMenuTitle: '메뉴 목록을 선택해주세요.'
+			},
+			'menu_title[title_name]' : {
+				requireTitleName: '메뉴 목록을 입력해주세요. 예) 메인메뉴, 음료 및 주류 등'
+			},
+			'menu[name]' : {
+				required: '메뉴 이름을 적어주세요.'
+			},
+			'menu[price]' : {
+				priceNumFormat: '가격은 숫자만 적어주세요.',
+				priceDivBy10: '가격은 10원 단위로 적어주세요.',
+				priceBlank: '가격을 적어주세요.'
+			}
+		}
+	});
+}
+
+// Sitga and unidentified cannot be checked simultaneously.
+function priceSitgaAndUniden() {
+	$('#new_menu').on('submit', function() {
+		if ( $('#menu_unidentified').is(':checked') && $('#menu_sitga').is(':checked') ) {
+			alert("메뉴 가격이 시가인 경우 '가격 미확인' 부분을 해제해주세요.")
+			return false;
+		};
+	});
+};
 
 // When unidentified is checked, disable price input.
 function disablePrice() {
@@ -97,10 +138,7 @@ $(document).on('ready page:load', function() {
 	// When the page is loaded for the first time.
 	$('#menu_section ul li:first-child a > div').click();
 
-	// Validation when menu form is submitted.
-	$('#menu_form').on('submit', function() {
-		if ( !(menuTitleValidation() && menuValidation()) ) {
-			return false;
-		};
-	});
+	// Validation for menus.
+	menuValidation();
+	priceSitgaAndUniden();
 });

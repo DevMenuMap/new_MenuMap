@@ -8,6 +8,10 @@ $("#flash").html("<%= j render "layouts/flash" %>");
 $("#menu_section > ul").html("<%= j render partial: "menu_titles/show", collection: @menu_titles, as: :menu_title %>");
 $("#menu_form").html("<%= j render partial: "menus/new", locals: { menu: Menu.new } %>");
 
+// Validation for menus.
+menuValidation();
+priceSitgaAndUniden();
+
 // Click newly added menu's title.
 // When menu is successfully saved.
 <% if @menu.id %>
