@@ -1,6 +1,9 @@
 <li id="comment_<%= @comment.id %>">
-	<%= form_for(@comment, remote: true) do |f| %>
-		<div class="star_rating_form" data-score=<%= @comment.rating %>></div>
+	<%= form_for @comment, html: { style: 'padding: 5px 0;', remote: true } do |f| %>
+		<div style="margin-top: 5px;">
+			<%= image_tag '/images/users/default_profile.png', class: 'profile_img', alt: '유저 프로필 이미지', style: 'float: left;' %>
+			<div class="star_rating_form" data-score=<%= @comment.rating %>></div>
+		</div>
 
 		<div class="form-group" style="clear: both;">
 			<%= text_field_tag :menu_comments, nil, { class: "menu_comments_tag", data: { restaurant: @comment.restaurant.id } } %>

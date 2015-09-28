@@ -17,6 +17,15 @@ class CommentsController < ApplicationController
 		end
 	end
 
+	# GET /comments/:id/modal
+	# Show edit and delete link modal.
+	def modal
+		@comment = Comment.find(params[:id])
+		respond_to do |format|
+			format.js
+		end
+	end
+
   def create
 		@comment = Comment.new(comment_params)
 		@comment.user_id = current_user.id

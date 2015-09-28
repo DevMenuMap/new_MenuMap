@@ -1,7 +1,7 @@
 $("#flash").html("<%= j render "layouts/flash" %>");
 
 // Comments#index
-$("#comment_section ul#comment_body").prepend("<%= j render partial: "comments/show", locals: { comment: @comment } %>");
+$("#comment_section ul.comment_body").prepend("<%= j render partial: "comments/show", locals: { comment: @comment } %>");
 
 // When the first comment is created.
 if ($('#no_comment').css('display') == 'block' && $('#comment_section').css('display') == 'none') {
@@ -19,6 +19,8 @@ starRatingForm();
 disableCommentPaste('#comment_contents');
 commentContentsValidation('#new_comment');
 autocompleteMenus('#new_comment .menu_comments_tag');
+slangCheck("#new_comment", "#comment_contents")
+loggedInUserComment();
 
 
 // Menus#index

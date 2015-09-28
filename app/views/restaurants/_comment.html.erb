@@ -12,7 +12,7 @@
 </div>
 
 <div id="comment_section" style="display: <%= display_none_if_comment_exists(@comments, false) %>">
-	<ul id="comment_body" style="list-style: none;">
+	<ul class="comment_body">
 		<%= render partial: "comments/show", collection: @comments, as: :comment %>
 	</ul>
 

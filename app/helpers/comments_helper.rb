@@ -13,8 +13,17 @@ module CommentsHelper
 	def blue_menu_comment_tags(comment)
 		text = ''
 		comment.menu_comments.each do |mc|
-			text += '#' + mc.menu.name + ', '
+			text += '#' + mc.menu.name + ' '
 		end
-		text.gsub(/,\s$/, '')
+		text.gsub(/\s$/, '')
+	end
+
+	# Show edit and delete link modal.
+	def link_to_edit_delete_comment_modal(comment)
+		if correct_user?(comment.user)
+			link_to modal_comment_path(comment), data: { remote: true, toggle: 'modal', target: '#myModal' } do
+				content_tag :i, '', class: 'fa fa-angle-down'
+			end
+		end
 	end
 end

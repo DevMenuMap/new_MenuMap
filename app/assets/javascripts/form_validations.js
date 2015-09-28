@@ -52,7 +52,7 @@ josaChecker.get = function (josa, jong) {
 
 	if (josa == '을' || josa == '를') return (jong?'을':'를');
 	if (josa == '이' || josa == '가') return (jong?'이':'가');
-	if (josa == '은' || josa == '는') return (jong?'은':'는');
+	if (josa == '은' || josa == '는') return (jong?"'은":"'는");
 	if (josa == '와' || josa == '과') return (jong?'와':'과');
 
 	// Unidentified josa
