@@ -259,6 +259,23 @@ class Restaurant < ActiveRecord::Base
 		http.request(request)
 	end
 
+	def self.menu_names(id, term)
+		temp = term.gsub(/^#/, '')
+		@menus = Restaurant.find(id).menus.where("name LIKE ?", "%#{temp}%").limit(10).pluck(:name).uniq.map{|name| "#" + name }
+	end
+
+	def self.google_sitemap_restaurants
+		query = <<-SQL
+						restaurants.updated_at > NOW() - INTERVAL 7 DAY
+			OR		rest_infos.updated_at > NOW() - INTERVAL 7 DAY
+			OR		rest_infos.menu_updated_at > NOW() - INTERVAL 7 DAY
+			OR		rest_infos.comment_updated_at > NOW() - INTERVAL 7 DAY
+			OR		rest_infos.img_updated_at > NOW() - INTERVAL 7 DAY
+		SQL
+
+		self.joins(:rest_info).where(query)
+	end
+
 
 	### Instance methods
 	# restaurant's coordinate from Naver
@@ -284,9 +301,28 @@ class Restaurant < ActiveRecord::Base
 		coordinate.present?
 	end
 
-	# Find most recent menus updated_at
+	# Find the most recent updated_at from menus, comments and pictures.
+	def last_updated_at
+		# [menus_updated_at, comments_updated_at, pictures_updated_at, updated_at].max
+		m = rest_info.menu_updated_at || Time.now - 1.years 
+		c = rest_info.comment_updated_at || Time.now - 1.years
+		i = rest_info.img_updated_at || Time.now - 1.years
+		[updated_at, rest_info.updated_at, m, c, i].max
+	end
+
+	# Find the most recent menus updated_at
 	def menus_updated_at
-		menus.select(:updated_at).limit(1).order("updated_at DESC").first.updated_at
+		menus.exists? ? menus.select(:updated_at).limit(1).order(updated_at: :desc).first.updated_at : Time.now - 1.years 
+	end
+
+	# Find the most recent comments updated_at
+	def comments_updated_at 
+		comments.exists? ? comments.select(:updated_at).limit(1).order(updated_at: :desc).first.updated_at : Time.now - 1.years
+	end
+
+	# Find the most recent images updated_at
+	def pictures_updated_at 
+		pictures.exists? ? pictures.select(:updated_at).limit(1).order(updated_at: :desc).first.updated_at : Time.now - 1.years
 	end
 
 	def save_latlng(latlng, log_file)
@@ -370,7 +406,7 @@ class Restaurant < ActiveRecord::Base
 	def destroy_related_when_addr_updated(params)
 		if addr != params[:restaurant][:addr]
 			update(addr_code: nil)
-			# addr_tags.destroy_all
+			addr_tags.destroy_all
 			coordinate.destroy						if coordinate.present?
 			rest_info.coordinate.destroy	if rest_info.coordinate.present?
 			rest_info.update(addr_updated_at: Time.now)

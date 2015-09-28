@@ -1,1 +1,13 @@
-$(this).closest("tr").replaceWith("<%= j(render partial: "comments/show", locals: { comment: @comment }) %>");
+$("#flash").html("<%= j render "layouts/flash" %>");
+
+// Comments#index
+$('#edit_comment_<%= @comment.id %>').closest('li').replaceWith("<%= j(render partial: "show", locals: { comment: @comment }) %>");
+showStarRating();
+
+
+// Menus#index
+<% (@comment.menus + @removed_menu_tags).each do |menu| %>
+	$("li#menu_<%= menu.id %>").replaceWith("<%= j render partial: "menus/show", locals: { menu: menu } %>");
+<% end %>
+
+showCommentsModal();

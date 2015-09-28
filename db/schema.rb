@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917115336) do
+ActiveRecord::Schema.define(version: 20150928044824) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -235,14 +235,15 @@ ActiveRecord::Schema.define(version: 20150917115336) do
   add_index "rest_errs", ["user_id"], name: "index_rest_errs_on_user_id", using: :btree
 
   create_table "rest_infos", force: :cascade do |t|
-    t.integer  "restaurant_id",   limit: 4
-    t.text     "owner_intro",     limit: 65535
-    t.boolean  "active",          limit: 1,     default: true
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.integer  "restaurant_id",      limit: 4
+    t.text     "owner_intro",        limit: 65535
+    t.boolean  "active",             limit: 1,     default: true
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
     t.datetime "addr_updated_at"
     t.datetime "menu_updated_at"
     t.datetime "img_updated_at"
+    t.datetime "comment_updated_at"
   end
 
   add_index "rest_infos", ["restaurant_id"], name: "index_rest_infos_on_restaurant_id", using: :btree

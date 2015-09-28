@@ -1,11 +1,14 @@
-<div class="form-group">
-	<%= f.label :email, "이메일(선택)" %>
-	<% if current_user %>
+<% if current_user %>
+	<div class="form-group" style="display: none;">
+		<%= f.label :email, "이메일(선택)" %>
 		<%= f.text_field :email, value: current_user.email, class: "form-control", readonly: true %>
-	<% else %>
+	</div>
+<% else %>
+	<div class="form-group">
+		<%= f.label :email, "이메일(선택)" %>
 		<%= f.text_field :email, class: "form-control" %>
-	<% end %>
-</div>
+	</div>
+<% end %>
 
 <div class="form-group">
 	<%= f.label :contents, "질문*" %>

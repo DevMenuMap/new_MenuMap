@@ -1,0 +1,8 @@
+$("#comment_section .comment_body").append("<%= j(render partial: 'comments/show', collection: @comments, as: :comment) %>");
+
+// Hide link if it is last page otherwise update link.
+<% if @comments.next_page.nil? %>
+    $("#comment_section .show_more_link").hide();
+<% else %>
+    $("#comment_section .show_more_link").attr("href", "<%= more_restaurant_comments_path(@restaurant, page: @comments.next_page) %>");
+<% end %>

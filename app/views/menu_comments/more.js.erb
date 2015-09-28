@@ -1,0 +1,12 @@
+$("#myModal .comment_body").append("<%= j(render partial: 'comments/show', collection: @comments, as: :comment) %>");
+
+// Hide link if it is last page otherwise update link.
+<% if @comments.next_page.nil? %>
+	$("#myModal .show_more_link").hide();
+<% else %>
+	$("#myModal .show_more_link").attr("href", "<%= more_menu_menu_comments_path(@menu, page: @comments.next_page) %>");
+<% end %>
+
+// Extend length of modal-backdrop.
+var newBackdropHeight = $('.modal-dialog').css('height').split('px')[0] * 1.1 + 'px'
+$('.modal-backdrop').css('height', newBackdropHeight);

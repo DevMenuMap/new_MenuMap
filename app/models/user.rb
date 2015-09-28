@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 	### Constants
 	USERNAME_FORMAT = /\A[a-zA-Z\p{Hangul}][a-zA-Z0-9_\-\p{Hangul}]+\z/
   USERNAME_CONSTRAINTS = ['메뉴맵', '매뉴맵', '메뉴멥', '메뉴맵', 
-													'MenuMap', '운영자', 'admin', 'root']
+													'MenuMap', '운영자', 'admin', 'root', '사장님']
 	EMAIL_FORMAT = /\A(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Z‌​a-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}\z/i
 
 
@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
 
   def size_in_byte
   	if username.bytesize < 6
-  		errors.add(:username, "Too short")
+  		errors.add(:username, '유저명은 한글일 경우 2글자, 영어 혹은 숫자일 경우 6글자 이상입니다.' )
   	end
   end
 

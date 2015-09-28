@@ -1,0 +1,9 @@
+<ul class='comment_body' style="padding: 0">
+	<%= render partial: 'comments/show', collection: @comments, as: :comment %>
+</ul>
+
+<% unless @comments.next_page.nil? %>
+	<%= link_to more_menu_menu_comments_path(@menu, page: @comments.next_page), class: 'show_more_link', remote: true, style: 'text-decoration: none;' do %>
+		<div><span>댓글 더보기</span></div>
+	<% end %>
+<% end %>

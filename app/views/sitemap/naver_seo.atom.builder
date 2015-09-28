@@ -13,7 +13,7 @@ naver_atom_feed({xmlns: "http://webmastertool.naver.com", id: 'http://menumap.co
 			entry.author do |a|
 				a.name("MenuMap")
 			end
-			entry.updated(restaurant.updated_at.xmlschema)
+			entry.updated(restaurant.last_updated_at.xmlschema)
 			entry.published(restaurant.created_at.xmlschema)
 			entry.link(rel: 'via', href: (request.protocol + request.host_with_port))
 			entry.content(restaurant_meta_description(restaurant), type: 'html')

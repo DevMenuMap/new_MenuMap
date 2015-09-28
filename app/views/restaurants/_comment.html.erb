@@ -1,21 +1,24 @@
-<% if @comments.blank? %>
-	<div id="no_comment">
-		<div class="row" style="margin: 0; padding: 0 15px 15px;">
-			<div class="col-xs-10 col-xs-offset-1" style="text-align: center; margin-top: 10px;">
-				음식점, 메뉴 댓글이 없습니다.<br/>
-				댓글을 작성해주세요.
-			</div>
+<div id="new_comment_section" class="col-xs-12">
+	<%= render partial: "comments/new", locals: { comment: @comment } %>
+</div>
+
+<div id="no_comment" style="display: <%= display_none_if_comment_exists(@comments) %>">
+	<div class="row" style="margin: 0; padding: 0 15px 15px;">
+		<div class="col-xs-10 col-xs-offset-1" style="text-align: center; margin-top: 10px;">
+			음식점, 메뉴 댓글이 없습니다.<br/>
+			댓글을 작성해주세요.
 		</div>
 	</div>
-<% else %>
-	<div id="comment_count">
-		<%= @comments.count %>
-	</div> 
-	<div id="comment_section">
-		<%= render "comments/page" %>
-	</div>
+</div>
 
-	<div id="new_comment_section">
-		<%= render partial: "comments/new", locals: { comment: @comment } %>
-	</div>
-<% end %>
+<div id="comment_section" style="display: <%= display_none_if_comment_exists(@comments, false) %>">
+	<ul class="comment_body">
+		<%= render partial: "comments/show", collection: @comments, as: :comment %>
+	</ul>
+
+	<% unless @comments.next_page.nil? %>
+		<%= link_to more_restaurant_comments_path(@restaurant, page: @comments.next_page), class: 'show_more_link', remote: true, style: 'text-decoration: none;' do %>
+			<div><span>댓글 더보기</span></div>
+		<% end %>
+	<% end %>
+</div>

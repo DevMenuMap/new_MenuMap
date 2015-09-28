@@ -1,2 +1,17 @@
-$("#comment_count").html("<%= @restaurant.comments.count %>");
-$(this).closest("tr").fadeOut();
+$('#myModal').hide();
+
+<% if @no_correct_user.nil? %>
+	$('#comment_<%= @comment.id %>').fadeOut();
+<% end %>
+$("#flash").html("<%= j render "layouts/flash" %>");
+
+
+// Menus#index
+/*
+<#% @menus.each do |menu| %>
+<#% byebug %>
+	$("li#menu_<#%= menu.id %>").replaceWith("<#%= j render partial: "menus/show", locals: { menu: menu } %>");
+<#% end %>
+
+showCommentsModal();
+*/

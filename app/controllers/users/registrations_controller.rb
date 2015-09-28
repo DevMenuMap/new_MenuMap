@@ -13,9 +13,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+		if current_user.username =~ /^fb_[0-9]+$/
+			flash[:info] = '유저명을 변경해주세요.'
+		end
+    super
+  end
 
   # PUT /resource
   # def update
