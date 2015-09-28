@@ -289,9 +289,28 @@ class Restaurant < ActiveRecord::Base
 		coordinate.present?
 	end
 
-	# Find most recent menus updated_at
+	# Find the most recent updated_at from menus, comments and pictures.
+	def last_updated_at
+		# [menus_updated_at, comments_updated_at, pictures_updated_at, updated_at].max
+		m = rest_info.menu_updated_at || Time.now - 1.years 
+		c = rest_info.comment_updated_at || Time.now - 1.years
+		i = rest_info.img_updated_at || Time.now - 1.years
+		[m, c, i, updated_at].max
+	end
+
+	# Find the most recent menus updated_at
 	def menus_updated_at
-		menus.select(:updated_at).limit(1).order("updated_at DESC").first.updated_at
+		menus.exists? ? menus.select(:updated_at).limit(1).order(updated_at: :desc).first.updated_at : Time.now - 1.years 
+	end
+
+	# Find the most recent comments updated_at
+	def comments_updated_at 
+		comments.exists? ? comments.select(:updated_at).limit(1).order(updated_at: :desc).first.updated_at : Time.now - 1.years
+	end
+
+	# Find the most recent images updated_at
+	def pictures_updated_at 
+		pictures.exists? ? pictures.select(:updated_at).limit(1).order(updated_at: :desc).first.updated_at : Time.now - 1.years
 	end
 
 	def save_latlng(latlng, log_file)

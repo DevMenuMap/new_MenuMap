@@ -127,5 +127,7 @@ class MenusController < ApplicationController
 				@restaurant.update(menu_on: 1) 
 				@first_menu_created = true
 			end
+
+			@restaurant.rest_info.update(menu_updated_at: Time.now)
 		end
 end
