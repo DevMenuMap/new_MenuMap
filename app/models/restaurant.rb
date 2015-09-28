@@ -375,7 +375,7 @@ class Restaurant < ActiveRecord::Base
 	def destroy_related_when_addr_updated(params)
 		if addr != params[:restaurant][:addr]
 			update(addr_code: nil)
-			# addr_tags.destroy_all
+			addr_tags.destroy_all
 			coordinate.destroy						if coordinate.present?
 			rest_info.coordinate.destroy	if rest_info.coordinate.present?
 			rest_info.update(addr_updated_at: Time.now)

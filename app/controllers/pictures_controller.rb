@@ -18,7 +18,6 @@ class PicturesController < ApplicationController
 			@picture.attributes = picture_params
 			if @picture.save
 				flash[:success] = '사진을 저장했습니다.'
-				@picture.imageable.rest_info.update(img_updated_at: Time.now)
 			else
 				flash[:danger] = '사진 저장에 실패했습니다.'
 			end
