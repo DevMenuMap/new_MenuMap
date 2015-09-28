@@ -5,12 +5,3 @@
 		<%= f.button "등록", class: "btn btn_submit" %>
 	</div>
 <% end %>
-
-<script>
-	$('#new_question').on('submit', function() {
-		if ( $('#question_contents').val().length == 0 ) {
-			alert('질문 내용을 입력해주세요.');
-			return false;
-		};
-	});
-</script>

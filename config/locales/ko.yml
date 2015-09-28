@@ -10,6 +10,7 @@ ko:
               taken: 이미 등록된 이메일입니다. 다른 이메일을 사용해주세요.
             username:
               blank: 유저명을 입력해주세요.
+              too_long: 유저명은 20자를 넘을 수 없습니다.
             password:
               blank: 비밀번호를 입력해주세요.
               too_short: 비밀번호는 8자 이상이어야 합니다.

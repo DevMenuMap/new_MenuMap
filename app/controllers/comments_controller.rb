@@ -34,6 +34,7 @@ class CommentsController < ApplicationController
 		if @comment.save
 			flash.now[:success] = '댓글을 저장했습니다.' 
 			save_menu_comment_tags
+			@comment.restaurant.rest_info.update(comment_updated_at: Time.now)
 		else
 			flash.now[:error] = '댓글을 저장하지 못했습니다.' 
 		end
