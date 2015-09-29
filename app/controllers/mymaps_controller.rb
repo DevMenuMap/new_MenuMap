@@ -94,7 +94,13 @@ class MymapsController < ApplicationController
 	def destroy
 		@user = current_user
 		@mymap = Mymap.find(params[:id])
-		@mymap.destroy
+
+		if @mymap.destroy
+			flash.now[:success] = 'MyMap을 삭제했습니다.'
+		else
+			flash.now[:error] = 'MyMap을 삭제하지 못했습니다.'
+		end
+
 		respond_to_js
 	end
 
