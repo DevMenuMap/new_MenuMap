@@ -9,7 +9,7 @@ function showStarRating() {
 
 // Star rating input.
 function starRatingForm(star) {
-	if ( star == true ) {
+	if ( star == 'mymap' ) {
 		var inputField = 'mymap[rating]';
 	} else {
 		var inputField = 'comment[rating]';
