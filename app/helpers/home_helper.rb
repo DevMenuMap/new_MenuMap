@@ -31,4 +31,8 @@ module HomeHelper
 			I18n.l time, format: '%Y년 %-m월 %-d일 %p %l:%M'
 		end
 	end
+
+	def time_in_ko(time)
+		I18n.l time, format: '%Y년 %-m월 %-d일 %p %l:%M'
+	end
 end

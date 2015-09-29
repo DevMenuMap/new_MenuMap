@@ -46,6 +46,7 @@ class MymapsController < ApplicationController
 
 	def show
 		@mymap = Mymap.find(params[:id])
+		@restaurant = @mymap.restaurant
 		respond_to_js
 	end
 
