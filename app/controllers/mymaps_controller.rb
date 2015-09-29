@@ -59,9 +59,14 @@ class MymapsController < ApplicationController
 		double_rating_score
 		@restaurant = Restaurant.find(params[:restaurant_id])
 		@user = current_user
+
 		@mymap = @restaurant.mymaps.new(mymap_params)
 		@mymap.user_id = @user.id
-		@mymap.save
+		if @mymap.save
+			flash[:succss] = 'MyMap에 음식점을 등록했습니다.'
+		else
+			flash[:error] = 'MyMap 등록에 실패했습니다.'
+		end
 
 		respond_to_js
 	end
