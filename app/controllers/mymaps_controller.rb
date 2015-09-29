@@ -64,9 +64,9 @@ class MymapsController < ApplicationController
 		@mymap = @restaurant.mymaps.new(mymap_params)
 		@mymap.user_id = @user.id
 		if @mymap.save
-			flash[:succss] = 'MyMap에 음식점을 등록했습니다.'
+			flash.now[:succss] = 'MyMap에 음식점을 등록했습니다.'
 		else
-			flash[:error] = 'MyMap 등록에 실패했습니다.'
+			flash.now[:error] = 'MyMap 등록에 실패했습니다.'
 		end
 
 		respond_to_js
@@ -80,7 +80,14 @@ class MymapsController < ApplicationController
 	def update
 		double_rating_score
 		@mymap = Mymap.find(params[:id])
-		@mymap.update(mymap_params)
+		@restaurant = @mymap.restaurant
+
+		if @mymap.update(mymap_params)
+			flash.now[:success] = 'MyMap 정보를 수정했습니다.'
+		else
+			flash.now[:error] = 'MyMap 정보를 수정하지 못했습니다.'
+		end
+
 		respond_to_js
 	end
 

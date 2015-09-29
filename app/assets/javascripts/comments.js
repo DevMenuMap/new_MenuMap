@@ -8,11 +8,17 @@ function showStarRating() {
 };
 
 // Star rating input.
-function starRatingForm() {
+function starRatingForm(star) {
+	if ( star == true ) {
+		var inputField = 'mymap[rating]';
+	} else {
+		var inputField = 'comment[rating]';
+	};
+
 	$(".star_rating_form").raty({
 		path: "/images/star_rating/",
 		half: true,
-		scoreName: "comment[rating]",
+		scoreName: inputField,
 		score: function() {
 			return parseInt($(this).attr("data-score")) / 2;
 		}
