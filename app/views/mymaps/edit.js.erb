@@ -1,4 +1,4 @@
-$("#edit_mymap_button").bind("ajax:success", function() {
-	$(".modal-title").html("Edit MyMap");
-	$(".modal-body").html("<%= j(render "edit") %>");
-});
+$('.modal-title').html("<span style='font-family: Ubuntu;'>MyMap 수정</span>");
+$(".modal-body").html("<%= j(render "edit") %>");
+
+starRatingForm();
