@@ -104,9 +104,8 @@ Rails.application.routes.draw do
 
 	get '/users/:username/MyMap' => 'mymaps#index', as: :mymap_index
 	# Case insensitive redirection to users' MyMap page
-	get '/users/:username/myMap' => redirect('users/%{username}/MyMap')
-	get '/users/:username/Mymap' => redirect('users/%{username}/MyMap')
-	get '/users/:username/mymap' => redirect('users/%{username}/MyMap')
+	get '/users/:username/:mymap' => redirect('/users/%{username}/MyMap'), 
+																	 constraints: { mymap: /mymap/i }
 
 	get '/users/:username/MyMap_list' => 'mymaps#list'
 	# Redirection to MyMap_list
