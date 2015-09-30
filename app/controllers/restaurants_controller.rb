@@ -36,6 +36,7 @@ class RestaurantsController < ApplicationController
   def show
 		@user = current_user
 		@restaurant = Restaurant.find(params[:id])
+		@restaurants = [@restaurant]
 		@menu_titles = @restaurant.menu_titles
 		@comments = @restaurant.comments.paginate(page: params[:page], per_page: 10)
 
