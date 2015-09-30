@@ -8,22 +8,17 @@ var k = 0
 /* 다각형 꼭지점 저장을 위한 변수 */
 var polygonCoords = [];
 
-function loadNaverMap(lat, lng, level){
-	if ( lat == 0 || lng == 0 || isNaN(lat) || isNaN(lng)){
-		lat = 37.48121;
-		lng = 126.952712;
-	};
-	if ( level == 0 || isNaN(level) ) {
-		level = 10;
-	};
-	var oCenter = new nhn.api.map.LatLng(lat, lng);
+function loadNaverMap(level){
+	var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
+	var defaultLevel = level || 10;
 
-	deviceWidth = responsiveMapWidth();
-	mapHeight = deviceWidth * 0.618
+	// Set map's width and heigth.
+	var deviceWidth = responsiveMapWidth();
+	var mapHeight = deviceWidth * 0.618;
 
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
-																	point : oCenter,
-																	zoom : level,
+																	point : defaultPoint,
+																	zoom : defaultLevel,
 																	// move on map with mouse dragging
 																	enableDragPan : true,  
 																	enableWheelZoom : true,
@@ -37,6 +32,21 @@ function loadNaverMap(lat, lng, level){
 
 	oMap.attach("contextmenu", drawPolygon);
 };
+
+// Return responsive width of naver map for devices.
+function responsiveMapWidth() {
+	var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+	if (width > 1200) {
+		width = 585;
+	} else if (width > 992) {
+		width = 970;
+	} else if (width > 768) {
+		width = 750;
+	}
+
+	return width;
+}
 
 // showLabels -> toggleLabels 20150810
 function toggleLabels() {
@@ -197,18 +207,3 @@ function showGroupMarkers(coordArray, groups, names) {
 		showPolygon.push(oLatLng);
 	};
 };
-
-// Return responsive width of naver map for devices.
-function responsiveMapWidth() {
-	var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-
-	if (width > 1200) {
-		width = 585;
-	} else if (width > 992) {
-		width = 970;
-	} else if (width > 768) {
-		width = 750;
-	}
-
-	return width;
-}

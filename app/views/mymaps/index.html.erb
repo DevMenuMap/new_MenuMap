@@ -39,7 +39,7 @@
 
 <script>
 	$(document).ready(function(){ 
-		loadNaverMap(<%= @center_x %>, <%= @center_y %>, 8);
+		loadNaverMap();
 		showGroupMarkers(<%= @coord_array %>, <%= @groups %>, <%= raw @names %>);
 		toggleLabels();
 	});
