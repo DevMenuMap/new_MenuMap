@@ -1,3 +1,2 @@
-$("#destroy_mymap_button").bind("ajax:success", function() {
-	$("#mymap_button_<%= @mymap.restaurant.id %>").html("<%= j(mymap_button(@user, @mymap.restaurant)) %>");
-});
+$("#flash").html("<%= j render "layouts/flash" %>");
+$("#show_mymap_<%= @mymap.id %>").replaceWith("<%= j(mymap_button(@user, @mymap.restaurant)) %>");

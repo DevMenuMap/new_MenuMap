@@ -1,4 +1,7 @@
-$("#new_mymap_<%= @restaurant.id %>").bind("ajax:success", function() { 
-	$(".modal-title").html("New MyMap");
-	$(".modal-body").html("<%= j(render partial: "mymaps/new") %>");
-});
+$('.modal-title').html("<%= @restaurant.name %> MyMap 등록");
+$('.modal-body').html("<%= j(render partial: 'mymaps/new') %>");
+
+$('.modal-title').addClass('left_border_label');
+$('.modal-title').css('border-color', '#ea4c15');
+
+starRatingForm('mymap');

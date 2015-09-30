@@ -1,4 +1,4 @@
-$("#show_mymap_<%= @mymap.id %>").bind("ajax:success", function(){
-	$(".modal-title").html("Show MyMap");
-	$(".modal-body").html("<%= j(render "show") %>");
-});
+$('.modal-title').html("<span style='font-family: Ubuntu;'>MyMap</span>");
+$('.modal-body').html("<%= j(render 'show') %>");
+
+showStarRating();

@@ -1,5 +1,6 @@
-$("#new_mymap").bind("ajax:success", function() {
-	$("#mymap_button_<%= @restaurant.id %>").html("<%= j(mymap_button(@user, @restaurant)) %>");
-	$(".modal-title").html("Show MyMap");
-	$(".modal-body").html("<%= j(render "show") %>");
-});
+$("#flash").html("<%= j render "layouts/flash" %>");
+$(".modal-title").html("Show MyMap");
+$(".modal-body").html("<%= j(render "show") %>");
+
+// Change MyMap button to show saved MyMap.
+$("#new_mymap_<%= @restaurant.id %>").replaceWith("<%= j(mymap_button(@user, @restaurant)) %>");

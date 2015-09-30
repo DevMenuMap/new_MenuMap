@@ -31,7 +31,8 @@ class User < ActiveRecord::Base
 
 
 	### Validations
-	validates :username, presence: true, uniqueness: { case_sensitive: false },
+	validates :username, presence: true, 
+											 uniqueness: { case_sensitive: false },
 											 format: { with: USERNAME_FORMAT, message: '유저명은 한글, 영어, 숫자, -, _ 으로만 가능합니다.' }, 
 											 length: { maximum: 20 }
 	validates :email, format: { with: EMAIL_FORMAT, message: "이메일 형식이 잘못되었습니다." }

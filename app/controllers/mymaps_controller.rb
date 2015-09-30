@@ -1,4 +1,5 @@
 class MymapsController < ApplicationController
+
   def index
 		@user = User.find_by(username: params[:username])
 		@mymaps = @user.mymaps
@@ -46,6 +47,7 @@ class MymapsController < ApplicationController
 
 	def show
 		@mymap = Mymap.find(params[:id])
+		@restaurant = @mymap.restaurant
 		respond_to_js
 	end
 
@@ -59,9 +61,14 @@ class MymapsController < ApplicationController
 		double_rating_score
 		@restaurant = Restaurant.find(params[:restaurant_id])
 		@user = current_user
+
 		@mymap = @restaurant.mymaps.new(mymap_params)
 		@mymap.user_id = @user.id
-		@mymap.save
+		if @mymap.save
+			flash.now[:succss] = 'MyMap에 음식점을 등록했습니다.'
+		else
+			flash.now[:error] = 'MyMap 등록에 실패했습니다.'
+		end
 
 		respond_to_js
 	end
@@ -74,14 +81,27 @@ class MymapsController < ApplicationController
 	def update
 		double_rating_score
 		@mymap = Mymap.find(params[:id])
-		@mymap.update(mymap_params)
+		@restaurant = @mymap.restaurant
+
+		if @mymap.update(mymap_params)
+			flash.now[:success] = 'MyMap 정보를 수정했습니다.'
+		else
+			flash.now[:error] = 'MyMap 정보를 수정하지 못했습니다.'
+		end
+
 		respond_to_js
 	end
 
 	def destroy
 		@user = current_user
 		@mymap = Mymap.find(params[:id])
-		@mymap.destroy
+
+		if @mymap.destroy
+			flash.now[:success] = 'MyMap을 삭제했습니다.'
+		else
+			flash.now[:error] = 'MyMap을 삭제하지 못했습니다.'
+		end
+
 		respond_to_js
 	end
 
