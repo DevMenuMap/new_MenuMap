@@ -60,9 +60,31 @@ function showMymapMarkers() {
 
 	$.getJSON( jsonUrl )
 		.done( function(data) {
+			mymapGroupMarkers(data);
 			setMapCenter(data);
 			setMapLevel(data);
 	});
+}
+
+// Attach group icon markers to map.
+function mymapGroupMarkers(data) {
+	$.each( data.mymaps, function( i, mymap ) {
+		if ( mymap.mymapGroup > 0 ) {
+			oOffset = new nhn.api.map.Size(28, 28);
+			oSize = new nhn.api.map.Size(28, 28);
+			oIcon = new nhn.api.map.Icon(groupIconPath(mymap.mymapGroup), oSize, oOffset);
+		} else {
+			oIcon = defaultGroupIcon;
+		};
+
+		var oLatLng = new nhn.api.map.LatLng(mymap.lat, mymap.lng);
+		var marker = new nhn.api.map.Marker(oIcon, { point: oLatLng });
+		oMap.addOverlay(marker);
+	});
+}
+
+function groupIconPath(n) {
+	return '/images/mymaps/mymap_group_icon_' + n + '.svg'
 }
 
 // Get json data of mymap and set center of the map.
@@ -71,7 +93,6 @@ function setMapCenter(data) {
 	var snu_lat = 37.48121, snu_lng = 126.952712;
 
 	$.each( data.mymaps, function( i, mymap ) {
-		mymapGroupMarkers( mymap.lat, mymap.lng, mymap.mymapGroup );
 		div += 1;
 		lat_sum += parseFloat(mymap.lat);
 		lng_sum += parseFloat(mymap.lng);
@@ -116,28 +137,6 @@ function setMapLevel(data) {
 	};
 	
 	oMap.setLevel(level);
-}
-
-
-// Attach group icon markers to map.
-function mymapGroupMarkers(lat, lng, group) {
-	var oOffset, oSize, oIcon;
-
-	if ( group > 0 ) {
-		oOffset = new nhn.api.map.Size(28, 28);
-		oSize = new nhn.api.map.Size(28, 28);
-		oIcon = new nhn.api.map.Icon(groupIconPath(group), oSize, oOffset);
-	} else {
-		oIcon = defaultGroupIcon;
-	};
-
-	var oLatLng = new nhn.api.map.LatLng(lat, lng);
-	var marker = new nhn.api.map.Marker(oIcon, { point: oLatLng });
-	oMap.addOverlay(marker);
-}
-
-function groupIconPath(n) {
-	return '/images/mymaps/mymap_group_icon_' + n + '.svg'
 }
 
 // showLabels -> toggleLabels 20150810
