@@ -107,12 +107,6 @@ Rails.application.routes.draw do
 	get '/users/:username/:mymap' => redirect('/users/%{username}/MyMap'), 
 																	 constraints: { mymap: /mymap/i }
 
-	get '/users/:username/MyMap_list' => 'mymaps#list'
-	# Redirection to MyMap_list
-	get '/users/:username/mymap_list' => redirect('users/%{username}/MyMap_list')
-	get '/users/:username/Mymap_list' => redirect('users/%{username}/MyMap_list')
-	get '/users/:username/mymap_list' => redirect('users/%{username}/MyMap_list')
-
 	scope module: 'admin' do
 		resources :monitors
 	end

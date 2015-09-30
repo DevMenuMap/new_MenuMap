@@ -10,12 +10,6 @@ class MymapsController < ApplicationController
 		end
   end
 
-	# GET /users/:username/MyMap_list
-	def list
-		@user = User.find_by(username: params[:username])
-		@mymaps = @user.mymaps
-	end
-
 	def show
 		@mymap = Mymap.find(params[:id])
 		@restaurant = @mymap.restaurant

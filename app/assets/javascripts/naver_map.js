@@ -37,6 +37,7 @@ function loadNaverMap(level){
 														});
 
 	oMap.attach("contextmenu", drawPolygon);
+	showMymapMarkers();
 };
 
 // Return responsive width of naver map for devices.
