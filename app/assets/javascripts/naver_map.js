@@ -5,7 +5,7 @@ var polygons;
 /* latlng 여러개 저장을 위한 변수 */
 var k = 0
 
-/* 다각형 꼭지점 저장을 위한 변수 */
+/* 다각형 꼭지점 저장을 위한 변수 */ 
 var polygonCoords = [];
 
 // Default group icon
@@ -16,8 +16,7 @@ var defaultGroupIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_def
 
 function loadNaverMap(level){
 	var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
-	// var defaultLevel = level || 10;
-	var defaultLevel = level || 12;
+	var defaultLevel = level || 10;
 
 	// Set map's width and heigth.
 	var deviceWidth = responsiveMapWidth();
@@ -55,28 +54,70 @@ function responsiveMapWidth() {
 	return width;
 }
 
-// Show MyMap's group markers.
+// Show MyMap's group markers and set center of those markers.
 function showMymapMarkers() {
 	var jsonUrl = window.location.href + '.json'
-	var div = 0, lat_sum = 0, lng_sum = 0;
-	var snu_lat = 37.48121, snu_lng = 126.952712;
 
 	$.getJSON( jsonUrl )
 		.done( function(data) {
-			$.each( data.mymaps, function( i, mymap ) {
-				mymapGroupMarkers( mymap.lat, mymap.lng, mymap.mymapGroup );
-				div += 1;
-				lat_sum += parseFloat(mymap.lat);
-				lng_sum += parseFloat(mymap.lng);
-			});
-
-			lat = lat_sum/div || snu_lat;
-			lng = lng_sum/div || snu_lng;
-
-			var centerLatLng = new nhn.api.map.LatLng(lat, lng)
-			oMap.setCenter(centerLatLng);
+			setMapCenter(data);
+			setMapLevel(data);
 	});
 }
+
+// Get json data of mymap and set center of the map.
+function setMapCenter(data) {
+	var div = 0, lat_sum = 0, lng_sum = 0;
+	var snu_lat = 37.48121, snu_lng = 126.952712;
+
+	$.each( data.mymaps, function( i, mymap ) {
+		mymapGroupMarkers( mymap.lat, mymap.lng, mymap.mymapGroup );
+		div += 1;
+		lat_sum += parseFloat(mymap.lat);
+		lng_sum += parseFloat(mymap.lng);
+	});
+
+	lat = lat_sum/div || snu_lat;
+	lng = lng_sum/div || snu_lng;
+
+	var centerLatLng = new nhn.api.map.LatLng(lat, lng)
+	oMap.setCenter(centerLatLng);
+}
+
+// Get json data of mymap and set level for the map.
+function setMapLevel(data) {
+	var lat_max = 0, lat_min = 1000, lng_max = 0, lng_min = 1000;
+	var lat_range = 0, lng_range = 0, level;
+
+	$.each( data.mymaps, function( i, mymap ) {
+		lat_max = Math.max(lat_max, mymap.lat);
+		lat_min = Math.min(lat_min, mymap.lat);
+		lng_max = Math.max(lng_max, mymap.lng);
+		lng_min = Math.min(lng_min, mymap.lng);
+	});
+
+	lat_range = lat_max - lat_min;
+	lng_range = lng_max - lng_min;
+
+	if ( lat_range > 0.28 || lng_range > 0.18 ) {
+		level = 5;
+	} else if ( lat_range > 0.15  || lng_range > 0.09  ) {
+	  level = 6;
+	} else if ( lat_range > 0.075 || lng_range > 0.04  ) {
+	  level = 7;
+	} else if ( lat_range > 0.035 || lng_range > 0.02  ) {
+	  level = 8;
+	} else if ( lat_range > 0.02  || lng_range > 0.013 ) {
+	  level = 9;
+	} else if ( lat_range > 0.01  || lng_range > 0.005 ) {
+	  level = 10;
+	} else {
+	  level = 11;
+	};
+	
+	oMap.setLevel(level);
+}
+
 
 // Attach group icon markers to map.
 function mymapGroupMarkers(lat, lng, group) {
