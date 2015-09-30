@@ -8,9 +8,17 @@ var k = 0
 /* 다각형 꼭지점 저장을 위한 변수 */
 var polygonCoords = [];
 
+// Default group icon
+var defaultGroupIconOffset = new nhn.api.map.Size(28, 28);
+var defaultGroupIconSize = new nhn.api.map.Size(18, 18);
+var defaultGroupIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_default.svg", defaultGroupIconSize, defaultGroupIconOffset);
+
+
 function loadNaverMap(level){
-	var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
-	var defaultLevel = level || 10;
+	// var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
+	var defaultPoint = new nhn.api.map.LatLng(37.4832357, 126.9288968);
+	// var defaultLevel = level || 10;
+	var defaultLevel = level || 12;
 
 	// Set map's width and heigth.
 	var deviceWidth = responsiveMapWidth();
@@ -46,6 +54,40 @@ function responsiveMapWidth() {
 	}
 
 	return width;
+}
+
+// Show MyMap's group markers.
+function showMymapMarkers() {
+	var jsonUrl = window.location.href + '.json'
+
+	$.getJSON( jsonUrl )
+		.done( function(data) {
+			$.each( data.mymaps, function( i, mymap ) {
+				console.log( mymap.name );
+				mymapGroupMarkers( mymap.lat, mymap.lng, mymap.mymapGroup );
+			});
+	});
+}
+
+// Attach group icon markers to map.
+function mymapGroupMarkers(lat, lng, group) {
+	var oOffset, oSize, oIcon;
+
+	if ( group > 0 ) {
+		oOffset = new nhn.api.map.Size(28, 28);
+		oSize = new nhn.api.map.Size(28, 28);
+		oIcon = new nhn.api.map.Icon(groupIconPath(group), oSize, oOffset);
+	} else {
+		oIcon = defaultGroupIcon;
+	};
+
+	var oLatLng = new nhn.api.map.LatLng(lat, lng);
+	var marker = new nhn.api.map.Marker(oIcon, { point: oLatLng });
+	oMap.addOverlay(marker);
+}
+
+function groupIconPath(n) {
+	return '/images/mymaps/mymap_group_icon_' + n + '.svg'
 }
 
 // showLabels -> toggleLabels 20150810

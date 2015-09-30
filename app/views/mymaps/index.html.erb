@@ -40,7 +40,8 @@
 <script>
 	$(document).ready(function(){ 
 		loadNaverMap();
-		showGroupMarkers(<%= @coord_array %>, <%= @groups %>, <%= raw @names %>);
+		// showGroupMarkers(<%= @coord_array %>, <%= @groups %>, <%= raw @names %>);
+		showMymapMarkers();
 		toggleLabels();
 	});
 </script>
