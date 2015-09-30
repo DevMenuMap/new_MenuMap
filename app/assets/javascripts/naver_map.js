@@ -15,8 +15,7 @@ var defaultGroupIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_def
 
 
 function loadNaverMap(level){
-	// var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
-	var defaultPoint = new nhn.api.map.LatLng(37.4832357, 126.9288968);
+	var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
 	// var defaultLevel = level || 10;
 	var defaultLevel = level || 12;
 
@@ -59,13 +58,23 @@ function responsiveMapWidth() {
 // Show MyMap's group markers.
 function showMymapMarkers() {
 	var jsonUrl = window.location.href + '.json'
+	var div = 0, lat_sum = 0, lng_sum = 0;
+	var snu_lat = 37.48121, snu_lng = 126.952712;
 
 	$.getJSON( jsonUrl )
 		.done( function(data) {
 			$.each( data.mymaps, function( i, mymap ) {
-				console.log( mymap.name );
 				mymapGroupMarkers( mymap.lat, mymap.lng, mymap.mymapGroup );
+				div += 1;
+				lat_sum += parseFloat(mymap.lat);
+				lng_sum += parseFloat(mymap.lng);
 			});
+
+			lat = lat_sum/div || snu_lat;
+			lng = lng_sum/div || snu_lng;
+
+			var centerLatLng = new nhn.api.map.LatLng(lat, lng)
+			oMap.setCenter(centerLatLng);
 	});
 }
 
