@@ -32,9 +32,9 @@
 
 <script>
 	$(document).ready( function() {
-		loadNaverMap(<%= @center_x %>, <%= @center_y %>, <%= @level %>);
-		showMarkers(<%= @coord_array %>, true, <%= raw @names %>);
-		toggleLabels();
+		loadNaverMap();
+		// toggleLabels();
+
 		<% if @restaurants.total_pages >= 6 %>
 			<% if @restaurants.current_page == 4 %>
 				$('a[rel="start"]').hide()

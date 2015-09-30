@@ -1,60 +1,15 @@
 class RestaurantsController < ApplicationController
 	before_action :admin?, :except => [:index, :show, :no_result, 
 																		 :menu_complete]
-	# before_action :check_category, only: [:create]
-	# to check if subcategory is not "all thing"; to specify subcategory
 
   def index
 		@user = current_user
+		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).order(menu_on: :desc).paginate(page: params[:page], per_page: 10)
+
+
 		#@restaurants = []
 		#@curr_lat = 0
 		#@curr_lng = 0
-		#restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).paginate(page: params[:page], per_page: 10)
-		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).order(menu_on: :desc).paginate(page: params[:page], per_page: 10)
-		
-		# Find Center point
-		@coord_array = []
-		@names = []
-		@level = 10
-		@restaurants.each do |r|
-			if( r.lat.to_f != 0 && r.lng.to_f != 0 )
-				@coord_array << r.lat.to_f << r.lng.to_f
-				@names << r.name
-			end
-		end
-		x = @coord_array.values_at(* @coord_array.each_index.select { |i| i.even? })
-		y = @coord_array.values_at(* @coord_array.each_index.select { |i| i.odd? })
-
-		@center_x = 37.48121
-		@center_y = 126.952712
-		
-		# When at least one of lat(and lng) values is not zero
-		if( x != [] && y != [] )
-			# Determine map scale
-			x_range = x.max - x.min
-			y_range = y.max - y.min
-			
-			if (x_range > 0.28) || (y_range > 0.18)
-				@level = 5
-			elsif (x_range > 0.15) || (y_range > 0.09)
-				@level = 6
-			elsif (x_range > 0.075) || (y_range > 0.04)
-				@level = 7
-			elsif (x_range > 0.035) || (y_range > 0.02)
-				@level = 8
-			elsif (x_range > 0.02) || (y_range > 0.013)
-				@level = 9
-			elsif (x_range > 0.01) || (y_range > 0.005)
-				@level = 10
-			else
-				@level = 11 
-			end
-
-			# Determin center point
-			@center_x = (x.inject{|sum, n| sum + n}) / x.length
-			@center_y = (y.inject{|sum, n| sum + n}) / y.length
-		end
-
 		#### WHEN USE CURRENT POSITION
 		#if (params[:curr_pos] == '1')
 		#	@curr_lat = params[:lat]
@@ -69,7 +24,10 @@ class RestaurantsController < ApplicationController
 		#end
 
 		if @restaurants.present?
-			render 'index'
+			respond_to do |format|
+				format.html
+				format.json
+			end
 		else
 			render 'no_result'
 		end
@@ -91,8 +49,8 @@ class RestaurantsController < ApplicationController
 		@comment = Comment.new
 
 		# For nearby restaurants 
-		@curr_lat = @restaurant.lat.to_f 
-		@curr_lng = @restaurant.lng.to_f 
+		# @curr_lat = @restaurant.lat.to_f 
+		# @curr_lng = @restaurant.lng.to_f 
 		# @nearbyRestaurants = []
 		# # limit 5 & latlng_type = Restaurant
 		# coords = Coordinate.find_by_sql("SELECT id, latlng_id, latlng_type, ( 6371 * acos( cos( radians( #{@curr_lat} ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( #{@curr_lng} ) ) + sin( radians( #{@curr_lat} ) ) * sin( radians( lat ) ) ) ) AS distance FROM coordinates HAVING distance < 100 AND latlng_type = 'Restaurant' ORDER BY distance LIMIT 0 , 5")

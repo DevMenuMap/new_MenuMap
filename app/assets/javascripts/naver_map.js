@@ -8,10 +8,15 @@ var k = 0
 /* 다각형 꼭지점 저장을 위한 변수 */ 
 var polygonCoords = [];
 
+// Default Naver map icon
+var defaultNaverOffset = new nhn.api.map.Size(14, 37);
+var defaultNaverSize = new nhn.api.map.Size(28, 37);
+var defaultNaverIcon = new nhn.api.map.Icon("/images/mymaps/naver_map_icon.png", defaultNaverSize, defaultNaverOffset);
+
 // Default group icon
-var defaultGroupIconOffset = new nhn.api.map.Size(28, 28);
-var defaultGroupIconSize = new nhn.api.map.Size(18, 18);
-var defaultGroupIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_default.svg", defaultGroupIconSize, defaultGroupIconOffset);
+var defaultGroupOffset = new nhn.api.map.Size(28, 28);
+var defaultGroupSize = new nhn.api.map.Size(18, 18);
+var defaultGroupIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_default.svg", defaultGroupSize, defaultGroupOffset);
 
 
 function loadNaverMap(level){
@@ -25,7 +30,6 @@ function loadNaverMap(level){
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
 																	point : defaultPoint,
 																	zoom : defaultLevel,
-																	// move on map with mouse dragging
 																	enableDragPan : true,  
 																	enableWheelZoom : true,
 																	enableDblClickZoom : true,
@@ -37,7 +41,7 @@ function loadNaverMap(level){
 														});
 
 	oMap.attach("contextmenu", drawPolygon);
-	showMymapMarkers();
+	mapAndMarkers();
 };
 
 // Return responsive width of naver map for devices.
@@ -56,26 +60,32 @@ function responsiveMapWidth() {
 }
 
 // Show MyMap's group markers and set center of those markers.
-function showMymapMarkers() {
-	var jsonUrl = window.location.href + '.json'
+function mapAndMarkers() {
+	if ( window.location.href.match(/.*\/restaurants\?/) ) {
+		var jsonUrl = window.location.href.replace('/restaurants?', '/restaurants.json?');
+	} else {
+		var jsonUrl = window.location.href + '.json';
+	}
 
 	$.getJSON( jsonUrl )
 		.done( function(data) {
-			mymapGroupMarkers(data);
+			displayMarkers(data);
 			setMapCenter(data);
 			setMapLevel(data);
 	});
 }
 
 // Attach group icon markers to map.
-function mymapGroupMarkers(data) {
+function displayMarkers(data) {
 	$.each( data.restaurants, function( i, restaurant ) {
 		if ( restaurant.mymap.group > 0 ) {
 			oOffset = new nhn.api.map.Size(28, 28);
 			oSize = new nhn.api.map.Size(28, 28);
 			oIcon = new nhn.api.map.Icon(groupIconPath(restaurant.mymap.group), oSize, oOffset);
-		} else {
+		} else if ( restaurant.mymap.group == 0 ) {
 			oIcon = defaultGroupIcon;
+		} else {
+			oIcon = defaultNaverIcon;
 		};
 
 		var oLatLng = new nhn.api.map.LatLng(restaurant.lat, restaurant.lng);
@@ -139,6 +149,14 @@ function setMapLevel(data) {
 	
 	oMap.setLevel(level);
 }
+
+
+
+
+/*********************************************/
+
+
+
 
 // showLabels -> toggleLabels 20150810
 function toggleLabels() {
