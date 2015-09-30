@@ -68,16 +68,16 @@ function showMymapMarkers() {
 
 // Attach group icon markers to map.
 function mymapGroupMarkers(data) {
-	$.each( data.mymaps, function( i, mymap ) {
-		if ( mymap.mymapGroup > 0 ) {
+	$.each( data.restaurants, function( i, restaurant ) {
+		if ( restaurant.mymap.group > 0 ) {
 			oOffset = new nhn.api.map.Size(28, 28);
 			oSize = new nhn.api.map.Size(28, 28);
-			oIcon = new nhn.api.map.Icon(groupIconPath(mymap.mymapGroup), oSize, oOffset);
+			oIcon = new nhn.api.map.Icon(groupIconPath(restaurant.mymap.group), oSize, oOffset);
 		} else {
 			oIcon = defaultGroupIcon;
 		};
 
-		var oLatLng = new nhn.api.map.LatLng(mymap.lat, mymap.lng);
+		var oLatLng = new nhn.api.map.LatLng(restaurant.lat, restaurant.lng);
 		var marker = new nhn.api.map.Marker(oIcon, { point: oLatLng });
 		oMap.addOverlay(marker);
 	});
@@ -92,10 +92,10 @@ function setMapCenter(data) {
 	var div = 0, lat_sum = 0, lng_sum = 0;
 	var snu_lat = 37.48121, snu_lng = 126.952712;
 
-	$.each( data.mymaps, function( i, mymap ) {
+	$.each( data.restaurants, function( i, restaurant ) {
 		div += 1;
-		lat_sum += parseFloat(mymap.lat);
-		lng_sum += parseFloat(mymap.lng);
+		lat_sum += parseFloat(restaurant.lat);
+		lng_sum += parseFloat(restaurant.lng);
 	});
 
 	lat = lat_sum/div || snu_lat;
@@ -110,11 +110,11 @@ function setMapLevel(data) {
 	var lat_max = 0, lat_min = 1000, lng_max = 0, lng_min = 1000;
 	var lat_range = 0, lng_range = 0, level;
 
-	$.each( data.mymaps, function( i, mymap ) {
-		lat_max = Math.max(lat_max, mymap.lat);
-		lat_min = Math.min(lat_min, mymap.lat);
-		lng_max = Math.max(lng_max, mymap.lng);
-		lng_min = Math.min(lng_min, mymap.lng);
+	$.each( data.restaurants, function( i, restaurant ) {
+		lat_max = Math.max(lat_max, restaurant.lat);
+		lat_min = Math.min(lat_min, restaurant.lat);
+		lng_max = Math.max(lng_max, restaurant.lng);
+		lng_min = Math.min(lng_min, restaurant.lng);
 	});
 
 	lat_range = lat_max - lat_min;

@@ -3,36 +3,7 @@ class MymapsController < ApplicationController
   def index
 		@user = User.find_by(username: params[:username])
 		@mymaps = @user.mymaps
-		@groups = []
-		@coord_array = []
-		@names = []
 		
-		@mymaps.each do |m|
-			# Check restaurant's lat,lng nil?
-			if( m.restaurant.lat.to_f != 0 && m.restaurant.lng.to_f != 0 )
-				@coord_array << m.restaurant.lat.to_f << m.restaurant.lng.to_f
-				@groups << m.group
-				@names << m.restaurant.name
-			end
-		end
-
-		# Find Center point
-		x = []
-		y = []
-		@center_x = 0
-		@center_y = 0
-		
-		if( @coord_array != [] )
-			l = @coord_array.length / 2
-			for i in 0..(l-1)
-				x << @coord_array[2*i]
-				y << @coord_array[2*i+1]
-			end
-
-			@center_x = (x.inject{|sum, n| sum + n}) / x.length
-			@center_y = (y.inject{|sum, n| sum + n}) / y.length
-		end
-
 		respond_to do |format|
 			format.html
 			format.json
