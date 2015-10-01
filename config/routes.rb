@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 	get "search"	=> "home#search"
 	get "home/update_subcategories"		# cascading select box 
 	get "home/addrcomplete"						# autocomplete for address text_field
+	get "home/info_window"						# infoWindow over map.
 
 	resources :notices, 			 except: [:index, :show]
 	resources :questions
@@ -106,12 +107,6 @@ Rails.application.routes.draw do
 	# Case insensitive redirection to users' MyMap page
 	get '/users/:username/:mymap' => redirect('/users/%{username}/MyMap'), 
 																	 constraints: { mymap: /mymap/i }
-
-	get '/users/:username/MyMap_list' => 'mymaps#list'
-	# Redirection to MyMap_list
-	get '/users/:username/mymap_list' => redirect('users/%{username}/MyMap_list')
-	get '/users/:username/Mymap_list' => redirect('users/%{username}/MyMap_list')
-	get '/users/:username/mymap_list' => redirect('users/%{username}/MyMap_list')
 
 	scope module: 'admin' do
 		resources :monitors

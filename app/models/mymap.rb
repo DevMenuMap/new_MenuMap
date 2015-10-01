@@ -25,4 +25,8 @@ class Mymap < ActiveRecord::Base
       errors.add(:contents, "Slang")
     end
   end
+
+	def index_plus_one
+		user.mymaps.index(self) + 1
+	end
 end

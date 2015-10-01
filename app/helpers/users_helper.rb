@@ -15,7 +15,7 @@ module UsersHelper
 
 	# Check if correct user is doing the action.
 	def correct_user?(user)
-		user == current_user
+		current_user && user == current_user
 	end
 
 	def user_id_if_exists(user)

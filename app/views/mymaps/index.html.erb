@@ -29,7 +29,14 @@
 				<th>mymap_button</th>
 			</tr>
 
-			<%= render @mymaps %>
+			<% @mymaps.each do |mymap| %>
+				<tr>
+					<td><%= mymap.id %></td>
+					<td><%= mymap.restaurant.id %></td>
+					<td><%= mymap.restaurant.name %></td>
+					<td><%= show_mymap_info_button(mymap) %></td>
+				</tr>
+			<% end %>
 		</table>
 
 		<%= link_to "share MyMap", new_user_mymap_snapshot_path(@user), id: "share_mymap_button", remote: true, data: {toggle: "modal", target: "#myModal"} %>
@@ -39,8 +46,6 @@
 
 <script>
 	$(document).ready(function(){ 
-		loadNaverMap(<%= @center_x %>, <%= @center_y %>, 8);
-		showGroupMarkers(<%= @coord_array %>, <%= @groups %>, <%= raw @names %>);
-		toggleLabels();
+		loadNaverMap(false, true);
 	});
 </script>

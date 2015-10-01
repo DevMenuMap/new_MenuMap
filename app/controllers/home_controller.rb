@@ -44,4 +44,12 @@ class HomeController < ApplicationController
 			format.json
 		end
 	end
+
+	def info_window
+		@restaurant = Restaurant.find(params[:id])
+		@mymap = Mymap.find(params[:mymap_id])
+		respond_to do |format|
+			format.js
+		end
+	end
 end
