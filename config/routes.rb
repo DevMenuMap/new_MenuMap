@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 	get "search"	=> "home#search"
 	get "home/update_subcategories"		# cascading select box 
 	get "home/addrcomplete"						# autocomplete for address text_field
+	get "home/info_window"						# infoWindow over map.
 
 	resources :notices, 			 except: [:index, :show]
 	resources :questions

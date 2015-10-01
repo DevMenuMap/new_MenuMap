@@ -44,4 +44,12 @@ class HomeController < ApplicationController
 			format.json
 		end
 	end
+
+	def info_window
+		@id = params[:id]
+		@name = params[:name]
+		respond_to do |format|
+			format.js
+		end
+	end
 end

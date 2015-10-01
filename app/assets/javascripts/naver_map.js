@@ -211,7 +211,10 @@ function loadInfoWindow(data) {
 			if ( e.clickCoveredMarker ) { return; }
 			
 			var index = target.getZIndex();
-			infoWindow.setContent(infoWindowContents(index, data));
+			infoWindow.setContent("<div id='map_" + data.restaurants[index].id + "'></div>");
+			// Ajax
+			infoWindowContents(index, data);
+
 			infoWindow.setPoint(point);
 			infoWindow.setVisible(true);
 			infoWindow.setPosition({ right: 15, top: 30 });
@@ -221,13 +224,19 @@ function loadInfoWindow(data) {
 	});
 }
 
-// InfoWindow's contents
+// Ajax call for infoWindow's contents
 function infoWindowContents(index, data) {
-	var contents = '';
-	contents += '<div>' + data.restaurants[index].mymap.contents + '</div>';
-	return contents;
+	$.ajax({
+		type: 'GET',
+		url: '/home/info_window',
+		data: {
+			id: data.restaurants[index].id,
+			name: data.restaurants[index].name
+		}
+	});
 }
 
+	
 
 
 
