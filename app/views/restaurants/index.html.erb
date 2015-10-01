@@ -32,8 +32,7 @@
 
 <script>
 	$(document).ready( function() {
-		loadNaverMap();
-		// toggleLabels();
+		loadNaverMap(false, false);
 
 		<% if @restaurants.total_pages >= 6 %>
 			<% if @restaurants.current_page == 4 %>

@@ -10,8 +10,8 @@ var polygonCoords = [];
 
 
 /***** Map *****/
-
-function loadNaverMap(level){
+// Info means if this map needs infoWindow(true) or labels(false).
+function loadNaverMap(level, info){
 	var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
 	var defaultLevel = level || 10;
 
@@ -31,7 +31,7 @@ function loadNaverMap(level){
 														});
 
 	oMap.attach("contextmenu", drawPolygon);
-	mapAndMarkers();
+	mapAndMarkers(info);
 };
 
 // Return responsive width of naver map for devices.
@@ -64,7 +64,7 @@ var defaultGroupIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_def
 
 
 // Show MyMap's group markers and set center of those markers.
-function mapAndMarkers() {
+function mapAndMarkers(info) {
 	if ( window.location.href.match(/.*\/restaurants\?/) ) {
 		var jsonUrl = window.location.href.replace('/restaurants?', '/restaurants.json?');
 	} else {
@@ -76,7 +76,14 @@ function mapAndMarkers() {
 			displayMarkers(data);
 			setMapCenter(data);
 			setMapLevel(data);
-			loadInfoWindow(data);
+
+			// If info is true, infoWindows will appear on the map.
+			// If not, labels will do.
+			if ( info ) {
+				loadInfoWindow(data);
+			} else {
+				toggleLabels();
+			};
 	});
 }
 
@@ -159,6 +166,33 @@ function setMapLevel(data) {
 	
 	oMap.setLevel(level);
 }
+
+
+/***** Label *****/
+function toggleLabels() {
+	var oLabel = new nhn.api.map.MarkerLabel();
+	var oMarker_new;
+	var oMarker_old;
+	oMap.addOverlay(oLabel);
+	oMap.attach('click', function(oCustomEvent) {
+		if (oCustomEvent.target instanceof nhn.api.map.Marker) {
+			oMarker_old = oMarker_new;
+			oMarker_new = oCustomEvent.target;
+
+			if (oMarker_new == oMarker_old) {
+				oLabel.setVisible(false, oMarker_new);
+				oMarker_new = undefined;
+			} else {
+				oLabel.setVisible(true, oMarker_new);
+			};
+		};
+
+		if (oCustomEvent.target instanceof nhn.api.map.Map) {
+			oLabel.setVisible(false, oMarker_new);
+			oMarker_new = undefined;
+		};
+	});
+};
 
 
 /***** InfoWindow *****/
@@ -244,34 +278,6 @@ function infoWindowContents(index, data) {
 
 /*********************************************/
 
-
-
-
-// showLabels -> toggleLabels 20150810
-function toggleLabels() {
-	var oLabel = new nhn.api.map.MarkerLabel();
-	var oMarker_new;
-	var oMarker_old;
-	oMap.addOverlay(oLabel);
-	oMap.attach('click', function(oCustomEvent) {
-		if (oCustomEvent.target instanceof nhn.api.map.Marker) {
-			oMarker_old = oMarker_new;
-			oMarker_new = oCustomEvent.target;
-
-			if (oMarker_new == oMarker_old) {
-				oLabel.setVisible(false, oMarker_new);
-				oMarker_new = undefined;
-			} else {
-				oLabel.setVisible(true, oMarker_new);
-			};
-		};
-
-		if (oCustomEvent.target instanceof nhn.api.map.Map) {
-			oLabel.setVisible(false, oMarker_new);
-			oMarker_new = undefined;
-		};
-	});
-};
 
 // Set marker on mouse click ( new_addr_rule )
 function setMarker(event) {

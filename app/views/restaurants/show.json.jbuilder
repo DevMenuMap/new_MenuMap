@@ -6,7 +6,16 @@ json.restaurants @restaurants do |restaurant|
 	json.lng restaurant.lng
 
 	json.mymap do
-		json.id 'none'
-		json.group 'none'
+		if current_user && current_user.saved_mymap?(restaurant)
+			mymap = current_user.find_mymap(restaurant)
+
+			json.id mymap.id
+			json.group mymap.group
+			json.rating mymap.rating
+			json.contents mymap.contents
+		else
+			json.id 'none'
+			json.group 'none'
+		end
 	end
 end

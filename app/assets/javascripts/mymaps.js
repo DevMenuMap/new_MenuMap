@@ -10,5 +10,10 @@ function removeMymapIcon() {
 }
 
 function updateMymapIcon(index, group) {
-	$('.nmap_overlay_pane img:nth-of-type(' + index + ')').attr('src', groupIconPath(group));
+	var target = $('.nmap_overlay_pane img:nth-of-type(' + index + ')')
+	if ( target.length != 0 ) {
+		target.attr('src', groupIconPath(group));
+	} else {
+		$('.nmap_overlay_pane img:nth-of-type(1)').attr('src', groupIconPath(group));
+	};
 }
