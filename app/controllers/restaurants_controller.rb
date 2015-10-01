@@ -6,23 +6,6 @@ class RestaurantsController < ApplicationController
 		@user = current_user
 		@restaurants = Restaurant.search(params[:delivery], params[:category], params[:name], params[:address]).order(menu_on: :desc).paginate(page: params[:page], per_page: 10)
 
-
-		#@restaurants = []
-		#@curr_lat = 0
-		#@curr_lng = 0
-		#### WHEN USE CURRENT POSITION
-		#if (params[:curr_pos] == '1')
-		#	@curr_lat = params[:lat]
-		#	@curr_lng = params[:lng]
-		#	# limit 100 & latlng_type = Restaurant
-		#	coords = Coordinate.find_by_sql("SELECT id, latlng_id, latlng_type, ( 6371 * acos( cos( radians( #{@curr_lat} ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( #{@curr_lng} ) ) + sin( radians( #{@curr_lat} ) ) * sin( radians( lat ) ) ) ) AS distance FROM coordinates HAVING distance < 100 AND latlng_type = 'Restaurant' ORDER BY distance LIMIT 0 , 100")
-		#	coords.each do |c|
-		#		@restaurants << c.latlng
-		#	end
-		#else
-		#	@restaurants = restaurants
-		#end
-
 		if @restaurants.present?
 			respond_to do |format|
 				format.html
@@ -48,16 +31,6 @@ class RestaurantsController < ApplicationController
 		@menu_title = MenuTitle.new
 		@menu = Menu.new
 		@comment = Comment.new
-
-		# For nearby restaurants 
-		# @curr_lat = @restaurant.lat.to_f 
-		# @curr_lng = @restaurant.lng.to_f 
-		# @nearbyRestaurants = []
-		# # limit 5 & latlng_type = Restaurant
-		# coords = Coordinate.find_by_sql("SELECT id, latlng_id, latlng_type, ( 6371 * acos( cos( radians( #{@curr_lat} ) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians( #{@curr_lng} ) ) + sin( radians( #{@curr_lat} ) ) * sin( radians( lat ) ) ) ) AS distance FROM coordinates HAVING distance < 100 AND latlng_type = 'Restaurant' ORDER BY distance LIMIT 0 , 5")
-		# coords.each do |c|
-		# 	@nearbyRestaurants << c.latlng
-		# end
 
 		respond_to do |format|
 			format.html
@@ -127,7 +100,6 @@ class RestaurantsController < ApplicationController
 	def destroy
 		@restaurant = Restaurant.find(params[:id])
 		@restaurant.update(active: false)
-		# Restaurant.find(params[:id]).update(active: false)
 		# inactivate belongings
 		inactivate_related
 		redirect_to restaurants_url

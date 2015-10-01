@@ -35,11 +35,6 @@
 				</div>
 			</div>
 
-			<!--%= label_tag :currentPosition, "CurrentPosition" %-->
-			<!--%= hidden_field_tag :currentPosition, nil, { id: "curr_lat", name: "lat" } %-->
-			<!--%= hidden_field_tag :currentPosition, nil, { id: "curr_lng", name: "lng" } %-->
-			<!--%= check_box_tag :curr_pos, 1, false, :onclick => "geoFindMe()" %-->
-
 			<div class="form-group">
 				<%= label_tag :name, "음식점 이름" %>
 				<%= text_field_tag :name, nil, { class: "form-control" } %>
@@ -60,16 +55,4 @@
 			j(options_for_select(@subcategories.map{ |s| [s.name, s.id]}, nil)) 
 		%>")
 	};
-
-	/**
-	$('#curr_pos').change( function() {
-		if ( $('#curr_pos').is(':checked') == true ) {
-			$('#addrcomplete').prop('disabled', true);
-			$('#addrcomplete').hide();
-		} else {
-			$('#addrcomplete').prop('disabled', false);
-			$('#addrcomplete').show();
-		};
-	});
-	**/
 </script>
