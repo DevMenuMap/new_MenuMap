@@ -8,16 +8,8 @@ var k = 0
 /* 다각형 꼭지점 저장을 위한 변수 */ 
 var polygonCoords = [];
 
-// Default Naver map icon
-var defaultNaverOffset = new nhn.api.map.Size(14, 37);
-var defaultNaverSize = new nhn.api.map.Size(28, 37);
-var defaultNaverIcon = new nhn.api.map.Icon("/images/mymaps/naver_map_icon.png", defaultNaverSize, defaultNaverOffset);
 
-// Default group icon
-var defaultGroupOffset = new nhn.api.map.Size(28, 28);
-var defaultGroupSize = new nhn.api.map.Size(18, 18);
-var defaultGroupIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_default.svg", defaultGroupSize, defaultGroupOffset);
-
+/***** Map *****/
 
 function loadNaverMap(level){
 	var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
@@ -34,8 +26,6 @@ function loadNaverMap(level){
 																	enableWheelZoom : true,
 																	enableDblClickZoom : true,
 																	mapMode : 0,
-																	// activateTrafficMap : false,
-																	// activateBicycleMap : false,
 																	size : new nhn.api.map.Size(deviceWidth, mapHeight),
 																	minMaxLevel : [ 1, 14 ]
 														});
@@ -59,6 +49,20 @@ function responsiveMapWidth() {
 	return width;
 }
 
+
+/***** Marker *****/
+
+// Default Naver map icon
+var defaultNaverOffset = new nhn.api.map.Size(14, 37);
+var defaultNaverSize = new nhn.api.map.Size(28, 37);
+var defaultNaverIcon = new nhn.api.map.Icon("/images/mymaps/naver_map_icon.png", defaultNaverSize, defaultNaverOffset);
+
+// Default group icon
+var defaultGroupOffset = new nhn.api.map.Size(28, 28);
+var defaultGroupSize = new nhn.api.map.Size(18, 18);
+var defaultGroupIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_default.svg", defaultGroupSize, defaultGroupOffset);
+
+
 // Show MyMap's group markers and set center of those markers.
 function mapAndMarkers() {
 	if ( window.location.href.match(/.*\/restaurants\?/) ) {
@@ -72,12 +76,13 @@ function mapAndMarkers() {
 			displayMarkers(data);
 			setMapCenter(data);
 			setMapLevel(data);
+			loadInfoWindow(data);
 	});
 }
 
 // Attach group icon markers to map.
 function displayMarkers(data) {
-	$.each( data.restaurants, function( i, restaurant ) {
+	$.each( data.restaurants, function( index, restaurant ) {
 		if ( restaurant.mymap.group > 0 ) {
 			oOffset = new nhn.api.map.Size(28, 28);
 			oSize = new nhn.api.map.Size(28, 28);
@@ -89,7 +94,12 @@ function displayMarkers(data) {
 		};
 
 		var oLatLng = new nhn.api.map.LatLng(restaurant.lat, restaurant.lng);
-		var marker = new nhn.api.map.Marker(oIcon, { point: oLatLng });
+		var marker = new nhn.api.map.Marker(oIcon, { 
+																					point: oLatLng,
+																					zIndex: index,
+																					title: restaurant.name
+																			 });
+
 		oMap.addOverlay(marker);
 	});
 }
@@ -149,6 +159,75 @@ function setMapLevel(data) {
 	
 	oMap.setLevel(level);
 }
+
+
+/***** InfoWindow *****/
+
+// Load infoWindow.
+function loadInfoWindow(data) {
+
+	// Create infoWindow.
+	var infoWindow = new nhn.api.map.InfoWindow();
+	infoWindow.setVisible(false);
+	oMap.addOverlay(infoWindow);
+	
+	// Create Label.
+	var markerLabel = new nhn.api.map.MarkerLabel();
+	oMap.addOverlay(markerLabel);
+
+	// Avoid label and infoWindow's collision.
+	infoWindow.attach('changeVisible', function(e) {
+		if ( e.visible ) {
+			markerLabel.setVisible(false);
+		}
+	});
+
+	// Show marker's label with mouse.
+	oMap.attach('mouseenter', function(e) {
+		var target = e.target;
+		if ( target instanceof nhn.api.map.Marker ) {
+			var marker = target;
+			markerLabel.setVisible(true, marker);
+		}
+	});
+
+	oMap.attach('mouseleave', function(e) {
+		var target = e.target;
+		if ( target instanceof nhn.api.map.Marker ) {
+			markerLabel.setVisible(false);
+		}
+	});
+
+	// Show infoWindow on mouseclick.
+	oMap.attach('click', function(e) {
+		var point = e.point;
+		var target = e.target;
+		infoWindow.setVisible(false);
+
+		// When click marker.
+		if ( target instanceof nhn.api.map.Marker ) {
+
+			// When click the same marker.
+			if ( e.clickCoveredMarker ) { return; }
+			
+			var index = target.getZIndex();
+			infoWindow.setContent(infoWindowContents(index, data));
+			infoWindow.setPoint(point);
+			infoWindow.setVisible(true);
+			infoWindow.setPosition({ right: 15, top: 30 });
+			infoWindow.autoPosition();
+			return;
+		}
+	});
+}
+
+// InfoWindow's contents
+function infoWindowContents(index, data) {
+	var contents = '';
+	contents += '<div>' + data.restaurants[index].mymap.contents + '</div>';
+	return contents;
+}
+
 
 
 
