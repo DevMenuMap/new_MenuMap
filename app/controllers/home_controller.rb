@@ -46,8 +46,8 @@ class HomeController < ApplicationController
 	end
 
 	def info_window
-		@id = params[:id]
-		@name = params[:name]
+		@restaurant = Restaurant.find(params[:id])
+		@mymap = Mymap.find(params[:mymap_id])
 		respond_to do |format|
 			format.js
 		end

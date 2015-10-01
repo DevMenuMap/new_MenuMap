@@ -211,7 +211,7 @@ function loadInfoWindow(data) {
 			if ( e.clickCoveredMarker ) { return; }
 			
 			var index = target.getZIndex();
-			infoWindow.setContent("<div id='map_" + data.restaurants[index].id + "'></div>");
+			infoWindow.setContent("<div id='info_window_" + data.restaurants[index].id + "'></div>");
 			// Ajax
 			infoWindowContents(index, data);
 
@@ -226,17 +226,18 @@ function loadInfoWindow(data) {
 
 // Ajax call for infoWindow's contents
 function infoWindowContents(index, data) {
+	var restaurant = data.restaurants[index];
+	var mymap = data.restaurants[index].mymap;
+
 	$.ajax({
 		type: 'GET',
 		url: '/home/info_window',
 		data: {
-			id: data.restaurants[index].id,
-			name: data.restaurants[index].name
+			id: 				restaurant.id,
+			mymap_id: 	mymap.id
 		}
 	});
 }
-
-	
 
 
 

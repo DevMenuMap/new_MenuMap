@@ -1,1 +1,3 @@
-$("#map_<%= @id %>").html("<%= j render 'info_window' %>");
+$("#info_window_<%= @restaurant.id %>").html("<%= j render 'info_window' %>");
+
+showStarRating();
