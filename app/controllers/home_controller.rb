@@ -39,7 +39,7 @@ class HomeController < ApplicationController
 	end
 
 	def slang
-    @result = Slang.where("? LIKE CONCAT('%', name, '%')", params[:contents] ).first
+    @result = Slang.where("? LIKE CONCAT('%', name, '%')", params[:contents].gsub(/\s/, '')).first
 		respond_to do |format|
 			format.json
 		end
