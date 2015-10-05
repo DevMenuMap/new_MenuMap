@@ -508,15 +508,20 @@ nav.pagination {
 	}
 	.right {
 		float: right;
-		margin: 5px 10px 0;
+		margin: 5px 0 0;
 		a {
+			padding: 3px;
+			border: 1px solid;
+			border-radius: 2px;
+			font-family: 'Ubuntu';
+			font-weight: bold;
 			color: #333;
 			&:active, &:focus, &:hover {
 				text-decoration: none;
 				outline: none;
 			}
 		}
-		div {
+		> div {
 			margin: 5px 0;
 		}
 	}
