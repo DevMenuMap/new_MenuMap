@@ -974,3 +974,18 @@ a.MultiFile-remove {
 		height: 100%;
 	}
 }
+
+/* mymaps#index */
+#mymap_index_title {
+	margin: 10px 0;
+	font-size: 14px;
+	img {
+		margin-right: 10px;
+	}
+	> a {
+		float: right;
+		text-decoration: none;
+		color: $facebook_link_blue;
+		line-height: 2.8;
+	}
+}
