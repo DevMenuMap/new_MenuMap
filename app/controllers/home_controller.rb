@@ -39,8 +39,8 @@ class HomeController < ApplicationController
 	end
 
 	def validate_slangs
-		contents = params[:comment][:contents]
-    @result = Slang.where("? LIKE CONCAT('%', name, '%')", contents.gsub(/\s/, '')).first
+		target = params[:comment] || params[:mymap]
+    @result = Slang.where("? LIKE CONCAT('%', name, '%')", target[:contents].gsub(/\s/, '')).first
 		respond_to do |format|
 			format.json { render json: !@result.present? }
 		end
