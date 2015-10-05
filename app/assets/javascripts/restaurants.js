@@ -1,3 +1,22 @@
+function hidePaginateButton(total, current) {
+	if ( total >= 6 ) {
+		// First page 
+		if ( current == 4 ) {
+			$('a[rel="start"]').hide();
+		} else {
+			$('a[rel="start"]').show();
+		};
+
+		// Last page
+		if ( current == total - 3 ) {
+			$("a:contains('" + total + "')").hide();
+		} else {
+			$("a:contains('" + total + "')").show();
+		};
+	};
+};
+
+
 $(document).on('ready page:load', function() {
 	$("#carousel .item:first-of-type").addClass("active");
 
