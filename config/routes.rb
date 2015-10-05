@@ -92,7 +92,7 @@ Rails.application.routes.draw do
 	resources :addr_rules, except: [:edit, :update]
 
 	resources :slangs
-	get "home/slang"
+	get "home/validate_slangs"
 
 	# User specific routes
 	# 'resources :users' needs just for nesting.
