@@ -14,5 +14,6 @@
 	$(document).ready( function() {
 		loadNaverMap(false, false);
 		hidePaginateButton(<%= @restaurants.total_pages %>, <%= @restaurants.current_page %>);
+		showStarRating();
 	});
 </script>

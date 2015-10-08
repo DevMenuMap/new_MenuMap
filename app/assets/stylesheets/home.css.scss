@@ -474,6 +474,41 @@ nav.pagination {
 	margin: 0;
 }
 
+.mymap {
+	clear: right;
+	a[data-toggle=collapse] {
+		&:active, &:focus, &:hover {
+			text-decoration: none;
+		}
+		div {
+			padding: 10px 0 0;
+			text-align: right;
+			color: $facebook_link_blue;
+			font-size: 11px;
+		}
+	}
+	.panel-collapse {
+		padding: 10px 10px 0;
+		.img {
+			float: left;
+		}
+	}
+	.right {
+		float: left;
+		margin-left: 10px;
+		padding-top: 2px;
+		font-size: 85%;
+	}
+	.star_rating_form img {
+		width: 14px;
+		vertical-align: baseline;
+	}
+	.contents {
+		clear: both;
+		padding-top: 8px;
+	}
+}
+
 /* restaurants#show */
 #rst_show_top_img {
 	width: 100%;

@@ -26,6 +26,8 @@
 		</div>
 		<div id="naver_map" style="margin: 0 -15px 0;"></div>
 
+		<%= render partial: 'restaurants/show', collection: @restaurants, as: :restaurant %>
+
 		<%= link_to "share MyMap", new_user_mymap_snapshot_path(@user), id: "share_mymap_button", remote: true, data: {toggle: "modal", target: "#myModal"} %>
 
 	</div>
