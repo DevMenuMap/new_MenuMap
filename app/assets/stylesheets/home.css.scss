@@ -1002,6 +1002,59 @@ a.MultiFile-remove {
 	}
 }
 
+/* mymaps#new modal */
+#myModal {
+	form#new_mymap {
+		> img {
+			width: 120px;
+			height: 80px;
+			float: left;
+		}
+		.right {
+			float: left;
+			padding: 10px;
+			line-height: 2;
+		}
+		.col-xs-8 {
+			padding-left: 25px;
+		}
+	}
+}
+
+#new_mymap {
+	.icon {
+		width: 50px;
+		height: 30px;
+	}
+}
+
+@media (min-width: 992px) {
+	#myModal {
+		form#new_mymap {
+			> img {
+				width: 160px;
+				height: 120px;
+			}
+			.right {
+				font-size: 18px;
+			}
+			.col-xs-8 {
+				padding: 0;
+				text-align: center;
+			}
+			label[for=mymap_group] {
+				display: none;
+			}
+			label[for=mymap_group_1] {
+				margin-bottom: 10px;
+			}
+			.icon {
+				width: 10%;
+			}
+		}
+	}
+}
+
 /* mymaps#show modal */
 #myModal {
 	div.rst_img img {

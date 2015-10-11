@@ -59,7 +59,7 @@ module RestaurantsHelper
 		if picture = restaurant.pictures.first 
 			image_tag picture.img.url(:small), alt: "#{restaurant.name} 사진", class: "thumbnail"
 		else 
-			image_tag "restaurants/picture_add_icon.svg", alt: "현재 등록된 사진이 없습니다.", class: "thumbnail", style: "padding: 20px;"
+			image_tag "restaurants/picture_add_icon.svg", alt: "#{restaurant.name} 사진 미등록", class: "thumbnail", style: "padding: 20px;"
 		end 
 	end
 
