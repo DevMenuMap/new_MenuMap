@@ -1004,7 +1004,7 @@ a.MultiFile-remove {
 
 /* mymaps#new modal */
 #myModal {
-	form#new_mymap {
+	form#new_mymap, form.edit_mymap {
 		> img {
 			width: 120px;
 			height: 80px;
@@ -1018,19 +1018,16 @@ a.MultiFile-remove {
 		.col-xs-8 {
 			padding-left: 25px;
 		}
-	}
-}
-
-#new_mymap {
-	.icon {
-		width: 50px;
-		height: 30px;
+		.icon {
+			width: 50px;
+			height: 30px;
+		}
 	}
 }
 
 @media (min-width: 992px) {
 	#myModal {
-		form#new_mymap {
+		form#new_mymap, form.edit_mymap {
 			> img {
 				width: 160px;
 				height: 120px;
