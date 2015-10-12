@@ -23,6 +23,10 @@ $facebook_link_blue: #5890ff;
 	border-top: 1px solid $grey_border-color;
 }
 
+.small_info {
+	font-size: 80%;
+}
+
 .grey_small_info {
 	font-size: 80%;
 	color: $grey_info_font;
@@ -237,14 +241,47 @@ footer {
 /* Map */
 .info_window {
 	background-color: white;
-	padding: 15px;
-	border-radius: 0 5px 5px 5px; 
+	padding: 8px;
+	border-radius: 5px;
+	width: 180px;
+	min-height: 55px;
+	> a {
+		&:active, &:focus, &:hover {
+			text-decoration: none;
+		}
+	}
 	.img {
-		width: 120px;
-		height: 90px;
+		float: left;
+		width: 40px;
+		height: 40px;
+		margin: 0 5px 0 0;
 		img {
 			width: 100%;
 			height: 100%;
+		}
+	}
+	span.name {
+		padding-left: 5px;
+		color: #333;
+	}
+	.star_rating {
+		margin: 5px 0 5px 45px;
+	}
+	.time {
+ 		margin-top: 5px; 
+		margin-left: 45px;
+	}
+	.contents {
+		clear: both;
+		color: #333;
+	}
+}
+
+@media (min-width: 992px) {
+	.info_window {
+		width: 200px;
+		.time {
+			font-size: 11px;
 		}
 	}
 }

@@ -1,17 +1,28 @@
 <div class="info_window">
-	<div class="img">
-		<%= restaurant_picture(@restaurant) %>
-	</div>
-	<div><%= restaurant_name_with_menu_on(@restaurant) %></div>
-	<div><%= time_in_ko(@mymap.updated_at) %></div>
-	<div class="star_rating" data-score=<%= @mymap.rating %>></div>
-	<div><%= @mymap.contents %></div>
-
-	<% if correct_user?(@mymap.user) %>
-		<div data-mymap-index="<%= @mymap.index_plus_one %>">
-			<%= link_to "삭제", mymap_path(@mymap), { class: "btn btn_cancel destroy_mymap", method: :delete, remote: true, data: { confirm: '해당 음식점을 MyMap에서 삭제하시겠습니까?' } } %>
-			<%= link_to "수정", edit_mymap_path(@mymap), { class: "btn btn_submit", remote: true, data: { toggle: 'modal', target: '#myModal' }, onclick: "$('.info_window').hide();" } %>
+	<%= link_to restaurant_path(@restaurant) do %>
+		<div class="img">
+			<%= restaurant_picture_on_map(@restaurant) %>
 		</div>
+		<div style="font-size: 12px;"><%= restaurant_name_with_menu_on(@restaurant) %></div>
+
+		<% if @mymap.contents.blank? && !(@mymap.rating > 0) %>
+			<div class="time small_info" style="color: #5890ff;"><%= time_in_ko(@mymap.updated_at) %> 등록</div>
+		<% elsif !(@mymap.rating > 0) %>
+			<div class="time grey_small_info"><%= time_in_ko(@mymap.updated_at) %> 등록</div>
+			<div class="contents" style="padding-top: 8px;"><%= @mymap.contents %></div>
+		<% else %>
+			<div class="star_rating" data-score=<%= @mymap.rating %>></div>
+			<div class="contents" style="padding-top: 8px;"><%= @mymap.contents %></div>
+		<% end %>
+
+		<!--
+		<#% if correct_user?(@mymap.user) %>
+			<div data-mymap-index="<#%= @mymap.index_plus_one %>">
+				<#%= link_to "삭제", mymap_path(@mymap), { class: "btn btn_cancel destroy_mymap", method: :delete, remote: true, data: { confirm: '해당 음식점을 MyMap에서 삭제하시겠습니까?' } } %>
+				<#%= link_to "수정", edit_mymap_path(@mymap), { class: "btn btn_submit", remote: true, data: { toggle: 'modal', target: '#myModal' }, onclick: "$('.info_window').hide();" } %>
+			</div>
+		<#% end %>
+		-->
 	<% end %>
 </div>
 
