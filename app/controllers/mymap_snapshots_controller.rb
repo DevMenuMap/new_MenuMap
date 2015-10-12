@@ -31,13 +31,9 @@ class MymapSnapshotsController < ApplicationController
 		@user = User.find(params[:user_id])
 		@mymaps = @user.mymaps
 
-		@lat = params[:lat]
-		@lng = params[:lng]
-		@level = params[:level]
-
-		@coord_array = []
-		@mymaps.each do |m|
-			@coord_array << m.restaurant.lat.to_f << m.restaurant.lng.to_f
+		respond_to do |format|
+			format.html
+			format.json
 		end
 	end
 
