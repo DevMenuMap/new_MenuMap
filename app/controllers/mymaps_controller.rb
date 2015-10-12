@@ -3,6 +3,7 @@ class MymapsController < ApplicationController
   def index
 		@user = User.find_by(username: params[:username])
 		@mymaps = @user.mymaps
+		@restaurants = @user.restaurants
 		
 		respond_to do |format|
 			format.html

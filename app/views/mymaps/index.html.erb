@@ -16,28 +16,17 @@
 	<% end %>
 <% end %>
 
-<div class="container">
+<div class="container" style="padding: 0;">
 	<div class="col-md-6 col-md-offset-3">
-		<h1><%= @user.username %>'s <span style="font-family: Ubuntu;">MyMap</span></h1>
+		<div id="mymap_index_title">
+			<%= profile_img(@user) %><%= @user.username %>
+			<% if correct_user?(@user) %>
+				<%= link_to '계정 설정', edit_user_registration_path(@user) %>
+			<% end %>
+		</div>
 		<div id="naver_map" style="margin: 0 -15px 0;"></div>
 
-		<table>
-			<tr>
-				<th>mymap_id</th>
-				<th>restaurant_id</th>
-				<th>restaurant_name</th>
-				<th>mymap_button</th>
-			</tr>
-
-			<% @mymaps.each do |mymap| %>
-				<tr>
-					<td><%= mymap.id %></td>
-					<td><%= mymap.restaurant.id %></td>
-					<td><%= mymap.restaurant.name %></td>
-					<td><%= show_mymap_info_button(mymap) %></td>
-				</tr>
-			<% end %>
-		</table>
+		<%= render partial: 'restaurants/show', collection: @restaurants, as: :restaurant %>
 
 		<%= link_to "share MyMap", new_user_mymap_snapshot_path(@user), id: "share_mymap_button", remote: true, data: {toggle: "modal", target: "#myModal"} %>
 
@@ -46,6 +35,6 @@
 
 <script>
 	$(document).ready(function(){ 
-		loadNaverMap(false, true);
+		loadNaverMap(false, true, 0.8);
 	});
 </script>

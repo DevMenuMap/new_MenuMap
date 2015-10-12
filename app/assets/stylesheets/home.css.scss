@@ -23,6 +23,10 @@ $facebook_link_blue: #5890ff;
 	border-top: 1px solid $grey_border-color;
 }
 
+.small_info {
+	font-size: 80%;
+}
+
 .grey_small_info {
 	font-size: 80%;
 	color: $grey_info_font;
@@ -237,14 +241,47 @@ footer {
 /* Map */
 .info_window {
 	background-color: white;
-	padding: 15px;
-	border-radius: 0 5px 5px 5px; 
+	padding: 8px;
+	border-radius: 5px;
+	width: 180px;
+	min-height: 55px;
+	> a {
+		&:active, &:focus, &:hover {
+			text-decoration: none;
+		}
+	}
 	.img {
-		width: 120px;
-		height: 90px;
+		float: left;
+		width: 40px;
+		height: 40px;
+		margin: 0 5px 0 0;
 		img {
 			width: 100%;
 			height: 100%;
+		}
+	}
+	span.name {
+		padding-left: 5px;
+		color: #333;
+	}
+	.star_rating {
+		margin: 5px 0 5px 45px;
+	}
+	.time {
+ 		margin-top: 5px; 
+		margin-left: 45px;
+	}
+	.contents {
+		clear: both;
+		color: #333;
+	}
+}
+
+@media (min-width: 992px) {
+	.info_window {
+		width: 200px;
+		.time {
+			font-size: 11px;
 		}
 	}
 }
@@ -474,6 +511,41 @@ nav.pagination {
 	margin: 0;
 }
 
+.mymap {
+	clear: right;
+	a[data-toggle=collapse] {
+		&:active, &:focus, &:hover {
+			text-decoration: none;
+		}
+		div {
+			padding: 10px 0 0;
+			text-align: right;
+			color: $facebook_link_blue;
+			font-size: 11px;
+		}
+	}
+	.panel-collapse {
+		padding: 10px 10px 0;
+		.img {
+			float: left;
+		}
+	}
+	.right {
+		float: left;
+		margin-left: 10px;
+		padding-top: 2px;
+		font-size: 85%;
+	}
+	.star_rating_form img {
+		width: 14px;
+		vertical-align: baseline;
+	}
+	.contents {
+		clear: both;
+		padding-top: 8px;
+	}
+}
+
 /* restaurants#show */
 #rst_show_top_img {
 	width: 100%;
@@ -508,15 +580,20 @@ nav.pagination {
 	}
 	.right {
 		float: right;
-		margin: 5px 10px 0;
+		margin: 5px 0 0;
 		a {
+			padding: 3px;
+			border: 1px solid;
+			border-radius: 2px;
+			font-family: 'Ubuntu';
+			font-weight: bold;
 			color: #333;
 			&:active, &:focus, &:hover {
 				text-decoration: none;
 				outline: none;
 			}
 		}
-		div {
+		> div {
 			margin: 5px 0;
 		}
 	}
@@ -962,10 +1039,91 @@ a.MultiFile-remove {
 	}
 }
 
+/* mymaps#new modal */
+#myModal {
+	form#new_mymap, form.edit_mymap, .show_mymap {
+		> img {
+			width: 120px;
+			height: 80px;
+			float: left;
+			margin-bottom: 10px
+		}
+		.right {
+			float: left;
+			padding: 10px;
+			line-height: 2;
+			span.name {
+				padding-left: 5px;
+			}
+		}
+		.col-xs-8 {
+			padding-left: 25px;
+		}
+		.icon {
+			width: 50px;
+			height: 30px;
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	#myModal {
+		form#new_mymap, form.edit_mymap, .show_mymap {
+			> img {
+				width: 160px;
+				height: 120px;
+			}
+			.right {
+				font-size: 18px;
+			}
+			.col-xs-8 {
+				padding: 0;
+				text-align: center;
+			}
+			label[for=mymap_group] {
+				display: none;
+			}
+			label[for=mymap_group_1] {
+				margin-bottom: 10px;
+			}
+			.icon {
+				width: 10%;
+			}
+		}
+	}
+}
+
 /* mymaps#show modal */
 #myModal {
-	div.rst_img img {
-		width: 100%;
-		height: 100%;
+	.show_mymap {
+		.contents {
+			clear: both;
+			padding: 5px 15px 15px;
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	#myModal {
+		.show_mymap {
+			.star_rating img {
+				width: 18px;
+			}
+		}
+	}
+}
+
+/* mymaps#index */
+#mymap_index_title {
+	margin: 10px 0;
+	font-size: 14px;
+	img {
+		margin-right: 10px;
+	}
+	> a {
+		float: right;
+		text-decoration: none;
+		color: $facebook_link_blue;
+		line-height: 2.8;
 	}
 }

@@ -11,13 +11,14 @@ var polygonCoords = [];
 
 /***** Map *****/
 // Info means if this map needs infoWindow(true) or labels(false).
-function loadNaverMap(level, info){
+function loadNaverMap(level, info, heightRatio){
 	var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
 	var defaultLevel = level || 10;
+	var heightRatio = heightRatio || 0.618
 
 	// Set map's width and heigth.
 	var deviceWidth = responsiveMapWidth();
-	var mapHeight = deviceWidth * 0.618;
+	var mapHeight = deviceWidth * heightRatio;
 
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
 																	point : defaultPoint,
@@ -251,8 +252,12 @@ function loadInfoWindow(data) {
 
 			infoWindow.setPoint(point);
 			infoWindow.setVisible(true);
-			infoWindow.setPosition({ right: 15, top: 30 });
+			infoWindow.setPosition({ right: 5, top: 10 });
 			infoWindow.autoPosition();
+			console.log(target.getPoint());
+			oMap.setCenter(target.getPoint());
+			console.log(target.getPoint());
+			console.log(oMap.getCenter());
 			return;
 		}
 	});

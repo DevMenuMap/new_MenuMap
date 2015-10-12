@@ -17,3 +17,20 @@ function updateMymapIcon(index, group) {
 		$('.nmap_overlay_pane img:nth-of-type(1)').attr('src', groupIconPath(group));
 	};
 }
+
+function mymapValidation(target) {
+	$(target).validate({
+		rules: {
+			'mymap[contents]' : { 
+				maxlength: 255,
+				remote: { url: window.location.origin + '/home/validate_slangs' }
+			}
+		},
+		messages: {
+			'mymap[contents]' : { 
+				maxlength: '255자 이내로 적어주세요.',
+				remote: '욕설이 들어갈 수 없습니다.'
+			}
+		}
+	});
+};

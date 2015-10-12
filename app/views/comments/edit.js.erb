@@ -10,6 +10,4 @@ autocompleteMenus("#comment_<%= @comment.id %> .menu_comments_tag");
 	$("#comment_<%= @comment.id %> .menu_comments_tag").tagit('createTag', "#<%= menu.name %>")
 <% end %>
 
-disableCommentPaste("#comment_<%= @comment.id %> #comment_contents");
 commentContentsValidation("#edit_comment_<%= @comment.id %>");
-slangCheck("#edit_comment_<%= @comment.id %>", "#edit_comment_<%= @comment.id %> #comment_contents")

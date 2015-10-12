@@ -1,23 +1,25 @@
-<div class="rst_img" style="width: 120px; height: 90px; float: left;">
+<div class="show_mymap" %>
 	<%= restaurant_picture(@restaurant) %>
-</div>
 
-<div><%= restaurant_name_with_menu_on(@restaurant) %></div>
-
-<% if @mymap.rating != 0 %>
-	<div class="star_rating" data-score=<%= @mymap.rating %>></div>
-<% end %>
-
-<% if @mymap.contents.blank? %>
-	<div style="color: #5890ff; clear: both;">
-		MyMap 한줄평이 없습니다.
+	<div class="right">
+		<div><%= restaurant_name_with_menu_on(@restaurant) %></div>
+		<% if @mymap.rating > 0 %>
+			<div class="star_rating" data-score=<%= @mymap.rating %>></div>
+		<% else %>
+			<div class="grey_small_info"><%= time_in_ko(@mymap.updated_at) %> 작성</div>
+		<% end %>
 	</div>
-<% else %>
-	<div style="clear: both;"><%= @mymap.contents %></div>
-<% end %>
-<div style="float: right;"><%= time_in_ko(@mymap.updated_at) %> 작성</div>
 
-<div class="modal-footer" style="padding: 10px 0 0; clear: both;">
-	<%= link_to "삭제", mymap_path(@mymap), { class: "btn btn_cancel", method: :delete, remote: true, data: {dismiss: "modal"} } %>
-	<%= link_to "수정", edit_mymap_path(@mymap), class: "btn btn_submit", remote: true %>
+	<% if @mymap.contents.blank? %>
+		<div style="color: #5890ff; clear: both; text-align: center; margin-bottom: 10px;">
+			<span style="font-family: Ubuntu;">MyMap</span> 한줄평이 없습니다.
+		</div>
+	<% else %>
+		<div class="contents"><%= simple_format @mymap.contents %></div>
+	<% end %>
+
+	<div class="modal-footer" style="padding: 10px 0 0; clear: both;">
+		<%= link_to "삭제", mymap_path(@mymap), { class: "btn btn_cancel", method: :delete, remote: true, data: {dismiss: "modal"} } %>
+		<%= link_to "수정", edit_mymap_path(@mymap), class: "btn btn_submit", remote: true %>
+	</div>
 </div>

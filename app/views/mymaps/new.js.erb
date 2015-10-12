@@ -1,7 +1,5 @@
-$('.modal-title').html("<%= @restaurant.name %> MyMap 등록");
+$('.modal-title').html("<span class='left_border_label' style='border-color: #ea4c15; font-family: Ubuntu;'>MyMap</span> 등록");
 $('.modal-body').html("<%= j(render partial: 'mymaps/new') %>");
 
-$('.modal-title').addClass('left_border_label');
-$('.modal-title').css('border-color', '#ea4c15');
-
 starRatingForm('mymap');
+mymapValidation('#new_mymap');

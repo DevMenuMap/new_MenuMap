@@ -1,5 +1,5 @@
 <%= form_for @mymap, remote: true do |f| %>
-	<%= render "field", f: f %>
+	<%= render "field", f: f, restaurant: @mymap.restaurant %>
 
 	<div class="modal-footer" style="padding: 10px 0 0;">
 		<%= f.button "취소", class: "btn btn_cancel", data: { dismiss: "modal" } %>
