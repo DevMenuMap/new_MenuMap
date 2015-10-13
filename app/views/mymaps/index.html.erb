@@ -24,10 +24,10 @@
 				<%= link_to '계정 설정', edit_user_registration_path(@user) %>
 			<% end %>
 		</div>
+
 		<div id="naver_map" style="margin: 0 -15px 0;"></div>
 
-		<%= link_to "share MyMap", new_user_mymap_snapshot_path(@user), id: "share_mymap_button", remote: true, data: {toggle: "modal", target: "#myModal"} %>
-
+		<%= link_to 'share gogogo', user_mymap_snapshot_path(@user), method: :post %>
 		<%= render partial: 'restaurants/show', collection: @restaurants, as: :restaurant %>
 
 	</div>

@@ -9,22 +9,21 @@ class MymapSnapshotsController < ApplicationController
 	end
 
 	def create
-		user = User.find(params[:user_id])
-		lat = params[:lat]
-		lng = params[:lng]
-		level = params[:level]
-		Phantomjs.run("../new_MenuMap/lib/assets/javascripts/snapshot.js", lat, lng, level, user.username, user.id.to_s)
-		file_path = '/home/ec2-user/new_MenuMap/public/images/' + user.username + '_mymap_snapshot.png'
-		if user.mymap_snapshot.blank?
-			MymapSnapshot.create(:user => user, :snapshot => File.open(file_path))
+		@user = User.find(params[:user_id])
+
+		Phantomjs.run("../new_MenuMap/lib/assets/javascripts/snapshot.js", @user.id.to_s)
+		file_path = '/home/ec2-user/new_MenuMap/public/images/' + @user.id.to_s + '_mymap_snapshot.png'
+
+		if @user.mymap_snapshot.blank?
+			MymapSnapshot.create(user: @user, snapshot: File.open(file_path))
 		else
-			user.mymap_snapshot.update(:snapshot => File.open(file_path))
+			@user.mymap_snapshot.update(snapshot: File.open(file_path))
 		end
+
 		File.delete(file_path)
+		# request_to_fb(@user)
 
-		request_to_fb(user)
-
-		redirect_to mymap_index_url(user.username) 
+		redirect_to mymap_index_url(@user.username) 
 	end
 	
 	def show
