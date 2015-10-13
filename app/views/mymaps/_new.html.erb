@@ -1,5 +1,8 @@
-<h2>mymaps#new restaurant = <%= @restaurant.id %></h2>
-<%= form_for([@restaurant, @mymap], remote: true) do |f| %>
-	<%= render "mymaps/field", f: f %>
-	<%= f.submit %>
+<%= form_for [@restaurant, @mymap], remote: true do |f| %>
+	<%= render 'field', f: f, restaurant: @restaurant %>
+
+	<div class="modal-footer" style="padding: 10px 0 0;">
+		<%= f.button "취소", class: "btn btn_cancel", data: { dismiss: "modal" } %>
+		<%= f.button "등록", class: "btn btn_submit" %>
+	</div>
 <% end %>

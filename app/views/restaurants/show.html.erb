@@ -19,10 +19,8 @@
 				</div>
 
 				<div class="right">
-					<%= link_to share_rest_path(@restaurant), remote: true, data: { toggle: "modal", target: "#myModal" } do %>
-						<div><i class="fa fa-share-alt" style="margin-right: 5px;"></i>공유</div>
-					<% end %>
-					<div id="rst_show_map"><i class="fa fa-globe" style="margin-right: 5px;"></i>지도</div>
+					<div><%= mymap_button(current_user, @restaurant) %></div>
+					<div id="rst_show_map"><div style="margin: 12px 4px 0;"><i class="fa fa-globe" style="margin-right: 5px;"></i>지도</div></div>
 				</div>
 			</div>
 		</div>
@@ -87,10 +85,8 @@
 <% end %>
 
 <script>
-	$(document).ready( function() {
-		loadNaverMap(<%= @curr_lat %>, <%= @curr_lng %>, 9);
-		showMarkers([<%= @curr_lat %>, <%= @curr_lng %>], true, ["<%= @restaurant.name %>"]);  
-		toggleLabels();
+	$(document).on('ready page:load', function() {
+		loadNaverMap(false, false);
 
 		imageUploadValidate();
 

@@ -372,14 +372,13 @@ class Restaurant < ActiveRecord::Base
 		[legal_dong, admin_dong, title_addr_tags(n)].flatten.join(', ')
 	end
 
-	# Return gu and dong for this restaurant.
 	def short_addrs
-		addr.split(" ")[2]
+		addr.split(' ')[2]
 	end
 
-	# Restaurant name except ().
-	def short_name
-		remove_the_last_parenthesis_pair(name)
+	# Return gu and dong for this restaurant.
+	def gu_and_dong
+		addr.split(' ')[1..2].join(' ')
 	end
 
 	# Return legal_dong for this restaurant.
@@ -399,6 +398,11 @@ class Restaurant < ActiveRecord::Base
 		title = []
 		addresses.take(n).map{ |a| title << a.name.split(/\s-\s/)[0] }
 		title.join(', ')
+	end
+
+	# Restaurant name except ().
+	def short_name
+		remove_the_last_parenthesis_pair(name)
 	end
 
 	# If restaurant's address is changed, delete addr_code, addr_tags and

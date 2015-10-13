@@ -1,27 +1,25 @@
-<div id="star_rating_form" data-score=<%= @mymap.rating %>></div>
+<%= restaurant_picture(restaurant) %>
 
-<%= f.label :group %>
-<% 1.upto(9) do |n| %>
-	<label for="mymap_group_<%= n %>"> 
-		<%= image_tag "/images/mymaps/mymap_group_icon_#{n}.svg", id: "mymap_group_icon_#{n}", style: "height: 20px; width: 20px;" %> 
-		<%= f.radio_button :group, n %>
-	</label>
-<% end %>
+<div class="right">
+	<div><%= restaurant_name_with_menu_on(restaurant) %></div>
+	<div class="form-group">
+		<div class="star_rating_form" data-score=<%= @mymap.rating %>></div>
+	</div>
+</div>
 
-<%= f.label :contents %>
-<%= f.text_field :contents %>
+<div class="form-group" style="clear: both;">
+	<%= f.label :group, "아이콘 선택", class: "col-xs-4", style: "line-height: 6.5;" %>
+	<div class="col-xs-8 col-md-12">
+		<% 1.upto(9) do |n| %>
+			<label for="mymap_group_<%= n %>" class="icon"> 
+				<%= image_tag "/images/mymaps/mymap_group_icon_#{n}.svg", id: "mymap_group_icon_#{n}", style: "height: 20px; width: 20px;" %> 
+				<%= f.radio_button :group, n %>
+			</label>
+			<% if n % 3 == 0 && n != 9 %><br class="visible-xs-block" /><% end %>
+		<% end %>
+	</div>
+</div>
 
-<script>
-	$(document).ready( function() {
-		slangCheck("#new_mymap", "#mymap_contents");
-	});
-	$("#star_rating_form").raty({
-		path: "/images/star_rating/",
-		half: true,
-		scoreName: "mymap[rating]",
-		// In mymaps#edit, star rating should show for references.
-		score: function() {
-			return parseInt($(this).attr("data-score")) / 2;
-		}
-	});
-</script>
+<div class="form-group">
+	<%= f.text_area :contents, { class: "form-control", rows: 3, placeholder: "음식점에 대한 한줄평을 남겨주세요." } %>
+</div>

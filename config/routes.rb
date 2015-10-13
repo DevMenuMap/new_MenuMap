@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 	get "search"	=> "home#search"
 	get "home/update_subcategories"		# cascading select box 
 	get "home/addrcomplete"						# autocomplete for address text_field
+	get "home/info_window"						# infoWindow over map.
 
 	resources :notices, 			 except: [:index, :show]
 	resources :questions
@@ -91,12 +92,12 @@ Rails.application.routes.draw do
 	resources :addr_rules, except: [:edit, :update]
 
 	resources :slangs
-	get "home/slang"
+	get "home/validate_slangs"
 
 	# User specific routes
 	# 'resources :users' needs just for nesting.
 	resources :users, shallow: true do 
-		resource :mymap_snapshot
+		resource :mymap_snapshot, only: [:show, :create]
 	end
 
 	# MyMap :new, :create depends on restaurants.
@@ -104,15 +105,8 @@ Rails.application.routes.draw do
 
 	get '/users/:username/MyMap' => 'mymaps#index', as: :mymap_index
 	# Case insensitive redirection to users' MyMap page
-	get '/users/:username/myMap' => redirect('users/%{username}/MyMap')
-	get '/users/:username/Mymap' => redirect('users/%{username}/MyMap')
-	get '/users/:username/mymap' => redirect('users/%{username}/MyMap')
-
-	get '/users/:username/MyMap_list' => 'mymaps#list'
-	# Redirection to MyMap_list
-	get '/users/:username/mymap_list' => redirect('users/%{username}/MyMap_list')
-	get '/users/:username/Mymap_list' => redirect('users/%{username}/MyMap_list')
-	get '/users/:username/mymap_list' => redirect('users/%{username}/MyMap_list')
+	get '/users/:username/:mymap' => redirect('/users/%{username}/MyMap'), 
+																	 constraints: { mymap: /mymap/i }
 
 	scope module: 'admin' do
 		resources :monitors

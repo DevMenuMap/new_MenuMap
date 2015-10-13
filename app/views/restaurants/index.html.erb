@@ -2,27 +2,7 @@
 	<div class="col-md-6 col-md-offset-3">
 		<div id="naver_map" style="margin: 0 -15px 0;"></div>
 
-		<%= link_to "new restaurant", new_restaurant_path if admin_user? %>
-
-		<% @restaurants.each do |restaurant| %>
-			<%= link_to restaurant_path(restaurant), class: "rst_card_link" do %>
-				<div id="rst_<%= restaurant.id %>" class="rst_index_card">
-					<div class="rst_img">
-						<%= restaurant_picture(restaurant) %>
-					</div>
-
-					<div class="content">
-						<%= restaurant_name_with_menu_on(restaurant) %><br />
-						<span style="font-size: 0.8em;">
-							<%= gu_and_dong(restaurant) %> <%= delivery_possible_with_middot(restaurant) %><br />
-							<%= menus_or_category(restaurant) %>
-						</span>
-					</div>
-
-					<%= link_to "destroy", restaurant_path(restaurant), method: :delete if admin_user? %>
-				</div>
-			<% end %>
-		<% end %>
+		<%= render partial: 'show', collection: @restaurants, as: :restaurant %>
 		
 		<div style="text-align: center;">
 			<%= will_paginate @restaurants, :renderer => 'BootstrapPaginationHelper::LinkRenderer', :outer_window => -1, :inner_window => 2 %>
@@ -31,22 +11,9 @@
 </div>
 
 <script>
-	$(document).ready( function() {
-		loadNaverMap(<%= @center_x %>, <%= @center_y %>, <%= @level %>);
-		showMarkers(<%= @coord_array %>, true, <%= raw @names %>);
-		toggleLabels();
-		<% if @restaurants.total_pages >= 6 %>
-			<% if @restaurants.current_page == 4 %>
-				$('a[rel="start"]').hide()
-			<% else %>
-				$('a[rel="start"]').show()
-			<% end %>
-
-			<% if @restaurants.current_page == @restaurants.total_pages - 3 %>
-				$('a:contains("<%= @restaurants.total_pages %>")').hide()
-			<% else %>
-				$('a:contains("<%= @restaurants.total_pages %>")').show()
-			<% end %>
-		<% end %>
+	$(document).on('ready page:load', function() {
+		loadNaverMap(false, false);
+		hidePaginateButton(<%= @restaurants.total_pages %>, <%= @restaurants.current_page %>);
+		showStarRating();
 	});
 </script>

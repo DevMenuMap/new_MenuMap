@@ -31,7 +31,8 @@ class User < ActiveRecord::Base
 
 
 	### Validations
-	validates :username, presence: true, uniqueness: { case_sensitive: false },
+	validates :username, presence: true, 
+											 uniqueness: { case_sensitive: false },
 											 format: { with: USERNAME_FORMAT, message: '유저명은 한글, 영어, 숫자, -, _ 으로만 가능합니다.' }, 
 											 length: { maximum: 20 }
 	validates :email, format: { with: EMAIL_FORMAT, message: "이메일 형식이 잘못되었습니다." }
@@ -101,5 +102,13 @@ class User < ActiveRecord::Base
 
 	def find_mymap(restaurant)
 		mymaps.find_by(restaurant_id: restaurant.id)
+	end
+
+	def mymap_updated_at
+		mymaps.order(:updated_at).last.try(:updated_at)
+	end
+
+	def mymap_updated?
+		mymap_updated_at != mymap_snapshot.try(:updated_at)
 	end
 end

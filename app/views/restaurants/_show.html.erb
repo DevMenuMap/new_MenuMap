@@ -1,0 +1,20 @@
+<%= link_to restaurant_path(restaurant), class: "rst_card_link" do %>
+	<div class="rst_index_card">
+		<div id="rst_<%= restaurant.id %>">
+			<div class="rst_img">
+				<%= restaurant_picture(restaurant) %>
+			</div>
+
+			<div class="content">
+				<%= restaurant_name_with_menu_on(restaurant) %><br />
+				<span style="font-size: 0.8em;">
+					<%= gu_and_dong(restaurant) %> <%= delivery_possible_with_middot(restaurant) %><br />
+					<%= menus_or_category(restaurant) %>
+				</span>
+			</div>
+
+			<%= link_to "destroy", restaurant_path(restaurant), method: :delete if admin_user? %>
+		</div>
+		<%= render partial: 'mymaps/add_on', locals: { restaurant: restaurant } %>
+	</div>
+<% end %>

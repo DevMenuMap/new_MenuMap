@@ -1,5 +1,9 @@
-$("#new_mymap").bind("ajax:success", function() {
-	$("#mymap_button_<%= @restaurant.id %>").html("<%= j(mymap_button(@user, @restaurant)) %>");
-	$(".modal-title").html("Show MyMap");
-	$(".modal-body").html("<%= j(render "show") %>");
-});
+$("#flash").html("<%= j render "layouts/flash" %>");
+$('.modal-title').html("<span class='left_border_label' style='border-color: #ea4c15; font-family: Ubuntu;'>MyMap</span>");
+$(".modal-body").html("<%= j(render "show") %>");
+
+// Change MyMap button to show saved MyMap.
+$("#new_mymap_<%= @restaurant.id %>").replaceWith("<%= j(mymap_button(@user, @restaurant)) %>");
+
+showStarRating();
+updateMymapIcon(<%= @mymap.index_plus_one %>, <%= @mymap.group %>);

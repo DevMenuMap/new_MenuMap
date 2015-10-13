@@ -1,44 +1,35 @@
-<h1>Mymap#index</h1>
+<div class="container" style="padding: 0;">
+	<div class="col-md-6 col-md-offset-3">
 
-<%= render "shared/user_navigation" %>
+		<!-- User's image and username, link_to edit page -->
+		<div id="mymap_index_title">
+			<%= profile_img(@user) %>
+			<% if correct_user?(@user) %>
+				<div class="name truncate"><%= @user.username %></div>
+				<%= link_to '계정 설정', edit_user_registration_path(@user) %>
+			<% else %>
+				<div class="name wo truncate"><%= @user.username %></div>
+			<% end %>
+		</div>
 
-<% content_for :head do %>
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:site" content="@luke9407" />
-	<meta name="twitter:creator" content="@luke9407" />
-	<meta name="twitter:title" content="MenuMap" />
-	<meta name="twitter:description" content="MyMap" />
-	<% unless @user.mymap_snapshot.blank? %>
-		<meta name="twitter:image" content="<%= @user.mymap_snapshot.snapshot.url %>" />
-	<% end %>
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="MenuMap" />
-	<meta property="og:url" content="http://menumap.co.kr/users/<%= @user.username %>/MyMap" />
-	<meta property="og:description" content="MyMap" />
-	<% unless @user.mymap_snapshot.blank? %>
-		<meta property="og:image" content="<%= @user.mymap_snapshot.snapshot.url %>" />
-	<% end %>
-<% end %>
+		<!-- Naver Map for MyMap -->
+		<div id="naver_map" style="margin: 0 -15px 70px;"></div>
 
-<div id="naver_map"></div>
-
-<table>
-	<tr>
-		<th>mymap_id</th>
-		<th>restaurant_id</th>
-		<th>restaurant_name</th>
-		<th>mymap_button</th>
-	</tr>
-
-	<%= render @mymaps %>
-</table>
-
-<%= link_to "share MyMap", new_user_mymap_snapshot_path(@user), id: "share_mymap_button", remote: true, data: {toggle: "modal", target: "#myModal"} %>
+		<!-- MyMap list -->
+		<% if @user.mymaps.exists? %>
+			<%= render 'mymap_snapshots/share' %>
+			<%= render partial: 'restaurants/show', collection: @restaurants, as: :restaurant %>
+		<% else %>
+			<p class='mymap_index no_result'>
+				<span class="ubuntu">MyMap</span> 에 저장된 음식점이 없습니다.<br/>
+				자신만의 맛집을 검색해 <span class="ubuntu">MyMap</span> 에 추가해주세요.
+			</p>
+		<% end %>
+	</div>
+</div>
 
 <script>
-	$(document).ready(function(){ 
-		loadNaverMap(<%= @center_x %>, <%= @center_y %>, 8);
-		showGroupMarkers(<%= @coord_array %>, <%= @groups %>, <%= raw @names %>);
-		toggleLabels();
+	$(document).on('ready page:load', function(){ 
+		loadNaverMap(false, true, 0.8);
 	});
 </script>

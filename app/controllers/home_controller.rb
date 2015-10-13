@@ -38,10 +38,19 @@ class HomeController < ApplicationController
 		end
 	end
 
-	def slang
-    @result = Slang.where("? LIKE CONCAT('%', name, '%')", params[:contents] ).first
+	def validate_slangs
+		target = params[:comment] || params[:mymap]
+    @result = Slang.where("? LIKE CONCAT('%', name, '%')", target[:contents].gsub(/\s/, '')).first
 		respond_to do |format|
-			format.json
+			format.json { render json: !@result.present? }
+		end
+	end
+
+	def info_window
+		@restaurant = Restaurant.find(params[:id])
+		@mymap = Mymap.find(params[:mymap_id])
+		respond_to do |format|
+			format.js
 		end
 	end
 end

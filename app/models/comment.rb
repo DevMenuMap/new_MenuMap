@@ -26,7 +26,7 @@ class Comment < ActiveRecord::Base
 
   ### Instance methods
   def no_slang
-    if Slang.where("? LIKE CONCAT('%', name, '%')", contents).present?
+    if Slang.where("? LIKE CONCAT('%', name, '%')", contents.gsub(/\s/, '')).present?
       errors.add(:contents, "Slang")
     end
   end

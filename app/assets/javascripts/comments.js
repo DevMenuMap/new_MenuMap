@@ -8,11 +8,17 @@ function showStarRating() {
 };
 
 // Star rating input.
-function starRatingForm() {
+function starRatingForm(star) {
+	if ( star == 'mymap' ) {
+		var inputField = 'mymap[rating]';
+	} else {
+		var inputField = 'comment[rating]';
+	};
+
 	$(".star_rating_form").raty({
 		path: "/images/star_rating/",
 		half: true,
-		scoreName: "comment[rating]",
+		scoreName: inputField,
 		score: function() {
 			return parseInt($(this).attr("data-score")) / 2;
 		}
@@ -31,13 +37,15 @@ function commentContentsValidation(target) {
 		rules: {
 			'comment[contents]' : { 
 				required: true,
-				maxlength: 255
+				maxlength: 255,
+				remote: { url: window.location.origin + '/home/validate_slangs' }
 			}
 		},
 		messages: {
 			'comment[contents]' : { 
 				required: '댓글 내용을 적어주세요.',
-				maxlength: '255자 이내로 적어주세요.'
+				maxlength: '255자 이내로 적어주세요.',
+				remote: '욕설이 들어갈 수 없습니다.'
 			}
 		}
 	});
@@ -53,22 +61,6 @@ function autocompleteMenus(target) {
 			placeholderText: "#메뉴_이름_태그"
 		});
 	};
-};
-
-// Prevent Slangs.
-function slangCheck(formRoute, textRoute) {
-	$( formRoute ).on('submit', function(event) {
-		var url = window.location.origin + '/home/slang';
-		$.ajax({
-			url: url,
-			data: { contents: $( textRoute ).val() },
-			success: function( data ) {
-				if (data.status) {
-					alert("'" + josaChecker(data.slang, '은') + " 금지된 단어입니다.");
-				};
-			}
-		});
-	});
 };
 
 // Only logged in users can make comments.
@@ -94,9 +86,7 @@ $(document).on('ready page:load', function() {
 
 	// Comments#new
 	starRatingForm();
-	disableCommentPaste('#comment_contents');
 	commentContentsValidation('#new_comment');
 	autocompleteMenus('#new_comment .menu_comments_tag');
-	slangCheck("#new_comment", "#comment_contents")
 	loggedInUserComment();
 });

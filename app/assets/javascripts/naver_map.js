@@ -5,40 +5,171 @@ var polygons;
 /* latlng 여러개 저장을 위한 변수 */
 var k = 0
 
-/* 다각형 꼭지점 저장을 위한 변수 */
+/* 다각형 꼭지점 저장을 위한 변수 */ 
 var polygonCoords = [];
 
-function loadNaverMap(lat, lng, level){
-	if ( lat == 0 || lng == 0 || isNaN(lat) || isNaN(lng)){
-		lat = 37.48121;
-		lng = 126.952712;
-	};
-	if ( level == 0 || isNaN(level) ) {
-		level = 10;
-	};
-	var oCenter = new nhn.api.map.LatLng(lat, lng);
 
-	deviceWidth = responsiveMapWidth();
-	mapHeight = deviceWidth * 0.618
+/***** Map *****/
+// Info means if this map needs infoWindow(true) or labels(false).
+function loadNaverMap(level, info, heightRatio){
+	var defaultPoint = new nhn.api.map.LatLng(37.48121, 126.952712);
+	var defaultLevel = level || 10;
+	var heightRatio = heightRatio || 0.618
+
+	// Set map's width and heigth.
+	var deviceWidth = responsiveMapWidth();
+	var mapHeight = deviceWidth * heightRatio;
 
 	oMap = new nhn.api.map.Map(document.getElementById('naver_map'), { 
-																	point : oCenter,
-																	zoom : level,
-																	// move on map with mouse dragging
+																	point : defaultPoint,
+																	zoom : defaultLevel,
 																	enableDragPan : true,  
 																	enableWheelZoom : true,
 																	enableDblClickZoom : true,
 																	mapMode : 0,
-																	// activateTrafficMap : false,
-																	// activateBicycleMap : false,
 																	size : new nhn.api.map.Size(deviceWidth, mapHeight),
 																	minMaxLevel : [ 1, 14 ]
 														});
 
 	oMap.attach("contextmenu", drawPolygon);
+	mapAndMarkers(info);
 };
 
-// showLabels -> toggleLabels 20150810
+// Return responsive width of naver map for devices.
+function responsiveMapWidth() {
+	var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+	if (width > 1200) {
+		width = 585;
+	} else if (width > 992) {
+		width = 970;
+	} else if (width > 768) {
+		width = 750;
+	}
+
+	return width;
+}
+
+
+/***** Marker *****/
+
+// Default Naver map icon
+var defaultNaverOffset = new nhn.api.map.Size(14, 37);
+var defaultNaverSize = new nhn.api.map.Size(28, 37);
+var defaultNaverIcon = new nhn.api.map.Icon("/images/mymaps/naver_map_icon.png", defaultNaverSize, defaultNaverOffset);
+
+// Default group icon
+var defaultGroupOffset = new nhn.api.map.Size(28, 28);
+var defaultGroupSize = new nhn.api.map.Size(18, 18);
+var defaultGroupIcon = new nhn.api.map.Icon("/images/mymaps/mymap_group_icon_default.svg", defaultGroupSize, defaultGroupOffset);
+
+
+// Show MyMap's group markers and set center of those markers.
+function mapAndMarkers(info) {
+	if ( window.location.href.match(/.*\/restaurants\?/) ) {
+		var jsonUrl = window.location.href.replace('/restaurants?', '/restaurants.json?');
+	} else {
+		var jsonUrl = window.location.href + '.json';
+	}
+
+	$.getJSON( jsonUrl )
+		.done( function(data) {
+			displayMarkers(data);
+			setMapCenter(data);
+			setMapLevel(data);
+
+			// If info is true, infoWindows will appear on the map.
+			// If not, labels will do.
+			if ( info ) {
+				loadInfoWindow(data);
+			} else {
+				toggleLabels();
+			};
+	});
+}
+
+// Attach group icon markers to map.
+function displayMarkers(data) {
+	$.each( data.restaurants, function( index, restaurant ) {
+		if ( restaurant.mymap.group > 0 ) {
+			oOffset = new nhn.api.map.Size(28, 28);
+			oSize = new nhn.api.map.Size(28, 28);
+			oIcon = new nhn.api.map.Icon(groupIconPath(restaurant.mymap.group), oSize, oOffset);
+		} else if ( restaurant.mymap.group == 0 ) {
+			oIcon = defaultGroupIcon;
+		} else {
+			oIcon = defaultNaverIcon;
+		};
+
+		var oLatLng = new nhn.api.map.LatLng(restaurant.lat, restaurant.lng);
+		var marker = new nhn.api.map.Marker(oIcon, { 
+																					point: oLatLng,
+																					zIndex: index,
+																					title: restaurant.name
+																			 });
+
+		oMap.addOverlay(marker);
+	});
+}
+
+function groupIconPath(n) {
+	return '/images/mymaps/mymap_group_icon_' + n + '.svg'
+}
+
+// Get json data of mymap and set center of the map.
+function setMapCenter(data) {
+	var div = 0, lat_sum = 0, lng_sum = 0;
+	var snu_lat = 37.48121, snu_lng = 126.952712;
+
+	$.each( data.restaurants, function( i, restaurant ) {
+		div += 1;
+		lat_sum += parseFloat(restaurant.lat);
+		lng_sum += parseFloat(restaurant.lng);
+	});
+
+	lat = lat_sum/div || snu_lat;
+	lng = lng_sum/div || snu_lng;
+
+	var centerLatLng = new nhn.api.map.LatLng(lat, lng)
+	oMap.setCenter(centerLatLng);
+}
+
+// Get json data of mymap and set level for the map.
+function setMapLevel(data) {
+	var lat_max = 0, lat_min = 1000, lng_max = 0, lng_min = 1000;
+	var lat_range = 0, lng_range = 0, level;
+
+	$.each( data.restaurants, function( i, restaurant ) {
+		lat_max = Math.max(lat_max, restaurant.lat);
+		lat_min = Math.min(lat_min, restaurant.lat);
+		lng_max = Math.max(lng_max, restaurant.lng);
+		lng_min = Math.min(lng_min, restaurant.lng);
+	});
+
+	lat_range = lat_max - lat_min;
+	lng_range = lng_max - lng_min;
+
+	if ( lat_range > 0.28 || lng_range > 0.18 ) {
+		level = 5;
+	} else if ( lat_range > 0.15  || lng_range > 0.09  ) {
+	  level = 6;
+	} else if ( lat_range > 0.075 || lng_range > 0.04  ) {
+	  level = 7;
+	} else if ( lat_range > 0.035 || lng_range > 0.02  ) {
+	  level = 8;
+	} else if ( lat_range > 0.02  || lng_range > 0.013 ) {
+	  level = 9;
+	} else if ( lat_range > 0.01  || lng_range > 0.005 ) {
+	  level = 10;
+	} else {
+	  level = 11;
+	};
+	
+	oMap.setLevel(level);
+}
+
+
+/***** Label *****/
 function toggleLabels() {
 	var oLabel = new nhn.api.map.MarkerLabel();
 	var oMarker_new;
@@ -63,6 +194,92 @@ function toggleLabels() {
 		};
 	});
 };
+
+
+/***** InfoWindow *****/
+
+// Load infoWindow.
+function loadInfoWindow(data) {
+
+	// Create infoWindow.
+	var infoWindow = new nhn.api.map.InfoWindow();
+	infoWindow.setVisible(false);
+	oMap.addOverlay(infoWindow);
+	
+	// Create Label.
+	var markerLabel = new nhn.api.map.MarkerLabel();
+	oMap.addOverlay(markerLabel);
+
+	// Avoid label and infoWindow's collision.
+	infoWindow.attach('changeVisible', function(e) {
+		if ( e.visible ) {
+			markerLabel.setVisible(false);
+		}
+	});
+
+	// Show marker's label with mouse.
+	oMap.attach('mouseenter', function(e) {
+		var target = e.target;
+		if ( target instanceof nhn.api.map.Marker ) {
+			var marker = target;
+			markerLabel.setVisible(true, marker);
+		}
+	});
+
+	oMap.attach('mouseleave', function(e) {
+		var target = e.target;
+		if ( target instanceof nhn.api.map.Marker ) {
+			markerLabel.setVisible(false);
+		}
+	});
+
+	// Show infoWindow on mouseclick.
+	oMap.attach('click', function(e) {
+		var point = e.point;
+		var target = e.target;
+		infoWindow.setVisible(false);
+
+		// When click marker.
+		if ( target instanceof nhn.api.map.Marker ) {
+
+			// When click the same marker.
+			if ( e.clickCoveredMarker ) { return; }
+			
+			var index = target.getZIndex();
+			infoWindow.setContent("<div id='info_window_" + data.restaurants[index].id + "'></div>");
+			// Ajax
+			infoWindowContents(index, data);
+
+			infoWindow.setPoint(point);
+			infoWindow.setVisible(true);
+			infoWindow.setPosition({ right: 5, top: 10 });
+			infoWindow.autoPosition();
+			oMap.setCenter(target.getPoint());
+			return;
+		}
+	});
+}
+
+// Ajax call for infoWindow's contents
+function infoWindowContents(index, data) {
+	var restaurant = data.restaurants[index];
+	var mymap = data.restaurants[index].mymap;
+
+	$.ajax({
+		type: 'GET',
+		url: '/home/info_window',
+		data: {
+			id: 				restaurant.id,
+			mymap_id: 	mymap.id
+		}
+	});
+}
+
+
+
+
+/*********************************************/
+
 
 // Set marker on mouse click ( new_addr_rule )
 function setMarker(event) {
@@ -197,18 +414,3 @@ function showGroupMarkers(coordArray, groups, names) {
 		showPolygon.push(oLatLng);
 	};
 };
-
-// Return responsive width of naver map for devices.
-function responsiveMapWidth() {
-	var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-
-	if (width > 1200) {
-		width = 585;
-	} else if (width > 992) {
-		width = 970;
-	} else if (width > 768) {
-		width = 750;
-	}
-
-	return width;
-}
