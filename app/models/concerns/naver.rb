@@ -7,7 +7,7 @@ module Naver
 	if Rails.env.development?
 		MAP_KEY_JB = '494b7876f12b30bd0486f5198f02c2f7'
 	elsif Rails.env.production?
-		MAP_KEY_JB = '984b61b8ce2e249ac2ad09436df81845'
+		MAP_KEY_JB = 'ebe0cc444a4bab8aa6003cb9baf35292'
 	end
 	SEARCH_KEY  = '813b2e5e653326da6ff7d7114acf8748'
 	# Filtering
