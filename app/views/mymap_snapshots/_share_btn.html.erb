@@ -1,0 +1,9 @@
+<div id="mymap_fb_share">
+	<% if correct_user?(@user) %>
+		<% if @user.mymap_updated? %>
+			<%= link_to 'facebook 공유하기', user_mymap_snapshot_path(@user), method: :post, remote: true %>
+		<% else %>
+			<%= link_to 'facebook 공유하기', fb_share_url(@user) %>
+		<% end %>
+	<% end %>
+</div>

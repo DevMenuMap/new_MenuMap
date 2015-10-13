@@ -5,7 +5,7 @@
 	<meta property="og:site_name" content="MenuMap" />
 
 	<meta property="og:title" content="<%= @user.username %>님의 맛집 지도 || MenuMap" />
-	<meta property="og:url" content="http://menumap.co.kr/users/<%= @user.username %>/MyMap" />
+	<meta property="og:url" content="<%= fb_meta_url(@user) %>" />
 	<meta property="og:description" content="<%= fb_meta_description(@user) %>" />
 
 	<% unless @user.mymap_snapshot.blank? %>
@@ -16,6 +16,4 @@
 <% end %>
 
 <!-- Share button for Facebook -->
-<% if correct_user?(@user) %>
-	<%= link_to 'facebook 공유하기', user_mymap_snapshot_path(@user, update: @user.mymap_updated?), method: :post %>
-<% end %>
+<%= render 'mymap_snapshots/share_btn' %>

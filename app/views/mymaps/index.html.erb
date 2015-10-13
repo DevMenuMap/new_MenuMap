@@ -17,7 +17,7 @@
 
 		<!-- MyMap list -->
 		<% if @user.mymaps.exists? %>
-			<%= render partial: 'mymap_snapshots/share' %>
+			<%= render 'mymap_snapshots/share' %>
 			<%= render partial: 'restaurants/show', collection: @restaurants, as: :restaurant %>
 		<% else %>
 			<p class='mymap_index no_result'>

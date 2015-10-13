@@ -11,37 +11,36 @@ class MymapSnapshotsController < ApplicationController
 		end
 	end
 
+	# Only when user updated his MyMap, create a new MyMap screenshot.
 	def create
 		@user = User.find(params[:user_id])
 
-		# If user updated mymap, params is true.
-		if params[:update] == 'true'
-			Phantomjs.run('../new_MenuMap/lib/assets/javascripts/snapshot.js', @user.id.to_s)
-			file_path = '/home/ec2-user/new_MenuMap/public/images/mymap_snapshots/' + @user.id.to_s + '_mymap_snapshot.png'
+		Phantomjs.run('../new_MenuMap/lib/assets/javascripts/snapshot.js', @user.id.to_s)
+		file_path = '/home/ec2-user/new_MenuMap/public/images/mymap_snapshots/' + @user.id.to_s + '_mymap_snapshot.png'
 
-			@snapshot = MymapSnapshot.find_or_initialize_by(user: @user)
-			@snapshot.update(snapshot: File.open(file_path),
-											 created_at: @user.mymap_updated_at,
-											 updated_at: @user.mymap_updated_at)
+		@snapshot = MymapSnapshot.find_or_initialize_by(user: @user)
+		@snapshot.update(snapshot: File.open(file_path),
+										 created_at: @user.mymap_updated_at,
+										 updated_at: @user.mymap_updated_at)
 
-			File.delete(file_path)
-			# request_to_fb
-		else
-			# Just send fb to get url	
+		File.delete(file_path)
+		request_fb_to_scrape
+
+		respond_to do |format|
+			format.js { render layout: false }
 		end
-
-		redirect_to mymap_index_url(@user.username) 
 	end
 	
 	private
-		def request_to_fb
-			fb_id = "http://menumap.co.kr/users/" + @user.username + "/MyMap"
+		# GET call for scraping this page again.
+		def request_fb_to_scrape
+			url = ENV['CURRENT_IP'] + "/users/#{@user.username}/MyMap"
 			uri = URI.parse("https://graph.facebook.com")
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
 
 			request = Net::HTTP::Post.new(uri.request_uri)
-			request.set_form_data({"id" => fb_id, "scrape" => "true"})
+			request.set_form_data({"id" => url, "scrape" => "true"})
 
 			response = http.request(request)
 		end
