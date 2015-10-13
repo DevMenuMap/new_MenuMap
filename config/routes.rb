@@ -97,7 +97,7 @@ Rails.application.routes.draw do
 	# User specific routes
 	# 'resources :users' needs just for nesting.
 	resources :users, shallow: true do 
-		resource :mymap_snapshot
+		resource :mymap_snapshot, only: [:show, :create]
 	end
 
 	# MyMap :new, :create depends on restaurants.

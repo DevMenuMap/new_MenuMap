@@ -1,0 +1,3 @@
+<% if correct_user?(@user) && @user.mymaps.exists? %>
+	<%= link_to 'facebook 공유하기', user_mymap_snapshot_path(@user, update: @user.mymap_updated?), method: :post %>
+<% end %>

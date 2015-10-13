@@ -27,7 +27,7 @@
 
 		<div id="naver_map" style="margin: 0 -15px 0;"></div>
 
-		<%= link_to 'share gogogo', user_mymap_snapshot_path(@user), method: :post %>
+		<%= render partial: 'mymap_snapshots/share' %>
 		<%= render partial: 'restaurants/show', collection: @restaurants, as: :restaurant %>
 
 	</div>
