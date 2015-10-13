@@ -8,10 +8,12 @@ class MymapSnapshot < ActiveRecord::Base
   end
 
 	has_attached_file :snapshot,
-										:processors => [:watermark],
-										:styles => {
-											:original => { :geometry => '800>', :watermark_path => "#{Rails.root}/public/images/watermark.png" }
-										},
+										# :processors => [:watermark],
+										# :styles => { 
+										# 	original: { 
+										# 		geometry: '800>', watermark_path: "#{Rails.root}/public/images/watermark.png" 
+										# 	} 
+										# },
 										:path   => '/mymap_snapshot/snapshot/:user_id/:style/:basename.:extension'
 
 	### Validations

@@ -254,10 +254,7 @@ function loadInfoWindow(data) {
 			infoWindow.setVisible(true);
 			infoWindow.setPosition({ right: 5, top: 10 });
 			infoWindow.autoPosition();
-			console.log(target.getPoint());
 			oMap.setCenter(target.getPoint());
-			console.log(target.getPoint());
-			console.log(oMap.getCenter());
 			return;
 		}
 	});

@@ -1,55 +1,46 @@
 class MymapSnapshotsController < ApplicationController
 	require 'phantomjs'
 
-	def new
-		@user = User.find(params[:user_id])		
-		respond_to do |format|
-			format.js
-		end
-	end
-
-	def create
-		user = User.find(params[:user_id])
-		lat = params[:lat]
-		lng = params[:lng]
-		level = params[:level]
-		Phantomjs.run("../new_MenuMap/lib/assets/javascripts/snapshot.js", lat, lng, level, user.username, user.id.to_s)
-		file_path = '/home/ec2-user/new_MenuMap/public/images/' + user.username + '_mymap_snapshot.png'
-		if user.mymap_snapshot.blank?
-			MymapSnapshot.create(:user => user, :snapshot => File.open(file_path))
-		else
-			user.mymap_snapshot.update(:snapshot => File.open(file_path))
-		end
-		File.delete(file_path)
-
-		request_to_fb(user)
-
-		redirect_to mymap_index_url(user.username) 
-	end
-	
 	def show
 		@user = User.find(params[:user_id])
 		@mymaps = @user.mymaps
 
-		@lat = params[:lat]
-		@lng = params[:lng]
-		@level = params[:level]
-
-		@coord_array = []
-		@mymaps.each do |m|
-			@coord_array << m.restaurant.lat.to_f << m.restaurant.lng.to_f
+		respond_to do |format|
+			format.html
+			format.json { render layout: false }
 		end
 	end
 
+	# Only when user updated his MyMap, create a new MyMap screenshot.
+	def create
+		@user = User.find(params[:user_id])
+
+		Phantomjs.run('../new_MenuMap/lib/assets/javascripts/snapshot.js', @user.id.to_s)
+		file_path = '/home/ec2-user/new_MenuMap/public/images/mymap_snapshots/' + @user.id.to_s + '_mymap_snapshot.png'
+
+		@snapshot = MymapSnapshot.find_or_initialize_by(user: @user)
+		@snapshot.update(snapshot: File.open(file_path),
+										 created_at: @user.mymap_updated_at,
+										 updated_at: @user.mymap_updated_at)
+
+		File.delete(file_path)
+		request_fb_to_scrape
+
+		respond_to do |format|
+			format.js { render layout: false }
+		end
+	end
+	
 	private
-		def request_to_fb(user)
-			fb_id = "http://menumap.co.kr/users/" + user.username + "/MyMap"
+		# GET call for scraping this page again.
+		def request_fb_to_scrape
+			url = ENV['CURRENT_IP'] + "/users/#{@user.username}/MyMap"
 			uri = URI.parse("https://graph.facebook.com")
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
 
 			request = Net::HTTP::Post.new(uri.request_uri)
-			request.set_form_data({"id" => fb_id, "scrape" => "true"})
+			request.set_form_data({"id" => url, "scrape" => "true"})
 
 			response = http.request(request)
 		end

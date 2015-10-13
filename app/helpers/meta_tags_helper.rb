@@ -19,8 +19,6 @@ module MetaTagsHelper
 		title += " || MenuMap 온라인 메뉴제공 서비스"				# MenuMap
 	end
 
-
-	### Meta Description tags
 	# Each restaurants#show page specific meta description
 	def restaurant_meta_description(restaurant)
 		description	 = "음식점 #{restaurant.name}("
@@ -44,5 +42,16 @@ module MetaTagsHelper
 		end
 
 		description
+	end
+
+	# Facebook
+	# Url for the link.
+	def fb_meta_url(user)
+		ENV['CURRENT_IP'] + "/users/#{user.username}/MyMap"
+	end
+
+	# Description for sharing web page on Facebook.
+	def fb_meta_description(user)
+		"#{user.username}님의 맛집 지도입니다. #{user.username}님이 추천하는 맛집 리스트와 평점이 있는 MyMap 페이지를 확인해보세요."
 	end
 end

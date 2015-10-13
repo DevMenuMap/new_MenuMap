@@ -103,4 +103,12 @@ class User < ActiveRecord::Base
 	def find_mymap(restaurant)
 		mymaps.find_by(restaurant_id: restaurant.id)
 	end
+
+	def mymap_updated_at
+		mymaps.order(:updated_at).last.try(:updated_at)
+	end
+
+	def mymap_updated?
+		mymap_updated_at != mymap_snapshot.try(:updated_at)
+	end
 end

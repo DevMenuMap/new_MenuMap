@@ -94,7 +94,7 @@
 </div>
 
 <script>
-	$(document).ready( function() {
+	$(document).on('ready page:load', function() {
 		imageUploadValidate();
 		$('#new_rest_register #rest_register_name').focus();
 	});
