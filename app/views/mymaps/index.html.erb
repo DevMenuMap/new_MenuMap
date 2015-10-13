@@ -1,15 +1,7 @@
-<% content_for :head do %>
-	<meta property="og:type" content="website" />
-	<meta property="og:title" content="MenuMap" />
-	<meta property="og:url" content="http://menumap.co.kr/users/<%= @user.username %>/MyMap" />
-	<meta property="og:description" content="MyMap" />
-	<% unless @user.mymap_snapshot.blank? %>
-		<meta property="og:image" content="<%= @user.mymap_snapshot.snapshot.url %>" />
-	<% end %>
-<% end %>
-
 <div class="container" style="padding: 0;">
 	<div class="col-md-6 col-md-offset-3">
+
+		<!-- User's image and username, link_to edit page -->
 		<div id="mymap_index_title">
 			<%= profile_img(@user) %>
 			<% if correct_user?(@user) %>
@@ -20,8 +12,10 @@
 			<% end %>
 		</div>
 
+		<!-- Naver Map for MyMap -->
 		<div id="naver_map" style="margin: 0 -15px 70px;"></div>
 
+		<!-- MyMap list -->
 		<% if @user.mymaps.exists? %>
 			<%= render partial: 'mymap_snapshots/share' %>
 			<%= render partial: 'restaurants/show', collection: @restaurants, as: :restaurant %>
@@ -31,7 +25,6 @@
 				자신만의 맛집을 검색해 <span class="ubuntu">MyMap</span> 에 추가해주세요.
 			</p>
 		<% end %>
-
 	</div>
 </div>
 

@@ -45,4 +45,17 @@ module MetaTagsHelper
 
 		description
 	end
+
+	# Description for sharing web page on Facebook.
+	def fb_meta_description(user)
+		if user.mymaps.blank?
+			"#{user.username}님의 맛집 지도 페이지입니다. 현재 #{user.username}님의 MyMap에 저장된 음식점이 없습니다."
+		else
+			desc = "#{user.username}님의 맛집 지도 페이지입니다. 현재 #{user.username}님의 MyMap에 저장된 음식점은 "
+			user.restaurants.limit(5).each do |restaurant|
+				desc += restaurant.gu_and_dong + ' ' + restaurant.name + ', '
+			end
+			desc.gsub(/\,\s$/,'') + '입니다.'
+		end
+	end
 end

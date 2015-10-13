@@ -1,3 +1,21 @@
+<!-- Open Graph tags for Facebook API -->
+<% content_for :head do %>
+	<meta property="fb:app_id" content="<%= ENV['FB_APP_ID'] %>" />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="MenuMap" />
+
+	<meta property="og:title" content="<%= @user.username %>님의 맛집 지도 || MenuMap" />
+	<meta property="og:url" content="http://menumap.co.kr/users/<%= @user.username %>/MyMap" />
+	<meta property="og:description" content="<%= fb_meta_description(@user) %>" />
+
+	<% unless @user.mymap_snapshot.blank? %>
+		<meta property="og:image" content="<%= @user.mymap_snapshot.snapshot.url %>" />
+		<meta property="og:image:width" content="970" />
+		<meta property="og:image:height" content="590" />
+	<% end %>
+<% end %>
+
+<!-- Share button for Facebook -->
 <% if correct_user?(@user) %>
 	<%= link_to 'facebook 공유하기', user_mymap_snapshot_path(@user, update: @user.mymap_updated?), method: :post %>
 <% end %>
