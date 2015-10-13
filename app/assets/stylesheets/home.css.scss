@@ -271,7 +271,7 @@ footer {
 		color: #333;
 	}
 	.star_rating {
-		margin: 5px 0 5px 45px;
+		margin: 0 0 5px 45px;
 	}
 	.time {
  		margin-top: 5px; 
@@ -1162,4 +1162,8 @@ p.mymap_index.no_result {
 		font-size: 16px;
 		padding-left: 15px;
 	}
+}
+
+#mymap_fb_share {
+	margin: -10px 0 5px;
 }

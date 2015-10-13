@@ -9,9 +9,11 @@
 			<div class="time small_info" style="color: #5890ff;"><%= time_in_ko(@mymap.updated_at) %> 등록</div>
 		<% elsif !(@mymap.rating > 0) %>
 			<div class="time grey_small_info"><%= time_in_ko(@mymap.updated_at) %> 등록</div>
-			<div class="contents" style="padding-top: 8px;"><%= @mymap.contents %></div>
 		<% else %>
 			<div class="star_rating" data-score=<%= @mymap.rating %>></div>
+		<% end %>
+		
+		<% if !@mymap.contents.blank? %>
 			<div class="contents" style="padding-top: 8px;"><%= @mymap.contents %></div>
 		<% end %>
 

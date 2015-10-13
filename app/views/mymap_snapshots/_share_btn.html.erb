@@ -1,9 +1,22 @@
 <div id="mymap_fb_share">
 	<% if correct_user?(@user) %>
 		<% if @user.mymap_updated? %>
-			<%= link_to 'facebook 공유하기', user_mymap_snapshot_path(@user), method: :post, remote: true %>
+			<%= link_to user_mymap_snapshot_path(@user), class: "btn btn-block btn-social btn-facebook", method: :post, remote: true do %>
+				<i class="fa fa-facebook"></i> 페이스북에 공유하기
+			<% end %>
 		<% else %>
-			<%= link_to 'facebook 공유하기', fb_share_url(@user) %>
+			<%= link_to fb_share_url(@user), class: "btn btn-block btn-social btn-facebook" do %>
+				<i class="fa fa-facebook"></i> 페이스북에 공유하기
+			<% end %>
 		<% end %>
 	<% end %>
 </div>
+
+<script>
+	$(document).on('ready page:load', function() {
+		$('#mymap_fb_share a[data-remote=true]').on('click', function() {
+			$(this).addClass('disabled');
+			$(this).html("<span style='font-family: Ubuntu;'>MyMap</span> 이미지 생성중...");
+		});
+	});	
+</script>
