@@ -5,4 +5,5 @@ $(".modal-body").html("<%= j(render "show") %>");
 // Change MyMap button to show saved MyMap.
 $("#new_mymap_<%= @restaurant.id %>").replaceWith("<%= j(mymap_button(@user, @restaurant)) %>");
 
+showStarRating();
 updateMymapIcon(<%= @mymap.index_plus_one %>, <%= @mymap.group %>);

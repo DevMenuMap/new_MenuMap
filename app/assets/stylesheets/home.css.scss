@@ -53,34 +53,10 @@ $facebook_link_blue: #5890ff;
 	}
 }
 
-table, th, td {
-	border: 1px solid black;
-}
-
-ul.tagit li.tagit-choice a.tagit-close .text-icon {
-	display: block;
-  text-decoration: none;
-  font-weight: bold;
-  margin-left: 2px;
-  line-height: 10px;
-}	
-
-html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
-	font-family: 'Noto Sans Korean', sans-serif;
-}
-
-legend {
-	font-size: 18px;
-}
-
-label {
-	font-weight: 500;
-}
-
-@media (min-width: 992px) {
-	h1, h4, label {
-		font-weight: 400;
-	}
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ubuntu {
@@ -159,6 +135,36 @@ label {
 
 .form-group label.error {
 	color: $facebook_link_blue;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+ul.tagit li.tagit-choice a.tagit-close .text-icon {
+	display: block;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 2px;
+  line-height: 10px;
+}	
+
+html, body, h1, h2, h3, h4, h5, h6, p, a, input, textarea, button {
+	font-family: 'Noto Sans Korean', sans-serif;
+}
+
+legend {
+	font-size: 18px;
+}
+
+label {
+	font-weight: 500;
+}
+
+@media (min-width: 992px) {
+	h1, h4, label {
+		font-weight: 400;
+	}
 }
 
 /* body */
@@ -1118,12 +1124,42 @@ a.MultiFile-remove {
 	margin: 10px 0;
 	font-size: 14px;
 	img {
-		margin-right: 10px;
+		float: left;
+		margin: 0 10px 10px 0;
+	}
+	.name {
+		float: left;
+		width: 220px;
+		margin-bottom: 10px;
+		line-height: 2.9;
+	}
+	.name.wo {
+		width: 280px;
 	}
 	> a {
 		float: right;
 		text-decoration: none;
 		color: $facebook_link_blue;
-		line-height: 2.8;
+		line-height: 2.9;
+	}
+}
+
+p.mymap_index.no_result {
+	@extend .left_border_label;
+	border-color: red;
+}
+
+@media (min-width: 992px) {
+	#mymap_index_title {
+		.name {
+			width: 420px;
+		}
+		.name.wo {
+			width: 500px;
+		}
+	}
+	p.mymap_index.no_result {
+		font-size: 16px;
+		padding-left: 15px;
 	}
 }

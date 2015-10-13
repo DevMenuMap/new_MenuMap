@@ -19,16 +19,26 @@
 <div class="container" style="padding: 0;">
 	<div class="col-md-6 col-md-offset-3">
 		<div id="mymap_index_title">
-			<%= profile_img(@user) %><%= @user.username %>
+			<%= profile_img(@user) %>
 			<% if correct_user?(@user) %>
+				<div class="name truncate"><%= @user.username %></div>
 				<%= link_to '계정 설정', edit_user_registration_path(@user) %>
+			<% else %>
+				<div class="name wo truncate"><%= @user.username %></div>
 			<% end %>
 		</div>
 
-		<div id="naver_map" style="margin: 0 -15px 0;"></div>
+		<div id="naver_map" style="margin: 0 -15px 70px;"></div>
 
-		<%= render partial: 'mymap_snapshots/share' %>
-		<%= render partial: 'restaurants/show', collection: @restaurants, as: :restaurant %>
+		<% if @user.mymaps.exists? %>
+			<%= render partial: 'mymap_snapshots/share' %>
+			<%= render partial: 'restaurants/show', collection: @restaurants, as: :restaurant %>
+		<% else %>
+			<p class='mymap_index no_result'>
+				<span class="ubuntu">MyMap</span> 에 저장된 음식점이 없습니다.<br/>
+				자신만의 맛집을 검색해 <span class="ubuntu">MyMap</span> 에 추가해주세요.
+			</p>
+		<% end %>
 
 	</div>
 </div>
