@@ -7,24 +7,24 @@ namespace :restaurants do
 			
 			# Default values.
 			row[0] = row[0].to_i		# restaurant_id
-			row[5] ||= false				# delivery
-			row[6] ||= 0						# menu_on
-			row[8] ||= true					# active
+			row[8]  ||= false				# delivery
+			row[9]  ||= 0						# menu_on
+			row[11] ||= true				# active
 
 			@restaurant = Restaurant.create(
 				id: row[0],
-				category_id: row[1],
-				subcategory_id: row[2],
-				name: row[3],
-				phnum: row[4],
-				delivery: row[5],
-				menu_on: row[6],
-				open_at: row[7],
-				active: row[8],
-				franchise_id: row[9],
+				category_id: row[2],
+				subcategory_id: row[4],
+				name: row[5],
+				phnum: row[7],
+				delivery: row[8],
+				menu_on: row[9],
+				open_at: row[10],
+				active: row[11],
+				franchise_id: row[12],
 				# These two columns are needed only for creation not update.
-				addr: row[10],
-				addr_code: row[11]
+				addr: row[15],
+				addr_code: row[16]
 			)
 
 			# Create an associated RestInfo.
@@ -58,20 +58,20 @@ namespace :restaurants do
 			
 			# Default values.
 			row[0] = row[0].to_i		# restaurant_id
-			row[5] ||= false				# delivery
-			row[6] ||= 0						# menu_on
-			row[8] ||= true					# active
+			row[8]  ||= false				# delivery
+			row[9]  ||= 0						# menu_on
+			row[11] ||= true				# active
 
 			Restaurant.unscoped.find(row[0]).update(
-				category_id: row[1],
-				subcategory_id: row[2],
-				name: row[3],
-				phnum: row[4],
-				delivery: row[5],
-				menu_on: row[6],
-				open_at: row[7],
-				active: row[8],
-				franchise_id: row[9]
+				category_id: row[2],
+				subcategory_id: row[4],
+				name: row[5],
+				phnum: row[7],
+				delivery: row[8],
+				menu_on: row[9],
+				open_at: row[10],
+				active: row[11],
+				franchise_id: row[12],
 			)
 		end
 	end
