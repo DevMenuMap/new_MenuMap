@@ -11,7 +11,7 @@ namespace :restaurants do
 		# Start the task.
 		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
 			
-			# Default values
+			# Default values.
 			row[0] = row[0].to_i		# restaurant_id
 			row[5] ||= false				# delivery
 			row[6] ||= 0						# menu_on
@@ -36,48 +36,63 @@ namespace :menus do
   desc "Create menus"
   task :create, [:filename] => :environment do |t, args|
 
-		restaurant_id = [0, false]
-		franchise_id = 0
+		is_franchise  = false 
+		franchise_id 	= 0
+		restaurant_id = 0
 	
 		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
-			if !row[0].nil?
-				if row[0].to_i < 10**9
-					restaurant_id = [row[0].to_i, true]
-				else
-					restaurant_id[1] = false
+			
+			### restaurant_id || franchise_id
+			# Check if this row starts with the restaurant_id.
+			if row[0]
+				# Franchise
+				if row[0].to_i > 10**9
+					is_franchise = true
 					franchise_id = row[0].to_i
+				else
+					is_franchise 	= false
+					restaurant_id = row[0].to_i
 				end
 			end
 
-			if !row[1].nil?
-				if restaurant_id[1]
-					Restaurant.unscoped.find(restaurant_id[0]).menu_titles.create(
-						title_name: row[1],
-						title_info: row[2]
-					)
-				else
-					Restaurant.unscoped.where(franchise_id: franchise_id).each do |r|
+			### MenuTitle
+			if row[1]
+				if is_franchise
+					Restaurant.where(franchise_id: franchise_id).each do |r|
 						r.menu_titles.create(
 							title_name: row[1],
 							title_info: row[2]
 						)
+						r.update(menu_on: 1)
 					end
+				else
+					restaurant = Restaurant.find(restaurant_id)
+					restaurant.menu_titles.create(
+						title_name: row[1],
+						title_info: row[2]
+					)
+					restaurant.update(menu_on: 1)
 				end
 			end
 
-			if restaurant_id[1]
-				Restaurant.unscoped.find(restaurant_id[0]).menu_titles.last.menus.create(
-					name: row[3],
-					side_info: row[4],
-					price: row[5],
-					info: row[6],
-					sitga: row[7],
-					unidentified: row[8],
-					best: 0,
-					user_id: 10**7
-				)
-			else
-				Restaurant.unscoped.where(franchise_id: franchise_id).each do |r|
+			### Menu
+			# Default values for menu.
+			row[4] = '(' + row[4] + ')' if row[4]		# side_info
+			row[5] = row[5].to_i * 100 	if row[5]		# price
+			row[7] ||= false												# sitga
+			row[8] ||= false												# unidentified
+
+			# If row[3] is blank, menu.name is the same with the last one.
+			if !row[3]
+				row[3] = if is_franchise
+					Restaurant.find_by_franchise_id(franchise_id).menus.last.name
+				else
+					Restaurant.find(restaurant_id).menus.last.name
+				end
+			end
+
+			if is_franchise
+				Restaurant.where(franchise_id: franchise_id).each do |r|
 					r.menu_titles.last.menus.create(
 						name: row[3],
 						side_info: row[4],
@@ -85,10 +100,23 @@ namespace :menus do
 						info: row[6],
 						sitga: row[7],
 						unidentified: row[8],
+						active: true,
 						best: 0,
 						user_id: 10**7
 					)
 				end
+			else
+				Restaurant.find(restaurant_id).menu_titles.last.menus.create(
+					name: row[3],
+					side_info: row[4],
+					price: row[5],
+					info: row[6],
+					sitga: row[7],
+					unidentified: row[8],
+					active: true,
+					best: 0,
+					user_id: 10**7
+				)
 			end
 		end
 	end
