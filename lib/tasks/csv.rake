@@ -1,6 +1,51 @@
 require 'csv'
 
 namespace :restaurants do
+	desc "Create a new restaurant"
+  task :create, [:filename] => :environment do |t, args|
+		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
+			
+			# Default values.
+			row[0] = row[0].to_i		# restaurant_id
+			row[5] ||= false				# delivery
+			row[6] ||= 0						# menu_on
+			row[8] ||= true					# active
+
+			@restaurant = Restaurant.create(
+				id: row[0],
+				category_id: row[1],
+				subcategory_id: row[2],
+				name: row[3],
+				phnum: row[4],
+				delivery: row[5],
+				menu_on: row[6],
+				open_at: row[7],
+				active: row[8],
+				franchise_id: row[9],
+				# These two columns are needed only for creation not update.
+				addr: row[10],
+				addr_code: row[11]
+			)
+
+			# Create an associated RestInfo.
+			RestInfo.create(
+				id: @restaurant.id,
+				restaurant_id: @restaurant.id,
+				active: true
+			)
+
+			# Save a Naver coordinate.
+			@restaurant.get_and_save_latlng
+		end
+
+		# Same task with addresses:save_addr_tags
+		Address.where("id > ?", Addressable::ADDR_TAG).find_each do |a|
+			if a.coordinates.present? && a.addr_bounds.present?
+				a.save_addr_tags
+			end
+		end
+	end
+
   desc "Update restaurants' info"
   task :update, [:filename] => :environment do |t, args|
 
@@ -66,12 +111,12 @@ namespace :menus do
 						r.update(menu_on: 1)
 					end
 				else
-					restaurant = Restaurant.find(restaurant_id)
-					restaurant.menu_titles.create(
+					@restaurant = Restaurant.find(restaurant_id)
+					@restaurant.menu_titles.create(
 						title_name: row[1],
 						title_info: row[2]
 					)
-					restaurant.update(menu_on: 1)
+					@restaurant.update(menu_on: 1)
 				end
 			end
 
