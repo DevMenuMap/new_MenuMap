@@ -3,8 +3,21 @@ require 'csv'
 namespace :restaurants do
   desc "Update restaurants' info"
   task :update, [:filename] => :environment do |t, args|
+
+		# Initialzie a log file.
+		# logger = Logger.new File.new("log/tasks/rest_update.log", 'w')
+		# logger.progname = "restaurant_#{row[0]}"
+
+		# Start the task.
 		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
-			Restaurant.unscoped.find(row[0].to_i).update(
+			
+			# Default values
+			row[0] = row[0].to_i		# restaurant_id
+			row[5] ||= false				# delivery
+			row[6] ||= 0						# menu_on
+			row[8] ||= true					# active
+
+			Restaurant.unscoped.find(row[0]).update(
 				category_id: row[1],
 				subcategory_id: row[2],
 				name: row[3],
