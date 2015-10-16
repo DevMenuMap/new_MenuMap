@@ -40,4 +40,12 @@ module HomeHelper
 			I18n.l time, format: '%Y년 %-m월 %-d일 %p %l:%M'
 		end
 	end
+
+	def created_or_updated_at(object)
+		if object.created_at == object.updated_at
+			time_in_ko(object.updated_at) + ' 작성'
+		else
+			time_in_ko(object.updated_at) + ' 수정됨'
+		end
+	end
 end

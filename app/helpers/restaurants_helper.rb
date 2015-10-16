@@ -39,10 +39,8 @@ module RestaurantsHelper
 	end
 
 	# Puts string when delivery is possible.
-	def delivery_possible?(restaurant)
-		if restaurant.delivery
-			content_tag :span, "배달", class: "label label-info"
-		end
+	def delivery_possible?(object)
+		'배달 가능'	if object.delivery
 	end
 
 	def delivery_possible_with_middot(restaurant)
