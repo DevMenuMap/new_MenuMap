@@ -74,6 +74,8 @@ module RestaurantsHelper
 	end
 
 	def restaurant_link_with_name(id)
-		link_to Restaurant.find(id).name, restaurant_path(id)
+		if restaurant = Restaurant.find(id)
+			link_to restaurant.name, restaurant
+		end
 	end
 end
