@@ -1,21 +1,39 @@
 <h1>RestRegisters#index</h1>
 
-<table>
+<table class="admin">
 	<tr>
-		<% RestRegister.column_names.each do |column| %>
-			<th><%= column %></th>
-		<% end %>
+		<th>id</th>
+		<th>user</th>
+		<th>name</th>
+		<th>category</th>
+		<th>subcategory</th>
+		<th>addr</th>
+		<th>phnum</th>
+		<th>delivery</th>
+		<th>open_at</th>
+		<th>etc</th>
+		<th>updated_at</th>
 		<th></th>
 		<th></th>
 	</tr>
 
 	<% @rest_registers.each do |register| %>
 		<tr>
-			<% register.attributes.each_value do |value| %>
-				<td><%= value %></td>
-			<% end %>
+			<td><%= register.id %></td>
+			<td><%= user_email_or_link_to_user_mymap(register) %></td>
+			<td><%= register.name %></td>
+			<td><%= register.category.name %></td>
+			<td><%= register.subcategory.name %></td>
+			<td><%= register.addr %></td>
+			<td><%= register.phnum %></td>
+			<td><%= delivery_possible?(register) %></td>
+			<td><%= register.open_at %></td>
+			<td><%= simple_format register.etc %></td>
+			<td><%= created_or_updated_at(register) %></td>
 			<td><%= link_to "show", rest_register_path(register) %></td>
 			<td><%= link_to "destroy", rest_register_path(register), method: :delete %></td>
 		</tr>
 	<% end %>
 </table>
+
+<%= will_paginate @rest_registers %>

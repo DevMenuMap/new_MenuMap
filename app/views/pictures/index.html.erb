@@ -1,16 +1,27 @@
 <h1>Pictures#index</h1>
 
-<%= link_to "new picture", new_picture_path %>
+<table class="admin">
+	<tr>
+		<th>id</th>
+		<th>user</th>
+		<th>restaurant</th>
+		<th>image</th>
+		<th>created_at</th>
+		<th></th>
+		<th></th>
+	</tr>
 
-<% @pictures.each do |picture| %>
-	<br />
-	<%= picture.id %> |
-	<%= picture.imageable_id %> |
-	<%= picture.created_at %>
-	<br />
-	<%= image_tag picture.img.url %>
-	<br />
-	<%= link_to "edit", edit_picture_path(picture) %>
-	<%= link_to "delete", picture_path(picture), method: :delete %>
-	<br />
-<% end %>
+	<% @pictures.each do |picture| %>
+		<tr>
+			<td><%= picture.id %></td>
+			<td><%= link_to_user_mymap(picture.user_id) %></td>
+			<td><%= restaurant_link_with_name(picture.imageable_id) %></td>
+			<td><%= image_tag picture.img.url %></td>
+			<td><%= created_or_updated_at(picture) %></td>
+			<td><%= link_to "edit", edit_picture_path(picture) %></td>
+			<td><%= link_to "delete", picture_path(picture), method: :delete %></td>
+		</tr>
+	<% end %>
+</table>
+
+<%= will_paginate @pictures %>

@@ -1,5 +1,5 @@
 class RestErr < ActiveRecord::Base
-	# Associations
+	### Associations
   belongs_to :restaurant
 	belongs_to :user
 
@@ -8,9 +8,11 @@ class RestErr < ActiveRecord::Base
 	# Associated attributes
 	accepts_nested_attributes_for :pictures
 
-	# Validations
+
+	### Validations
 	validates :restaurant_id, presence: true
 
-	# Scopes
+
+	### Scopes
 	default_scope { where(active: true) }
 end

@@ -1,8 +1,8 @@
 class MenusController < ApplicationController
-	before_action :admin?, :except => [:create]
+	before_action :admin?, except: [:create]
 
 	def index
-		@menus = Menu.paginate(:page => params[:page], :per_page => 10)
+		@menus = Menu.paginate(page: params[:page]).order(id: :desc)
 	end
 
 	def create
@@ -40,20 +40,18 @@ class MenusController < ApplicationController
 	# GET /menus/:id/edit
 	def edit
 		@menu = Menu.find(params[:id])
-		redirect_to_restaurant_page
 	end
 
 	# PUT /menus/:id
 	def update
 		@menu = Menu.find(params[:id])
-
+		@menu.price = nil	unless params[:menu][:price]
 		if @menu.update(menu_params)
-			flash[:alert] = "Succeed menu#update"
+			flash[:success] = "Succeed menu#update"
 		else
-			flash[:alert] = "Fail menu#update"
+			flash[:danger] = "Fail menu#update"
 		end
-
-		redirect_to_restaurant_page
+		redirect_to menus_url
 	end
 
 	# PUT /menus/:id/cancel
@@ -64,17 +62,13 @@ class MenusController < ApplicationController
 
 	def destroy
 		@menu = Menu.find(params[:id])
-		@menu.update(active: false)
-		flash[:alert] = "Succeed menu#destroy"
-
-		if destroy_menu_title
-			respond_to do |format|
-				format.html { redirect_to restaurant_url(@menu_title.restaurant) }
-				format.js		{ render action: "destroy_menu_title", layout: false }
-			end
+		if @menu.update(active: false)
+			@menu.menu_comments.destoy_all if @menu.menu_comments.exists?
+			flash[:success] = "Succeed menus#destroy"
 		else
-			redirect_to_restaurant_page
+			flash[:danger] = "Fail menus#destroy"
 		end
+		redirect_to menus_url
 	end
 
 	private

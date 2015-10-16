@@ -1,14 +1,52 @@
 <h1>RestRegisters#show</h1>
 
-<table>
-	<% @rest_register.attributes.each do |key, value| %>
-		<tr>
-			<td><%= key %></td>
-			<td><%= value %></td>
-		</tr>
-	<% end %>
+<table class="admin">
+	<tr>
+		<td>id</td>
+		<td><%= @register.id %></td>
+	</tr>
+	<tr>
+		<td>user</td>
+		<td><%= user_email_or_link_to_user_mymap(@register) %></td>
+	</tr>
+	<tr>
+		<td>name</td>
+		<td><%= @register.name %></td>
+	</tr>
+	<tr>
+		<td>category</td>
+		<td><%= @register.category.name %></td>
+	</tr>
+	<tr>
+		<td>subcategory</td>
+		<td><%= @register.subcategory.name %></td>
+	</tr>
+	<tr>
+		<td>addr</td>
+		<td><%= @register.addr %></td>
+	</tr>
+	<tr>
+		<td>phnum</td>
+		<td><%= @register.phnum %></td>
+	</tr>
+	<tr>
+		<td>delivery</td>
+		<td><%= delivery_possible?(@register) %></td>
+	</tr>
+	<tr>
+		<td>open_at</td>
+		<td><%= @register.open_at %></td>
+	</tr>
+	<tr>
+		<td>etc</td>
+		<td><%= simple_format @register.etc %></td>
+	</tr>
+	<tr>
+		<td>updated_at</td>
+		<td><%= created_or_updated_at(@register) %></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><%= link_to "destroy", rest_register_path(@register), method: :delete %></td>
+	</tr>
 </table>
-
-<% @rest_register.pictures.each do |picture| %>
-	<%= custom_image_tag(@rest_register, picture) %>
-<% end %>

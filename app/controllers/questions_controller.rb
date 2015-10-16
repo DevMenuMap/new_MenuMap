@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
+	before_action :admin?, except: [:new, :create]
+
   def index
-		@questions = Question.all
+		@questions = Question.order(created_at: :desc).paginate(page: params[:page], per_page: 20)
   end
 
 	def new
@@ -21,30 +23,14 @@ class QuestionsController < ApplicationController
 		redirect_to qna_url
 	end
 
-  def edit
-		@question = Question.find(params[:id])
-  end
-
-	def update
-		@question = Question.find(params[:id])
-		if @question.update_attributes(question_params)
-			flash[:alert] = "succeed question#update"
-			redirect_to questions_url
-		else
-			flash[:alert] = "fail question#update"
-			redirect_to questions_url
-		end
-	end
-
 	def destroy
-		@question = Question.find(params[:id]).destroy
-		flash[:alert] = "succeed question#delete"
+		if Question.find(params[:id]).update(active: false)
+			flash[:success] = "succeed question#destroy"
+		else
+			flash[:danger] = "fail questions#destroy"
+		end
 		redirect_to questions_url
 	end
-
-  def show
-		@question = Question.find(params[:id])
-  end
 
 	private
 		def question_params

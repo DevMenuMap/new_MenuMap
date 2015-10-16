@@ -1,0 +1,49 @@
+<h1>Users#index</h1>
+
+<table class="admin">
+	<tr>
+		<th>id</th>
+		<th>username</th>
+		<th>email</th>
+		<th>sign_in</th>
+		<th>last_sign_in</th>
+		<th>facebook</th>
+		<th>updated_at</th>
+		<th>comments</th>
+		<th></th>
+		<th>mymaps</th>
+		<th></th>
+	</tr>
+
+	<% @users.each do |user| %>
+		<tr>
+			<td><%= user.id %></td>
+			<td><%= link_to_user_mymap(user.id) %></td>
+			<td><%= user.email %></td>
+			<td><%= user.sign_in_count %></td>
+			<td><%= time_in_ko(user.last_sign_in_at) %></td>
+			<td><%= 'v' if user.provider %></td>
+			<td><%= created_or_updated_at(user) %></td>
+			<td><%= user.comments.count %></td>
+			<td><%= time_ago_in_ko_longer_term(user.comments.first.try(:updated_at)) %></td>
+			<td><%= user.mymaps.count %></td>
+			<td><%= time_ago_in_ko_longer_term(user.mymap_updated_at) %></td>
+		</tr>
+	<% end %>
+
+	<% @deleted_users.each do |user| %>
+		<tr>
+			<td><%= user.id %></td>
+			<td style="color: red;"><%= user.username %></td>
+			<td><%= user.email %></td>
+			<td><%= user.sign_in_count %></td>
+			<td><%= time_in_ko(user.last_sign_in_at) %></td>
+			<td><%= 'v' if user.provider %></td>
+			<td><%= created_or_updated_at(user) %></td>
+			<td><%= user.comments.count %></td>
+			<td><%= time_ago_in_ko_longer_term(user.comments.first.try(:updated_at)) %></td>
+			<td><%= user.mymaps.count %></td>
+			<td><%= time_ago_in_ko_longer_term(user.mymap_updated_at) %></td>
+		</tr>
+	<% end %>
+</table>

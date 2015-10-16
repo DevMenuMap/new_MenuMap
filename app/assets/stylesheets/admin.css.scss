@@ -1,0 +1,16 @@
+/***** Admin *****/
+table.admin {
+	tr {
+		th, td {
+			min-width: 50px;
+			text-align: center;
+			padding: 5px;
+			img {
+				width: 500px;
+			}
+			&.star_rating img {
+				width: 14px;
+			}
+		}
+	}
+}

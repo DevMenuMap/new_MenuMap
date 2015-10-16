@@ -2,11 +2,11 @@ class RestRegistersController < ApplicationController
 	before_action :admin?, :except => [:new, :create]
 
   def index
-		@rest_registers = RestRegister.all
+		@rest_registers = RestRegister.order(id: :desc).paginate(page: params[:page], per_page: 10)
   end
 
   def show
-		@rest_register = RestRegister.find(params[:id])
+		@register = RestRegister.find(params[:id])
   end
 
   def new
@@ -28,9 +28,13 @@ class RestRegistersController < ApplicationController
 	end
 
 	def destroy
-		@rest_register = RestRegister.find(params[:id]).destroy
-		flash[:alert] = "succeed in rest_registers#destroy"
-		redirect_to :back
+		if RestRegister.find(params[:id]).update(active: false)
+			flash[:success] = "success rest_registers#destroy"
+		else 
+			flash[:danger] = "fail rest_registers#destroy"
+		end
+
+		redirect_to rest_registers_url
 	end
 
 	private
