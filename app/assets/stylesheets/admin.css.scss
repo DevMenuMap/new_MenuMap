@@ -8,6 +8,9 @@ table.admin {
 			img {
 				width: 500px;
 			}
+			&.star_rating img {
+				width: 14px;
+			}
 		}
 	}
 }

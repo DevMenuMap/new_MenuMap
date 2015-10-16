@@ -1,21 +1,33 @@
 <h1>Comment#index</h1>
 
-<table>
+<table class="admin">
 	<tr>
-		<% Comment.column_names.each do |column| %>
-			<th><%= column %></th>
-		<% end %>
-		<th></th>
+		<th>id</th>
+		<th>user</th>
+		<th>restaurant</th>
+		<th>rating</th>
+		<th>menu_comments</th>
+		<th>contents</th>
+		<th>updated_at</th>
 		<th></th>
 	</tr>
 
-	<% @comments.each do |title| %>
+	<% @comments.each do |comment| %>
 		<tr>
-			<% title.attributes.each_value do |value| %>
-				<td><%= value %></td>
+			<td><%= comment.id %></td>
+			<td><%= link_to_user_mymap(comment.user_id) %></td>
+			<td><%= restaurant_link_with_name(comment.restaurant_id) %></td>
+			<% if comment.rating && comment.rating > 0 %>
+				<td class="star_rating" data-score="<%= comment.rating %>"></td>
+			<% else %>
+				<td></td>
 			<% end %>
-			<td><%= link_to "edit", edit_comment_path(title) %></td>
-			<td><%= link_to "destroy", comment_path(title), method: :delete %></td>
+			<td><%= has_menu_comments?(comment) %></td>
+			<td><%= simple_format comment.contents %></td>
+			<td><%= created_or_updated_at(comment) %></td>
+			<td><%= link_to "destroy", comment_path(comment), method: :delete %></td>
 		</tr>
 	<% end %>
 </table>
+
+<%= will_paginate @comments %>
