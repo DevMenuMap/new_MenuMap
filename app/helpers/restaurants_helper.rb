@@ -19,13 +19,12 @@ module RestaurantsHelper
 	end
 
 	def menu_color(restaurant)
-		case restaurant.menu_on
-		when 1 
-			"orange"
-		when 0
-			"gray"
-		else
+		if restaurant.menu_on > 1
 			"#23b300"
+		elsif restaurant.menu_on > 0 
+			"orange"
+		else
+			"gray"
 		end
 	end
 
