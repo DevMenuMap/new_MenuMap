@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016004332) do
+ActiveRecord::Schema.define(version: 20151016042436) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -211,8 +211,9 @@ ActiveRecord::Schema.define(version: 20151016004332) do
     t.integer  "user_id",    limit: 4
     t.string   "email",      limit: 255
     t.text     "contents",   limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.boolean  "active",     limit: 1,     default: true
   end
 
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree

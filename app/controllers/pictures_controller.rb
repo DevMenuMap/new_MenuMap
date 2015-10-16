@@ -45,7 +45,7 @@ class PicturesController < ApplicationController
 		if Picture.find(params[:id]).update(active: false)
 			flash[:success] = "succeed pictures#destroy"
 		else
-			flash[:error] = "fail pictures#destroy"
+			flash[:danger] = "fail pictures#destroy"
 		end
 		redirect_to :back
 	end

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 	get "home/info_window"						# infoWindow over map.
 
 	resources :notices, 			 except: [:index, :show]
-	resources :questions
+	resources :questions, 		 except: [:show, :edit, :update]
 	resources :rest_registers, except: [:edit, :update]
 
 	# User & Admin with devise gem.
@@ -47,7 +47,7 @@ Rails.application.routes.draw do
 			end
 		end
 
-		resources :comments, 		 except: [:index] do
+		resources :comments, 		 except: [:index, :show, :new] do
 			# Show more comments in restaurants#show.
 			get 'more', on: :collection
 			# Show edit or delete link modal.
@@ -67,7 +67,7 @@ Rails.application.routes.draw do
 	get 'rest_errs' 	=> 'rest_errs#index', 	as: :rest_errs
 	get 'menu_titles' => 'menu_titles#index', as: :menu_titles
 	get 'menus'				=> 'menus#index', 			as: :menus
-	get 'comments' 		=> 'comments#index', 		as: :comments
+	resources :comments, only: [:index]
 
 	# Parsing foursquare images by Ajax loading.
 	get 'foursquares/parse' => 'foursquares#parse'

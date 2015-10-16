@@ -1,4 +1,5 @@
 class Question < ActiveRecord::Base
-	validates :contents, presence: true
 	belongs_to :user
+	validates :contents, presence: true
+	default_scope { where(active: true) }
 end
