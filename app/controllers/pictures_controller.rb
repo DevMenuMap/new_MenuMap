@@ -2,7 +2,7 @@ class PicturesController < ApplicationController
 	before_action :admin?, except: :create
 	
   def index
-		@pictures = Picture.all
+		@pictures = Picture.where("imageable_type = 'Restaurant'").order(id: :desc).paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -43,9 +43,9 @@ class PicturesController < ApplicationController
 
 	def destroy
 		if Picture.find(params[:id]).update(active: false)
-			flash[:alert] = "succeed pictures#destroy"
+			flash[:success] = "succeed pictures#destroy"
 		else
-			flash[:alert] = "fail pictures#destroy"
+			flash[:error] = "fail pictures#destroy"
 		end
 		redirect_to :back
 	end

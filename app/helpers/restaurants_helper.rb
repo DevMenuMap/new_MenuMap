@@ -72,4 +72,8 @@ module RestaurantsHelper
 	def no_img?(pictures)
 		pictures.blank? ? "block" : "none"
 	end
+
+	def restaurant_link_with_name(id)
+		link_to Restaurant.find(id).name, restaurant_path(id)
+	end
 end
