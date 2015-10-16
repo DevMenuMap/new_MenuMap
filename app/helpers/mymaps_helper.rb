@@ -19,7 +19,7 @@ module MymapsHelper
 		if user
 			link_to 'MyMap', new_restaurant_mymap_path(restaurant), id: "new_mymap_#{restaurant.id}", remote: true, data: { toggle: "modal", target: "#myModal" }, style: "color: #5890ff; border-color: #5890ff;"
 		else
-			link_to 'MyMap', "#", data: { confirm: "로그인이 필요합니다." }, style: "color: #ea4c15; border-color: #ea4c15;"
+			link_to 'MyMap', new_user_session_path, data: { confirm: "로그인이 필요합니다." }, style: "color: #ea4c15; border-color: #ea4c15;"
 		end
 	end
 end

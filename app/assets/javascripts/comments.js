@@ -63,16 +63,6 @@ function autocompleteMenus(target) {
 	};
 };
 
-// Only logged in users can make comments.
-function loggedInUserComment() {
-	$('#new_comment_section').on('click', function(e) {
-		if ( !($(this).find('#new_comment').data('user') > 0) ) {
-			alert('로그인을 해주세요.');
-			return false;
-		};
-	});
-};
-
 // Reset star rating and menu tags.
 function resetCommentsNew() {
 	starRatingForm();
@@ -88,5 +78,4 @@ $(document).on('ready page:load', function() {
 	starRatingForm();
 	commentContentsValidation('#new_comment');
 	autocompleteMenus('#new_comment .menu_comments_tag');
-	loggedInUserComment();
 });

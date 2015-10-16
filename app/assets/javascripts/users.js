@@ -1,4 +1,20 @@
+// Only logged in users can do.
+function needLogin() {
+	$('#new_comment_section').on('click', function(e) {
+		if ( !($(this).find('#new_comment').data('user') > 0) ) {
+			if ( confirm('로그인을 해주세요.') ) {
+				window.location.href = 'http://menumap.co.kr/users/sign_in';
+			} else {
+				return false;
+			};
+		};
+	});
+};
+
+
 $(document).on('ready page:load', function() {
+	needLogin();
+
 	// Username starts only with Korean or English.
 	$.validator.addMethod('usernameStart', function(value, element) {
 		return value.match(/^[a-zA-Z가-힣]/)
