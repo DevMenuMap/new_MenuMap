@@ -29,5 +29,5 @@ class Picture < ActiveRecord::Base
 
 
 	### Scopes
-	default_scope { where active: true }
+	default_scope { where(active: true) }
 end

@@ -33,7 +33,7 @@ class PicturesController < ApplicationController
 
 	def update
 		@picture = Picture.find(params[:id])
-		if @picture.update(picture_params)
+		if @picture.update(img: params[:picture][:img])
 			flash[:alert] = "succeed pictures#update"
 		else
 			flash[:alert] = "fail pictures#update"
