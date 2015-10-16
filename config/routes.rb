@@ -35,7 +35,7 @@ Rails.application.routes.draw do
 		resources :rest_errs, 	 except: [:index, :show, :edit]
 
 		resources :menu_titles,  except: [:index, :show, :new]
-		resources :menus, 		 	 except: [:index] do
+		resources :menus, 		 	 except: [:index, :show, :new] do
 			# Cancel the menu editing operation.
 			get 'cancel', on: :member
 
@@ -62,10 +62,10 @@ Rails.application.routes.draw do
 
 	# Index pages which is not bounded with :restaurants
 	resources :franchises
-	resources :rest_errs, only: [:index]
-	get 'menu_titles' => 'menu_titles#index', as: :menu_titles
-	get 'menus'				=> 'menus#index', 			as: :menus
-	resources :comments, only: [:index]
+	resources :rest_errs, 	only: [:index]
+	resources :menu_titles,	only: [:index]
+	resources :menus, 			only: [:index]
+	resources :comments, 		only: [:index]
 
 	# Parsing foursquare images by Ajax loading.
 	get 'foursquares/parse' => 'foursquares#parse'
