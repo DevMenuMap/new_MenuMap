@@ -44,4 +44,16 @@ module MenusHelper
 	def menu_sitga_div_without_price(menu)
 		content_tag :div, "시가", class: "price"
 	end
+
+	def menu_title_link_with_name(menu_title)
+		link_to menu_title.title_name, edit_menu_title_path(menu_title)
+	end
+
+	def brief_menu_price_info(menu)
+		info = [] 
+		info << menu.price_in_won 	if menu.price
+		info << '싯가'							if menu.sitga
+		info << '미확인'						if menu.unidentified
+		info.join(', ')
+	end
 end
