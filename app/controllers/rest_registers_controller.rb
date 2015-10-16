@@ -6,7 +6,7 @@ class RestRegistersController < ApplicationController
   end
 
   def show
-		@rest_register = RestRegister.find(params[:id])
+		@register = RestRegister.find(params[:id])
   end
 
   def new
@@ -34,7 +34,7 @@ class RestRegistersController < ApplicationController
 			flash[:danger] = "fail rest_registers#destroy"
 		end
 
-		redirect_to :back
+		redirect_to rest_registers_url
 	end
 
 	private
