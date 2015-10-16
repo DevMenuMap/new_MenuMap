@@ -77,4 +77,8 @@ module RestaurantsHelper
 			link_to restaurant.name, restaurant
 		end
 	end
+
+	def site_url(restaurant)
+		link_to restaurant.site, restaurant.site, style: "color: #5890ff;", target: "_blank"
+	end
 end

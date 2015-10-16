@@ -1,8 +1,12 @@
 <ul style="padding: 0 10px; list-style-type: none;">
-	<!-- <a id="mymap_button_<#%= @restaurant.id %>"><#%= mymap_button(@user, @restaurant) %></a> -->
+	<% if @restaurant.site %>
+		<li><i class="fa fa-home"></i> <%= site_url(@restaurant) %></li>
+	<% end %>
+
 	<li>
 		<i class="fa fa-map-signs"></i> <%= @restaurant.addr %>
 	</li>
+
 	<li>
 		<i class="fa fa-phone"></i>
 		<% if @restaurant.phnum %>
@@ -13,14 +17,13 @@
 			<span style="color: #5890ff">전화번호 정보가 없습니다.</span>
 		<% end %>
 	</li>
+
 	<li>
 		<i class="fa fa-cutlery"></i> <%= @restaurant.category.name %> <i class="fa fa-angle-right"></i> <%= @restaurant.subcategory.name %>	
 	</li>
 
 	<% if @restaurant.open_at %>
-		<li>
-			<i class="fa fa-clock-o"></i> <%= @restaurant.open_at %>
-		</li>
+		<li><i class="fa fa-clock-o"></i> <%= @restaurant.open_at %></li>
 	<% end %>
 
 	<li style="text-align: center;">
