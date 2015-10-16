@@ -93,7 +93,7 @@ Rails.application.routes.draw do
 	get "home/validate_slangs"
 
 	# User specific routes
-	resources :users, shallow: true do 
+	resources :users, only: [:index], shallow: true do 
 		resource :mymap_snapshot, only: [:show, :create]
 	end
 
