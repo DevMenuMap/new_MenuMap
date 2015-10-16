@@ -95,7 +95,6 @@ Rails.application.routes.draw do
 	get "home/validate_slangs"
 
 	# User specific routes
-	# 'resources :users' needs just for nesting.
 	resources :users, shallow: true do 
 		resource :mymap_snapshot, only: [:show, :create]
 	end
@@ -109,8 +108,6 @@ Rails.application.routes.draw do
 																	 constraints: { mymap: /mymap/i }
 
 	scope module: 'admin' do
-		resources :monitors
+		resources :monitors, only: [:index]
 	end
-
-	get "no_admin" => "admin/monitors#no_admin", as: :no_admin
 end

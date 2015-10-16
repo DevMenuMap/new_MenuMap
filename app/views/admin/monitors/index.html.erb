@@ -2,13 +2,7 @@
 
 <ul>
 	<li>
-		<%= link_to "about page", about_path %>
-	</li>
-	<li>
-		<%= link_to "manual page", manual_path %>
-	</li>
-	<li>
-		<%= link_to "restaurants index" , restaurants_path %>
+		<%= link_to "restaurant registers" , rest_registers_path %>
 	</li>
 	<li>
 		<%= link_to "restaurants errors" , rest_errs_path %>
@@ -25,56 +19,4 @@
 	<li>
 		<%= link_to "pictures" , pictures_path %>
 	</li>
-	<li>
-		<%= link_to "addresses" , addresses_path %>
-	</li>
-	<li>
-		<%= link_to "addr_rules" , addr_rules_path %>
-	</li>
-	<li>
-		<%= link_to "new addr_rule" , new_addr_rule_path %>
-	</li>
-	<li>
-		<%= link_to "addr_conversions" , addr_conversions_path %>
-	</li>
-	<li>
-		<%= link_to "slangs" , slangs_path %>
-	</li>
-	<li>
-		<%= link_to "franchises" , franchises_path %>
-	</li>
 </ul>
-
-<%= will_paginate @restaurants %>
-
-<table class="table">
-	<tr>
-		<% Restaurant.column_names.each do |column| %>
-			<th><%= column %></th>
-		<% end %>
-		<th>Best Menu 1</th>
-		<th>Best Menu 2</th> 
-		<th>메뉴 등록</th>
-		<th></th>
-		<th></th>
-	</tr>
-
-	<% @restaurants.each do |restaurant| %>
-		<tr>
-			<% restaurant.attributes.each_value do |value| %>
-				<td><%= value %></td>
-			<% end %>
-			<% if restaurant.title_menus(2).blank? %>
-				<td>Empty</td>
-				<td>Empty</td> 
-			<% else %>
-				<% restaurant.title_menus(2).each do |menu| %>
-					<td><%= menu %></td>
-				<% end %>
-			<% end %>
-			<td><%= menu_on_helper(restaurant) %></td>
-			<td><%= link_to "show", restaurant_path(restaurant) %></td>
-			<td><%= link_to "destroy", restaurant_path(restaurant), method: :delete %></td>
-		</tr>
-	<% end %>
-</table>
