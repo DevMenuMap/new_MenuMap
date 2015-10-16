@@ -32,9 +32,7 @@ Rails.application.routes.draw do
 	# Restaurant and nested controllers.
 	resources :restaurants, shallow: true do 
 		resources :rest_infos,	 except: [:index, :show]
-		resources :rest_errs, 	 except: [:index, :new] do
-			get 'modal', on: :member
-		end
+		resources :rest_errs, 	 except: [:index, :show, :edit]
 
 		resources :menu_titles,  except: [:index, :show, :new]
 		resources :menus, 		 	 except: [:index] do
@@ -64,7 +62,7 @@ Rails.application.routes.draw do
 
 	# Index pages which is not bounded with :restaurants
 	resources :franchises
-	get 'rest_errs' 	=> 'rest_errs#index', 	as: :rest_errs
+	resources :rest_errs, only: [:index]
 	get 'menu_titles' => 'menu_titles#index', as: :menu_titles
 	get 'menus'				=> 'menus#index', 			as: :menus
 	resources :comments, only: [:index]

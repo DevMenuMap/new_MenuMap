@@ -24,7 +24,7 @@
 	<% end %>
 
 	<li style="text-align: center;">
-		<%= link_to modal_rest_err_path(@restaurant), id: "rest_err", style: "text-decoration: none;", remote: true, data: { toggle: "modal", target: "#myModal" } do %>
+		<%= link_to new_restaurant_rest_err_path(@restaurant), id: "rest_err", style: "text-decoration: none;", remote: true, data: { toggle: "modal", target: "#myModal" } do %>
 			음식점 정보가 틀렸나요?
 		<% end %>
 	</li>

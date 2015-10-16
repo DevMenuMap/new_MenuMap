@@ -1,21 +1,35 @@
 <h1>RestErrs#index</h1>
 
-<table>
+<table class="admin">
 	<tr>
-		<% RestErr.column_names.each do |column| %>
-			<th><%= column %></th>
-		<% end %>
+		<th>id</th>
+		<th>restaurant</th>
+		<th>user</th>
+		<th>presence</th>
+		<th>menu</th>
+		<th>phnum</th>
+		<th>category</th>
+		<th>etc</th>
+		<th>updated_at</th>
 		<th></th>
 		<th></th>
 	</tr>
 
-	<% @rest_errs.each do |err| %>
+	<% @rest_errs.each do |rest_err| %>
 		<tr>
-			<% err.attributes.each_value do |value| %>
-				<td><%= value %></td>
-			<% end %>
-			<td><%= link_to "show", rest_err_path(err) %></td>
-			<td><%= link_to "destroy", rest_err_path(err), method: :delete %></td>
+			<td><%= rest_err.id %></td>
+			<td><%= restaurant_link_with_name(rest_err.restaurant_id) %></td>
+			<td><%= link_to_user_mymap(rest_err.user_id) %></td>
+			<td><%= 'v' if rest_err.presence_err %></td>
+			<td><%= 'v' if rest_err.menu_err %></td>
+			<td><%= 'v' if rest_err.phnum_err %></td>
+			<td><%= 'v' if rest_err.category_err %></td>
+			<td><%= simple_format rest_err.etc %></td>
+			<td><%= created_or_updated_at(rest_err) %></td>
+			<td><%= link_to "skip", rest_err, method: :put %></td>
+			<td><%= link_to "destroy", rest_err, method: :delete %></td>
 		</tr>
 	<% end %>
 </table>
+
+<%= will_paginate @rest_errs %>
