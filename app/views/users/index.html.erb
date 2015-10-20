@@ -21,7 +21,7 @@
 			<td><%= link_to_user_mymap(user.id) %></td>
 			<td><%= user.email %></td>
 			<td><%= user.sign_in_count %></td>
-			<td><%= time_in_ko(user.last_sign_in_at) %></td>
+			<td><%= time_in_ko(user.last_sign_in_at || user.created_at) %></td>
 			<td><%= 'v' if user.provider %></td>
 			<td><%= created_or_updated_at(user) %></td>
 			<td><%= user.comments.count %></td>

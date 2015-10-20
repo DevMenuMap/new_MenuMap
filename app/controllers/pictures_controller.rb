@@ -2,7 +2,7 @@ class PicturesController < ApplicationController
 	before_action :admin?, except: :create
 	
   def index
-		@pictures = Picture.where("imageable_type = 'Restaurant' AND user_id != 10000000").order(id: :desc).paginate(page: params[:page], per_page: 10)
+		@pictures = Picture.where("imageable_type = 'Restaurant' AND user_id IS NULL").order(id: :desc).paginate(page: params[:page])
   end
 
   def show

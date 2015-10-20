@@ -14,7 +14,7 @@
 	<% @menu_titles.each do |title| %>
 		<tr>
 			<td><%= title.id %></td>
-			<td><%= restaurant_link_with_name(title.restaurant) %></td>
+			<td><%= restaurant_link_with_name(title.restaurant.try(:id)) %></td>
 			<td><%= title.title_name %></td>
 			<td><%= title.title_info %></td>
 			<td><%= created_or_updated_at(title) %></td>
