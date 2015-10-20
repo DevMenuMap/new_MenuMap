@@ -124,6 +124,14 @@ function disablePrice() {
 	};
 };
 
+// Reset menu form especially for new menu_title form section 
+// and disabled price input.
+function resetMenuForm() {
+	$('#menu_title_form').css('display', 'none');
+	$('#menu_title_form').closest('form').find('label[for=menu_name]').css('margin-top', '0px');
+	$('#menu_price').prop('disabled', false);
+};	
+
 
 $(document).on('ready page:load', function() {
 
