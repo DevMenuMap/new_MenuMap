@@ -32,4 +32,10 @@ module UsersHelper
 			link_to "#{user.username}", mymap_index_path(user.username)
 		end
 	end
+
+	# Check if user didn't change his/her username since the first 
+	# sign in with facebook.
+	def first_fb_username(user)
+		!(current_user && current_user == user && user.username =~ /^fb\_[\d]+$/)
+	end
 end
