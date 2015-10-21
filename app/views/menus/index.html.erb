@@ -1,21 +1,37 @@
 <h1>Menu#index</h1>
 
-<table>
+<table class="admin">
 	<tr>
-		<% Menu.column_names.each do |column| %>
-			<th><%= column %></th>
-		<% end %>
+		<th>id</th>
+		<th>restaurant</th>
+		<th>menu_title</th>
+		<th>user</th>
+		<th>name</th>
+		<th>side_info</th>
+		<th>price</th>
+		<th>info</th>
+		<th>updated_at</th>
+		<th>menu_comments</th>
 		<th></th>
 		<th></th>
 	</tr>
 
-	<% @menus.each do |title| %>
+	<% @menus.each do |menu| %>
 		<tr>
-			<% title.attributes.each_value do |value| %>
-				<td><%= value %></td>
-			<% end %>
-			<td><%= link_to "edit", edit_menu_path(title) %></td>
-			<td><%= link_to "destroy", menu_path(title), method: :delete %></td>
+			<td><%= menu.id %></td>
+			<td><%= restaurant_link_with_name(menu.menu_title.restaurant) %></td>
+			<td><%= menu_title_link_with_name(menu.menu_title) %></td>
+			<td><%= link_to_user_mymap(menu.user) %></td>
+			<td><%= menu.name %></td>
+			<td><%= menu.side_info %></td>
+			<td><%= brief_menu_price_info(menu) %></td>
+			<td><%= menu.info %></td>
+			<td><%= created_or_updated_at(menu) %></td>
+			<td><%= 'v' if menu.menu_comments.exists? %></td>
+			<td><%= link_to "edit", edit_menu_path(menu) %></td>
+			<td><%= link_to "destroy", menu, method: :delete %></td>
 		</tr>
 	<% end %>
 </table>
+
+<%= will_paginate @menus %>

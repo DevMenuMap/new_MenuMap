@@ -1,13 +1,16 @@
 class RestErrsController < ApplicationController
-	before_action :admin?, :except => [:create, :modal]
+	before_action :admin?, :except => [:new, :create]
 	
   def index
-		@rest_errs = RestErr.all
+		@rest_errs = RestErr.paginate(page: params[:page], per_page: 10).order(id: :desc)
   end
 
-  def show
-		@rest_err = RestErr.find(params[:id])
-		@pictures = @rest_err.pictures
+  def new 
+		@restaurant = Restaurant.find(params[:restaurant_id])
+		@rest_err = RestErr.new
+		respond_to do |format|
+			format.js { render layout: false }
+		end
   end
 
 	def create
@@ -20,34 +23,18 @@ class RestErrsController < ApplicationController
 			flash.now[:danger] = "음식점 정보 수정 요청을 저장하지 못했습니다."
 		end
 
-		# Single image upload
-		# img = params[:rest_err][:pictures_attributes]["0"][:img]
-		# @rest_err.pictures.create(img: img)
-
-		# Multiple images upload
-		if params[:rest_err][:pictures_attributes]
-			params[:rest_err][:pictures_attributes]["0"][:img].each do |img|
-				@rest_err.pictures.create(img: img)
-			end
-		end
-
 		respond_to do |format|
 			format.js { render layout: false }
 		end
 	end
 
-  def edit
-		@rest_err = RestErr.find(params[:id])
-		@rest_err.pictures.build
-  end
-
 	def update
 		@rest_err = RestErr.find(params[:id])
 
-		if @rest_err.update(rest_err_params)
-			flash[:alert] = "succeed rest_errs#update"
+		if @rest_err.update(active: false, skip: true)
+			flash[:success] = "succeed rest_errs#update"
 		else
-			flash[:alert] = "fail rest_errs#update"
+			flash[:danger] = "fail rest_errs#update"
 		end
 
 		redirect_to rest_errs_url
@@ -55,20 +42,11 @@ class RestErrsController < ApplicationController
 
 	def destroy
 		if @rest_err = RestErr.find(params[:id]).update(active: false)
-			flash[:alert] = "succeed rest_err#destroy"
+			flash[:success] = "succeed rest_err#destroy"
 		else
-			flash[:alert] = "fail rest_err#destroy"
+			flash[:danger] = "fail rest_err#destroy"
 		end
 		redirect_to rest_errs_url
-	end
-
-	# GET /rest_errs/:id/modal
-	def modal
-		@restaurant = Restaurant.find(params[:id])
-		@rest_err = RestErr.new
-		respond_to do |format|
-			format.js { render layout: false }
-		end
 	end
 
 	private

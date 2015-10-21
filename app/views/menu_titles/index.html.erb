@@ -1,21 +1,27 @@
 <h1>MenuTitles#index</h1>
 
-<table>
+<table class="admin">
 	<tr>
-		<% MenuTitle.column_names.each do |column| %>
-			<th><%= column %></th>
-		<% end %>
+		<th>id</th>
+		<th>restaurant</th>
+		<th>name</th>
+		<th>info</th>
+		<th>updated_at</th>
 		<th></th>
 		<th></th>
 	</tr>
 
 	<% @menu_titles.each do |title| %>
 		<tr>
-			<% title.attributes.each_value do |value| %>
-				<td><%= value %></td>
-			<% end %>
+			<td><%= title.id %></td>
+			<td><%= restaurant_link_with_name(title.restaurant.try(:id)) %></td>
+			<td><%= title.title_name %></td>
+			<td><%= title.title_info %></td>
+			<td><%= created_or_updated_at(title) %></td>
 			<td><%= link_to "edit", edit_menu_title_path(title) %></td>
-			<td><%= link_to "destroy", menu_title_path(title), method: :delete %></td>
+			<td><%= link_to "destroy", title, method: :delete %></td>
 		</tr>
 	<% end %>
 </table>
+
+<%= will_paginate @menus %>

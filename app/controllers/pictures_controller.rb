@@ -2,7 +2,7 @@ class PicturesController < ApplicationController
 	before_action :admin?, except: :create
 	
   def index
-		@pictures = Picture.all
+		@pictures = Picture.where("imageable_type = 'Restaurant' AND user_id IS NULL").order(id: :desc).paginate(page: params[:page])
   end
 
   def show
@@ -33,7 +33,7 @@ class PicturesController < ApplicationController
 
 	def update
 		@picture = Picture.find(params[:id])
-		if @picture.update(picture_params)
+		if @picture.update(img: params[:picture][:img])
 			flash[:alert] = "succeed pictures#update"
 		else
 			flash[:alert] = "fail pictures#update"
@@ -43,9 +43,9 @@ class PicturesController < ApplicationController
 
 	def destroy
 		if Picture.find(params[:id]).update(active: false)
-			flash[:alert] = "succeed pictures#destroy"
+			flash[:success] = "succeed pictures#destroy"
 		else
-			flash[:alert] = "fail pictures#destroy"
+			flash[:danger] = "fail pictures#destroy"
 		end
 		redirect_to :back
 	end

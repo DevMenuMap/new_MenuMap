@@ -19,13 +19,12 @@ module RestaurantsHelper
 	end
 
 	def menu_color(restaurant)
-		case restaurant.menu_on
-		when 1 
-			"orange"
-		when 0
-			"gray"
-		else
+		if restaurant.menu_on > 1
 			"#23b300"
+		elsif restaurant.menu_on > 0 
+			"orange"
+		else
+			"gray"
 		end
 	end
 
@@ -39,10 +38,8 @@ module RestaurantsHelper
 	end
 
 	# Puts string when delivery is possible.
-	def delivery_possible?(restaurant)
-		if restaurant.delivery
-			content_tag :span, "배달", class: "label label-info"
-		end
+	def delivery_possible?(object)
+		'배달 가능'	if object.delivery
 	end
 
 	def delivery_possible_with_middot(restaurant)
@@ -73,5 +70,19 @@ module RestaurantsHelper
 
 	def no_img?(pictures)
 		pictures.blank? ? "block" : "none"
+	end
+
+	def restaurant_link_with_name(id)
+		if id && restaurant = Restaurant.find_by_id(id)
+			link_to restaurant.name, restaurant
+		end
+	end
+
+	def site_url(restaurant)
+		if restaurant.site
+			link_to restaurant.site, restaurant.site, style: "color: #5890ff;", target: "_blank"
+		else
+			link_to restaurant.franchise.site, restaurant.franchise.site, style: "color: #5890ff;", target: "_blank"
+		end
 	end
 end

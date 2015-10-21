@@ -1,13 +1,23 @@
 <h1>Questions#index</h1>
 
-<table>
+<table class="admin">
 	<tr>
-		<th>user_id</th>
-		<th>email</th>
+		<th>id</th>
+		<th>user</th>
 		<th>contents</th>
+		<th>updated_at</th>
 		<th></th>
 	</tr>
 
-	<!-- Each questions in questions/_question.html.erb -->
-	<%= render @questions %>
+	<% @questions.each do |question| %>
+		<tr>
+			<td><%= question.id %></td>
+			<td><%= user_email_or_link_to_user_mymap(question) %></td>
+			<td><%= simple_format question.contents %></td>
+			<td><%= created_or_updated_at(question) %></td>
+			<td><%= link_to "destroy", question, method: :delete %></td>
+		</tr>
+	<% end %>
 </table>
+
+<%= will_paginate @questions %>

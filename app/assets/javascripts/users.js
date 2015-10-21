@@ -1,4 +1,32 @@
+// Only logged in users can do.
+function needLogin() {
+	$('#new_comment_section').on('click', function(e) {
+		if ( !($(this).find('#new_comment').data('user') > 0) ) {
+			if ( confirm('로그인을 해주세요.') ) {
+				window.location.href = 'http://menumap.co.kr/users/sign_in';
+			} else {
+				return false;
+			};
+		};
+	});
+};
+
+// Alert when user didn't chnage his/her username 
+// when signed in via facebook.
+function changeUsernameAlert(e, isChanged, username) {
+	if (!isChanged) {
+		var text = "현재 유저명이 " + username + "입니다.\n";
+		text +=	"유저명을 바꿔주세요.";
+		if ( confirm(text) ) {
+			window.location.href = 'http://menumap.co.kr/users/edit';
+		};
+	};
+};
+
+
 $(document).on('ready page:load', function() {
+	needLogin();
+
 	// Username starts only with Korean or English.
 	$.validator.addMethod('usernameStart', function(value, element) {
 		return value.match(/^[a-zA-Z가-힣]/)

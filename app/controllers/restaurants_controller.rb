@@ -116,6 +116,7 @@ class RestaurantsController < ApplicationController
 			@restaurant.rest_info.coordinate.destroy if @restaurant.rest_info.coordinate.present? 
 			@restaurant.rest_info.update(active: false)
 			@restaurant.coordinate.destroy if @restaurant.coordinate.present?
+			@restaurant.mymaps.destroy_all
 		end
 
 		def create_rest_info

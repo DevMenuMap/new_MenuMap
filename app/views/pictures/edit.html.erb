@@ -2,7 +2,7 @@
 
 <%= form_for @picture, html: { multipart: true } do |f| %>
 	<%= f.label :img %>
-	<%= f.file_field :img, multiple: true, class: "uploadImage" %>
+	<%= f.file_field :img %>
 
 	<%= f.submit %>
 <% end %>

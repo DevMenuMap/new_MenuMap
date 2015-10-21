@@ -4,18 +4,30 @@
 			<%= profile_img(comment.user) %>
 		</div>
 		<div class="info">
-			<div>
-				<%= comment.user.username %> &middot; <%= time_ago_in_ko(comment.updated_at) %>
-				<%= link_to_edit_delete_comment_modal(comment) %>
-			</div>
 			<% if star_rating_exists?(comment) %>
+				<div>
+					<span class="truncate"><%= comment.user.username %></span> <span class="time">&middot; <%= time_ago_in_ko(comment.updated_at) %></span>
+					<%= link_to_edit_delete_comment_modal(comment) %>
+				</div>
 				<div class="star_rating" data-score=<%= comment.rating%>></div>
+			<% else %>
+				<div class="wo">
+					<span class="truncate"><%= comment.user.username %></span> <span class="time">&middot; <%= time_ago_in_ko(comment.updated_at) %></span>
+					<%= link_to_edit_delete_comment_modal(comment) %>
+				</div>
 			<% end %>
 		</div>
 	</div>
-	<div class="tags">
-		<%= blue_menu_comment_tags(comment) %>
-	</div>
+
+	<% if comment.menu_comments.blank? %>
+		<div class="tags wo">
+			<%= blue_menu_comment_tags(comment) %>
+		</div>
+	<% else %>
+		<div class="tags">
+			<%= blue_menu_comment_tags(comment) %>
+		</div>
+	<% end %>
 	<div class="contents">
 		<%= simple_format comment.contents %>
 	</div>

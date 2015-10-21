@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
 	before_action :double_rating_score, only: [:create, :update]
 	
   def index
-  	@comments = Comment.all
+  	@comments = Comment.unscoped.where("active = 1").order(updated_at: :desc).paginate(page: params[:page], per_page: 30)
   end
 
 	# GET /restaurants/:restaurant_id/comments/more
@@ -85,6 +85,7 @@ class CommentsController < ApplicationController
   	end
 
 		respond_to do |format|
+			format.html { redirect_to comments_url }
 			format.js { render layout: false }
 		end
 	end
@@ -120,7 +121,7 @@ class CommentsController < ApplicationController
 		end
 
   	def correct_user
-  		if Comment.find(params[:id]).user != current_user
+  		if Comment.find(params[:id]).user != current_user && !current_user.admin
   			flash.now[:error] = '해당 권한이 없습니다.'
 				@no_correct_user = true
 				respond_to do |format|

@@ -21,4 +21,21 @@ module UsersHelper
 	def user_id_if_exists(user)
 		user.id unless user.nil?
 	end
+
+	def user_email_or_link_to_user_mymap(object)
+		object.user_id ? link_to_user_mymap(object.user_id) : object.email
+	end
+
+	def link_to_user_mymap(user_id)
+		if user_id
+			user = User.find(user_id)
+			link_to "#{user.username}", mymap_index_path(user.username)
+		end
+	end
+
+	# Check if user didn't change his/her username since the first 
+	# sign in with facebook.
+	def first_fb_username(user)
+		!(current_user && current_user == user && user.username =~ /^fb\_[\d]+$/)
+	end
 end

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 	get "home/info_window"						# infoWindow over map.
 
 	resources :notices, 			 except: [:index, :show]
-	resources :questions
+	resources :questions, 		 except: [:show, :edit, :update]
 	resources :rest_registers, except: [:edit, :update]
 
 	# User & Admin with devise gem.
@@ -32,12 +32,10 @@ Rails.application.routes.draw do
 	# Restaurant and nested controllers.
 	resources :restaurants, shallow: true do 
 		resources :rest_infos,	 except: [:index, :show]
-		resources :rest_errs, 	 except: [:index, :new] do
-			get 'modal', on: :member
-		end
+		resources :rest_errs, 	 except: [:index, :show, :edit]
 
 		resources :menu_titles,  except: [:index, :show, :new]
-		resources :menus, 		 	 except: [:index] do
+		resources :menus, 		 	 except: [:index, :show, :new] do
 			# Cancel the menu editing operation.
 			get 'cancel', on: :member
 
@@ -47,7 +45,7 @@ Rails.application.routes.draw do
 			end
 		end
 
-		resources :comments, 		 except: [:index] do
+		resources :comments, 		 except: [:index, :show, :new] do
 			# Show more comments in restaurants#show.
 			get 'more', on: :collection
 			# Show edit or delete link modal.
@@ -64,10 +62,10 @@ Rails.application.routes.draw do
 
 	# Index pages which is not bounded with :restaurants
 	resources :franchises
-	get 'rest_errs' 	=> 'rest_errs#index', 	as: :rest_errs
-	get 'menu_titles' => 'menu_titles#index', as: :menu_titles
-	get 'menus'				=> 'menus#index', 			as: :menus
-	get 'comments' 		=> 'comments#index', 		as: :comments
+	resources :rest_errs, 	only: [:index]
+	resources :menu_titles,	only: [:index]
+	resources :menus, 			only: [:index]
+	resources :comments, 		only: [:index]
 
 	# Parsing foursquare images by Ajax loading.
 	get 'foursquares/parse' => 'foursquares#parse'
@@ -95,8 +93,7 @@ Rails.application.routes.draw do
 	get "home/validate_slangs"
 
 	# User specific routes
-	# 'resources :users' needs just for nesting.
-	resources :users, shallow: true do 
+	resources :users, only: [:index], shallow: true do 
 		resource :mymap_snapshot, only: [:show, :create]
 	end
 
@@ -109,8 +106,6 @@ Rails.application.routes.draw do
 																	 constraints: { mymap: /mymap/i }
 
 	scope module: 'admin' do
-		resources :monitors
+		resources :monitors, only: [:index]
 	end
-
-	get "no_admin" => "admin/monitors#no_admin", as: :no_admin
 end

@@ -25,6 +25,9 @@ $(document).on('ready page:load', function() {
 	$('#new_picture').on('submit', function() {
 		if ( !onePictureValidation() ) {
 			return false;
+		} else {
+			$(this).find('button[type=submit]').html('추가중...');
+			$(this).find('button[type=submit]').addClass('disabled');
 		};
 	});
 });

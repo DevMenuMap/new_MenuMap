@@ -6,7 +6,7 @@
 			<%= profile_img(@user) %>
 			<% if correct_user?(@user) %>
 				<div class="name truncate"><%= @user.username %></div>
-				<%= link_to '계정 설정', edit_user_registration_path(@user) %>
+				<%= link_to '계정 설정', edit_user_registration_path %>
 			<% else %>
 				<div class="name wo truncate"><%= @user.username %></div>
 			<% end %>
@@ -31,5 +31,6 @@
 <script>
 	$(document).ready(function() {
 		loadNaverMap(false, true, 0.8);
+		changeUsernameAlert(event, <%= first_fb_username(@user) %>, "<%= @user.username %>");
 	});
 </script>

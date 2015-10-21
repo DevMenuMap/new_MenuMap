@@ -26,4 +26,8 @@ module CommentsHelper
 			end
 		end
 	end
+
+	def has_menu_comments?(comment)
+		comment.menu_comments.exists? ? 'tag 있음' : nil
+	end
 end

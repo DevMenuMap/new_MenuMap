@@ -18,7 +18,7 @@ $("#new_comment_section").html("<%= j render partial: "comments/new", locals: { 
 starRatingForm();
 commentContentsValidation('#new_comment');
 autocompleteMenus('#new_comment .menu_comments_tag');
-loggedInUserComment();
+needLogin();
 
 
 // Menus#index

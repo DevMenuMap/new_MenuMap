@@ -1,6 +1,23 @@
 <h1>Menu#edit</h1>
 
 <%= form_for @menu do |f| %>
-	<%= render "field", f: f %>
+	<%= f.label :name, "메뉴 이름" %>
+	<%= f.text_field :name, class: "form-control" %>
+
+	<%= f.label :side_info, "간단 정보" %>
+	<%= f.text_field :side_info, class: "form-control", placeholder: "예) (中), 순한맛, 한근, 500g 등" %>
+
+	<%= f.label :price, "가격" %>
+	<%= f.text_field :price, class: "form-control", placeholder: "숫자만 입력" %>
+
+	<%= f.check_box :sitga %>
+	<%= f.label :sitga, "시가" %>
+
+	<%= f.check_box :unidentified, onchange: "disablePrice()" %>
+	<%= f.label :unidentified, "가격 미확인" %>
+
+	<%= f.label :info, "상세 정보" %>
+	<%= f.text_field :info, class: "form-control" %>
+
 	<%= f.submit "update menu" %>
 <% end %>
