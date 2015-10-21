@@ -4,6 +4,7 @@ class SitemapController < ApplicationController
   def index
 		@static = "http://menumap.co.kr/"
 		@restaurants = Restaurant.google_sitemap_restaurants
+		@franchises = Franchise.where("updated_at > NOW() - INTERVAL 7 DAY")
 
 		respond_to do |format|
 			format.xml 
