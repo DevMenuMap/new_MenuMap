@@ -15,6 +15,6 @@
 
 			<%= link_to "destroy", restaurant_path(restaurant), method: :delete if admin_user? %>
 		</div>
-		<%= render partial: 'mymaps/add_on', locals: { restaurant: restaurant } %>
+		<%= render partial: 'mymaps/add_on', locals: { restaurant: restaurant, mymap: ( @user.find_mymap(restaurant) if @user ) } %>
 	</div>
 <% end %>
