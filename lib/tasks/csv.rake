@@ -1,5 +1,20 @@
 require 'csv'
 
+namespace :franchises do
+	task :update, [:filename] => :environment do |t, args|
+		CSV.foreach('db/seed_data/' + args[:filename] + '.csv', headers: true) do |row|
+
+			# Default values.
+			row[0] = row[0].to_i		# franchise_id
+
+			Franchise.find(row[0]).update(
+				name: row[1],
+				site: row[2]
+			)
+		end
+	end
+end
+
 namespace :restaurants do
 	desc "Create a new restaurant"
   task :create, [:filename] => :environment do |t, args|

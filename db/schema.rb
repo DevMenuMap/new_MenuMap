@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016125434) do
+ActiveRecord::Schema.define(version: 20151021012103) do
 
   create_table "addr_bounds", force: :cascade do |t|
     t.integer  "address_id", limit: 8
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20151016125434) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "site",       limit: 255
   end
 
   create_table "menu_comments", force: :cascade do |t|
