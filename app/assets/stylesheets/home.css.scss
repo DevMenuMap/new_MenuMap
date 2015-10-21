@@ -872,7 +872,19 @@ li.comment {
 			float: left;
 		}
 		.info {
+			> .wo {
+				line-height: 2.8;
+			}
 			padding-left: 50px;
+			span.truncate {
+				display: inline-block;
+				max-width: 170px;
+				vertical-align: bottom;
+			}
+			span.time {
+				font-size: 80%;
+				color: #999;
+			}
 			a {
 				float: right;
 				color: $facebook_link_blue;
@@ -880,14 +892,23 @@ li.comment {
 					font-size: initial;
 				}
 			}
+			.star_rating img {
+				width: 12px;
+			}
 		}
 	}
 	.tags {
 		clear: both;
+		padding-left: 50px;
 		color: $facebook_link_blue;
+		margin-bottom: 2px;
+		&.wo {
+			margin-bottom: 0px;
+		}
 	}
 	.contents {
 		clear: both;
+		padding-left: 50px;
 	}
 }
 
@@ -904,6 +925,9 @@ li.comment {
 		.top {
 			.info {
 				padding-left: 50px;
+				span.truncate {
+					max-width: 380px;
+				}
 			}
 		}
 	}
