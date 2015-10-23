@@ -1,5 +1,5 @@
 <div id="mymap_fb_share">
-	<% if correct_user?(@user) && current_user.provider == 'facebook' %>
+	<% if correct_user?(@user) %>
 		<% if @user.mymap_updated? %>
 			<%= link_to user_mymap_snapshot_path(@user), class: "btn btn-block btn-social btn-facebook", method: :post, remote: true do %>
 				<i class="fa fa-facebook"></i> 페이스북에 공유하기
