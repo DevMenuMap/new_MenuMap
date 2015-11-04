@@ -79,7 +79,7 @@ module RestaurantsHelper
 	end
 
 	def site_url(restaurant)
-		if restaurant.site
+		if restaurant.site.present?
 			link_to restaurant.site, restaurant.site, style: "color: #5890ff;", target: "_blank"
 		else
 			link_to restaurant.franchise.site, restaurant.franchise.site, style: "color: #5890ff;", target: "_blank"
