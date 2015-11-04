@@ -1,5 +1,5 @@
 <ul style="padding: 0 10px; list-style-type: none;">
-	<% if @restaurant.site || @restaurant.try(:franchise).try(:site) %>
+	<% if @restaurant.site.present? || @restaurant.try(:franchise).try(:site) %>
 		<li><i class="fa fa-home"></i> <%= site_url(@restaurant) %></li>
 	<% end %>
 
@@ -9,7 +9,7 @@
 
 	<li>
 		<i class="fa fa-phone"></i>
-		<% if @restaurant.phnum %>
+		<% if @restaurant.phnum.present? %>
 			<%= link_to "tel:#{@restaurant.phnum}", style: "color: #5890ff;"  do %>
 				<%= @restaurant.phnum %> <%= delivery_possible_with_middot(@restaurant) %>
 			<% end %>
@@ -22,7 +22,7 @@
 		<i class="fa fa-cutlery"></i> <%= @restaurant.category.name %> <i class="fa fa-angle-right"></i> <%= @restaurant.subcategory.name %>	
 	</li>
 
-	<% if @restaurant.open_at %>
+	<% if @restaurant.open_at.present? %>
 		<li><i class="fa fa-clock-o"></i> <%= @restaurant.open_at %></li>
 	<% end %>
 

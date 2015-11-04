@@ -74,7 +74,7 @@ module RestaurantsHelper
 
 	def restaurant_link_with_name(id)
 		if id && restaurant = Restaurant.find_by_id(id)
-			link_to restaurant.name, restaurant
+			link_to restaurant.name, restaurant, target: '_blank'
 		end
 	end
 
