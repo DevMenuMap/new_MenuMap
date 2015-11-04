@@ -89,9 +89,9 @@ class RestaurantsController < ApplicationController
 		@restaurant.destroy_related_when_addr_updated(params)
 
 		if @restaurant.update(restaurant_params)
-			flash[:alert] = "succeed restaurants#update"
+			flash[:success] = "succeed restaurants#update"
 		else
-			flash[:alert] = "fail restaurants#update"
+			flash[:error] = "fail restaurants#update"
 		end
 
 		redirect_to restaurant_url(@restaurant)
@@ -109,7 +109,8 @@ class RestaurantsController < ApplicationController
 		def restaurant_params
 			params.require(:restaurant).permit(:name, :addr, :phnum, :delivery,
 																				 :category_id, :subcategory_id, 
-																				 :menu_on, :open_at, :pictures)
+																				 :menu_on, :open_at, :pictures,
+																				 :addr_code, :franchise_id, :site)
 		end
 
 		def inactivate_related
