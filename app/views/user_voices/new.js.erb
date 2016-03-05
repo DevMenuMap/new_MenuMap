@@ -1,0 +1,6 @@
+$(".modal-title").html("서비스에 대한 의견 보내기");
+$(".modal-body").html("<%= j(render "form") %>");
+$(".modal-title").addClass("left_border_label");
+$(".modal-title").css("border-color", "red");
+
+userVoiceValidation();

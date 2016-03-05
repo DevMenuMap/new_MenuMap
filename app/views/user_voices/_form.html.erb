@@ -1,0 +1,37 @@
+<%= form_for(@user_voice, remote: true) do |f| %>
+  <% if @user_voice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_voice.errors.count, "error") %> prohibited this user_voice from being saved:</h2>
+
+      <ul>
+      <% @user_voice.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, "이름 <span class='desc'>(선택사항입니다)</span>".html_safe %><br>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email, "이메일 <span class='desc'>(선택사항입니다. 입력하시면 피드백을 보내드립니다.)</span>".html_safe %><br>
+    <%= f.text_field :email, class: "form-control" %>
+  </div>
+<!-- 
+  <div class="form-group">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+-->
+  <div class="form-group">
+    <%= f.label :description, "의견" %><br>
+    <%= f.text_area :description, { rows: 10, class: "form-control" } %>
+  </div>
+
+  <div class="modal-footer" style="padding: 10px 0 0;">
+    <%= f.button "취소", class: "btn btn_cancel", data: { dismiss: "modal" } %>
+    <%= f.button "등록", class: "btn btn_submit" %>
+  </div>
+<% end %>
