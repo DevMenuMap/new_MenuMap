@@ -5,5 +5,7 @@
 	<%= f.submit 'update' %>
 <% end %>
 
-<!-- Original category and subcategory -->
-<%= @restaurant.category.name %> | <%= @restaurant.subcategory.name %>
+<script>
+	$("#category_select").val(<%= @restaurant.category.id %>);
+	$("#subcategory_select").val(<%= @restaurant.subcategory.id %>);
+</script>
