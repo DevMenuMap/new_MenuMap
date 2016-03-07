@@ -38,4 +38,7 @@ $(document).on('ready page:load', function() {
 		$('#tab_map').click();
 		prev_tab = this;
 	});
+	
+	// Change the first tab to blog.
+	$('a[href=#blog]').click();
 });
