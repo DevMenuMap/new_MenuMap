@@ -39,6 +39,8 @@ $(document).on('ready page:load', function() {
 		prev_tab = this;
 	});
 	
-	// Change the first tab to blog.
-	$('a[href=#blog]').click();
+	// Change the first tab to blog when menu doesn't exist.
+	if ( $('.menu').length == 0 ) {
+		$('a[href=#blog]').click();
+	};
 });
