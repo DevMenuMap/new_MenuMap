@@ -7,7 +7,8 @@ function userVoiceValidation() {
       'user_voice[description]' : {
         required: true,
         maxlength: 2000
-      }
+      },
+      'consent' : { required: true }
     },
     messages: {
       'user_voice[email]' : { 
@@ -16,7 +17,8 @@ function userVoiceValidation() {
       'user_voice[description]' : {
         required: '건의 하실 내용을 입력해주세요.',
         maxlength: '1000자 이내로 적어주세요.'
-      }
+      },
+      'consent' : '필수사항입니다.'
     }
   });
 };

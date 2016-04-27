@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 	get "manual"	=> "home#manual"
 	get "qna"			=> "notices#index"
 	get "search"	=> "home#search"
+	get "personal_info" => "home#personal_info"
 	get "home/update_subcategories"		# cascading select box 
 	get "home/addrcomplete"						# autocomplete for address text_field
 	get "home/info_window"						# infoWindow over map.

@@ -61,7 +61,8 @@ $(document).on('ready page:load', function() {
 			},
 			'user[current_password]': { required: true },
 			'user[password]': { minlength: 8 },
-			'user[password_confirmation]': { equalTo: '#user_password' }
+			'user[password_confirmation]': { equalTo: '#user_password' },
+      'consent' : { required: true }
 		},
 		messages: {
 			'user[email]' : {
@@ -77,7 +78,8 @@ $(document).on('ready page:load', function() {
 			},
 			'user[current_password]': '변경사항을 저장하기 위해 현재 비밀번호를 적어주세요.',
 			'user[password]': '비밀번호는 8자 이상이어야 합니다.',
-			'user[password_confirmation]': '비밀번호가 일치하지 않습니다.'
+			'user[password_confirmation]': '비밀번호가 일치하지 않습니다.',
+      'consent' : '필수사항입니다.'
 		}
 	});
 });
