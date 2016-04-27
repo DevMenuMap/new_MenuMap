@@ -1198,3 +1198,8 @@ table#personal_info {
 		padding: 10px;
 	}
 }
+
+label[for=consent].error {
+	float: right;	
+}
+

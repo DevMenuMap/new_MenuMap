@@ -19,4 +19,13 @@ $(document).on('ready page:load', function() {
 			return false;
 		};
 	});
+
+	$('#new_rest_register').validate({
+		rules: {
+      'consent' : { required: true }
+		},
+		messages: {
+      'consent' : '필수사항입니다.'
+		}
+	});
 });

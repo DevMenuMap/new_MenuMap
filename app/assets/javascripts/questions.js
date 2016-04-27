@@ -7,7 +7,8 @@ function questionsValidation() {
 			'question[contents]' : {
 				required: true,
 				maxlength: 255
-			}
+			},
+      'consent' : { required: true }
 		},
 		messages: {
 			'question[email]' : { 
@@ -16,7 +17,8 @@ function questionsValidation() {
 			'question[contents]' : {
 				required: '질문 내용을 입력해주세요.',
 				maxlength: '255자 이내로 적어주세요.'
-			}
+			},
+      'consent' : '필수사항입니다.'
 		}
 	});
 };
